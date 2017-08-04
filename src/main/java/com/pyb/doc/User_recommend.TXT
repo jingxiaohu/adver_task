@@ -1,0 +1,14 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ur_id|主键ID|long|
+|ur_nd|唯一标识ND|String|
+|ur_ui_id|推荐人用户ID|long|
+|ur_ui_nd|推荐人ND|String|
+|other_ui_id|被推荐人用户ID|long|
+|other_ui_nd|被推荐人用户ND|String|
+|ur_money|推荐奖励金额（单位分）|int|
+|deal_state|是否已经处理（0:没有处理1:处理成功2:处理失败）|int|
+|ctime|创建时间|java.util.Date|
+|note|备注|String|
+

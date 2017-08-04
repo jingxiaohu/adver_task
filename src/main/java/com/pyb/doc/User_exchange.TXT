@@ -1,0 +1,14 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ue_id|主键ID|long|
+|ue_nd|兑换提现表ND|String|
+|ui_id|用户主键ID|long|
+|ui_nd|用户ND|String|
+|ue_type|类型（0:提现1:电话充值2:充值Q币）|int|
+|ue_name|兑换或者提现名称|String|
+|ue_money|兑换或者提现金额（单位分）|int|
+|rest_money|兑换后剩余金额(单位分)|int|
+|ctime|创建时间|java.util.Date|
+|note|备注|String|
+

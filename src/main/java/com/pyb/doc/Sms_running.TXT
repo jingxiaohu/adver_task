@@ -1,0 +1,15 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|Id||int|
+|sms_tel|电话或者邮箱|String|
+|sms_content|消息内容|String|
+|sms_stat|失败还是成功，0：失败1：成功|int|
+|sms_type|0-程序员自定义短信1-自定义短信2:邮箱|int|
+|sms_user|发送用户|String|
+|sms_user_name|发送用户|String|
+|server_state|服务端的状态码|String|
+|sms_date|发送时间|String|
+|note|备注|String|
+|sv_id|sms_validate表的主键ID|long|
+
