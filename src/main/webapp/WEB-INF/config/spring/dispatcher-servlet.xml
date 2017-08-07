@@ -37,19 +37,32 @@
     </bean>  
   
     <!-- 定义国际化资源文件查找规则 ，各种messages.properties -->  
-    <bean id="messageSource"  
-        class="org.springframework.context.support.ResourceBundleMessageSource"  
-        p:basename="config.messages.messages">  
-    </bean>  
-  
+    <!--
+     <bean id="messageSource"
+        class="org.springframework.context.support.ResourceBundleMessageSource"
+        p:basename="config.messages.messages">
+    </bean>
+     -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basename" value="config.messages.messages"/>
+    </bean>
     <!-- servlet适配器，这里必须明确声明，因为spring默认没有初始化该适配器 -->  
     <bean id="servletHandlerAdapter"  
         class="org.springframework.web.servlet.handler.SimpleServletHandlerAdapter" />  
   
     <!-- 定义文件上传处理器 -->  
-    <bean id="multipartResolver"  
-        class="org.springframework.web.multipart.commons.CommonsMultipartResolver"  
-        p:defaultEncoding="UTF-8" p:maxUploadSize="10485760000"  p:maxInMemorySize="40960"/>  
+<!--
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+        p:defaultEncoding="UTF-8" p:maxUploadSize="10485760000"  p:maxInMemorySize="40960"/>
+-->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="maxInMemorySize" value="40960"/>
+        <property name="maxUploadSize" value="10485760000"/>
+    </bean>
     <!-- 异常处理器 -->  
 	<!-- 
 	
