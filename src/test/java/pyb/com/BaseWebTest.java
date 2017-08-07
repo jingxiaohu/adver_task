@@ -1,9 +1,6 @@
 package pyb.com;
 
 import com.pyb.constants.Constants;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Before;
 import org.junit.runner.RunWith;
@@ -20,6 +17,10 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  * web容器基础测试类
  *
@@ -27,7 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration({"file:WebContent/WEB-INF/config/spring/spring_test.xml","file:WebContent/WEB-INF/config/spring/dispatcher-servlet.xml"})
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/config/spring/spring_test.xml","file:src/main/webapp/WEB-INF/config/spring/dispatcher-servlet.xml"})
 public abstract class BaseWebTest {
 
   public static String basepath = "D:/my_java_project/wypyb_task/src/test/java/pyb/com/";
