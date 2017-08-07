@@ -13,3 +13,4 @@ target
 .project
 bin
 stopcar/src/test/resources/doc
+src/test/resources/
