@@ -37,6 +37,8 @@ protected Sms_validateDao sms_validateDao;
 protected Pay_parkDao pay_parkDao;
 @Autowired
 protected Live_infoDao live_infoDao;
+@Autowired
+protected Message_infoDao message_infoDao;
 
 /*******************************下面是GET方法**************************************/
 public User_infoDao getUser_infoDao() {
@@ -80,6 +82,9 @@ public Pay_parkDao getPay_parkDao() {
 }
 public Live_infoDao getLive_infoDao() {
 	return live_infoDao;
+}
+public Message_infoDao getMessage_infoDao() {
+	return message_infoDao;
 }
 
 

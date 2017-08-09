@@ -53,7 +53,7 @@ public abstract class BaseWebTest {
    * 从什么设备发出的请求 0:android 1:ios  2:web
    */
   protected   String dtype = "2";//从什么设备发出的请求 0:未指定  1: web  2:android  3:ios  4:QQ 5:微信 6:新浪  7:阿里
-  private String ui_id="1";//用户ID
+  private String ui_id="2";//用户ID
   private String ui_nd="2017072815195331778";//用户UUID
   private int vnum=1;//当前内部版本号
   private String token="559a778edef011aeeaabc210de0e615e";//用户登陆后的令牌

@@ -18,7 +18,7 @@ public class JxhCoderAuto {
 		String[] tablenames = {"user_info","game_task","task_info","user_exchange","user_recommend"
 				,"user_task","request_params_log","user_login_log","user_vc_act","user_pay","sms_running","sms_validate"
 				,"pay_park"
-				,"live_info"};
+				,"live_info","message_info"};
 		String ip = "114.55.10.246";
 //		String ip = "127.0.0.1";
 		int port = 3306;
