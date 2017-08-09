@@ -11,5 +11,4 @@ target
 .project
 bin
 
-src/main/java/com/pyb/test/
 src/test/resources/
