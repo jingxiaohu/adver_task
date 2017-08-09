@@ -1,14 +1,18 @@
 #########返回字段说明
 |名称|描述|类型|
 |----|----|---|
-|ue_id|主键ID|long|
-|ue_nd|兑换提现表ND|String|
-|ui_id|用户主键ID|long|
-|ui_nd|用户ND|String|
-|ue_type|类型（0:提现1:电话充值2:充值Q币）|int|
-|ue_name|兑换或者提现名称|String|
-|ue_money|兑换或者提现金额（单位分）|int|
-|rest_money|兑换后剩余金额(单位分)|int|
-|ctime|创建时间|java.util.Date|
+|ue_id||long|
+|ui_id|用户ID|long|
+|ue_time|创建时间|long|
+|ue_time_str||String|
+|ue_state|兑换状态：0未兑换1已兑换|int|
+|us_id|兑换种类0：电话充值1：Q币|long|
+|us_name|兑换礼物名称|String|
+|ue_money|兑换消耗的牛币|long|
+|ue_desc|描述|String|
+|ue_zfb|支付宝|String|
+|ue_telephone|电话号码|String|
+|ue_cft|财付通|String|
+|ui_vc_old|用户兑换前的牛币总数|long|
 |note|备注|String|
 

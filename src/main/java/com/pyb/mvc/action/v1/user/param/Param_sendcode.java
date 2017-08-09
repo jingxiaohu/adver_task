@@ -1,8 +1,8 @@
 package com.pyb.mvc.action.v1.user.param;
 
 
+import apidoc.jxh.cn.TargetComment;
 import com.pyb.mvc.action.v1.param.BaseParam;
-import com.pyb.test.utl.TargetComment;
 /**
  * 用户发送验证码
  * @author jingxiaohu

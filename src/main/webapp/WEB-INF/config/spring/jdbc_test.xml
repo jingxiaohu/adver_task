@@ -23,9 +23,9 @@
 		<property name="locations">
 			<list>
 
-				 <value>file:WebContent/WEB-INF/config/properties/jdbc_test.properties</value> 
-				   <value>file:WebContent/WEB-INF/config/properties/application.properties</value>
-				   <value>file:WebContent/WEB-INF/config/properties/mongodb.properties</value>
+				 <value>file:src/main/webapp/WEB-INF/config/properties/jdbc_test.properties</value>
+				   <value>file:src/main/webapp/WEB-INF/config/properties/application.properties</value>
+				   <value>file:src/main/webapp/WEB-INF/config/properties/mongodb.properties</value>
 				 
 				 <!-- 
 				 

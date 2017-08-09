@@ -7,17 +7,21 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class User_exchange implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"ue_id","ue_nd","ui_id","ui_nd","ue_type","ue_name","ue_money","rest_money","ctime","note"};
+    //public static String[] carrays ={"ue_id","ui_id","ue_time","ue_time_str","ue_state","us_id","us_name","ue_money","ue_desc","ue_zfb","ue_telephone","ue_cft","ui_vc_old","note"};
 
-    public long ue_id;//bigint(20)    主键ID
-    public String ue_nd="";//varchar(80)    兑换提现表ND
-    public long ui_id;//bigint(20)    用户主键ID
-    public String ui_nd="";//varchar(80)    用户ND
-    public int ue_type;//int(11)    类型（0:提现1:电话充值2:充值Q币）
-    public String ue_name="";//varchar(80)    兑换或者提现名称
-    public int ue_money;//int(11)    兑换或者提现金额（单位分）
-    public int rest_money;//int(11)    兑换后剩余金额(单位分)
-    public java.util.Date ctime=new java.util.Date();//datetime    创建时间
+    public long ue_id;//bigint(20)    
+    public long ui_id;//bigint(20)    用户ID
+    public long ue_time;//bigint(20)    创建时间
+    public String ue_time_str="";//varchar(60)    
+    public int ue_state;//int(11)    兑换状态：0未兑换1已兑换
+    public long us_id;//bigint(20)    兑换种类0：电话充值1：Q币
+    public String us_name="";//varchar(100)    兑换礼物名称
+    public long ue_money;//bigint(20)    兑换消耗的牛币
+    public String ue_desc="";//varchar(200)    描述
+    public String ue_zfb="";//varchar(100)    支付宝
+    public String ue_telephone="";//varchar(11)    电话号码
+    public String ue_cft="";//varchar(30)    财付通
+    public long ui_vc_old;//bigint(20)    用户兑换前的牛币总数
     public String note="";//varchar(100)    备注
 
 
@@ -30,17 +34,6 @@ public class User_exchange implements Cloneable , Serializable{
         this.ue_id= value;
     }
 
-    public String getUe_nd(){
-        return ue_nd;
-    }
-
-    public void setUe_nd(String value){
-    	if(value == null){
-           value = "";
-        }
-        this.ue_nd= value;
-    }
-
     public long getUi_id(){
         return ui_id;
     }
@@ -49,61 +42,110 @@ public class User_exchange implements Cloneable , Serializable{
         this.ui_id= value;
     }
 
-    public String getUi_nd(){
-        return ui_nd;
+    public long getUe_time(){
+        return ue_time;
     }
 
-    public void setUi_nd(String value){
+    public void setUe_time(long value){
+        this.ue_time= value;
+    }
+
+    public String getUe_time_str(){
+        return ue_time_str;
+    }
+
+    public void setUe_time_str(String value){
     	if(value == null){
            value = "";
         }
-        this.ui_nd= value;
+        this.ue_time_str= value;
     }
 
-    public int getUe_type(){
-        return ue_type;
+    public int getUe_state(){
+        return ue_state;
     }
 
-    public void setUe_type(int value){
-        this.ue_type= value;
+    public void setUe_state(int value){
+        this.ue_state= value;
     }
 
-    public String getUe_name(){
-        return ue_name;
+    public long getUs_id(){
+        return us_id;
     }
 
-    public void setUe_name(String value){
+    public void setUs_id(long value){
+        this.us_id= value;
+    }
+
+    public String getUs_name(){
+        return us_name;
+    }
+
+    public void setUs_name(String value){
     	if(value == null){
            value = "";
         }
-        this.ue_name= value;
+        this.us_name= value;
     }
 
-    public int getUe_money(){
+    public long getUe_money(){
         return ue_money;
     }
 
-    public void setUe_money(int value){
+    public void setUe_money(long value){
         this.ue_money= value;
     }
 
-    public int getRest_money(){
-        return rest_money;
+    public String getUe_desc(){
+        return ue_desc;
     }
 
-    public void setRest_money(int value){
-        this.rest_money= value;
-    }
-
-    public java.util.Date getCtime(){
-        return ctime;
-    }
-
-    public void setCtime(java.util.Date value){
+    public void setUe_desc(String value){
     	if(value == null){
-           value = new java.util.Date();
+           value = "";
         }
-        this.ctime= value;
+        this.ue_desc= value;
+    }
+
+    public String getUe_zfb(){
+        return ue_zfb;
+    }
+
+    public void setUe_zfb(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.ue_zfb= value;
+    }
+
+    public String getUe_telephone(){
+        return ue_telephone;
+    }
+
+    public void setUe_telephone(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.ue_telephone= value;
+    }
+
+    public String getUe_cft(){
+        return ue_cft;
+    }
+
+    public void setUe_cft(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.ue_cft= value;
+    }
+
+    public long getUi_vc_old(){
+        return ui_vc_old;
+    }
+
+    public void setUi_vc_old(long value){
+        this.ui_vc_old= value;
     }
 
     public String getNote(){
@@ -119,42 +161,54 @@ public class User_exchange implements Cloneable , Serializable{
 
 
 
-    public static User_exchange newUser_exchange(long ue_id, String ue_nd, long ui_id, String ui_nd, int ue_type, String ue_name, int ue_money, int rest_money, java.util.Date ctime, String note) {
+    public static User_exchange newUser_exchange(long ue_id, long ui_id, long ue_time, String ue_time_str, int ue_state, long us_id, String us_name, long ue_money, String ue_desc, String ue_zfb, String ue_telephone, String ue_cft, long ui_vc_old, String note) {
         User_exchange ret = new User_exchange();
         ret.setUe_id(ue_id);
-        ret.setUe_nd(ue_nd);
         ret.setUi_id(ui_id);
-        ret.setUi_nd(ui_nd);
-        ret.setUe_type(ue_type);
-        ret.setUe_name(ue_name);
+        ret.setUe_time(ue_time);
+        ret.setUe_time_str(ue_time_str);
+        ret.setUe_state(ue_state);
+        ret.setUs_id(us_id);
+        ret.setUs_name(us_name);
         ret.setUe_money(ue_money);
-        ret.setRest_money(rest_money);
-        ret.setCtime(ctime);
+        ret.setUe_desc(ue_desc);
+        ret.setUe_zfb(ue_zfb);
+        ret.setUe_telephone(ue_telephone);
+        ret.setUe_cft(ue_cft);
+        ret.setUi_vc_old(ui_vc_old);
         ret.setNote(note);
         return ret;    
     }
 
     public void assignment(User_exchange user_exchange) {
         long ue_id = user_exchange.getUe_id();
-        String ue_nd = user_exchange.getUe_nd();
         long ui_id = user_exchange.getUi_id();
-        String ui_nd = user_exchange.getUi_nd();
-        int ue_type = user_exchange.getUe_type();
-        String ue_name = user_exchange.getUe_name();
-        int ue_money = user_exchange.getUe_money();
-        int rest_money = user_exchange.getRest_money();
-        java.util.Date ctime = user_exchange.getCtime();
+        long ue_time = user_exchange.getUe_time();
+        String ue_time_str = user_exchange.getUe_time_str();
+        int ue_state = user_exchange.getUe_state();
+        long us_id = user_exchange.getUs_id();
+        String us_name = user_exchange.getUs_name();
+        long ue_money = user_exchange.getUe_money();
+        String ue_desc = user_exchange.getUe_desc();
+        String ue_zfb = user_exchange.getUe_zfb();
+        String ue_telephone = user_exchange.getUe_telephone();
+        String ue_cft = user_exchange.getUe_cft();
+        long ui_vc_old = user_exchange.getUi_vc_old();
         String note = user_exchange.getNote();
 
         this.setUe_id(ue_id);
-        this.setUe_nd(ue_nd);
         this.setUi_id(ui_id);
-        this.setUi_nd(ui_nd);
-        this.setUe_type(ue_type);
-        this.setUe_name(ue_name);
+        this.setUe_time(ue_time);
+        this.setUe_time_str(ue_time_str);
+        this.setUe_state(ue_state);
+        this.setUs_id(us_id);
+        this.setUs_name(us_name);
         this.setUe_money(ue_money);
-        this.setRest_money(rest_money);
-        this.setCtime(ctime);
+        this.setUe_desc(ue_desc);
+        this.setUe_zfb(ue_zfb);
+        this.setUe_telephone(ue_telephone);
+        this.setUe_cft(ue_cft);
+        this.setUi_vc_old(ui_vc_old);
         this.setNote(note);
 
     }
@@ -162,14 +216,18 @@ public class User_exchange implements Cloneable , Serializable{
     @SuppressWarnings("unused")
     public static void getUser_exchange(User_exchange user_exchange ){
         long ue_id = user_exchange.getUe_id();
-        String ue_nd = user_exchange.getUe_nd();
         long ui_id = user_exchange.getUi_id();
-        String ui_nd = user_exchange.getUi_nd();
-        int ue_type = user_exchange.getUe_type();
-        String ue_name = user_exchange.getUe_name();
-        int ue_money = user_exchange.getUe_money();
-        int rest_money = user_exchange.getRest_money();
-        java.util.Date ctime = user_exchange.getCtime();
+        long ue_time = user_exchange.getUe_time();
+        String ue_time_str = user_exchange.getUe_time_str();
+        int ue_state = user_exchange.getUe_state();
+        long us_id = user_exchange.getUs_id();
+        String us_name = user_exchange.getUs_name();
+        long ue_money = user_exchange.getUe_money();
+        String ue_desc = user_exchange.getUe_desc();
+        String ue_zfb = user_exchange.getUe_zfb();
+        String ue_telephone = user_exchange.getUe_telephone();
+        String ue_cft = user_exchange.getUe_cft();
+        long ui_vc_old = user_exchange.getUi_vc_old();
         String note = user_exchange.getNote();
     }
 
@@ -179,26 +237,34 @@ public class User_exchange implements Cloneable , Serializable{
 
     public static Map<String,Object> toEnMap(User_exchange user_exchange){
         long ue_id = user_exchange.getUe_id();
-        String ue_nd = user_exchange.getUe_nd();
         long ui_id = user_exchange.getUi_id();
-        String ui_nd = user_exchange.getUi_nd();
-        int ue_type = user_exchange.getUe_type();
-        String ue_name = user_exchange.getUe_name();
-        int ue_money = user_exchange.getUe_money();
-        int rest_money = user_exchange.getRest_money();
-        java.util.Date ctime = user_exchange.getCtime();
+        long ue_time = user_exchange.getUe_time();
+        String ue_time_str = user_exchange.getUe_time_str();
+        int ue_state = user_exchange.getUe_state();
+        long us_id = user_exchange.getUs_id();
+        String us_name = user_exchange.getUs_name();
+        long ue_money = user_exchange.getUe_money();
+        String ue_desc = user_exchange.getUe_desc();
+        String ue_zfb = user_exchange.getUe_zfb();
+        String ue_telephone = user_exchange.getUe_telephone();
+        String ue_cft = user_exchange.getUe_cft();
+        long ui_vc_old = user_exchange.getUi_vc_old();
         String note = user_exchange.getNote();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ue_id",ue_id);
-        _ret.put("ue_nd",ue_nd);
         _ret.put("ui_id",ui_id);
-        _ret.put("ui_nd",ui_nd);
-        _ret.put("ue_type",ue_type);
-        _ret.put("ue_name",ue_name);
+        _ret.put("ue_time",ue_time);
+        _ret.put("ue_time_str",ue_time_str);
+        _ret.put("ue_state",ue_state);
+        _ret.put("us_id",us_id);
+        _ret.put("us_name",us_name);
         _ret.put("ue_money",ue_money);
-        _ret.put("rest_money",rest_money);
-        _ret.put("ctime",ctime);
+        _ret.put("ue_desc",ue_desc);
+        _ret.put("ue_zfb",ue_zfb);
+        _ret.put("ue_telephone",ue_telephone);
+        _ret.put("ue_cft",ue_cft);
+        _ret.put("ui_vc_old",ui_vc_old);
         _ret.put("note",note);
         return _ret;
     }

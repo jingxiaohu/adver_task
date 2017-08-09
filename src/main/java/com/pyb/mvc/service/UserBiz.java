@@ -1,14 +1,5 @@
 package com.pyb.mvc.service;
 
-import java.net.URLDecoder;
-import java.util.Date;
-
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.pyb.DataSource.DynamicDataSourceHolder;
 import com.pyb.DataSource.TargetDataSource;
 import com.pyb.bean.ReturnDataNew;
@@ -18,6 +9,14 @@ import com.pyb.constants.Constants;
 import com.pyb.mvc.service.common.asyn.UserAsyn;
 import com.pyb.util.FileUtil;
 import com.pyb.util.RequestUtil;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.net.URLDecoder;
+import java.util.Date;
 
 /**
  * 用户信息管理
@@ -35,9 +34,6 @@ public class UserBiz extends BaseBiz {
    * 2.1.4. 用户注册
    *
    * @param verify_list :跟随验证码一起生产的 MD5验证串
-   * @param repassword return { "errorno": "0", "errormsg": "注册成功", "data": { "username":
-   * "15882345448", "uid": "118", "password": "14e1b600b1fd579f47433b88e8d85291", "niname":
-   * "xdfzgdmx118", "toppic": "" }
    */
   public void ReturnUserRegister(ReturnDataNew returnData, int dtype, String telephone,
       String verify_code, String verify_list, String vclass, String password,Integer reg_type) {

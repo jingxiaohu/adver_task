@@ -10,21 +10,22 @@ import com.highbeauty.sql.spring.builder.ABuilder;
 *
  */
 public class JxhCoderAuto {
-	public static void main(String[] args) throws Throwable { 
+	public static void main(String[] args) throws Throwable {
 		boolean src = true;
 		boolean is_maven = true;
 		String pkg = "com.pyb.";
 		String moduleName="";
 		String[] tablenames = {"user_info","game_task","task_info","user_exchange","user_recommend"
 				,"user_task","request_params_log","user_login_log","user_vc_act","user_pay","sms_running","sms_validate"
-				,"pay_park"};
+				,"pay_park"
+				,"live_info"};
 		String ip = "114.55.10.246";
 //		String ip = "127.0.0.1";
 		int port = 3306;
 		String user = "root";
 		String password = "jxh@@jingling123";
 //		String password = "root";
-		String databaseName = "wetask";
+		String databaseName = "wypyb";
 		ABuilder.AutoCoder(is_maven,src,moduleName, pkg, tablenames, ip, port, user, password, databaseName);
 	}
 

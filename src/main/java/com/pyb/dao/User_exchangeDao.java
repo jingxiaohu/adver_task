@@ -41,9 +41,9 @@ public class User_exchangeDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"ue_id","ue_nd","ui_id","ui_nd","ue_type","ue_name","ue_money","rest_money","ctime","note"};
-    private  String coulmns ="ue_id,ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note";
-    private  String coulmns2 ="ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note";
+    private  String[] carrays ={"ue_id","ui_id","ue_time","ue_time_str","ue_state","us_id","us_name","ue_money","ue_desc","ue_zfb","ue_telephone","ue_cft","ui_vc_old","note"};
+    private  String coulmns ="ue_id,ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note";
+    private  String coulmns2 ="ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class User_exchangeDao extends BaseDao{
     public int insert(User_exchange bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note) VALUES (:ue_nd,:ui_id,:ui_nd,:ue_type,:ue_name,:ue_money,:rest_money,:ctime,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note) VALUES (:ui_id,:ue_time,:ue_time_str,:ue_state,:us_id,:us_name,:ue_money,:ue_desc,:ue_zfb,:ue_telephone,:ue_cft,:ui_vc_old,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class User_exchangeDao extends BaseDao{
     public int insert_primarykey(User_exchange bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ue_id,ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note) VALUES (:ue_id,:ue_nd,:ui_id,:ui_nd,:ue_type,:ue_name,:ue_money,:rest_money,:ctime,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (ue_id,ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note) VALUES (:ue_id,:ui_id,:ue_time,:ue_time_str,:ue_state,:us_id,:us_name,:ue_money,:ue_desc,:ue_zfb,:ue_telephone,:ue_cft,:ui_vc_old,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class User_exchangeDao extends BaseDao{
     public int[] insert(final List<User_exchange> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note) VALUES (?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -115,15 +115,19 @@ public class User_exchangeDao extends BaseDao{
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     User_exchange bean = beans.get(i);
-                    ps.setString(1, bean.ue_nd);
-                    ps.setLong(2, bean.ui_id);
-                    ps.setString(3, bean.ui_nd);
-                    ps.setInt(4, bean.ue_type);
-                    ps.setString(5, bean.ue_name);
-                    ps.setInt(6, bean.ue_money);
-                    ps.setInt(7, bean.rest_money);
-                    ps.setTimestamp(8, new Timestamp(bean.ctime.getTime()));
-                    ps.setString(9, bean.note);
+                    ps.setLong(1, bean.ui_id);
+                    ps.setLong(2, bean.ue_time);
+                    ps.setString(3, bean.ue_time_str);
+                    ps.setInt(4, bean.ue_state);
+                    ps.setLong(5, bean.us_id);
+                    ps.setString(6, bean.us_name);
+                    ps.setLong(7, bean.ue_money);
+                    ps.setString(8, bean.ue_desc);
+                    ps.setString(9, bean.ue_zfb);
+                    ps.setString(10, bean.ue_telephone);
+                    ps.setString(11, bean.ue_cft);
+                    ps.setLong(12, bean.ui_vc_old);
+                    ps.setString(13, bean.note);
                 }
             });
         }catch(Exception e){
@@ -142,7 +146,7 @@ public class User_exchangeDao extends BaseDao{
     public List<User_exchange> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ue_id,ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note FROM "+TABLENAME2+" ORDER BY ue_id";
+            sql = "SELECT ue_id,ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note FROM "+TABLENAME2+" ORDER BY ue_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_exchange>(User_exchange.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -160,7 +164,7 @@ public class User_exchangeDao extends BaseDao{
     public List<User_exchange> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ue_id,ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note FROM "+TABLENAME2+" ORDER BY ue_id DESC LIMIT "+num+"" ;
+            sql = "SELECT ue_id,ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note FROM "+TABLENAME2+" ORDER BY ue_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_exchange>(User_exchange.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -178,7 +182,7 @@ public class User_exchangeDao extends BaseDao{
     public List<User_exchange> selectGtKey(long ue_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ue_id,ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note FROM "+TABLENAME2+" WHERE ue_id>:ue_id";
+            sql="SELECT ue_id,ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note FROM "+TABLENAME2+" WHERE ue_id>:ue_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ue_id", ue_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<User_exchange>(User_exchange.class));
@@ -198,7 +202,7 @@ public class User_exchangeDao extends BaseDao{
     public User_exchange selectByKey(long ue_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ue_id,ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note FROM "+TABLENAME2+" WHERE ue_id=:ue_id";
+            sql="SELECT ue_id,ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note FROM "+TABLENAME2+" WHERE ue_id=:ue_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ue_id", ue_id);
             List<User_exchange> list =  _np.query(sql, param, new BeanPropertyRowMapper<User_exchange>(User_exchange.class));
@@ -237,7 +241,7 @@ public class User_exchangeDao extends BaseDao{
     public List<User_exchange> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT ue_id,ue_nd,ui_id,ui_nd,ue_type,ue_name,ue_money,rest_money,ctime,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT ue_id,ui_id,ue_time,ue_time_str,ue_state,us_id,us_name,ue_money,ue_desc,ue_zfb,ue_telephone,ue_cft,ui_vc_old,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<User_exchange>(User_exchange.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -255,7 +259,7 @@ public class User_exchangeDao extends BaseDao{
     public int updateByKey(User_exchange bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET ue_nd=:ue_nd,ui_id=:ui_id,ui_nd=:ui_nd,ue_type=:ue_type,ue_name=:ue_name,ue_money=:ue_money,rest_money=:rest_money,ctime=:ctime,note=:note WHERE ue_id=:ue_id";
+            sql = "UPDATE "+TABLENAME2+" SET ui_id=:ui_id,ue_time=:ue_time,ue_time_str=:ue_time_str,ue_state=:ue_state,us_id=:us_id,us_name=:us_name,ue_money=:ue_money,ue_desc=:ue_desc,ue_zfb=:ue_zfb,ue_telephone=:ue_telephone,ue_cft=:ue_cft,ui_vc_old=:ui_vc_old,note=:note WHERE ue_id=:ue_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -273,7 +277,7 @@ public class User_exchangeDao extends BaseDao{
     public int[] updateByKey (final List<User_exchange> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET ue_nd=?,ui_id=?,ui_nd=?,ue_type=?,ue_name=?,ue_money=?,rest_money=?,ctime=?,note=? WHERE ue_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET ui_id=?,ue_time=?,ue_time_str=?,ue_state=?,us_id=?,us_name=?,ue_money=?,ue_desc=?,ue_zfb=?,ue_telephone=?,ue_cft=?,ui_vc_old=?,note=? WHERE ue_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -282,16 +286,20 @@ public class User_exchangeDao extends BaseDao{
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     User_exchange bean = beans.get(i);
-                    ps.setString(1, bean.ue_nd);
-                    ps.setLong(2, bean.ui_id);
-                    ps.setString(3, bean.ui_nd);
-                    ps.setInt(4, bean.ue_type);
-                    ps.setString(5, bean.ue_name);
-                    ps.setInt(6, bean.ue_money);
-                    ps.setInt(7, bean.rest_money);
-                    ps.setTimestamp(8, new Timestamp(bean.ctime.getTime()));
-                    ps.setString(9, bean.note);
-                    ps.setLong(10, bean.ue_id);
+                    ps.setLong(1, bean.ui_id);
+                    ps.setLong(2, bean.ue_time);
+                    ps.setString(3, bean.ue_time_str);
+                    ps.setInt(4, bean.ue_state);
+                    ps.setLong(5, bean.us_id);
+                    ps.setString(6, bean.us_name);
+                    ps.setLong(7, bean.ue_money);
+                    ps.setString(8, bean.ue_desc);
+                    ps.setString(9, bean.ue_zfb);
+                    ps.setString(10, bean.ue_telephone);
+                    ps.setString(11, bean.ue_cft);
+                    ps.setLong(12, bean.ui_vc_old);
+                    ps.setString(13, bean.note);
+                    ps.setLong(14, bean.ue_id);
                 }
             });
         }catch(Exception e){
@@ -350,15 +358,19 @@ public class User_exchangeDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`ue_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    主键ID'," +
-                 "	`ue_nd`  VARCHAR(80) COMMENT '//varchar(80)    兑换提现表ND'," +
-                 "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    用户主键ID'," +
-                 "	`ui_nd`  VARCHAR(80) COMMENT '//varchar(80)    用户ND'," +
-                 "	`ue_type`  INT(11) COMMENT '//int(11)    类型（0:提现1:电话充值2:充值Q币）'," +
-                 "	`ue_name`  VARCHAR(80) COMMENT '//varchar(80)    兑换或者提现名称'," +
-                 "	`ue_money`  INT(11) COMMENT '//int(11)    兑换或者提现金额（单位分）'," +
-                 "	`rest_money`  INT(11) COMMENT '//int(11)    兑换后剩余金额(单位分)'," +
-                 "	`ctime`  DATETIME COMMENT '//datetime    创建时间'," +
+                 "	`ue_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
+                 "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    用户ID'," +
+                 "	`ue_time`  BIGINT(20) COMMENT '//bigint(20)    创建时间'," +
+                 "	`ue_time_str`  VARCHAR(60) COMMENT '//varchar(60)    '," +
+                 "	`ue_state`  INT(11) COMMENT '//int(11)    兑换状态：0未兑换1已兑换'," +
+                 "	`us_id`  BIGINT(20) COMMENT '//bigint(20)    兑换种类0：电话充值1：Q币'," +
+                 "	`us_name`  VARCHAR(100) COMMENT '//varchar(100)    兑换礼物名称'," +
+                 "	`ue_money`  BIGINT(20) COMMENT '//bigint(20)    兑换消耗的牛币'," +
+                 "	`ue_desc`  VARCHAR(200) COMMENT '//varchar(200)    描述'," +
+                 "	`ue_zfb`  VARCHAR(100) COMMENT '//varchar(100)    支付宝'," +
+                 "	`ue_telephone`  VARCHAR(11) COMMENT '//varchar(11)    电话号码'," +
+                 "	`ue_cft`  VARCHAR(30) COMMENT '//varchar(30)    财付通'," +
+                 "	`ui_vc_old`  BIGINT(20) COMMENT '//bigint(20)    用户兑换前的牛币总数'," +
                  "	`note`  VARCHAR(100) COMMENT '//varchar(100)    备注'," +
                  "	PRIMARY KEY (`ue_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";

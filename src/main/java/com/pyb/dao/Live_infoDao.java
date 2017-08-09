@@ -11,18 +11,18 @@ import com.pyb.bean.*;
 import org.springframework.stereotype.Repository;
 import com.highbeauty.text.EasyTemplate;
 
-//user_recommend
+//live_info
 
-@Repository("user_recommendDao")
-public class User_recommendDao extends BaseDao{
+@Repository("live_infoDao")
+public class Live_infoDao extends BaseDao{
 
-    Logger log = LoggerFactory.getLogger(User_recommendDao.class);
+    Logger log = LoggerFactory.getLogger(Live_infoDao.class);
 
 
 
-    private  String TABLE = "user_recommend";
+    private  String TABLE = "live_info";
 
-    private  String TABLENAME = "user_recommend";
+    private  String TABLENAME = "live_info";
 
     public  String getTABLE(){
         return  TABLE;
@@ -41,9 +41,9 @@ public class User_recommendDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"ur_id","ur_time","ur_time_str","ui_id","ur_friend_id","ur_desc"};
-    private  String coulmns ="ur_id,ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc";
-    private  String coulmns2 ="ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc";
+    private  String[] carrays ={"mi_id","ui_id","mi_title","mi_content","mi_type","mi_image","mi_flag","mi_day","mi_createtime","mi_area","ci_id","title_md5","uptime","note"};
+    private  String coulmns ="mi_id,ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note";
+    private  String coulmns2 ="ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -58,15 +58,15 @@ public class User_recommendDao extends BaseDao{
     }
 
     //添加数据
-    public int insert(User_recommend bean) throws SQLException{
+    public int insert(Live_info bean) throws SQLException{
         return insert(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert(User_recommend bean, String TABLENAME2) throws SQLException{
+    public int insert(Live_info bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc) VALUES (:ur_time,:ur_time_str,:ui_id,:ur_friend_id,:ur_desc)";
+            sql = "INSERT INTO "+TABLENAME2+" (ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note) VALUES (:ui_id,:mi_title,:mi_content,:mi_type,:mi_image,:mi_flag,:mi_day,:mi_createtime,:mi_area,:ci_id,:title_md5,:uptime,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -79,15 +79,15 @@ public class User_recommendDao extends BaseDao{
     }
 
     //添加数据
-    public int insert_primarykey(User_recommend bean) throws SQLException{
+    public int insert_primarykey(Live_info bean) throws SQLException{
         return insert_primarykey(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert_primarykey(User_recommend bean, String TABLENAME2) throws SQLException{
+    public int insert_primarykey(Live_info bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ur_id,ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc) VALUES (:ur_id,:ur_time,:ur_time_str,:ui_id,:ur_friend_id,:ur_desc)";
+            sql = "INSERT INTO "+TABLENAME2+" (mi_id,ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note) VALUES (:mi_id,:ui_id,:mi_title,:mi_content,:mi_type,:mi_image,:mi_flag,:mi_day,:mi_createtime,:mi_area,:ci_id,:title_md5,:uptime,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -98,15 +98,15 @@ public class User_recommendDao extends BaseDao{
     }
 
     //批量添加数据
-    public int[] insert(List<User_recommend> beans) throws SQLException{
+    public int[] insert(List<Live_info> beans) throws SQLException{
         return insert(beans, TABLENAME);
     }
 
     //批量添加数据
-    public int[] insert(final List<User_recommend> beans, String TABLENAME2) throws SQLException{
+    public int[] insert(final List<Live_info> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc) VALUES (?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -114,12 +114,20 @@ public class User_recommendDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    User_recommend bean = beans.get(i);
-                    ps.setLong(1, bean.ur_time);
-                    ps.setString(2, bean.ur_time_str);
-                    ps.setLong(3, bean.ui_id);
-                    ps.setLong(4, bean.ur_friend_id);
-                    ps.setString(5, bean.ur_desc);
+                    Live_info bean = beans.get(i);
+                    ps.setLong(1, bean.ui_id);
+                    ps.setString(2, bean.mi_title);
+                    ps.setString(3, bean.mi_content);
+                    ps.setString(4, bean.mi_type);
+                    ps.setString(5, bean.mi_image);
+                    ps.setInt(6, bean.mi_flag);
+                    ps.setString(7, bean.mi_day);
+                    ps.setTimestamp(8, new Timestamp(bean.mi_createtime.getTime()));
+                    ps.setInt(9, bean.mi_area);
+                    ps.setLong(10, bean.ci_id);
+                    ps.setString(11, bean.title_md5);
+                    ps.setString(12, bean.uptime);
+                    ps.setString(13, bean.note);
                 }
             });
         }catch(Exception e){
@@ -130,78 +138,78 @@ public class User_recommendDao extends BaseDao{
     }
 
     //查询所有数据
-    public List<User_recommend> selectAll() {
+    public List<Live_info> selectAll() {
         return selectAll(TABLENAME);
     }
 
     //查询所有数据
-    public List<User_recommend> selectAll(String TABLENAME2) {
+    public List<Live_info> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ur_id,ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc FROM "+TABLENAME2+" ORDER BY ur_id";
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_recommend>(User_recommend.class));
+            sql = "SELECT mi_id,ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note FROM "+TABLENAME2+" ORDER BY mi_id";
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Live_info>(Live_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectAll", e);
-            return new ArrayList<User_recommend>();
+            return new ArrayList<Live_info>();
         }
     }
 
     //查询最新数据
-    public List<User_recommend> selectLast(int num) {
+    public List<Live_info> selectLast(int num) {
         return selectLast(num, TABLENAME);
     }
 
     //查询所有数据
-    public List<User_recommend> selectLast(int num ,String TABLENAME2) {
+    public List<Live_info> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ur_id,ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc FROM "+TABLENAME2+" ORDER BY ur_id DESC LIMIT "+num+"" ;
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_recommend>(User_recommend.class));
+            sql = "SELECT mi_id,ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note FROM "+TABLENAME2+" ORDER BY mi_id DESC LIMIT "+num+"" ;
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Live_info>(Live_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectLast", e);
-            return new ArrayList<User_recommend>();
+            return new ArrayList<Live_info>();
         }
     }
 
     //根据主键查询
-    public List<User_recommend> selectGtKey(long ur_id) {
-        return selectGtKey(ur_id, TABLENAME);
+    public List<Live_info> selectGtKey(long mi_id) {
+        return selectGtKey(mi_id, TABLENAME);
     }
 
     //根据主键查询
-    public List<User_recommend> selectGtKey(long ur_id, String TABLENAME2) {
+    public List<Live_info> selectGtKey(long mi_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ur_id,ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc FROM "+TABLENAME2+" WHERE ur_id>:ur_id";
+            sql="SELECT mi_id,ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note FROM "+TABLENAME2+" WHERE mi_id>:mi_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("ur_id", ur_id);
-            return _np.query(sql, param, new BeanPropertyRowMapper<User_recommend>(User_recommend.class));
+            param.put("mi_id", mi_id);
+            return _np.query(sql, param, new BeanPropertyRowMapper<Live_info>(Live_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectGtKey", e);
-            return new ArrayList<User_recommend>();
+            return new ArrayList<Live_info>();
         }
     }
 
     //根据主键查询
-    public User_recommend selectByKey(long ur_id) {
-        return selectByKey(ur_id, TABLENAME);
+    public Live_info selectByKey(long mi_id) {
+        return selectByKey(mi_id, TABLENAME);
     }
 
     //根据主键查询
-    public User_recommend selectByKey(long ur_id, String TABLENAME2) {
+    public Live_info selectByKey(long mi_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ur_id,ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc FROM "+TABLENAME2+" WHERE ur_id=:ur_id";
+            sql="SELECT mi_id,ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note FROM "+TABLENAME2+" WHERE mi_id=:mi_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("ur_id", ur_id);
-            List<User_recommend> list =  _np.query(sql, param, new BeanPropertyRowMapper<User_recommend>(User_recommend.class));
+            param.put("mi_id", mi_id);
+            List<Live_info> list =  _np.query(sql, param, new BeanPropertyRowMapper<Live_info>(Live_info.class));
             return (list == null || list.size() == 0) ? null : list.get(0);
         }catch(Exception e){
             //createTable(TABLENAME2);
-            log.error("selectByKey ur_id="+ur_id,e);
+            log.error("selectByKey mi_id="+mi_id,e);
             return null;
         }
     }
@@ -225,33 +233,33 @@ public class User_recommendDao extends BaseDao{
     }
 
     //分页查询
-    public List<User_recommend> selectByPage(int begin, int num) {
+    public List<Live_info> selectByPage(int begin, int num) {
         return selectByPage(begin, num, TABLENAME);
     }
 
     //分页查询
-    public List<User_recommend> selectByPage(int begin, int num, String TABLENAME2) {
+    public List<Live_info> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT ur_id,ur_time,ur_time_str,ui_id,ur_friend_id,ur_desc FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
-            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<User_recommend>(User_recommend.class));
+            sql = "SELECT mi_id,ui_id,mi_title,mi_content,mi_type,mi_image,mi_flag,mi_day,mi_createtime,mi_area,ci_id,title_md5,uptime,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Live_info>(Live_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectByPage",e);
-            return new ArrayList<User_recommend>();
+            return new ArrayList<Live_info>();
         }
     }
 
     //修改数据
-    public int updateByKey(User_recommend bean) {
+    public int updateByKey(Live_info bean) {
         return updateByKey(bean, TABLENAME);
     }
 
     //修改数据
-    public int updateByKey(User_recommend bean, String TABLENAME2) {
+    public int updateByKey(Live_info bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET ur_time=:ur_time,ur_time_str=:ur_time_str,ui_id=:ui_id,ur_friend_id=:ur_friend_id,ur_desc=:ur_desc WHERE ur_id=:ur_id";
+            sql = "UPDATE "+TABLENAME2+" SET ui_id=:ui_id,mi_title=:mi_title,mi_content=:mi_content,mi_type=:mi_type,mi_image=:mi_image,mi_flag=:mi_flag,mi_day=:mi_day,mi_createtime=:mi_createtime,mi_area=:mi_area,ci_id=:ci_id,title_md5=:title_md5,uptime=:uptime,note=:note WHERE mi_id=:mi_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -261,15 +269,15 @@ public class User_recommendDao extends BaseDao{
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<User_recommend> beans) throws SQLException{
+    public int[] updateByKey (final List<Live_info> beans) throws SQLException{
         return updateByKey(beans, TABLENAME);
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<User_recommend> beans, String TABLENAME2) throws SQLException{
+    public int[] updateByKey (final List<Live_info> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET ur_time=?,ur_time_str=?,ui_id=?,ur_friend_id=?,ur_desc=? WHERE ur_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET ui_id=?,mi_title=?,mi_content=?,mi_type=?,mi_image=?,mi_flag=?,mi_day=?,mi_createtime=?,mi_area=?,ci_id=?,title_md5=?,uptime=?,note=? WHERE mi_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -277,13 +285,21 @@ public class User_recommendDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    User_recommend bean = beans.get(i);
-                    ps.setLong(1, bean.ur_time);
-                    ps.setString(2, bean.ur_time_str);
-                    ps.setLong(3, bean.ui_id);
-                    ps.setLong(4, bean.ur_friend_id);
-                    ps.setString(5, bean.ur_desc);
-                    ps.setLong(6, bean.ur_id);
+                    Live_info bean = beans.get(i);
+                    ps.setLong(1, bean.ui_id);
+                    ps.setString(2, bean.mi_title);
+                    ps.setString(3, bean.mi_content);
+                    ps.setString(4, bean.mi_type);
+                    ps.setString(5, bean.mi_image);
+                    ps.setInt(6, bean.mi_flag);
+                    ps.setString(7, bean.mi_day);
+                    ps.setTimestamp(8, new Timestamp(bean.mi_createtime.getTime()));
+                    ps.setInt(9, bean.mi_area);
+                    ps.setLong(10, bean.ci_id);
+                    ps.setString(11, bean.title_md5);
+                    ps.setString(12, bean.uptime);
+                    ps.setString(13, bean.note);
+                    ps.setLong(14, bean.mi_id);
                 }
             });
         }catch(Exception e){
@@ -293,17 +309,17 @@ public class User_recommendDao extends BaseDao{
     }
 
     //删除单条数据
-    public int deleteByKey(long ur_id) throws SQLException{
-        return deleteByKey(ur_id, TABLENAME);
+    public int deleteByKey(long mi_id) throws SQLException{
+        return deleteByKey(mi_id, TABLENAME);
     }
 
     //删除单条数据
-    public int deleteByKey(long ur_id, String TABLENAME2) throws SQLException{
+    public int deleteByKey(long mi_id, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE ur_id=:ur_id";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE mi_id=:mi_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("ur_id", ur_id);
+            param.put("mi_id", mi_id);
             return _np.update(sql, param);
         }catch(Exception e){
             log.error("deleteByKey", e);
@@ -320,7 +336,7 @@ public class User_recommendDao extends BaseDao{
     public int[] deleteByKey(final long[] keys, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE ur_id=?";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE mi_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -342,13 +358,21 @@ public class User_recommendDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`ur_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
-                 "	`ur_time`  BIGINT(20) COMMENT '//bigint(20)    '," +
-                 "	`ur_time_str`  VARCHAR(60) COMMENT '//varchar(60)    '," +
-                 "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    '," +
-                 "	`ur_friend_id`  BIGINT(20) COMMENT '//bigint(20)    '," +
-                 "	`ur_desc`  VARCHAR(100) COMMENT '//varchar(100)    '," +
-                 "	PRIMARY KEY (`ur_id`)" +
+                 "	`mi_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
+                 "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    创建用户'," +
+                 "	`mi_title`  TINYTEXT COMMENT '//varchar(300)    消息标题'," +
+                 "	`mi_content`  TEXT COMMENT '//text    消息内容'," +
+                 "	`mi_type`  VARCHAR(10) COMMENT '//varchar(10)    标记消息类型0:原创1:评论'," +
+                 "	`mi_image`  VARCHAR(250) COMMENT '//varchar(250)    消息图片'," +
+                 "	`mi_flag`  INT(11) COMMENT '//int(11)    信息来源的标记0Web1Android2Iphone3PC客服端4新浪5腾讯6人人'," +
+                 "	`mi_day`  VARCHAR(30) COMMENT '//varchar(30)    年月日：2016-03-01'," +
+                 "	`mi_createtime`  DATETIME COMMENT '//datetime    创建时间'," +
+                 "	`mi_area`  INT(11) COMMENT '//int(11)    帖子发送目标地方：0自己看1：广播'," +
+                 "	`ci_id`  BIGINT(20) COMMENT '//bigint(20)    房间号'," +
+                 "	`title_md5`  VARCHAR(200) COMMENT '//varchar(200)    标题的MD5'," +
+                 "	`uptime`  VARCHAR(60) COMMENT '//varchar(60)    抓取的更新时间'," +
+                 "	`note`  TINYTEXT COMMENT '//varchar(255)    '," +
+                 "	PRIMARY KEY (`mi_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();
             params.put("TABLENAME", TABLENAME2);
