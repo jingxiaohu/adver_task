@@ -1,10 +1,9 @@
 package com.pyb.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.pyb.bean.User_info;
+import com.pyb.bean.User_info_new;
 import com.pyb.jedis.pool.JedisUserInfoPool;
 import com.pyb.util.RequestUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -316,7 +315,7 @@ public class UserRedisService {
   /**
    * 更新用户的基本信息
    */
-  public void updateUserInfo(User_info uInfo) {
+  public void updateUserInfo(User_info_new uInfo) {
     Jedis redis = null;
     try {
       String key = "ut_" + uInfo.getUi_id();

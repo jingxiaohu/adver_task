@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class DaoFactory{
 
 @Autowired
-protected User_infoDao user_infoDao;
+protected User_info_newDao user_info_newDao;
 @Autowired
 protected Game_taskDao game_taskDao;
 @Autowired
@@ -43,8 +43,8 @@ protected Message_infoDao message_infoDao;
 protected Channel_infoDao channel_infoDao;
 
 /*******************************下面是GET方法**************************************/
-public User_infoDao getUser_infoDao() {
-	return user_infoDao;
+public User_info_newDao getUser_info_newDao() {
+	return user_info_newDao;
 }
 public Game_taskDao getGame_taskDao() {
 	return game_taskDao;

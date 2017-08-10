@@ -2,18 +2,19 @@ package com.pyb.mvc.service;
 
 import com.pyb.bean.Pay_park;
 import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.User_info;
+import com.pyb.bean.User_info_new;
 import com.pyb.bean.User_pay;
 import com.pyb.exception.QzException;
 import com.pyb.mvc.service.common.PayParkPB;
 import com.pyb.util.RequestUtil;
-import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class AppUserPayBiz extends BaseBiz {
@@ -42,7 +43,7 @@ public class AppUserPayBiz extends BaseBiz {
       String tel = "";
       if (system_type != 4) {
         //PDA系统除开
-        User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+        User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
         if (userinfo == null) {
           //用户不存在
           returnData.setReturnData(errorcode_param, "用户不存在", "");
@@ -97,7 +98,7 @@ public class AppUserPayBiz extends BaseBiz {
       String tel = "";
       if (system_type != 4) {
         //PDA系统除开
-        User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+        User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
         if (userinfo == null) {
           //用户不存在
           returnData.setReturnData(errorcode_param, "用户不存在", "");

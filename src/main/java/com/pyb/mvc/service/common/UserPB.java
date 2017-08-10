@@ -1,15 +1,14 @@
 package com.pyb.mvc.service.common;
 
-import java.sql.SQLException;
-import java.util.Date;
-
-import org.springframework.stereotype.Service;
-
 import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.User_info;
+import com.pyb.bean.User_info_new;
 import com.pyb.bean.User_vc_act;
 import com.pyb.exception.QzException;
 import com.pyb.mvc.service.BaseBiz;
+import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
+import java.util.Date;
 
 /**
  * 用户公用方法
@@ -26,9 +25,9 @@ public class UserPB extends BaseBiz{
 	 * @param money
 	 * @return
 	 */
-	public User_info updateUserMoney(long ui_id,String ui_nd,int type,int money){
+	public User_info_new updateUserMoney(long ui_id, String ui_nd, int type, int money){
 		try {
-			User_info user_info = daoFactory.getUser_infoDao().selectByKey(ui_id);
+			User_info_new user_info = daoFactory.getUser_info_newDao().selectByKey(ui_id);
 			if(user_info == null || money < 1){
 				return null;
 			}
@@ -43,7 +42,7 @@ public class UserPB extends BaseBiz{
 					return null;
 				}
 			}
-			int count = daoFactory.getUser_infoDao().updateByKey(user_info);
+			int count = daoFactory.getUser_info_newDao().updateByKey(user_info);
 			if(count < 1){
 				return null;
 			}

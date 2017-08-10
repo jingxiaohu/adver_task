@@ -8,16 +8,9 @@
  */
 package com.pyb.transaction;
 
-import java.sql.SQLException;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.pyb.bean.Pay_park;
 import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.User_info;
+import com.pyb.bean.User_info_new;
 import com.pyb.bean.User_pay;
 import com.pyb.exception.QzException;
 import com.pyb.mvc.service.BaseBiz;
@@ -25,6 +18,12 @@ import com.pyb.mvc.service.common.PayParkPB;
 import com.pyb.mvc.service.common.UserPB;
 import com.pyb.type.PayTypeEnum;
 import com.pyb.util.RequestUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.SQLException;
+import java.util.Date;
 
 /**
  * @author 敬小虎
@@ -76,7 +75,7 @@ public class PayTransaction extends BaseBiz {
             if (type == 1) {
                 //充值
                 //钱包增加金额
-                User_info user_info = userPB.updateUserMoney(user_pay.getUi_id(), user_pay.getUi_nd(), 0, (int)user_pay.getMoney());
+                User_info_new user_info = userPB.updateUserMoney(user_pay.getUi_id(), user_pay.getUi_nd(), 0, (int)user_pay.getMoney());
                 if (user_info == null) {
                     //更新充值金额失败
                     log.error("更新用户充值金额失败 orderid=" + user_pay.getOrder_id());
@@ -120,7 +119,7 @@ public class PayTransaction extends BaseBiz {
                     jPushMessageBean.setImgurl(Constants.JPUSH_LOGO);
                     jPushMessageBean.setTitle("充值到账");
                     jPushMessageBean.setDate(date);
-                    User_info userinfo = daoFactory.getUser_infoDao().selectByKey(user_pay.getUi_id());
+                    User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(user_pay.getUi_id());
                     if (userinfo != null) {
                         asyncJpushTask.doAppJpush(jPushMessageBean, userinfo.getUi_nd());
                     }

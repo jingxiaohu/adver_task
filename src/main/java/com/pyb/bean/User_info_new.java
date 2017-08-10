@@ -3,9 +3,9 @@ package com.pyb.bean;
 import java.io.*;
 import java.util.*;
 
-//user_info
+//user_info_new
 @SuppressWarnings({"serial"})
-public class User_info implements Cloneable , Serializable{
+public class User_info_new implements Cloneable , Serializable{
 
     //public static String[] carrays ={"ui_id","ui_nd","ui_token","ui_tel","ui_password","ui_sex","ui_avtar","ui_bind_tel","ui_name","ui_zfb","ui_wx","ui_vc","ui_sign","ui_tj","ui_lock","ctime","utime","note","ui_release","ui_task","is_vip","ui_nickname","ui_flag","ui_email","ui_reg_type"};
 
@@ -281,8 +281,8 @@ public class User_info implements Cloneable , Serializable{
 
 
 
-    public static User_info newUser_info(long ui_id, String ui_nd, String ui_token, String ui_tel, String ui_password, int ui_sex, String ui_avtar, String ui_bind_tel, String ui_name, String ui_zfb, String ui_wx, int ui_vc, int ui_sign, int ui_tj, int ui_lock, java.util.Date ctime, java.util.Date utime, String note, int ui_release, int ui_task, int is_vip, String ui_nickname, int ui_flag, String ui_email, int ui_reg_type) {
-        User_info ret = new User_info();
+    public static User_info_new newUser_info_new(long ui_id, String ui_nd, String ui_token, String ui_tel, String ui_password, int ui_sex, String ui_avtar, String ui_bind_tel, String ui_name, String ui_zfb, String ui_wx, int ui_vc, int ui_sign, int ui_tj, int ui_lock, java.util.Date ctime, java.util.Date utime, String note, int ui_release, int ui_task, int is_vip, String ui_nickname, int ui_flag, String ui_email, int ui_reg_type) {
+        User_info_new ret = new User_info_new();
         ret.setUi_id(ui_id);
         ret.setUi_nd(ui_nd);
         ret.setUi_token(ui_token);
@@ -311,32 +311,32 @@ public class User_info implements Cloneable , Serializable{
         return ret;    
     }
 
-    public void assignment(User_info user_info) {
-        long ui_id = user_info.getUi_id();
-        String ui_nd = user_info.getUi_nd();
-        String ui_token = user_info.getUi_token();
-        String ui_tel = user_info.getUi_tel();
-        String ui_password = user_info.getUi_password();
-        int ui_sex = user_info.getUi_sex();
-        String ui_avtar = user_info.getUi_avtar();
-        String ui_bind_tel = user_info.getUi_bind_tel();
-        String ui_name = user_info.getUi_name();
-        String ui_zfb = user_info.getUi_zfb();
-        String ui_wx = user_info.getUi_wx();
-        int ui_vc = user_info.getUi_vc();
-        int ui_sign = user_info.getUi_sign();
-        int ui_tj = user_info.getUi_tj();
-        int ui_lock = user_info.getUi_lock();
-        java.util.Date ctime = user_info.getCtime();
-        java.util.Date utime = user_info.getUtime();
-        String note = user_info.getNote();
-        int ui_release = user_info.getUi_release();
-        int ui_task = user_info.getUi_task();
-        int is_vip = user_info.getIs_vip();
-        String ui_nickname = user_info.getUi_nickname();
-        int ui_flag = user_info.getUi_flag();
-        String ui_email = user_info.getUi_email();
-        int ui_reg_type = user_info.getUi_reg_type();
+    public void assignment(User_info_new user_info_new) {
+        long ui_id = user_info_new.getUi_id();
+        String ui_nd = user_info_new.getUi_nd();
+        String ui_token = user_info_new.getUi_token();
+        String ui_tel = user_info_new.getUi_tel();
+        String ui_password = user_info_new.getUi_password();
+        int ui_sex = user_info_new.getUi_sex();
+        String ui_avtar = user_info_new.getUi_avtar();
+        String ui_bind_tel = user_info_new.getUi_bind_tel();
+        String ui_name = user_info_new.getUi_name();
+        String ui_zfb = user_info_new.getUi_zfb();
+        String ui_wx = user_info_new.getUi_wx();
+        int ui_vc = user_info_new.getUi_vc();
+        int ui_sign = user_info_new.getUi_sign();
+        int ui_tj = user_info_new.getUi_tj();
+        int ui_lock = user_info_new.getUi_lock();
+        java.util.Date ctime = user_info_new.getCtime();
+        java.util.Date utime = user_info_new.getUtime();
+        String note = user_info_new.getNote();
+        int ui_release = user_info_new.getUi_release();
+        int ui_task = user_info_new.getUi_task();
+        int is_vip = user_info_new.getIs_vip();
+        String ui_nickname = user_info_new.getUi_nickname();
+        int ui_flag = user_info_new.getUi_flag();
+        String ui_email = user_info_new.getUi_email();
+        int ui_reg_type = user_info_new.getUi_reg_type();
 
         this.setUi_id(ui_id);
         this.setUi_nd(ui_nd);
@@ -367,64 +367,64 @@ public class User_info implements Cloneable , Serializable{
     }
 
     @SuppressWarnings("unused")
-    public static void getUser_info(User_info user_info ){
-        long ui_id = user_info.getUi_id();
-        String ui_nd = user_info.getUi_nd();
-        String ui_token = user_info.getUi_token();
-        String ui_tel = user_info.getUi_tel();
-        String ui_password = user_info.getUi_password();
-        int ui_sex = user_info.getUi_sex();
-        String ui_avtar = user_info.getUi_avtar();
-        String ui_bind_tel = user_info.getUi_bind_tel();
-        String ui_name = user_info.getUi_name();
-        String ui_zfb = user_info.getUi_zfb();
-        String ui_wx = user_info.getUi_wx();
-        int ui_vc = user_info.getUi_vc();
-        int ui_sign = user_info.getUi_sign();
-        int ui_tj = user_info.getUi_tj();
-        int ui_lock = user_info.getUi_lock();
-        java.util.Date ctime = user_info.getCtime();
-        java.util.Date utime = user_info.getUtime();
-        String note = user_info.getNote();
-        int ui_release = user_info.getUi_release();
-        int ui_task = user_info.getUi_task();
-        int is_vip = user_info.getIs_vip();
-        String ui_nickname = user_info.getUi_nickname();
-        int ui_flag = user_info.getUi_flag();
-        String ui_email = user_info.getUi_email();
-        int ui_reg_type = user_info.getUi_reg_type();
+    public static void getUser_info_new(User_info_new user_info_new ){
+        long ui_id = user_info_new.getUi_id();
+        String ui_nd = user_info_new.getUi_nd();
+        String ui_token = user_info_new.getUi_token();
+        String ui_tel = user_info_new.getUi_tel();
+        String ui_password = user_info_new.getUi_password();
+        int ui_sex = user_info_new.getUi_sex();
+        String ui_avtar = user_info_new.getUi_avtar();
+        String ui_bind_tel = user_info_new.getUi_bind_tel();
+        String ui_name = user_info_new.getUi_name();
+        String ui_zfb = user_info_new.getUi_zfb();
+        String ui_wx = user_info_new.getUi_wx();
+        int ui_vc = user_info_new.getUi_vc();
+        int ui_sign = user_info_new.getUi_sign();
+        int ui_tj = user_info_new.getUi_tj();
+        int ui_lock = user_info_new.getUi_lock();
+        java.util.Date ctime = user_info_new.getCtime();
+        java.util.Date utime = user_info_new.getUtime();
+        String note = user_info_new.getNote();
+        int ui_release = user_info_new.getUi_release();
+        int ui_task = user_info_new.getUi_task();
+        int is_vip = user_info_new.getIs_vip();
+        String ui_nickname = user_info_new.getUi_nickname();
+        int ui_flag = user_info_new.getUi_flag();
+        String ui_email = user_info_new.getUi_email();
+        int ui_reg_type = user_info_new.getUi_reg_type();
     }
 
     public Map<String,Object> toMap(){
         return toEnMap(this);
     }
 
-    public static Map<String,Object> toEnMap(User_info user_info){
-        long ui_id = user_info.getUi_id();
-        String ui_nd = user_info.getUi_nd();
-        String ui_token = user_info.getUi_token();
-        String ui_tel = user_info.getUi_tel();
-        String ui_password = user_info.getUi_password();
-        int ui_sex = user_info.getUi_sex();
-        String ui_avtar = user_info.getUi_avtar();
-        String ui_bind_tel = user_info.getUi_bind_tel();
-        String ui_name = user_info.getUi_name();
-        String ui_zfb = user_info.getUi_zfb();
-        String ui_wx = user_info.getUi_wx();
-        int ui_vc = user_info.getUi_vc();
-        int ui_sign = user_info.getUi_sign();
-        int ui_tj = user_info.getUi_tj();
-        int ui_lock = user_info.getUi_lock();
-        java.util.Date ctime = user_info.getCtime();
-        java.util.Date utime = user_info.getUtime();
-        String note = user_info.getNote();
-        int ui_release = user_info.getUi_release();
-        int ui_task = user_info.getUi_task();
-        int is_vip = user_info.getIs_vip();
-        String ui_nickname = user_info.getUi_nickname();
-        int ui_flag = user_info.getUi_flag();
-        String ui_email = user_info.getUi_email();
-        int ui_reg_type = user_info.getUi_reg_type();
+    public static Map<String,Object> toEnMap(User_info_new user_info_new){
+        long ui_id = user_info_new.getUi_id();
+        String ui_nd = user_info_new.getUi_nd();
+        String ui_token = user_info_new.getUi_token();
+        String ui_tel = user_info_new.getUi_tel();
+        String ui_password = user_info_new.getUi_password();
+        int ui_sex = user_info_new.getUi_sex();
+        String ui_avtar = user_info_new.getUi_avtar();
+        String ui_bind_tel = user_info_new.getUi_bind_tel();
+        String ui_name = user_info_new.getUi_name();
+        String ui_zfb = user_info_new.getUi_zfb();
+        String ui_wx = user_info_new.getUi_wx();
+        int ui_vc = user_info_new.getUi_vc();
+        int ui_sign = user_info_new.getUi_sign();
+        int ui_tj = user_info_new.getUi_tj();
+        int ui_lock = user_info_new.getUi_lock();
+        java.util.Date ctime = user_info_new.getCtime();
+        java.util.Date utime = user_info_new.getUtime();
+        String note = user_info_new.getNote();
+        int ui_release = user_info_new.getUi_release();
+        int ui_task = user_info_new.getUi_task();
+        int is_vip = user_info_new.getIs_vip();
+        String ui_nickname = user_info_new.getUi_nickname();
+        int ui_flag = user_info_new.getUi_flag();
+        String ui_email = user_info_new.getUi_email();
+        int ui_reg_type = user_info_new.getUi_reg_type();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ui_id",ui_id);
@@ -459,9 +459,9 @@ public class User_info implements Cloneable , Serializable{
         return super.clone();
     }
 
-    public User_info clone2(){
+    public User_info_new clone2(){
         try{
-            return (User_info) this.clone();
+            return (User_info_new) this.clone();
         } catch (Exception e) {
             e.printStackTrace();
         }

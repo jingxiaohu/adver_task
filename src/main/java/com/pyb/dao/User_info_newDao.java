@@ -11,18 +11,18 @@ import com.pyb.bean.*;
 import org.springframework.stereotype.Repository;
 import com.highbeauty.text.EasyTemplate;
 
-//user_info
+//user_info_new
 
-@Repository("user_infoDao")
-public class User_infoDao extends BaseDao{
+@Repository("user_info_newDao")
+public class User_info_newDao extends BaseDao{
 
-    Logger log = LoggerFactory.getLogger(User_infoDao.class);
+    Logger log = LoggerFactory.getLogger(User_info_newDao.class);
 
 
 
-    private  String TABLE = "user_info";
+    private  String TABLE = "user_info_new";
 
-    private  String TABLENAME = "user_info";
+    private  String TABLENAME = "user_info_new";
 
     public  String getTABLE(){
         return  TABLE;
@@ -58,12 +58,12 @@ public class User_infoDao extends BaseDao{
     }
 
     //添加数据
-    public int insert(User_info bean) throws SQLException{
+    public int insert(User_info_new bean) throws SQLException{
         return insert(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert(User_info bean, String TABLENAME2) throws SQLException{
+    public int insert(User_info_new bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
             sql = "INSERT INTO "+TABLENAME2+" (ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type) VALUES (:ui_nd,:ui_token,:ui_tel,:ui_password,:ui_sex,:ui_avtar,:ui_bind_tel,:ui_name,:ui_zfb,:ui_wx,:ui_vc,:ui_sign,:ui_tj,:ui_lock,:ctime,:utime,:note,:ui_release,:ui_task,:is_vip,:ui_nickname,:ui_flag,:ui_email,:ui_reg_type)";
@@ -79,12 +79,12 @@ public class User_infoDao extends BaseDao{
     }
 
     //添加数据
-    public int insert_primarykey(User_info bean) throws SQLException{
+    public int insert_primarykey(User_info_new bean) throws SQLException{
         return insert_primarykey(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert_primarykey(User_info bean, String TABLENAME2) throws SQLException{
+    public int insert_primarykey(User_info_new bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
             sql = "INSERT INTO "+TABLENAME2+" (ui_id,ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type) VALUES (:ui_id,:ui_nd,:ui_token,:ui_tel,:ui_password,:ui_sex,:ui_avtar,:ui_bind_tel,:ui_name,:ui_zfb,:ui_wx,:ui_vc,:ui_sign,:ui_tj,:ui_lock,:ctime,:utime,:note,:ui_release,:ui_task,:is_vip,:ui_nickname,:ui_flag,:ui_email,:ui_reg_type)";
@@ -98,12 +98,12 @@ public class User_infoDao extends BaseDao{
     }
 
     //批量添加数据
-    public int[] insert(List<User_info> beans) throws SQLException{
+    public int[] insert(List<User_info_new> beans) throws SQLException{
         return insert(beans, TABLENAME);
     }
 
     //批量添加数据
-    public int[] insert(final List<User_info> beans, String TABLENAME2) throws SQLException{
+    public int[] insert(final List<User_info_new> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
             sql = "INSERT INTO "+TABLENAME2+" (ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -114,7 +114,7 @@ public class User_infoDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    User_info bean = beans.get(i);
+                    User_info_new bean = beans.get(i);
                     ps.setString(1, bean.ui_nd);
                     ps.setString(2, bean.ui_token);
                     ps.setString(3, bean.ui_tel);
@@ -149,74 +149,74 @@ public class User_infoDao extends BaseDao{
     }
 
     //查询所有数据
-    public List<User_info> selectAll() {
+    public List<User_info_new> selectAll() {
         return selectAll(TABLENAME);
     }
 
     //查询所有数据
-    public List<User_info> selectAll(String TABLENAME2) {
+    public List<User_info_new> selectAll(String TABLENAME2) {
         String sql;
         try{
             sql = "SELECT ui_id,ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type FROM "+TABLENAME2+" ORDER BY ui_id";
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_info>(User_info.class));
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_info_new>(User_info_new.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectAll", e);
-            return new ArrayList<User_info>();
+            return new ArrayList<User_info_new>();
         }
     }
 
     //查询最新数据
-    public List<User_info> selectLast(int num) {
+    public List<User_info_new> selectLast(int num) {
         return selectLast(num, TABLENAME);
     }
 
     //查询所有数据
-    public List<User_info> selectLast(int num ,String TABLENAME2) {
+    public List<User_info_new> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
             sql = "SELECT ui_id,ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type FROM "+TABLENAME2+" ORDER BY ui_id DESC LIMIT "+num+"" ;
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_info>(User_info.class));
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<User_info_new>(User_info_new.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectLast", e);
-            return new ArrayList<User_info>();
+            return new ArrayList<User_info_new>();
         }
     }
 
     //根据主键查询
-    public List<User_info> selectGtKey(long ui_id) {
+    public List<User_info_new> selectGtKey(long ui_id) {
         return selectGtKey(ui_id, TABLENAME);
     }
 
     //根据主键查询
-    public List<User_info> selectGtKey(long ui_id, String TABLENAME2) {
+    public List<User_info_new> selectGtKey(long ui_id, String TABLENAME2) {
         String sql;
         try{
             sql="SELECT ui_id,ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type FROM "+TABLENAME2+" WHERE ui_id>:ui_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ui_id", ui_id);
-            return _np.query(sql, param, new BeanPropertyRowMapper<User_info>(User_info.class));
+            return _np.query(sql, param, new BeanPropertyRowMapper<User_info_new>(User_info_new.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectGtKey", e);
-            return new ArrayList<User_info>();
+            return new ArrayList<User_info_new>();
         }
     }
 
     //根据主键查询
-    public User_info selectByKey(long ui_id) {
+    public User_info_new selectByKey(long ui_id) {
         return selectByKey(ui_id, TABLENAME);
     }
 
     //根据主键查询
-    public User_info selectByKey(long ui_id, String TABLENAME2) {
+    public User_info_new selectByKey(long ui_id, String TABLENAME2) {
         String sql;
         try{
             sql="SELECT ui_id,ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type FROM "+TABLENAME2+" WHERE ui_id=:ui_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ui_id", ui_id);
-            List<User_info> list =  _np.query(sql, param, new BeanPropertyRowMapper<User_info>(User_info.class));
+            List<User_info_new> list =  _np.query(sql, param, new BeanPropertyRowMapper<User_info_new>(User_info_new.class));
             return (list == null || list.size() == 0) ? null : list.get(0);
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -244,30 +244,30 @@ public class User_infoDao extends BaseDao{
     }
 
     //分页查询
-    public List<User_info> selectByPage(int begin, int num) {
+    public List<User_info_new> selectByPage(int begin, int num) {
         return selectByPage(begin, num, TABLENAME);
     }
 
     //分页查询
-    public List<User_info> selectByPage(int begin, int num, String TABLENAME2) {
+    public List<User_info_new> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
             sql = "SELECT ui_id,ui_nd,ui_token,ui_tel,ui_password,ui_sex,ui_avtar,ui_bind_tel,ui_name,ui_zfb,ui_wx,ui_vc,ui_sign,ui_tj,ui_lock,ctime,utime,note,ui_release,ui_task,is_vip,ui_nickname,ui_flag,ui_email,ui_reg_type FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
-            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<User_info>(User_info.class));
+            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<User_info_new>(User_info_new.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectByPage",e);
-            return new ArrayList<User_info>();
+            return new ArrayList<User_info_new>();
         }
     }
 
     //修改数据
-    public int updateByKey(User_info bean) {
+    public int updateByKey(User_info_new bean) {
         return updateByKey(bean, TABLENAME);
     }
 
     //修改数据
-    public int updateByKey(User_info bean, String TABLENAME2) {
+    public int updateByKey(User_info_new bean, String TABLENAME2) {
         try{
             String sql;
             sql = "UPDATE "+TABLENAME2+" SET ui_nd=:ui_nd,ui_token=:ui_token,ui_tel=:ui_tel,ui_password=:ui_password,ui_sex=:ui_sex,ui_avtar=:ui_avtar,ui_bind_tel=:ui_bind_tel,ui_name=:ui_name,ui_zfb=:ui_zfb,ui_wx=:ui_wx,ui_vc=:ui_vc,ui_sign=:ui_sign,ui_tj=:ui_tj,ui_lock=:ui_lock,ctime=:ctime,utime=:utime,note=:note,ui_release=:ui_release,ui_task=:ui_task,is_vip=:is_vip,ui_nickname=:ui_nickname,ui_flag=:ui_flag,ui_email=:ui_email,ui_reg_type=:ui_reg_type WHERE ui_id=:ui_id";
@@ -280,12 +280,12 @@ public class User_infoDao extends BaseDao{
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<User_info> beans) throws SQLException{
+    public int[] updateByKey (final List<User_info_new> beans) throws SQLException{
         return updateByKey(beans, TABLENAME);
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<User_info> beans, String TABLENAME2) throws SQLException{
+    public int[] updateByKey (final List<User_info_new> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
             sql = "UPDATE "+TABLENAME2+" SET ui_nd=?,ui_token=?,ui_tel=?,ui_password=?,ui_sex=?,ui_avtar=?,ui_bind_tel=?,ui_name=?,ui_zfb=?,ui_wx=?,ui_vc=?,ui_sign=?,ui_tj=?,ui_lock=?,ctime=?,utime=?,note=?,ui_release=?,ui_task=?,is_vip=?,ui_nickname=?,ui_flag=?,ui_email=?,ui_reg_type=? WHERE ui_id=?";
@@ -296,7 +296,7 @@ public class User_infoDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    User_info bean = beans.get(i);
+                    User_info_new bean = beans.get(i);
                     ps.setString(1, bean.ui_nd);
                     ps.setString(2, bean.ui_token);
                     ps.setString(3, bean.ui_tel);

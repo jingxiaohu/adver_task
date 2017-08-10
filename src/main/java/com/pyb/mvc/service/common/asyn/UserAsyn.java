@@ -1,14 +1,13 @@
 package com.pyb.mvc.service.common.asyn;
 
-import java.util.Date;
-
+import com.pyb.bean.ReturnDataNew;
+import com.pyb.bean.User_info_new;
+import com.pyb.bean.User_login_log;
+import com.pyb.mvc.service.BaseBiz;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.User_info;
-import com.pyb.bean.User_login_log;
-import com.pyb.mvc.service.BaseBiz;
+import java.util.Date;
 
 /**
  * 用户公用方法
@@ -19,14 +18,13 @@ import com.pyb.mvc.service.BaseBiz;
 public class UserAsyn extends BaseBiz{
 	/**
 	 * 记录用户登录日志
-	 * @param ui_id
-	 * @param ui_nd
-	 * @param type
-	 * @param money
-	 * @return
+	 * @param userinfo
+	 * @param dtype
+	 * @param ip
+	 * @param returnData
 	 */
 	@Async
-	public void Log_recordUserLogin(User_info userinfo,int dtype,String ip,ReturnDataNew returnData){
+	public void Log_recordUserLogin(User_info_new userinfo, int dtype, String ip, ReturnDataNew returnData){
 		try {
 			//$strsql = "insert into {$tablehead}app_user_login_report (u_tel,u_logindate,u_login_ip) values ('$username','$nowtimesharp','$userip')";
 		      Date date = new Date();

@@ -33,7 +33,7 @@ public class ChannelTest extends BaseWebTest {
         String path = this.getClass().getResource(".").getPath();
         path = path + "Channel.md";
         InterfaceUtil.AddInterfacePred(path, moduleName,
-                "获取笑话分类列表",
+                "读取频道信息列表",
                 "dtype+ui_id",
                 "/v1/channel_list",
                 1,

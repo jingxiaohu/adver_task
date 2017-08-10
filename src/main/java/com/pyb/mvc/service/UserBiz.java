@@ -4,7 +4,7 @@ import com.pyb.DataSource.DynamicDataSourceHolder;
 import com.pyb.DataSource.TargetDataSource;
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Sms_validate;
-import com.pyb.bean.User_info;
+import com.pyb.bean.User_info_new;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.service.common.asyn.UserAsyn;
 import com.pyb.util.FileUtil;
@@ -55,14 +55,14 @@ public class UserBiz extends BaseBiz {
         return;
       }
       //检查该手机号码是否已经注册
-      User_info userinfo = gainUserInfoByTelePhone(telephone);
+      User_info_new userinfo = gainUserInfoByTelePhone(telephone);
       if (userinfo != null) {
         returnData.setReturnData(errorcode_data, "您已经注册过了", "");
         return;
       }
 
       //写入用户信息到用户基本信息表中
-      userinfo = new User_info();
+      userinfo = new User_info_new();
       userinfo.setUi_reg_type(reg_type);
       if(reg_type == 1){
     	  //邮箱注册
@@ -83,7 +83,7 @@ public class UserBiz extends BaseBiz {
       userinfo.setUi_nickname(RandomStringUtils.random(8, true, true));//用户昵称
       //电话号码+密码 生成的MD5码 （授权码）
       userinfo.setUi_token(DigestUtils.md5Hex(telephone + password));
-      int userid = daoFactory.getUser_infoDao().insert(userinfo);
+      int userid = daoFactory.getUser_info_newDao().insert(userinfo);
       if (userid < 1) {
         returnData.setReturnData(errorcode_data, "注册失败", null);
         return;
@@ -109,7 +109,7 @@ public class UserBiz extends BaseBiz {
       String telephone, String password, String ip) {
     // TODO Auto-generated method stub dtype,tel,password,tel_version,ip
     try {
-      User_info userinfo = null;
+      User_info_new userinfo = null;
       //普通登陆
       //检查该用户是否已经注册过 如果没有则不能进行修改密码
       userinfo = gainUserInfoByTelePhone(telephone);
@@ -154,7 +154,7 @@ public class UserBiz extends BaseBiz {
     //dtype,tel,verify_code,verify_list,password,repassword,imei,tel_version
     try {
       //检查该手机号码是否已经注册
-      User_info userinfo = gainUserInfoByTelePhone(telephone);
+      User_info_new userinfo = gainUserInfoByTelePhone(telephone);
       if (userinfo == null) {
         returnData.setReturnData(errorcode_data, "您还没有注册!", null);
         return;
@@ -180,7 +180,7 @@ public class UserBiz extends BaseBiz {
       //电话号码+密码 生成的MD5码 （授权码）
       userinfo.setUi_token(DigestUtils.md5Hex(telephone + password));
       userinfo.setUtime(date);
-      int count = daoFactory.getUser_infoDao().updateByKey(userinfo);
+      int count = daoFactory.getUser_info_newDao().updateByKey(userinfo);
       if (count < 1) {
         returnData.setReturnData(errorcode_data, "更改密码失败", null);
         return;
@@ -205,7 +205,7 @@ public class UserBiz extends BaseBiz {
 
     try {
       //检查该手机号码是否已经注册
-      User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+      User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
       if (userinfo == null) {
         returnData.setReturnData(errorcode_data, "用户不存在!", null);
         return;
@@ -240,7 +240,7 @@ public class UserBiz extends BaseBiz {
         userinfo.setUi_avtar(url);
       }
       //更新用户的昵称
-      int count = daoFactory.getUser_infoDao().updateByKey(userinfo);
+      int count = daoFactory.getUser_info_newDao().updateByKey(userinfo);
       if (count < 1) {
         returnData.setReturnData(errorcode_data, "更改用户基本信息失败", null);
         return;
@@ -264,22 +264,22 @@ public class UserBiz extends BaseBiz {
     // TODO Auto-generated method stub
     try {
       //检查该用户是否已经注册过了的
-      String sql = "SELECT * FROM user_info WHERE ui_id=? AND ui_password=? LIMIT 1";
-      User_info userinfo = getMySelfService().queryUniqueT(sql, User_info.class, ui_id, password);
+      String sql = "SELECT * FROM user_info_new WHERE ui_id=? AND ui_password=? LIMIT 1";
+      User_info_new userinfo = getMySelfService().queryUniqueT(sql, User_info_new.class, ui_id, password);
       if (userinfo == null) {
         //用户密码错误
         returnData.setReturnData(errorcode_data, "用户密码错误", null);
         return;
       }
       //检查该手机号码是否已经注册 或者 被绑定过
-      User_info userinfo2 = gainUserInfoByTel_bind(tel);
+      User_info_new userinfo2 = gainUserInfoByTel_bind(tel);
       if (userinfo2 != null && ui_id != userinfo2.getUi_id()) {
         returnData.setReturnData(errorcode_data, "该手机号码已经被注册!", null);
         return;
       }
       userinfo.setUi_bind_tel(tel);
       //更新用户的绑定手机号码
-      int count = daoFactory.getUser_infoDao().updateByKey(userinfo);
+      int count = daoFactory.getUser_info_newDao().updateByKey(userinfo);
       if (count < 1) {
         returnData.setReturnData(errorcode_data, "绑定手机号码失败", null);
         return;
@@ -303,7 +303,7 @@ public class UserBiz extends BaseBiz {
     // TODO Auto-generated method stub
     try {
       //检查该手机号码是否已经注册
-      User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+      User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
       if (userinfo == null) {
         returnData.setReturnData(errorcode_data, "用户不存在!", null);
         return;
@@ -328,7 +328,7 @@ public class UserBiz extends BaseBiz {
     // TODO Auto-generated method stub
     /*try {
       //检查用户是否存在
-      User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+      User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
       if (userinfo == null) {
         returnData.setReturnData(errorcode_data, "用户不存在!", null);
         return;
@@ -360,10 +360,10 @@ public class UserBiz extends BaseBiz {
   /**
    * 检查该手机号码是否已经被其他人注册过了
    */
-  public User_info gainUserInfoByTelePhone(String telephone) throws Exception {
+  public User_info_new gainUserInfoByTelePhone(String telephone) throws Exception {
     try {
-      String sql = "SELECT * FROM user_info WHERE ui_tel=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_info.class, telephone);
+      String sql = "SELECT * FROM user_info_new WHERE ui_tel=? LIMIT 1";
+      return getMySelfService().queryUniqueT(sql, User_info_new.class, telephone);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("gainUserInfoByTelePhone(String telephone)  telephone=" + telephone + "  is error",
@@ -375,10 +375,10 @@ public class UserBiz extends BaseBiz {
   /**
    * 检查该手机号码是否已经被其他人注册过了 或者  绑定过了
    */
-  public User_info gainUserInfoByTel_bind(String telephone) throws Exception {
+  public User_info_new gainUserInfoByTel_bind(String telephone) throws Exception {
     try {
-      String sql = "SELECT * FROM user_info WHERE ui_tel=? AND bind_tel=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_info.class, telephone);
+      String sql = "SELECT * FROM user_info_new WHERE ui_tel=? AND bind_tel=? LIMIT 1";
+      return getMySelfService().queryUniqueT(sql, User_info_new.class, telephone);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("gainUserInfoByTelePhone(String telephone)  telephone=" + telephone + "  is error",
@@ -399,7 +399,7 @@ public void UpUserModifyPassword(ReturnDataNew returnData, int dtype,
 	// TODO Auto-generated method stub
     try {
         //检查该手机号码是否已经注册
-        User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+        User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
         
         if (userinfo == null) {
           returnData.setReturnData(errorcode_data, "您还没有注册!", "");
@@ -419,7 +419,7 @@ public void UpUserModifyPassword(ReturnDataNew returnData, int dtype,
         userinfo.setUi_token(DigestUtils.md5Hex(userinfo.getUi_tel() + new_password));
         userinfo.setUtime(date);
         
-        int count = daoFactory.getUser_infoDao().updateByKey(userinfo);
+        int count = daoFactory.getUser_info_newDao().updateByKey(userinfo);
         if (count < 1) {
           returnData.setReturnData(errorcode_data, "更改密码失败", "");
           return;

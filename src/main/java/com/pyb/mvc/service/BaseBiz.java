@@ -1,19 +1,11 @@
 package com.pyb.mvc.service;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.pyb.bean.User_info_new;
+import com.pyb.dao.DaoFactory;
+import com.pyb.mq.RabbitPublisher;
+import com.pyb.service.MySelfService;
+import com.pyb.service.UserRedisService;
+import com.pyb.task.AsyncJpushTask;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -23,12 +15,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pyb.bean.User_info;
-import com.pyb.dao.DaoFactory;
-import com.pyb.mq.RabbitPublisher;
-import com.pyb.service.MySelfService;
-import com.pyb.service.UserRedisService;
-import com.pyb.task.AsyncJpushTask;
+import javax.annotation.Resource;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Title:action
@@ -313,7 +306,7 @@ public class BaseBiz {
    *
    * @return true:余额不足  false:余额足够
    */
-  public boolean isNotSureMoney(User_info user_info, long money) {
+  public boolean isNotSureMoney(User_info_new user_info, long money) {
     if (user_info.getUi_vc() -  money < 0) {
       return true;
     }

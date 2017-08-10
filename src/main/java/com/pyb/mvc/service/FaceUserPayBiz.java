@@ -1,17 +1,16 @@
 package com.pyb.mvc.service;
 
-import java.text.SimpleDateFormat;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.pyb.bean.Pay_park;
 import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.User_info;
+import com.pyb.bean.User_info_new;
 import com.pyb.bean.User_pay;
 import com.pyb.mvc.service.common.PayParkPB;
 import com.pyb.transaction.PayTransaction;
 import com.pyb.util.RequestUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
 
 @Service
 public class FaceUserPayBiz extends BaseBiz {
@@ -37,7 +36,7 @@ public class FaceUserPayBiz extends BaseBiz {
       String tel = "";
       if (system_type != 4) {
         //PDA系统除开
-        User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+        User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
         if (userinfo == null) {
           //用户不存在
           returnData.setReturnData(errorcode_param, "用户不存在", "");
@@ -100,7 +99,7 @@ public class FaceUserPayBiz extends BaseBiz {
       String tel = "";
       if (system_type != 4) {
         //PDA系统除开
-        User_info userinfo = daoFactory.getUser_infoDao().selectByKey(ui_id);
+        User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(ui_id);
         if (userinfo == null) {
           //用户不存在
           returnData.setReturnData(errorcode_param, "用户不存在", "");

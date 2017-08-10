@@ -1,18 +1,17 @@
 package com.pyb.service;
 
-import java.util.Date;
-
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang.RandomStringUtils;
-import org.springframework.stereotype.Service;
-
 import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Sms_running;
 import com.pyb.bean.Sms_validate;
-import com.pyb.bean.User_info;
+import com.pyb.bean.User_info_new;
 import com.pyb.mvc.service.BaseBiz;
 import com.pyb.util.SMSUtil;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 /**
  * 用户信息管理
@@ -41,7 +40,7 @@ public class SMSBiz extends BaseBiz {
       if ("1".equalsIgnoreCase(vclass)) {
         //用户注册
         //检查该手机号码是否已经注册
-        User_info userinfo = gainUserInfoByTelePhone(telephone);
+        User_info_new userinfo = gainUserInfoByTelePhone(telephone);
         if (userinfo != null) {
           returnData.setReturnData(errorcode_data, "您已经注册过了", null);
           return;
@@ -49,7 +48,7 @@ public class SMSBiz extends BaseBiz {
       } else if ("2".equalsIgnoreCase(vclass)) {
         //修改密码
         //检查该用户是否已经注册过 如果没有则不能进行修改密码
-        User_info userinfo = gainUserInfoByTelePhone(telephone);
+        User_info_new userinfo = gainUserInfoByTelePhone(telephone);
         if (userinfo == null) {
           returnData.setReturnData(errorcode_data, "您还没有注册!", null);
           return;
@@ -57,7 +56,7 @@ public class SMSBiz extends BaseBiz {
       } else if ("3".equalsIgnoreCase(vclass)) {
         //修改手机
         //检查该用户是否已经注册过 如果没有则不能进行修改密码
-        User_info userinfo = gainUserInfoByTelePhone(telephone);
+        User_info_new userinfo = gainUserInfoByTelePhone(telephone);
         if (userinfo == null) {
           returnData.setReturnData(errorcode_data, "您还没有注册!", null);
           return;
@@ -116,7 +115,7 @@ public class SMSBiz extends BaseBiz {
       if ("1".equalsIgnoreCase(vclass)) {
         //用户注册
         //检查该手机号码是否已经注册
-        User_info userinfo = gainUserInfoByTelePhone(telephone);
+        User_info_new userinfo = gainUserInfoByTelePhone(telephone);
         if (userinfo != null) {
           returnData.setReturnData(errorcode_data, "您已经注册过了", null);
           return;
@@ -124,7 +123,7 @@ public class SMSBiz extends BaseBiz {
       } else if ("2".equalsIgnoreCase(vclass)) {
         //修改密码
         //检查该用户是否已经注册过 如果没有则不能进行修改密码
-        User_info userinfo = gainUserInfoByTelePhone(telephone);
+        User_info_new userinfo = gainUserInfoByTelePhone(telephone);
         if (userinfo == null) {
           returnData.setReturnData(errorcode_data, "您还没有注册!", null);
           return;
@@ -132,7 +131,7 @@ public class SMSBiz extends BaseBiz {
       } else if ("3".equalsIgnoreCase(vclass)) {
         //修改密码
         //检查该用户是否已经注册过 如果没有则不能进行修改密码
-        User_info userinfo = gainUserInfoByTelePhone(telephone);
+        User_info_new userinfo = gainUserInfoByTelePhone(telephone);
         if (userinfo == null) {
           returnData.setReturnData(errorcode_data, "您还没有注册!", null);
           return;
@@ -232,7 +231,7 @@ public class SMSBiz extends BaseBiz {
 //			String email) {
 //		// TODO Auto-generated method stub
 //		try {
-//			User_info userinfo  = gainUserInfoByEmail(email);
+//			User_info_new userinfo  = gainUserInfoByEmail(email);
 //			if(userinfo == null){
 //				returnData.setReturnData(errorcode_success, "发送成功", ""); 
 //				return ;
@@ -262,11 +261,11 @@ public class SMSBiz extends BaseBiz {
   /**
    * 获取用户信息
    */
-  public User_info gainUserInfoByTelePhone(String telephone) throws Exception {
+  public User_info_new gainUserInfoByTelePhone(String telephone) throws Exception {
     //获取该串号的物料码对应的SD卡是否存在
     try {
-      String sql = "SELECT * FROM user_info WHERE ui_tel=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_info.class, telephone);
+      String sql = "SELECT * FROM user_info_new WHERE ui_tel=? LIMIT 1";
+      return getMySelfService().queryUniqueT(sql, User_info_new.class, telephone);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("gainUserInfoByTelePhone(String telephone)  telephone=" + telephone + "  is error",
