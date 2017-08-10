@@ -1,0 +1,12 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ci_id||long|
+|ci_name|频道名称|String|
+|ui_id|创建人用户ID|long|
+|ctime|创建时间|java.util.Date|
+|is_show|是否显示0:显示1：不显示|int|
+|ci_type|频道类型:0免费1：收费|int|
+|ci_sort|排序权重比逆序|int|
+|note||String|
+

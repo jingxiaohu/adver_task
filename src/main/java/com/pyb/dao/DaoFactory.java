@@ -39,6 +39,8 @@ protected Pay_parkDao pay_parkDao;
 protected Live_infoDao live_infoDao;
 @Autowired
 protected Message_infoDao message_infoDao;
+@Autowired
+protected Channel_infoDao channel_infoDao;
 
 /*******************************下面是GET方法**************************************/
 public User_infoDao getUser_infoDao() {
@@ -85,6 +87,9 @@ public Live_infoDao getLive_infoDao() {
 }
 public Message_infoDao getMessage_infoDao() {
 	return message_infoDao;
+}
+public Channel_infoDao getChannel_infoDao() {
+	return channel_infoDao;
 }
 
 
