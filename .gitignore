@@ -12,3 +12,4 @@ target
 bin
 
 src/test/resources/
+/doc/pdm/*.pdb
