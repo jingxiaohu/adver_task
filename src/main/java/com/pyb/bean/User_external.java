@@ -11,7 +11,7 @@ public class User_external implements Cloneable , Serializable{
 
     public long up_id;//bigint(20)    
     public long ui_id;//bigint(20)    用户标识关联user_info表里面的用户uuid
-    public int up_type;//int(11)    用户账户类型0微信用户1新浪账户2腾讯账户3人人账户4开心账户5天涯账户6FACEBOOK
+    public int up_type;//int(11)    注册来源0:未指定1:web2:android3:ios4:QQ5:微信6:新浪7:阿里
     public String up_token="";//varchar(500)    外部TOKEN
     public String up_key="";//varchar(500)    外部主键
     public long ctime;//bigint(20)    

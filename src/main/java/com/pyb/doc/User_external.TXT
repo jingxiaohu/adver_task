@@ -3,7 +3,7 @@
 |----|----|---|
 |up_id||long|
 |ui_id|用户标识关联user_info表里面的用户uuid|long|
-|up_type|用户账户类型0微信用户1新浪账户2腾讯账户3人人账户4开心账户5天涯账户6FACEBOOK|int|
+|up_type|注册来源0:未指定1:web2:android3:ios4:QQ5:微信6:新浪7:阿里|int|
 |up_token|外部TOKEN|String|
 |up_key|外部主键|String|
 |ctime||long|

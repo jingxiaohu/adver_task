@@ -1,5 +1,6 @@
 package com.pyb.mvc.action.v1.user.param;
 
+import apidoc.jxh.cn.TargetComment;
 import com.pyb.mvc.action.v1.param.BaseParam;
 
 /**
@@ -9,21 +10,21 @@ import com.pyb.mvc.action.v1.param.BaseParam;
  */
 public class Param_External_login extends BaseParam {
 	/********************接收参数区*************************/
-	public String tel;//用户手机号码
-	public String password;//用户密码 
-	public String uid;//用户ID
-	public String avtar;//头像 
+	@TargetComment(value = "头像",isnull = "是")
+	public String avtar;//头像
+	@TargetComment(value = "昵称",isnull = "是")
 	public String nickname;//昵称
-	public String sex;//性别
+	@TargetComment(value = "性别",isnull = "是")
+	public int sex;//性别
 	//第三方登录
-	public String up_type;//用户账户类型 0本地用户 1新浪账户 2腾讯账户 3人人账户 4开心账户 5天涯账户 6FACEBOOK',
+	@TargetComment(value = "用户账户类型 来源0:未指定1:web2:android 3:ios 4:QQ 5:微信 6:新浪 7:阿里",isnull = "否")
+	public Integer up_type;//用户账户类型 来源0:未指定1:web2:android 3:ios 4:QQ 5:微信 6:新浪 7:阿里,
+	@TargetComment(value = "外部TOKEN",isnull = "否")
 	public String up_token;//外部TOKEN
+	@TargetComment(value = "外部KEY",isnull = "否")
 	public String up_key;//外部KEY
 	/************************get set 方法区****************************/
 
-	public String getTel() {
-		return tel;
-	}
 	public String getAvtar() {
 		return avtar;
 	}
@@ -47,21 +48,13 @@ public class Param_External_login extends BaseParam {
 	}
 
 
-
-	public String getSex() {
+	public int getSex() {
 		return sex;
 	}
 
-
-
-	public void setSex(String sex) {
+	public void setSex(int sex) {
 		this.sex = sex;
 	}
-
-
-
-
-
 
 	public String getUp_token() {
 		return up_token;
@@ -85,36 +78,11 @@ public class Param_External_login extends BaseParam {
 		this.up_key = up_key;
 	}
 
-
-
-	public String getUid() {
-		return uid;
-	}
-
-
-
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-
-
-
-	public void setTel(String tel) {
-		this.tel = tel;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getUp_type() {
+	public Integer getUp_type() {
 		return up_type;
 	}
-	public void setUp_type(String up_type) {
+
+	public void setUp_type(Integer up_type) {
 		this.up_type = up_type;
 	}
-
-	
 }

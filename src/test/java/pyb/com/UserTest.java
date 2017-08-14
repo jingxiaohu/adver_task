@@ -1,5 +1,7 @@
 package pyb.com;
 
+import apidoc.jxh.cn.InterfaceUtil;
+import com.pyb.mvc.action.v1.user.param.Param_External_login;
 import org.junit.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MvcResult;
@@ -129,8 +131,46 @@ public class UserTest extends BaseWebTest {
         .andExpect(status().isOk()).andReturn();
     System.err.println(mvcResult.getResponse().getContentAsString());
   }
-  
-  
+
+    /**
+     * 第三方用户登陆例子：
+     * <pre>
+     * {"data":{"ctime":1500180577000,"is_vip":0,"note":"","ui_avtar":"","ui_bind_tel":"251878350@qq.com","ui_email":"251878350@qq.com","ui_flag":2,"ui_id":1,"ui_lock":0,"ui_name":"","ui_nd":"2017071612493744156","ui_nickname":"m3pdkDN6","ui_password":"e10adc3949ba59abbe56e057f20f883e","ui_reg_type":1,"ui_release":0,"ui_sex":0,"ui_sign":0,"ui_task":0,"ui_tel":"251878350@qq.com","ui_tj":0,"ui_token":"78cd4ce76d37a0c0fc29ff4a6ba53ce2","ui_vc":0,"ui_wx":"","ui_zfb":"","utime":1500180577000},"errorcode":"","errormsg":"登录成功","errorno":"0"}
+     * </pre>
+     */
+    @Test
+    public void external_login() throws Exception {
+         String avtar="";//头像
+         String nickname="";//昵称
+         int sex=0;//性别
+        //第三方登录
+         Integer up_type=4;//用户账户类型 来源0:未指定1:web2:android 3:ios 4:QQ 5:微信 6:新浪 7:阿里,
+         String up_token="";//外部TOKEN
+         String up_key="";//外部KEY
+        MultiValueMap<String, String> params = getParams();
+        params.add("avtar",avtar );
+        params.add("nickname",nickname);
+        params.add("sex",sex+"" );
+        params.add("up_type",up_type+"");
+        params.add("up_token",up_token );
+        params.add("up_key",up_key);
+        sign(params, "dtype", "up_type","up_token","up_key");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/external_login").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "User.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "第三方用户登陆",
+                "dtype+up_type+up_token+up_key",
+                "/v1/external_login",
+                2,
+                params,
+                Param_External_login.class,
+                result);
+    }
   
   /**
    * 用户修改属性例子：

@@ -2,9 +2,7 @@ package com.pyb.mvc.service;
 
 import com.pyb.DataSource.DynamicDataSourceHolder;
 import com.pyb.DataSource.TargetDataSource;
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.Sms_validate;
-import com.pyb.bean.User_info_new;
+import com.pyb.bean.*;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.service.common.asyn.UserAsyn;
 import com.pyb.util.FileUtil;
@@ -368,81 +366,71 @@ public class UserBiz extends BaseBiz {
    * @param sex
    * @param ip
    */
-/*  public void ReturnExternalUserLogin(ReturnDataNew returnData, int dtype,
-                                      String up_type, String up_key, String up_token,
-                                      String avtar, String nickname, String sex,String ip) {
+  public void ReturnExternalUserLogin(ReturnDataNew returnData, int dtype,
+                                      Integer up_type, String up_key, String up_token,
+                                      String avtar, String nickname, int sex,String ip) {
     // TODO Auto-generated method stub
     //dtype,uid,up_type,up_key,up_token,imei,tel_version,item,ip
     try {
       //检查该用户是否已经注册过 如果没有则不能进行登录
 //			String sql = "select *  from user_external where up_key=? and up_token=? and up_type=?";
       String sql = "select *  from user_external where up_key=? and up_type=?";
-      User_external  user_external = getMySelfService().queryUniqueT(sql, User_external.class, up_key,up_type);
+      User_external user_external = getMySelfService().queryUniqueT(sql, User_external.class, up_key,up_type);
       if(user_external == null){
         //新增入库 并且进行创建一个我们的用户ID信息
         Date date = new Date();
         user_external = new  User_external();
         user_external.setUp_key(up_key);
         user_external.setUp_token(up_token);
-        user_external.setUp_type(Integer.parseInt(up_type));
+        user_external.setUp_type(up_type);
         user_external.setCtime(date.getTime());
         user_external.setUtime(date.getTime());
-        int id = user_externalDao.insert(user_external);
-
+        int id = daoFactory.getUser_externalDao().insert(user_external);
         if(id <  1){
-          returnData.setReturnData(errorcode_systerm, "登录失败", null);
+          returnData.setReturnData(errorcode_systerm, "登录失败", "");
           return ;
         }
         user_external.setUp_id(id);
         //绑定一个我们平台的数据
         String telephone = RandomStringUtils.random(15, true, true);
         String password = RandomStringUtils.random(8, true, true);
-        User_info userinfo = new User_info();
-        userinfo.setUi_loginname(telephone);
-//				userinfo.setUi_tel(telephone);
-        userinfo.setUi_password_show(password);
+        User_info_new userinfo = new User_info_new();
+		userinfo.setUi_tel(telephone);
         userinfo.setUi_password(DigestUtils.md5Hex(password));
-        userinfo.setUi_createtime(date.getTime());
-        userinfo.setUi_createtime_str(sf.format(date));
+        userinfo.setCtime(date);
+        userinfo.setUtime(date);
         //注册来源 0:android 1:ios 2: web 3:PC
-        userinfo.setUi_flag(dtype);
+        userinfo.setUi_flag(up_type);
         userinfo.setUi_nickname(RandomStringUtils.random(8, true, true));//用户昵称
         //电话号码+密码 生成的MD5码 （授权码）
         userinfo.setUi_token(DigestUtils.md5Hex(telephone+password));
-        //手机串号
-        userinfo.setUi_imei(imei);
-        //手机型号
-        userinfo.setUi_tel_version(tel_version);
         //注册类型
-//				0：手机号注册的用户户
-//				1：邮箱注册的用户
-//				2:第三方qq 等账号注册的
-        userinfo.setUi_reg_type(2);
+        userinfo.setUi_reg_type(0);
         if(!RequestUtil.checkObjectBlank(avtar)){
-          userinfo.setUi_avatar(avtar);
+          userinfo.setUi_avtar(avtar);
         }
         if(!RequestUtil.checkObjectBlank(nickname)){
           userinfo.setUi_nickname(nickname);
         }
         if(!RequestUtil.checkObjectBlank(sex)){
           try {
-            userinfo.setUi_sex(Integer.parseInt(sex));
+            userinfo.setUi_sex(sex);
           } catch (Exception e) {
             // TODO Auto-generated catch block
             log.error("userinfo.setUi_sex(Integer.parseInt(sex)) is error "+sex,e);
           }
         }
 
-        int userid = user_infoDao.insert(userinfo);
+        int userid = daoFactory.getUser_info_newDao().insert(userinfo);
         if(userid < 1){
-          returnData.setReturnData(errorcode_data, "登录失败", null);
+          returnData.setReturnData(errorcode_data, "登录失败", "");
           return ;
         }
         userinfo.setUi_id(userid);
 
         //更新外部表里面的用户ID
         user_external.setUi_id(userid);
-        int count = user_externalDao.updateByKey(user_external);
+        int count = daoFactory.getUser_externalDao().updateByKey(user_external);
         if(count < 1){
           returnData.setReturnData(errorcode_data, "登录失败", null);
           return ;
@@ -453,46 +441,25 @@ public class UserBiz extends BaseBiz {
 
       }
       //已经注册过了 再次登录的时候
-      User_info userinfo = user_infoDao.selectByKey(user_external.getUi_id());
+      User_info_new userinfo = daoFactory.getUser_info_newDao().selectByKey(user_external.getUi_id());
       if(userinfo == null){
         returnData.setReturnData(errorcode_data, "登录失败", null);
         return ;
       }
-
-
-      Date date = new Date();
-      User_log userlog = new User_log();
-      //用户ID
-      userlog.setUi_id(userinfo.getUi_id());
-      //0:android 1:ios 2: web 3:PC
-      userlog.setUl_flag(dtype);
-      userlog.setUl_imei(imei);
-      userlog.setUl_intime(date.getTime());
-      userlog.setUl_intime_str(sf.format(date));
-      userlog.setUl_ip(ip);
-      userlog.setUl_item_type(item);
-      userlog.setUl_name(userinfo.getUi_nickname());
-      //账号
-      userlog.setUl_number(userinfo.getUi_loginname());
-      //手机型号
-      userlog.setUl_tel_intro(tel_version);
-      int indexid = user_logDao.insert(userlog);
-      if(indexid < 1){
-        log.error("user_logDao.insert(userlog) is error");
-        returnData.setReturnData(errorcode_data, "登录失败", null);
-      }
+      //这里调用异步 用户登录日志记录
+      userAsyn.Log_recordUserLogin(userinfo, dtype, ip, returnData);
       //返回数据
-      userinfo.setUi_password_show("");
+      userinfo.setUi_password("");
       returnData.setReturnData(errorcode_success, "登录成功", userinfo);
       return ;
 
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("UserBiz ReturnExternalUserLogin is error", e);
-      returnData.setReturnData(errorcode_systerm, "system is error", null);
+      returnData.setReturnData(errorcode_systerm, "system is error", "");
       return ;
     }
-  }*/
+  }
   /**********************下面是分离的方法************************/
   /**
    * 检查该手机号码是否已经被其他人注册过了

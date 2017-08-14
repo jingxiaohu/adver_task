@@ -162,8 +162,8 @@ public class Write_UserLoginAction extends BaseV1Controller {
 			return null;
 		}
 		
-//		userBiz.ReturnExternalUserLogin(returnData, param.dtype,param.up_type,param.up_key,param.up_token
-//                ,param.avtar,param.nickname,param.sex,ip);
+		userBiz.ReturnExternalUserLogin(returnData, param.dtype,param.up_type,param.up_key,param.up_token
+                ,param.avtar,param.nickname,param.sex,ip);
 		sendResp(returnData,response);
 		return null;
 		

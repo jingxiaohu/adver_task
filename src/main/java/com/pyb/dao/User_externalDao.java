@@ -348,7 +348,7 @@ public class User_externalDao extends BaseDao{
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
                  "	`up_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
                  "	`ui_id`  BIGINT(20) NOT NULL COMMENT '//bigint(20)    用户标识关联user_info表里面的用户uuid'," +
-                 "	`up_type`  INT(11) COMMENT '//int(11)    用户账户类型0微信用户1新浪账户2腾讯账户3人人账户4开心账户5天涯账户6FACEBOOK'," +
+                 "	`up_type`  INT(11) COMMENT '//int(11)    注册来源0:未指定1:web2:android3:ios4:QQ5:微信6:新浪7:阿里'," +
                  "	`up_token`  TINYTEXT COMMENT '//varchar(500)    外部TOKEN'," +
                  "	`up_key`  TINYTEXT COMMENT '//varchar(500)    外部主键'," +
                  "	`ctime`  BIGINT(20) COMMENT '//bigint(20)    '," +
