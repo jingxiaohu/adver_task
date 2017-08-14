@@ -1,0 +1,12 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|up_id||long|
+|ui_id|用户标识关联user_info表里面的用户uuid|long|
+|up_type|用户账户类型0微信用户1新浪账户2腾讯账户3人人账户4开心账户5天涯账户6FACEBOOK|int|
+|up_token|外部TOKEN|String|
+|up_key|外部主键|String|
+|ctime||long|
+|utime||long|
+|note||String|
+

@@ -1,20 +1,20 @@
 
 package com.pyb.mvc.action.v1.user;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.pyb.bean.ReturnDataNew;
+import com.pyb.constants.Constants;
+import com.pyb.mvc.action.v1.BaseV1Controller;
+import com.pyb.mvc.action.v1.user.param.Param_External_login;
+import com.pyb.mvc.action.v1.user.param.Param_login;
+import com.pyb.mvc.service.UserBiz;
+import com.pyb.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.constants.Constants;
-import com.pyb.mvc.action.v1.BaseV1Controller;
-import com.pyb.mvc.action.v1.user.param.Param_login;
-import com.pyb.mvc.service.UserBiz;
-import com.pyb.util.RequestUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 用户登录  和 外部第三方用户系统授权登录 user_external
@@ -113,48 +113,57 @@ public class Write_UserLoginAction extends BaseV1Controller {
    * 第三方
    * @return
    */
-  /*@Action(value = "external_login")
-	public String user_external_login(){
+    @RequestMapping(value = "/external_login")
+    @ResponseBody
+	public String user_external_login(HttpServletRequest request, HttpServletResponse response, Param_External_login param){
 	ReturnDataNew returnData = new ReturnDataNew();
 	 try{
-		//检查是否是合法请求
-		String ip = getIpAddr(getRequest());
-		if(ip.startsWith("192.168") || ip.startsWith("127.0")){  
-			ip  =  null;
-		}
-		//2.1.4. 用户登录完成
-		if(RequestUtil.checkObjectBlank(sign)){
-			returnData.setReturnData(errorcode_param, " sign is null", null);
-			sendResp(returnData,response);
-			return null;
-		}
+       //参数检查
+       if (param == null) {
+         //参数传递错误
+         returnData.setReturnData(errorcode_param, "参数传递错误", "");
+         sendResp(returnData, response);
+         return null;
+       }
+       //检查是否进行了参数签名认证
+       if (!param.checkRequest()) {
+         returnData.setReturnData(errorcode_param, "没有进行参数签名认证", "");
+         sendResp(returnData, response);
+         return null;
+       }
+       //对封装的参数对象中的属性进行 非空等规则验证
+       String ip = getIpAddr(request);
+       if (ip.startsWith("192.168") || ip.startsWith("127.0")) {
+         ip = null;
+       }
 		
 		//用户登录
-		if(RequestUtil.checkObjectBlank(up_type)){
+		if(RequestUtil.checkObjectBlank(param.up_type)){
 			returnData.setReturnData(errorcode_param, " up_type is null", null);
 			sendResp(returnData,response);
 			return null;
 		}
-		if(RequestUtil.checkObjectBlank(up_key)){
+		if(RequestUtil.checkObjectBlank(param.up_key)){
 			returnData.setReturnData(errorcode_param, " up_key is null", null);
 			sendResp(returnData,response);
 			return null;
 		}
-		if(RequestUtil.checkObjectBlank(up_token)){
+		if(RequestUtil.checkObjectBlank(param.up_token)){
 			returnData.setReturnData(errorcode_param, " up_token is null", null);
 			sendResp(returnData,response);
 			return null;
 		}
 		
-		String sign_str = getSignature(Constants.getSystemKey(param.dtype), dtype,up_type,up_key,up_token);
-		if(!sign.equalsIgnoreCase(sign_str)){
-			log.warn("sign="+sign+"  sign_str="+sign_str);
+		String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.dtype,param.up_type,param.up_key,param.up_token);
+		if(!param.sign.equalsIgnoreCase(sign_str)){
+			log.warn("sign="+param.sign+"  sign_str="+sign_str);
 			returnData.setReturnData(errorcode_param, " sign is not right", null);
 			sendResp(returnData,response);
 			return null;
 		}
 		
-		userBiz.ReturnExternalUserLogin(returnData, dtype,up_type,up_key,up_token,imei,tel_version,item,avtar,nickname,sex,ip);
+//		userBiz.ReturnExternalUserLogin(returnData, param.dtype,param.up_type,param.up_key,param.up_token
+//                ,param.avtar,param.nickname,param.sex,ip);
 		sendResp(returnData,response);
 		return null;
 		
@@ -164,7 +173,7 @@ public class Write_UserLoginAction extends BaseV1Controller {
 		}
 		sendResp(returnData,response);
 		return null; 
-	}*/
+	}
 
 
 }

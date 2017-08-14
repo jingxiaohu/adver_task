@@ -41,6 +41,8 @@ protected Live_infoDao live_infoDao;
 protected Message_infoDao message_infoDao;
 @Autowired
 protected Channel_infoDao channel_infoDao;
+@Autowired
+protected User_externalDao user_externalDao;
 
 /*******************************下面是GET方法**************************************/
 public User_info_newDao getUser_info_newDao() {
@@ -90,6 +92,9 @@ public Message_infoDao getMessage_infoDao() {
 }
 public Channel_infoDao getChannel_infoDao() {
 	return channel_infoDao;
+}
+public User_externalDao getUser_externalDao() {
+	return user_externalDao;
 }
 
 
