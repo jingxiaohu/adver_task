@@ -1,0 +1,14 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|id||long|
+|post_id||long|
+|category_id||long|
+|category_code|分类英文代码|String|
+|url||String|
+|title|标题|String|
+|date_time|时间|java.util.Date|
+|url_status|发布状态0：还没有发布1：已经发布2：删除|int|
+|content|内容|String|
+|father_url|上级的URL|String|
+
