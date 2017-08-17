@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -13,14 +15,21 @@ import java.net.URL;
 
 /**
  * eaveryday spider article
+ * https://jsoup.org/apidocs/
  */
 public class EaverydayArticleSpider extends BaseSpider {
+    Logger log = LoggerFactory.getLogger(EaverydayArticleSpider.class);
     /**
      * make content spider
      */
     public Document MakeArticle(String url) throws MalformedURLException ,IOException {
         URL xx = new URL(url);
-        Document document = Jsoup.parse(xx, 600);
+        Document document = Jsoup.parse(xx, 12000);
+        try {
+            Thread.currentThread().sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 //        log.info(document.html());
         return document;
     }

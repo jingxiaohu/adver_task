@@ -43,6 +43,12 @@ protected Message_infoDao message_infoDao;
 protected Channel_infoDao channel_infoDao;
 @Autowired
 protected User_externalDao user_externalDao;
+@Autowired
+protected Wp_postsDao wp_postsDao;
+@Autowired
+protected Wp_termsDao wp_termsDao;
+@Autowired
+protected Wp_post_jxhDao wp_post_jxhDao;
 
 /*******************************下面是GET方法**************************************/
 public User_info_newDao getUser_info_newDao() {
@@ -95,6 +101,15 @@ public Channel_infoDao getChannel_infoDao() {
 }
 public User_externalDao getUser_externalDao() {
 	return user_externalDao;
+}
+public Wp_postsDao getWp_postsDao() {
+	return wp_postsDao;
+}
+public Wp_termsDao getWp_termsDao() {
+	return wp_termsDao;
+}
+public Wp_post_jxhDao getWp_post_jxhDao() {
+	return wp_post_jxhDao;
 }
 
 

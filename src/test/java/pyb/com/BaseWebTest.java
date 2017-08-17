@@ -28,7 +28,7 @@ import java.util.List;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration({"file:src/main/webapp/WEB-INF/config/spring/spring_test.xml","file:src/main/webapp/WEB-INF/config/spring/dispatcher-servlet.xml"})
+@ContextConfiguration({"file:src/main/webapp/WEB-INF/config/spring/spring.xml","file:src/main/webapp/WEB-INF/config/spring/dispatcher-servlet.xml"})
 public abstract class BaseWebTest {
 
   public static String basepath = "D:/my_java_project/wypyb_task/src/test/java/pyb/com/";
