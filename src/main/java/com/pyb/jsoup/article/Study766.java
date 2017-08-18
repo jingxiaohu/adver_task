@@ -6,6 +6,7 @@ import com.pyb.mvc.service.BaseBiz;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -53,6 +54,7 @@ public class Study766 extends BaseBiz{
                 for (Element element : elements) {
                     String title = element.text();
                     String href = element.attr("href");
+                    if("".equalsIgnoreCase(href)){continue;}
                     if (href == null || title== null){continue;}
 
                     if (href != null && href.indexOf("List") != -1){
@@ -62,7 +64,7 @@ public class Study766 extends BaseBiz{
                         log.info("数据={}",element.text()+"  "+element.attr("href"));
                         Wp_post_jxh wp_post_jxh = WpPostModel.getWp_post_jxh();
                         wp_post_jxh.setTitle(title.trim());
-                        if(href.indexOf("http:") == -1){
+                        if(href.indexOf("http") == -1){
                             href = prefx+href;
                         }
                         String content = GetContent( href, testspider);
@@ -71,7 +73,7 @@ public class Study766 extends BaseBiz{
                         wp_post_jxh.setDate_time(new Date());
                         wp_post_jxh.setCategory_id(10);
                         wp_post_jxh.setCategory_code("study");
-                        wp_post_jxh.setUrl(prefx+href);
+                        wp_post_jxh.setUrl(href);
                         wp_post_jxh.setFather_url(url);
                         list2.add(wp_post_jxh);
                     }
@@ -122,7 +124,7 @@ public class Study766 extends BaseBiz{
                     }else{
                         log.info("数据={}",element.text()+"  "+element.attr("href"));
                         //获取内容之前 先检查是否不是最终的内容页面
-                        if(href.indexOf("http:") == -1){
+                        if(href.indexOf("http") == -1){
                             href = prefx+href;
                         }
                         Document document2 = null;
@@ -200,14 +202,15 @@ public class Study766 extends BaseBiz{
         return content;
     }
 
-    public String GetContent2(String url,EaverydayArticleSpider testspider)  {
+    public String GetContent2(String url,EaverydayArticleSpider testspider,String prefx)  {
         Document document2 = null;
         try {
             document2 = testspider.MakeArticle(url);
-            Elements elements2  =  document2.select("neirong").select("FONT");
+            Elements elements2  =  document2.select(".neirong").select("FONT");
             if (elements2.size() > 0){
 //                String content = elements2.get(0).text();
                 Element element = elements2.get(0);
+                element = AddImagePrefx( element, prefx);
                 String content = element.html();
 //                log.info("content={}",content);
                 //获取里面的连接地址 检查是否还有下一页
@@ -242,10 +245,11 @@ public class Study766 extends BaseBiz{
         String prefx = "http://www.net767.com";
         try {
             document2 = testspider.MakeArticle(url);
-            Elements elements2  =  document2.select("neirong").select("FONT");
+            Elements elements2  =  document2.select(".neirong").select("FONT");
             if (elements2.size() > 0){
                 StringBuffer sb = new StringBuffer();
                 Element element = elements2.get(0);
+                element = AddImagePrefx( element, prefx);
                 String content = element.html();
 //                log.info("content={}",content);
                 //获取里面的连接地址 检查是否还有下一页
@@ -277,10 +281,10 @@ public class Study766 extends BaseBiz{
                     if(list.size() > 0){
                         //有数据
                         for (String surl : list) {
-                            if(surl.indexOf("http:") == -1){
+                            if(surl.indexOf("http") == -1){
                                 surl = prefx+surl;
                             }
-                            String content_temp  =  GetContent2( surl, testspider);
+                            String content_temp  =  GetContent2( surl, testspider,prefx);
                             if (content_temp == null || "".equalsIgnoreCase(content_temp)){
                                 continue;
                             }
@@ -313,7 +317,7 @@ public class Study766 extends BaseBiz{
      */
     public boolean checkIsContent(EaverydayArticleSpider testspider,Document document){
 
-        Elements elements2  =  document.select("neirong").select("FONT");
+        Elements elements2  =  document.select(".neirong").select("FONT");
         if(elements2.size() > 0){
             //是内容
             return  true;
@@ -331,10 +335,47 @@ public class Study766 extends BaseBiz{
        return ss.replace(ss.substring(ss.lastIndexOf("/")),"" );
     }
 
+    /**
+     * 给内容里面的图片 添加上访问全地址  就是图片访问的前缀
+     */
+    public Element AddImagePrefx(Element element,String prefx){
+        try {
+            Elements elements = element.select("img");
+            if(elements != null && elements.size() > 0){
+                for (int i = 0; i < elements.size(); i++) {
+                    Element element1 = elements.get(i);
+                    String src = element1.attr("src");
+                    if(src.indexOf("http") == -1){
+                        if(src.indexOf("/") == 0){
+                            src = prefx+src;
+                        }else{
+                            src = prefx+"/"+src;
+                        }
+                        element1.attr("src",src);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            log.error("AddImagePrefx=>错误{}",e.getMessage());
+        }
+        return element;
+    }
 
-
-
-
+   /* @Test
+    public void tt2() throws IOException {
+        String url = "http://www.net767.com/book/kxianrumen/201702/22549.html";
+        EaverydayArticleSpider testspider = new EaverydayArticleSpider();
+        String prefx = "http://www.net767.com";
+        Document document2 = testspider.MakeArticle(url);
+        Elements elements  =  document2.select(".neirong").select("FONT");
+        if(elements.size() == 0){
+            System.out.println("没有数据");
+            return;
+        }
+        Element element = elements.get(0);
+        element = AddImagePrefx( element, prefx);
+        System.out.println(element.toString());
+    }*/
 
 }
 

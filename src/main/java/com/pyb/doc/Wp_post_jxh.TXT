@@ -11,4 +11,5 @@
 |url_status|发布状态0：还没有发布1：已经发布2：删除|int|
 |content|内容|String|
 |father_url|上级的URL|String|
+|note|备注|String|
 

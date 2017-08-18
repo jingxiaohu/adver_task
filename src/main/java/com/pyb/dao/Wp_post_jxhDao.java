@@ -41,9 +41,9 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"id","post_id","category_id","category_code","url","title","date_time","url_status","content","father_url"};
-    private  String coulmns ="id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url";
-    private  String coulmns2 ="post_id,category_id,category_code,url,title,date_time,url_status,content,father_url";
+    private  String[] carrays ={"id","post_id","category_id","category_code","url","title","date_time","url_status","content","father_url","note"};
+    private  String coulmns ="id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
+    private  String coulmns2 ="post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public int insert(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url) VALUES (:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url)";
+            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public int insert_primarykey(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url) VALUES (:id,:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url)";
+            sql = "INSERT INTO "+TABLENAME2+" (id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:id,:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public int[] insert(final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url) VALUES (?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -124,6 +124,7 @@ public class Wp_post_jxhDao extends BaseDao{
                     ps.setInt(7, bean.url_status);
                     ps.setString(8, bean.content);
                     ps.setString(9, bean.father_url);
+                    ps.setString(10, bean.note);
                 }
             });
         }catch(Exception e){
@@ -142,7 +143,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public List<Wp_post_jxh> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url FROM "+TABLENAME2+" ORDER BY id";
+            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -160,7 +161,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public List<Wp_post_jxh> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
+            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -178,7 +179,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public List<Wp_post_jxh> selectGtKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url FROM "+TABLENAME2+" WHERE id>:id";
+            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id>:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
@@ -198,7 +199,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public Wp_post_jxh selectByKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url FROM "+TABLENAME2+" WHERE id=:id";
+            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id=:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
             List<Wp_post_jxh> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
@@ -237,7 +238,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public List<Wp_post_jxh> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -255,7 +256,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public int updateByKey(Wp_post_jxh bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=:post_id,category_id=:category_id,category_code=:category_code,url=:url,title=:title,date_time=:date_time,url_status=:url_status,content=:content,father_url=:father_url WHERE id=:id";
+            sql = "UPDATE "+TABLENAME2+" SET post_id=:post_id,category_id=:category_id,category_code=:category_code,url=:url,title=:title,date_time=:date_time,url_status=:url_status,content=:content,father_url=:father_url,note=:note WHERE id=:id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -273,7 +274,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public int[] updateByKey (final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=?,category_id=?,category_code=?,url=?,title=?,date_time=?,url_status=?,content=?,father_url=? WHERE id=?";
+            sql = "UPDATE "+TABLENAME2+" SET post_id=?,category_id=?,category_code=?,url=?,title=?,date_time=?,url_status=?,content=?,father_url=?,note=? WHERE id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -291,7 +292,8 @@ public class Wp_post_jxhDao extends BaseDao{
                     ps.setInt(7, bean.url_status);
                     ps.setString(8, bean.content);
                     ps.setString(9, bean.father_url);
-                    ps.setLong(10, bean.id);
+                    ps.setString(10, bean.note);
+                    ps.setLong(11, bean.id);
                 }
             });
         }catch(Exception e){
@@ -360,6 +362,7 @@ public class Wp_post_jxhDao extends BaseDao{
                  "	`url_status`  INT(11) NOT NULL COMMENT '//int(11)    发布状态0：还没有发布1：已经发布2：删除'," +
                  "	`content`  LONGTEXT COMMENT '//longtext    内容'," +
                  "	`father_url`  TINYTEXT COMMENT '//varchar(1000)    上级的URL'," +
+                 "	`note`  TINYTEXT COMMENT '//varchar(255)    备注'," +
                  "	PRIMARY KEY (`id`)," +
                  "	UNIQUE KEY `title` (`title`)," +
                  "	UNIQUE KEY `url` (`url`)" +

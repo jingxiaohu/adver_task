@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wp_post_jxh implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"id","post_id","category_id","category_code","url","title","date_time","url_status","content","father_url"};
+    //public static String[] carrays ={"id","post_id","category_id","category_code","url","title","date_time","url_status","content","father_url","note"};
 
     public long id;//bigint(11) unsigned    
     public long post_id;//bigint(11) unsigned    
@@ -19,6 +19,7 @@ public class Wp_post_jxh implements Cloneable , Serializable{
     public int url_status;//int(11)    发布状态0：还没有发布1：已经发布2：删除
     public String content="";//longtext    内容
     public String father_url="";//varchar(1000)    上级的URL
+    public String note="";//varchar(255)    备注
 
 
 
@@ -120,9 +121,20 @@ public class Wp_post_jxh implements Cloneable , Serializable{
         this.father_url= value;
     }
 
+    public String getNote(){
+        return note;
+    }
+
+    public void setNote(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.note= value;
+    }
 
 
-    public static Wp_post_jxh newWp_post_jxh(long id, long post_id, long category_id, String category_code, String url, String title, java.util.Date date_time, int url_status, String content, String father_url) {
+
+    public static Wp_post_jxh newWp_post_jxh(long id, long post_id, long category_id, String category_code, String url, String title, java.util.Date date_time, int url_status, String content, String father_url, String note) {
         Wp_post_jxh ret = new Wp_post_jxh();
         ret.setId(id);
         ret.setPost_id(post_id);
@@ -134,6 +146,7 @@ public class Wp_post_jxh implements Cloneable , Serializable{
         ret.setUrl_status(url_status);
         ret.setContent(content);
         ret.setFather_url(father_url);
+        ret.setNote(note);
         return ret;    
     }
 
@@ -148,6 +161,7 @@ public class Wp_post_jxh implements Cloneable , Serializable{
         int url_status = wp_post_jxh.getUrl_status();
         String content = wp_post_jxh.getContent();
         String father_url = wp_post_jxh.getFather_url();
+        String note = wp_post_jxh.getNote();
 
         this.setId(id);
         this.setPost_id(post_id);
@@ -159,6 +173,7 @@ public class Wp_post_jxh implements Cloneable , Serializable{
         this.setUrl_status(url_status);
         this.setContent(content);
         this.setFather_url(father_url);
+        this.setNote(note);
 
     }
 
@@ -174,6 +189,7 @@ public class Wp_post_jxh implements Cloneable , Serializable{
         int url_status = wp_post_jxh.getUrl_status();
         String content = wp_post_jxh.getContent();
         String father_url = wp_post_jxh.getFather_url();
+        String note = wp_post_jxh.getNote();
     }
 
     public Map<String,Object> toMap(){
@@ -191,6 +207,7 @@ public class Wp_post_jxh implements Cloneable , Serializable{
         int url_status = wp_post_jxh.getUrl_status();
         String content = wp_post_jxh.getContent();
         String father_url = wp_post_jxh.getFather_url();
+        String note = wp_post_jxh.getNote();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("id",id);
@@ -203,6 +220,7 @@ public class Wp_post_jxh implements Cloneable , Serializable{
         _ret.put("url_status",url_status);
         _ret.put("content",content);
         _ret.put("father_url",father_url);
+        _ret.put("note",note);
         return _ret;
     }
 
