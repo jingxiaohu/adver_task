@@ -119,56 +119,68 @@ public class Study766 extends BaseBiz{
 
                     if (href != null && href.indexOf("List") != -1){
                         href = prefx+href;
-//                        list1.add(href);
                     }else{
                         log.info("数据={}",element.text()+"  "+element.attr("href"));
                         //获取内容之前 先检查是否不是最终的内容页面
                         if(href.indexOf("http:") == -1){
                             href = prefx+href;
                         }
-                        if (!checkIsContent(href,testspider)){
+                        Document document2 = null;
+                        try {
+                            document2 = document2 = testspider.MakeArticle(href);
+                        } catch (IOException e) {
+                            log.error("错误");
+                        }
+                        if (!checkIsContent(testspider,document2)){
+                            //不是内容
+                            //获取列表 继续获取内容
+                            Elements elements2 = document2.select("a[href $= List_1.html]");
+                            if(elements2 != null && elements2.size() == 1){
+                                 element = elements2.get(0);
+                                 String href_temp = element.attr("href");
+                                 //获取目录
+                                String mulu = GetMuLu( href_temp);
+
+
+                                 title = element.text();
+                                 href = element.attr("href");
+                                  //这里获取内容
+                                /*if (href == null || title== null){continue;}
+
+                                if (href.indexOf("List") != -1){
+                                    href = prefx+href;
+                                }else{*/
+
+                            }
 
                         }else{
+                            String content = GetContent( href, testspider);
+                            if (content != null && !"".equalsIgnoreCase(content)){
+                                Wp_post_jxh wp_post_jxh = WpPostModel.getWp_post_jxh();
+                                wp_post_jxh.setTitle(title.trim());
+                                if (content == null) continue;
+                                wp_post_jxh.setContent(content.replaceAll("767股票学习网",""));
+                                wp_post_jxh.setDate_time(new Date());
+                                wp_post_jxh.setCategory_id(10);
+                                wp_post_jxh.setCategory_code("study");
+                                wp_post_jxh.setUrl(prefx+href);
+                                wp_post_jxh.setFather_url(url);
+                                //写入数据库
+                                try {
+                                    //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
+                                    daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
+                                } catch (SQLException e) {
+                                    log.error("插入Wp_post_jxh错误",e);
+                                }
+                            }
 
                         }
-
-
-                        String content = GetContent( href, testspider);
-                        /*if(){
-
-                        }*/
-
-
-
-
-
-                        Wp_post_jxh wp_post_jxh = WpPostModel.getWp_post_jxh();
-                        wp_post_jxh.setTitle(title.trim());
-                        if (content == null) continue;
-                        wp_post_jxh.setContent(content.replaceAll("767股票学习网",""));
-                        wp_post_jxh.setDate_time(new Date());
-                        wp_post_jxh.setCategory_id(10);
-                        wp_post_jxh.setCategory_code("study");
-                        wp_post_jxh.setUrl(prefx+href);
-                        wp_post_jxh.setFather_url(url);
-                        list2.add(wp_post_jxh);
                     }
                 }
             } catch (Exception e) {
                 log.error("错误｛｝",e);
             }
-            //写入数据库
-            if (list2.size() > 0){
-                for (Wp_post_jxh wp_post_jxh : list2) {
-                    try {
-                        //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
 
-                        daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
-                    } catch (SQLException e) {
-                        log.error("插入Wp_post_jxh错误",e);
-                    }
-                }
-            }
 
         }
     }
@@ -296,18 +308,12 @@ public class Study766 extends BaseBiz{
 
     /**
      * 检查是否是内容
-     * @param url
      * @param testspider
      * @return false:不是 true:是
      */
-    public boolean checkIsContent(String url,EaverydayArticleSpider testspider){
-        Document document2 = null;
-        try {
-            document2 = document2 = testspider.MakeArticle(url);
-        } catch (IOException e) {
-            log.error("错误");
-        }
-        Elements elements2  =  document2.select("neirong").select("FONT");
+    public boolean checkIsContent(EaverydayArticleSpider testspider,Document document){
+
+        Elements elements2  =  document.select("neirong").select("FONT");
         if(elements2.size() > 0){
             //是内容
             return  true;
@@ -315,7 +321,15 @@ public class Study766 extends BaseBiz{
         return  false;
     }
 
-
+    /**
+     * 获取目录
+     * @return
+     */
+    public String  GetMuLu(String ss){
+        //String ss = "/book/duanxianshiyin/201003/17399.html";
+        ss = ss.replace(ss.substring(ss.lastIndexOf("/")),"" );
+       return ss.replace(ss.substring(ss.lastIndexOf("/")),"" );
+    }
 
 
 
