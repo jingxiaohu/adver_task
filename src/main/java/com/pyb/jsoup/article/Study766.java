@@ -126,6 +126,13 @@ public class Study766 extends BaseBiz{
                         if(href.indexOf("http:") == -1){
                             href = prefx+href;
                         }
+                        if (!checkIsContent(href,testspider)){
+
+                        }else{
+
+                        }
+
+
                         String content = GetContent( href, testspider);
                         /*if(){
 
@@ -286,6 +293,35 @@ public class Study766 extends BaseBiz{
         }
         return null;
     }
+
+    /**
+     * 检查是否是内容
+     * @param url
+     * @param testspider
+     * @return false:不是 true:是
+     */
+    public boolean checkIsContent(String url,EaverydayArticleSpider testspider){
+        Document document2 = null;
+        try {
+            document2 = document2 = testspider.MakeArticle(url);
+        } catch (IOException e) {
+            log.error("错误");
+        }
+        Elements elements2  =  document2.select("neirong").select("FONT");
+        if(elements2.size() > 0){
+            //是内容
+            return  true;
+        }
+        return  false;
+    }
+
+
+
+
+
+
+
+
 }
 
 //<!--nextpage-->
