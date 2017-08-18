@@ -160,7 +160,7 @@ public class StudyUtil extends BaseBiz{
         }
     }
 
-    public String GetContent(String url,EaverydayArticleSpider testspider)  {
+/*    public String GetContent(String url,EaverydayArticleSpider testspider)  {
         Document document2 = null;
         try {
             document2 = testspider.MakeArticle(url);
@@ -174,9 +174,122 @@ public class StudyUtil extends BaseBiz{
             log.error("解析错误",e);
         }
         return null;
+    }*/
+
+    /**
+     * 遍历取代
+     * @param elements3
+     * @param content
+     * @return
+     */
+    public String ReplaceStr(Elements elements3,String content){
+        if (elements3 != null && elements3.size() > 0){
+            for (Element element1 : elements3) {
+                content = content.replace(element1.outerHtml(),"");
+            }
+        }
+        return content;
     }
 
+    public String GetContent2(String url,EaverydayArticleSpider testspider)  {
+        Document document2 = null;
+        try {
+            document2 = testspider.MakeArticle(url);
+            Elements elements2  =  document2.select(".neirong").select("FONT");
+            if (elements2.size() > 0){
+//                String content = elements2.get(0).text();
+                Element element = elements2.get(0);
+                String content = element.html();
+//                log.info("content={}",content);
+                //获取里面的连接地址 检查是否还有下一页
+                elements2 = element.select("a");
+                System.out.println("elements2.size()="+elements2.size());
+                if (elements2.size() > 0){
+                    //遍历
+                    for (Element element1 : elements2) {
+                        String href = element1.attr("href");
+                        if (href == null){
+                            continue;
+                        }
+                        if (href.contains("net767.com")){
+                            //内容清除掉
+                            content = content.replace(element1.toString(),"");
+                        }
+                    }
+                    //添加内容
+                    Elements elements3 = element.select("div");
+                    content = ReplaceStr(elements3,content);
+                }
+                return content;
+            }
+        } catch (IOException e) {
+            log.error("解析错误",e);
+        }
+        return null;
+    }
 
+    public String GetContent(String url,EaverydayArticleSpider testspider)  {
+        Document document2 = null;
+        String prefx = "http://www.net767.com";
+        try {
+            document2 = testspider.MakeArticle(url);
+            Elements elements2  =  document2.select(".neirong").select("FONT");
+            if (elements2.size() > 0){
+                StringBuffer sb = new StringBuffer();
+                Element element = elements2.get(0);
+                String content = element.html();
+//                log.info("content={}",content);
+
+
+                //获取里面的连接地址 检查是否还有下一页
+                elements2 = element.select("a");
+                System.out.println("elements2.size()="+elements2.size());
+                if (elements2.size() > 0){
+                    List<String> list = new ArrayList<String>();
+                    //遍历
+                    for (Element element1 : elements2) {
+                        //System.out.println("element1.outerHtml="+element1.outerHtml());
+                        //System.out.println("element1.toString="+element1.toString());
+                        String href = element1.attr("href");
+                        if (href == null){
+                            continue;
+                        }
+                        if (href.contains("net767.com")){
+                            //内容清除掉
+                            content = content.replace(element1.toString(),"");
+                        }else{
+                            list.add(href);
+                        }
+                    }
+                    //添加内容
+                    //添加内容
+                    Elements elements3 = element.select("div");
+                    content = ReplaceStr(elements3,content);
+                    sb.append(content);
+                    //----------------这里处理如果还有没有完全的分页内容-------------------------
+                    if(list.size() > 0){
+                        //有数据
+                        for (String surl : list) {
+                            if(surl.indexOf("http:") == -1){
+                                      surl = prefx+surl;
+                            }
+                            String content_temp  =  GetContent2( surl, testspider);
+                            if (content_temp == null || "".equalsIgnoreCase(content_temp)){
+                                continue;
+                            }
+                            sb.append("\r\n").append("<!--nextpage-->").append("\r\n");
+                            sb.append(content_temp);
+                        }
+                    }
+                }
+                //-----------------------------------------
+                return sb.toString();
+            }
+        } catch (IOException e) {
+            log.error("解析错误",e);
+        }
+        return null;
+    }
 
     @Test
     public void test() throws Exception {
@@ -203,22 +316,26 @@ public class StudyUtil extends BaseBiz{
 
     @Test
     public void testcontent(){
-        String url = "http://www.net767.com/gupiao/gupiao2/200804/3417.html";
-        Document document2 = null;
+        String url = "http://www.net767.com/gupiao/stock/200712/1769.html";
         try {
             EaverydayArticleSpider testspider = new EaverydayArticleSpider();
-            document2 = testspider.MakeArticle(url);
-            Elements elements2  =  document2.select(".neirong");
-            if (elements2.size() == 1){
-                Element xx = elements2.get(0);
-                String content = xx.text();
-                String content1 = xx.html();
-                log.info("content={}","12321321");
-                log.error("content1={}","dasdsadsada");
-            }
-        } catch (IOException e) {
+            String content = GetContent( url, testspider);
+            System.out.println(content);
+        } catch (Exception e) {
             log.error("解析错误",e);
         }
     }
+
+    @Test
+    public  void ddddd() throws IOException {
+        EaverydayArticleSpider testspider = new EaverydayArticleSpider();
+        Document document = testspider.MakeArticle("http://www.net767.com/gupiao/stock/200712/1769.html");
+        Elements elements2  =  document.select(".neirong").select("FONT");
+        System.out.println(elements2.size());
+    }
+
+
+
+
 
 }

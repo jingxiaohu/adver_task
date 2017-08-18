@@ -23,13 +23,13 @@ public class EaverydayArticleSpider extends BaseSpider {
      * make content spider
      */
     public Document MakeArticle(String url) throws MalformedURLException ,IOException {
-        URL xx = new URL(url);
-        Document document = Jsoup.parse(xx, 12000);
         try {
             Thread.currentThread().sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        URL xx = new URL(url);
+        Document document = Jsoup.parse(xx, 12000);
 //        log.info(document.html());
         return document;
     }

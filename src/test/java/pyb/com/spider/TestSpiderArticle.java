@@ -115,7 +115,8 @@ public class TestSpiderArticle extends BaseWebTest{
 private Study766 study766;
 @Test
 public void  executeSql(){
-        study766.DoPostData();
+//        study766.DoPostData();
+        study766.DoPostData("stock",1,4);
 }
 
 
