@@ -1,6 +1,13 @@
 package com.pyb.jsoup.article;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.highbeauty.pinyin.PinYin;
 import com.pyb.bean.Wp_post_jxh;
+import com.pyb.bean.Wp_term_jxh;
+import com.pyb.bean.Wp_term_taxonomy;
+import com.pyb.bean.Wp_terms;
+import com.pyb.exception.QzException;
 import com.pyb.jsoup.article.model.WpPostModel;
 import com.pyb.mvc.service.BaseBiz;
 import org.jsoup.nodes.Document;
@@ -10,6 +17,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -30,7 +38,11 @@ public class Study766 extends BaseBiz{
         String baseurl = "http://www.net767.com/gupiao/"+classname+"/List_%s.html";
         spider766("study" ,baseurl,classname,startpage,endpage);
     }
-
+    //http://www.net767.com/gupiao/stock/
+    //String baseurl = "http://www.net767.com/gupiao/"+classname+"/List_%s.html";
+    public void DoPostData(String baseurl,String classname,int startpage,int endpage){
+        spider766("study" ,baseurl,classname,startpage,endpage);
+    }
 
 
     public  void spider766(String CategoryCode , String baseurl,String classname,int startPage,int endPage){
@@ -67,7 +79,7 @@ public class Study766 extends BaseBiz{
                         if(href.indexOf("http") == -1){
                             href = prefx+href;
                         }
-                        String content = GetContent( href, testspider);
+                        String content = GetContent( href, testspider,prefx);
                         if (content == null) continue;
                         wp_post_jxh.setContent(content.replaceAll("767股票学习网",""));
                         wp_post_jxh.setDate_time(new Date());
@@ -96,20 +108,33 @@ public class Study766 extends BaseBiz{
 
         }
     }
-    public  void spider766_3(String CategoryCode , String baseurl,String classname,int startPage,int endPage){
+
+
+
+
+
+    public  void spider766_3( String prefx,Wp_term_jxh wp_term_jxh , String baseurl,String classname,int startPage,int endPage){
+        //定义 第一级的集合
+        //https://jsoup.org/apidocs/
         //定义 第一级的集合
         //https://jsoup.org/apidocs/
         EaverydayArticleSpider testspider = new EaverydayArticleSpider();
-        String prefx = "http://www.net767.com";
+//        String prefx = "http://www.net767.com";
         for (int i = startPage; i < endPage; i++) {
             List<Wp_post_jxh> list2 = new ArrayList<Wp_post_jxh>();
-            String url = baseurl;
-            url = String.format(url,i);
+            String url = "";
+            if(i == 1){
+                url = prefx+wp_term_jxh.url;
+            }else{
+                url = baseurl;
+                url = String.format(url,i);
+            }
+
             log.info("url={}",url);
             try {
                 Document document = testspider.MakeArticle(url);
                 Elements elements  =  document
-                        .select("a[href ^= /gupiao/"+classname+"]")
+                        .select("a[href ^="+classname+"]")
                         .select("a[href $= .html]");
                 log.info("条数={}",elements.size());
 
@@ -117,72 +142,51 @@ public class Study766 extends BaseBiz{
                 for (Element element : elements) {
                     String title = element.text();
                     String href = element.attr("href");
+                    if("".equalsIgnoreCase(href)){continue;}
                     if (href == null || title== null){continue;}
 
                     if (href != null && href.indexOf("List") != -1){
-                        href = prefx+href;
+//                        list1.add(href);
                     }else{
                         log.info("数据={}",element.text()+"  "+element.attr("href"));
-                        //获取内容之前 先检查是否不是最终的内容页面
+                        Wp_post_jxh wp_post_jxh = WpPostModel.getWp_post_jxh();
+                        wp_post_jxh.setTitle(title.trim());
                         if(href.indexOf("http") == -1){
                             href = prefx+href;
                         }
-                        Document document2 = null;
+                        String content = GetContent( href, testspider,prefx);
+                        if (content == null) continue;
+                        wp_post_jxh.setContent(content.replaceAll("767股票学习网",""));
+                        wp_post_jxh.setDate_time(new Date());
+                        wp_post_jxh.setCategory_id(wp_term_jxh.category_id);
+                        wp_post_jxh.setCategory_code(wp_term_jxh.category_code);
+                        wp_post_jxh.setUrl(href);
+                        wp_post_jxh.setFather_url(url);
+//                        list2.add(wp_post_jxh);
                         try {
-                            document2 = document2 = testspider.MakeArticle(href);
-                        } catch (IOException e) {
-                            log.error("错误");
-                        }
-                        if (!checkIsContent(testspider,document2)){
-                            //不是内容
-                            //获取列表 继续获取内容
-                            Elements elements2 = document2.select("a[href $= List_1.html]");
-                            if(elements2 != null && elements2.size() == 1){
-                                 element = elements2.get(0);
-                                 String href_temp = element.attr("href");
-                                 //获取目录
-                                String mulu = GetMuLu( href_temp);
+                            //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
 
-
-                                 title = element.text();
-                                 href = element.attr("href");
-                                  //这里获取内容
-                                /*if (href == null || title== null){continue;}
-
-                                if (href.indexOf("List") != -1){
-                                    href = prefx+href;
-                                }else{*/
-
-                            }
-
-                        }else{
-                            String content = GetContent( href, testspider);
-                            if (content != null && !"".equalsIgnoreCase(content)){
-                                Wp_post_jxh wp_post_jxh = WpPostModel.getWp_post_jxh();
-                                wp_post_jxh.setTitle(title.trim());
-                                if (content == null) continue;
-                                wp_post_jxh.setContent(content.replaceAll("767股票学习网",""));
-                                wp_post_jxh.setDate_time(new Date());
-                                wp_post_jxh.setCategory_id(10);
-                                wp_post_jxh.setCategory_code("study");
-                                wp_post_jxh.setUrl(prefx+href);
-                                wp_post_jxh.setFather_url(url);
-                                //写入数据库
-                                try {
-                                    //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
-                                    daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
-                                } catch (SQLException e) {
-                                    log.error("插入Wp_post_jxh错误",e);
-                                }
-                            }
-
+                            daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
+                        } catch (SQLException e) {
+                            log.error("插入Wp_post_jxh错误",e);
                         }
                     }
                 }
             } catch (Exception e) {
                 log.error("错误｛｝",e);
             }
+            //写入数据库
+            if (list2.size() > 0){
+                for (Wp_post_jxh wp_post_jxh : list2) {
+                    try {
+                        //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
 
+                        daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
+                    } catch (SQLException e) {
+                        log.error("插入Wp_post_jxh错误",e);
+                    }
+                }
+            }
 
         }
     }
@@ -240,9 +244,9 @@ public class Study766 extends BaseBiz{
         return null;
     }
 
-    public String GetContent(String url,EaverydayArticleSpider testspider)  {
+    public String GetContent(String url,EaverydayArticleSpider testspider,String prefx)  {
         Document document2 = null;
-        String prefx = "http://www.net767.com";
+//        String prefx = "http://www.net767.com";
         try {
             document2 = testspider.MakeArticle(url);
             Elements elements2  =  document2.select(".neirong").select("FONT");
@@ -361,21 +365,131 @@ public class Study766 extends BaseBiz{
         return element;
     }
 
-   /* @Test
-    public void tt2() throws IOException {
-        String url = "http://www.net767.com/book/kxianrumen/201702/22549.html";
+    /**
+     * 新增分类目录
+     * @throws IOException
+     */
+    @Transactional(rollbackFor = QzException.class)
+    public void addClass(Wp_terms wp_terms, Long fatherId,String url,String fatherurl) throws QzException {
+        if(wp_terms == null ){
+                return ;
+        }
+        try {
+        //首先检查是否存在 wp_terms
+            String sql = "select * from wp_terms where name=? limit 1";
+            Wp_terms wp_terms2 = getMySelfService().queryUniqueT(sql,Wp_terms.class,wp_terms.getName());
+            if (wp_terms2 != null){
+                return;
+            }
+
+        //首先验证是否新增二级目录 如果是则需要对 目录关系表中添加数据
+        if(fatherId == null){
+              //只是一级目录
+                int id = daoFactory.getWp_termsDao().insert(wp_terms);
+                if(id < 1){
+                    throw new QzException("addClass:daoFactory.getWp_termsDao().insert(wp_terms)  is error");
+                }
+                wp_terms.setTerm_id(id);
+
+                Wp_term_jxh wp_term_jxh = new Wp_term_jxh();
+                wp_term_jxh.setCategory_code(wp_terms.getSlug());
+                wp_term_jxh.setCategory_id(wp_terms.getTerm_id());
+                wp_term_jxh.setCtime(new Date());
+                wp_term_jxh.setFatherurl(fatherurl);
+                wp_term_jxh.setName(wp_terms.getName());
+                wp_term_jxh.setUrl(url);
+                id = daoFactory.getWp_term_jxhDao().insert(wp_term_jxh);
+                if(id < 1){
+                    throw new QzException("addClass:daoFactory.getWp_term_jxhDao().insert(wp_term_jxh)  is error");
+                }
+
+        }else{
+            //二级目录
+                int id =  daoFactory.getWp_termsDao().insert(wp_terms);
+                if(id < 1){
+                    throw new QzException("addClass:daoFactory.getWp_termsDao().insert(wp_terms)  is error");
+                }
+                wp_terms.setTerm_id(id);
+                //插入成功
+                Wp_term_taxonomy wp_term_taxonomy = new Wp_term_taxonomy();
+                wp_term_taxonomy.setParent(fatherId);
+                wp_term_taxonomy.setTerm_id(id);
+                wp_term_taxonomy.setTaxonomy("category");
+                wp_term_taxonomy.setDescription("");
+                id  = daoFactory.getWp_term_taxonomyDao().insert(wp_term_taxonomy);
+                if(id < 1){
+                    throw new QzException("addClass:daoFactory.getWp_term_taxonomyDao().insert(wp_term_taxonomy)  is error");
+                }
+
+                Wp_term_jxh wp_term_jxh = new Wp_term_jxh();
+                wp_term_jxh.setCategory_code(wp_terms.getSlug());
+                wp_term_jxh.setCategory_id(wp_terms.getTerm_id());
+                wp_term_jxh.setCtime(new Date());
+                wp_term_jxh.setFatherurl(fatherurl);
+                wp_term_jxh.setName(wp_terms.getName());
+                wp_term_jxh.setUrl(url);
+                id = daoFactory.getWp_term_jxhDao().insert(wp_term_jxh);
+                if(id < 1){
+                    throw new QzException("addClass:daoFactory.getWp_term_jxhDao().insert(wp_term_jxh)  is error");
+                }
+        }
+
+        } catch (Exception e) {
+            log.error("addClass  is error",e);
+            throw new QzException("addClass  is error",e);
+        }
+    }
+
+
+
+    /**
+     * 添加分类目录或者二级目录
+     * @param fatherId
+     * @param url
+     * @throws IOException
+     * @throws QzException
+     */
+    public void addClassMain(Long fatherId,String url) throws IOException, QzException {
+//        String url = "http://www.net767.com";
         EaverydayArticleSpider testspider = new EaverydayArticleSpider();
-        String prefx = "http://www.net767.com";
+//        String prefx = "http://www.net767.com";
         Document document2 = testspider.MakeArticle(url);
-        Elements elements  =  document2.select(".neirong").select("FONT");
+        //<P style="MARGIN-TOP: 4px; FONT-SIZE: 14px; MARGIN-BOTTOM
+        Elements elements  =  document2.select("p[style^=MARGIN-TOP: 4px; FONT-SIZE: 14px; MARGIN-BOTTOM]");
+        elements = elements.select("a");
         if(elements.size() == 0){
             System.out.println("没有数据");
             return;
         }
-        Element element = elements.get(0);
-        element = AddImagePrefx( element, prefx);
-        System.out.println(element.toString());
-    }*/
+        for (Element element : elements) {
+            System.out.println(element.toString());
+            String title = element.text();
+            String href = element.attr("href");
+            Wp_terms wp_terms = new Wp_terms();
+            wp_terms.setName(title);
+            wp_terms.setSlug(PinYin.getShortPinYin(title));
+            wp_terms.setTerm_group(0);
+
+            addClass(wp_terms, fatherId, href,url);
+        }
+    }
+
+
+    /**
+     * 新增分类目录
+     * @throws IOException
+     */
+    public List<Wp_term_jxh> FindWptermsJxh(long fatherId) {
+        try {
+            //首先检查是否存在 wp_terms
+            String sql = "select * from wp_term_jxh where category_id=?";
+            List<Wp_term_jxh> wp_terms_list = getMySelfService().queryListT(sql,Wp_term_jxh.class,fatherId);
+            return wp_terms_list;
+        } catch (Exception e) {
+            log.error("addClass  is error",e);
+        }
+        return null;
+    }
 
 }
 

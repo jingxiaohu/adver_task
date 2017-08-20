@@ -48,6 +48,12 @@ protected Wp_postsDao wp_postsDao;
 @Autowired
 protected Wp_termsDao wp_termsDao;
 @Autowired
+protected Wp_term_taxonomyDao wp_term_taxonomyDao;
+@Autowired
+protected Wp_termmetaDao wp_termmetaDao;
+@Autowired
+protected Wp_term_jxhDao wp_term_jxhDao;
+@Autowired
 protected Wp_post_jxhDao wp_post_jxhDao;
 
 /*******************************下面是GET方法**************************************/
@@ -107,6 +113,15 @@ public Wp_postsDao getWp_postsDao() {
 }
 public Wp_termsDao getWp_termsDao() {
 	return wp_termsDao;
+}
+public Wp_term_taxonomyDao getWp_term_taxonomyDao() {
+	return wp_term_taxonomyDao;
+}
+public Wp_termmetaDao getWp_termmetaDao() {
+	return wp_termmetaDao;
+}
+public Wp_term_jxhDao getWp_term_jxhDao() {
+	return wp_term_jxhDao;
 }
 public Wp_post_jxhDao getWp_post_jxhDao() {
 	return wp_post_jxhDao;

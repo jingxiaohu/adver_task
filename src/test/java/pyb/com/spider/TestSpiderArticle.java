@@ -1,6 +1,8 @@
 package pyb.com.spider;
 
 import com.pyb.bean.Wp_posts;
+import com.pyb.bean.Wp_term_jxh;
+import com.pyb.exception.QzException;
 import com.pyb.jsoup.article.EaverydayArticleSpider;
 import com.pyb.jsoup.article.Study766;
 import com.pyb.jsoup.article.model.WpPostModel;
@@ -116,7 +118,31 @@ private Study766 study766;
 @Test
 public void  executeSql(){
 //        study766.DoPostData();
-        study766.DoPostData("stock",1,4);
+//        study766.DoPostData("stock",1,4);
+
+
+
+    //String classname = "stock";
+    //String baseurl = "http://www.net767.com/gupiao/"+classname+"/List_%s.html";
+    //study766.DoPostData(baseurl,classname,1,4);
+    /*try {
+        study766.addClassMain((long) 11,"http://www.net767.com");
+    } catch (Exception e) {
+
+    }*/
+    List<Wp_term_jxh> list =  study766.FindWptermsJxh(11);
+    if(list != null && list.size() > 0){
+        for (Wp_term_jxh wp_term_jxh : list) {
+            try {
+                String classname = wp_term_jxh.url;
+                String baseurl = wp_term_jxh.fatherurl+classname+"/List_%s.html";
+                study766.spider766_3( wp_term_jxh.fatherurl,  wp_term_jxh ,  baseurl, classname,1,8);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
 
 

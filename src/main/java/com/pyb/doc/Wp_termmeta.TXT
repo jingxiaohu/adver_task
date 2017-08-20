@@ -1,0 +1,8 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|meta_id||long|
+|term_id||long|
+|meta_key||String|
+|meta_value||String|
+

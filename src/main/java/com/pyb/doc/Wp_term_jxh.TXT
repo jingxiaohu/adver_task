@@ -1,0 +1,12 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|id||long|
+|category_id|分类目录主键ID|long|
+|category_code|分类代码|String|
+|name|分类目录的抓取时候名称(标题)|String|
+|url|分类目录抓取的URL|String|
+|fatherurl|抓取的上级来源URL|String|
+|ctime|创建时间|java.util.Date|
+|noe|备注|String|
+
