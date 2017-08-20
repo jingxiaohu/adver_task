@@ -119,9 +119,6 @@ private Study766 study766;
 public void  executeSql(){
 //        study766.DoPostData();
 //        study766.DoPostData("stock",1,4);
-
-
-
     //String classname = "stock";
     //String baseurl = "http://www.net767.com/gupiao/"+classname+"/List_%s.html";
     //study766.DoPostData(baseurl,classname,1,4);

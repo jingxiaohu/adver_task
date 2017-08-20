@@ -7,10 +7,11 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wp_term_jxh implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"id","category_id","category_code","name","url","fatherurl","ctime","noe"};
+    //public static String[] carrays ={"id","category_id","category_father_id","category_code","name","url","fatherurl","ctime","noe"};
 
     public long id;//bigint(20)    
     public long category_id;//bigint(20)    分类目录主键ID
+    public long category_father_id;//bigint(20)    父级分类的ID
     public String category_code="";//varchar(100)    分类代码
     public String name="";//varchar(100)    分类目录的抓取时候名称(标题)
     public String url="";//varchar(255)    分类目录抓取的URL
@@ -34,6 +35,14 @@ public class Wp_term_jxh implements Cloneable , Serializable{
 
     public void setCategory_id(long value){
         this.category_id= value;
+    }
+
+    public long getCategory_father_id(){
+        return category_father_id;
+    }
+
+    public void setCategory_father_id(long value){
+        this.category_father_id= value;
     }
 
     public String getCategory_code(){
@@ -104,10 +113,11 @@ public class Wp_term_jxh implements Cloneable , Serializable{
 
 
 
-    public static Wp_term_jxh newWp_term_jxh(long id, long category_id, String category_code, String name, String url, String fatherurl, java.util.Date ctime, String noe) {
+    public static Wp_term_jxh newWp_term_jxh(long id, long category_id, long category_father_id, String category_code, String name, String url, String fatherurl, java.util.Date ctime, String noe) {
         Wp_term_jxh ret = new Wp_term_jxh();
         ret.setId(id);
         ret.setCategory_id(category_id);
+        ret.setCategory_father_id(category_father_id);
         ret.setCategory_code(category_code);
         ret.setName(name);
         ret.setUrl(url);
@@ -120,6 +130,7 @@ public class Wp_term_jxh implements Cloneable , Serializable{
     public void assignment(Wp_term_jxh wp_term_jxh) {
         long id = wp_term_jxh.getId();
         long category_id = wp_term_jxh.getCategory_id();
+        long category_father_id = wp_term_jxh.getCategory_father_id();
         String category_code = wp_term_jxh.getCategory_code();
         String name = wp_term_jxh.getName();
         String url = wp_term_jxh.getUrl();
@@ -129,6 +140,7 @@ public class Wp_term_jxh implements Cloneable , Serializable{
 
         this.setId(id);
         this.setCategory_id(category_id);
+        this.setCategory_father_id(category_father_id);
         this.setCategory_code(category_code);
         this.setName(name);
         this.setUrl(url);
@@ -142,6 +154,7 @@ public class Wp_term_jxh implements Cloneable , Serializable{
     public static void getWp_term_jxh(Wp_term_jxh wp_term_jxh ){
         long id = wp_term_jxh.getId();
         long category_id = wp_term_jxh.getCategory_id();
+        long category_father_id = wp_term_jxh.getCategory_father_id();
         String category_code = wp_term_jxh.getCategory_code();
         String name = wp_term_jxh.getName();
         String url = wp_term_jxh.getUrl();
@@ -157,6 +170,7 @@ public class Wp_term_jxh implements Cloneable , Serializable{
     public static Map<String,Object> toEnMap(Wp_term_jxh wp_term_jxh){
         long id = wp_term_jxh.getId();
         long category_id = wp_term_jxh.getCategory_id();
+        long category_father_id = wp_term_jxh.getCategory_father_id();
         String category_code = wp_term_jxh.getCategory_code();
         String name = wp_term_jxh.getName();
         String url = wp_term_jxh.getUrl();
@@ -167,6 +181,7 @@ public class Wp_term_jxh implements Cloneable , Serializable{
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("id",id);
         _ret.put("category_id",category_id);
+        _ret.put("category_father_id",category_father_id);
         _ret.put("category_code",category_code);
         _ret.put("name",name);
         _ret.put("url",url);

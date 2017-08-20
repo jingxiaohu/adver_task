@@ -25,12 +25,12 @@ public class JxhCoderAuto {
 				"wp_term_jxh",
 				"wp_post_jxh"
 				};
-		String ip = "114.55.10.246";
-//		String ip = "127.0.0.1";
+//		String ip = "114.55.10.246";
+		String ip = "127.0.0.1";
 		int port = 3306;
 		String user = "root";
-		String password = "jxh@@jingling123";
-//		String password = "root";
+//		String password = "jxh@@jingling123";
+		String password = "root";
 		String databaseName = "wypyb";
 		ABuilder.AutoCoder(is_maven,src,moduleName, pkg, tablenames, ip, port, user, password, databaseName);
 	}

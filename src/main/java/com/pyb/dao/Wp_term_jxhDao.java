@@ -41,9 +41,9 @@ public class Wp_term_jxhDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"id","category_id","category_code","name","url","fatherurl","ctime","noe"};
-    private  String coulmns ="id,category_id,category_code,name,url,fatherurl,ctime,noe";
-    private  String coulmns2 ="category_id,category_code,name,url,fatherurl,ctime,noe";
+    private  String[] carrays ={"id","category_id","category_father_id","category_code","name","url","fatherurl","ctime","noe"};
+    private  String coulmns ="id,category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe";
+    private  String coulmns2 ="category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public int insert(Wp_term_jxh bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (category_id,category_code,name,url,fatherurl,ctime,noe) VALUES (:category_id,:category_code,:name,:url,:fatherurl,:ctime,:noe)";
+            sql = "INSERT INTO "+TABLENAME2+" (category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe) VALUES (:category_id,:category_father_id,:category_code,:name,:url,:fatherurl,:ctime,:noe)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public int insert_primarykey(Wp_term_jxh bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (id,category_id,category_code,name,url,fatherurl,ctime,noe) VALUES (:id,:category_id,:category_code,:name,:url,:fatherurl,:ctime,:noe)";
+            sql = "INSERT INTO "+TABLENAME2+" (id,category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe) VALUES (:id,:category_id,:category_father_id,:category_code,:name,:url,:fatherurl,:ctime,:noe)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public int[] insert(final List<Wp_term_jxh> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (category_id,category_code,name,url,fatherurl,ctime,noe) VALUES (?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe) VALUES (?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -116,12 +116,13 @@ public class Wp_term_jxhDao extends BaseDao{
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     Wp_term_jxh bean = beans.get(i);
                     ps.setLong(1, bean.category_id);
-                    ps.setString(2, bean.category_code);
-                    ps.setString(3, bean.name);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.fatherurl);
-                    ps.setTimestamp(6, new Timestamp(bean.ctime.getTime()));
-                    ps.setString(7, bean.noe);
+                    ps.setLong(2, bean.category_father_id);
+                    ps.setString(3, bean.category_code);
+                    ps.setString(4, bean.name);
+                    ps.setString(5, bean.url);
+                    ps.setString(6, bean.fatherurl);
+                    ps.setTimestamp(7, new Timestamp(bean.ctime.getTime()));
+                    ps.setString(8, bean.noe);
                 }
             });
         }catch(Exception e){
@@ -140,7 +141,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public List<Wp_term_jxh> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,category_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" ORDER BY id";
+            sql = "SELECT id,category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" ORDER BY id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_term_jxh>(Wp_term_jxh.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -158,7 +159,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public List<Wp_term_jxh> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,category_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
+            sql = "SELECT id,category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_term_jxh>(Wp_term_jxh.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -176,7 +177,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public List<Wp_term_jxh> selectGtKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,category_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" WHERE id>:id";
+            sql="SELECT id,category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" WHERE id>:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wp_term_jxh>(Wp_term_jxh.class));
@@ -196,7 +197,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public Wp_term_jxh selectByKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,category_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" WHERE id=:id";
+            sql="SELECT id,category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" WHERE id=:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
             List<Wp_term_jxh> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wp_term_jxh>(Wp_term_jxh.class));
@@ -235,7 +236,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public List<Wp_term_jxh> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT id,category_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT id,category_id,category_father_id,category_code,name,url,fatherurl,ctime,noe FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wp_term_jxh>(Wp_term_jxh.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -253,7 +254,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public int updateByKey(Wp_term_jxh bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET category_id=:category_id,category_code=:category_code,name=:name,url=:url,fatherurl=:fatherurl,ctime=:ctime,noe=:noe WHERE id=:id";
+            sql = "UPDATE "+TABLENAME2+" SET category_id=:category_id,category_father_id=:category_father_id,category_code=:category_code,name=:name,url=:url,fatherurl=:fatherurl,ctime=:ctime,noe=:noe WHERE id=:id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -271,7 +272,7 @@ public class Wp_term_jxhDao extends BaseDao{
     public int[] updateByKey (final List<Wp_term_jxh> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET category_id=?,category_code=?,name=?,url=?,fatherurl=?,ctime=?,noe=? WHERE id=?";
+            sql = "UPDATE "+TABLENAME2+" SET category_id=?,category_father_id=?,category_code=?,name=?,url=?,fatherurl=?,ctime=?,noe=? WHERE id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -281,13 +282,14 @@ public class Wp_term_jxhDao extends BaseDao{
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     Wp_term_jxh bean = beans.get(i);
                     ps.setLong(1, bean.category_id);
-                    ps.setString(2, bean.category_code);
-                    ps.setString(3, bean.name);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.fatherurl);
-                    ps.setTimestamp(6, new Timestamp(bean.ctime.getTime()));
-                    ps.setString(7, bean.noe);
-                    ps.setLong(8, bean.id);
+                    ps.setLong(2, bean.category_father_id);
+                    ps.setString(3, bean.category_code);
+                    ps.setString(4, bean.name);
+                    ps.setString(5, bean.url);
+                    ps.setString(6, bean.fatherurl);
+                    ps.setTimestamp(7, new Timestamp(bean.ctime.getTime()));
+                    ps.setString(8, bean.noe);
+                    ps.setLong(9, bean.id);
                 }
             });
         }catch(Exception e){
@@ -348,6 +350,7 @@ public class Wp_term_jxhDao extends BaseDao{
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
                  "	`id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
                  "	`category_id`  BIGINT(20) COMMENT '//bigint(20)    分类目录主键ID'," +
+                 "	`category_father_id`  BIGINT(20) COMMENT '//bigint(20)    父级分类的ID'," +
                  "	`category_code`  VARCHAR(100) COMMENT '//varchar(100)    分类代码'," +
                  "	`name`  VARCHAR(100) COMMENT '//varchar(100)    分类目录的抓取时候名称(标题)'," +
                  "	`url`  TINYTEXT COMMENT '//varchar(255)    分类目录抓取的URL'," +
