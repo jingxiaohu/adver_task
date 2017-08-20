@@ -397,6 +397,7 @@ public class Study766 extends BaseBiz{
                 wp_term_jxh.setFatherurl(fatherurl);
                 wp_term_jxh.setName(wp_terms.getName());
                 wp_term_jxh.setUrl(url);
+                wp_term_jxh.setCategory_father_id(fatherId);
                 id = daoFactory.getWp_term_jxhDao().insert(wp_term_jxh);
                 if(id < 1){
                     throw new QzException("addClass:daoFactory.getWp_term_jxhDao().insert(wp_term_jxh)  is error");
@@ -427,6 +428,7 @@ public class Study766 extends BaseBiz{
                 wp_term_jxh.setFatherurl(fatherurl);
                 wp_term_jxh.setName(wp_terms.getName());
                 wp_term_jxh.setUrl(url);
+                wp_term_jxh.setCategory_father_id(fatherId);
                 id = daoFactory.getWp_term_jxhDao().insert(wp_term_jxh);
                 if(id < 1){
                     throw new QzException("addClass:daoFactory.getWp_term_jxhDao().insert(wp_term_jxh)  is error");
