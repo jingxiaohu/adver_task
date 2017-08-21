@@ -146,11 +146,15 @@ public class TestSpiderArticle extends BaseWebTest {
             //首先验证是否是内容
             Document document = testspider.MakeArticle("http://www.net767.com");
             //进行内容处理
-            Elements elements = document.select("FONT[color=#0d519c]");
+            Elements elements = document.select("FONT[color=#0d519c]")
+                    .select("a");
             // .select("a[href ^=" + classname + "]")
             //.select("a[href $= .html]");
             log.info("条数={}", elements.size());
             for (Element element : elements) {
+                if(element.attr("target") != null && !"".equalsIgnoreCase(element.attr("target"))){
+                        continue;
+                }
                 System.out.println(element.toString());
 //                String text = element.text();
 //                String href = element.attr("href");
