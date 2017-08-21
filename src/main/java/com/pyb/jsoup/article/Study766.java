@@ -483,7 +483,7 @@ public class Study766 extends BaseBiz{
     public List<Wp_term_jxh> FindWptermsJxh(long fatherId) {
         try {
             //首先检查是否存在 wp_terms
-            String sql = "select * from wp_term_jxh where category_id=?";
+            String sql = "select * from wp_term_jxh where category_father_id=?";
             List<Wp_term_jxh> wp_terms_list = getMySelfService().queryListT(sql,Wp_term_jxh.class,fatherId);
             return wp_terms_list;
         } catch (Exception e) {
