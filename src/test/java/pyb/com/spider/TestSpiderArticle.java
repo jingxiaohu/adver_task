@@ -1,8 +1,10 @@
 package pyb.com.spider;
 
 import com.pyb.bean.Wp_posts;
+import com.pyb.bean.Wp_term_jxh;
 import com.pyb.jsoup.article.EaverydayArticleSpider;
 import com.pyb.jsoup.article.Study766;
+import com.pyb.jsoup.article.StudyUtil;
 import com.pyb.jsoup.article.model.WpPostModel;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -114,6 +116,8 @@ public class TestSpiderArticle extends BaseWebTest {
 
     @Resource  //自动注入,默认按名称
     private Study766 study766;
+    @Resource
+    private StudyUtil studyUtil;
 
     @Test
     public void executeSql() {
@@ -140,7 +144,7 @@ public class TestSpiderArticle extends BaseWebTest {
         }
     }*/
         //添加数据
-        try {
+       /* try {
             //<FONT color=#0d519c>
             EaverydayArticleSpider testspider = new EaverydayArticleSpider();
             //首先验证是否是内容
@@ -155,13 +159,34 @@ public class TestSpiderArticle extends BaseWebTest {
                 if(element.attr("target") != null && !"".equalsIgnoreCase(element.attr("target"))){
                         continue;
                 }
-                System.out.println(element.toString());
-//                String text = element.text();
-//                String href = element.attr("href");
-//                System.out.println("text=" + text + "  href=" + href);
+//                System.out.println(element.toString());
+                String text = element.text();
+                String href = element.attr("href");
+                System.out.println("text=" + text + "  href=" + href);
+                try {
+                    study766.addClassMain2((long) 11,"http://www.net767.com");
+                } catch (Exception e) {
+
+                }
             }
         } catch (Exception e) {
+        }*/
+
+        List<Wp_term_jxh> list =  studyUtil.FindWptermsJxh(11,40,42);
+        if(list != null && list.size() > 0){
+            for (Wp_term_jxh wp_term_jxh : list) {
+                try {
+                    String classname = wp_term_jxh.url;
+                    String baseurl = wp_term_jxh.fatherurl+classname;
+//                    study766.spider766_3( wp_term_jxh.fatherurl,  wp_term_jxh ,  baseurl, classname,1,8);
+                    studyUtil.spider766_2(wp_term_jxh.fatherurl,wp_term_jxh,baseurl,classname);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
+
     }
 
 }

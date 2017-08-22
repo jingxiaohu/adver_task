@@ -1,7 +1,5 @@
 package com.pyb.jsoup.article;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.highbeauty.pinyin.PinYin;
 import com.pyb.bean.Wp_post_jxh;
 import com.pyb.bean.Wp_term_jxh;
@@ -475,7 +473,41 @@ public class Study766 extends BaseBiz{
         }
     }
 
+    /**
+     * 添加分类目录或者二级目录
+     * @param fatherId
+     * @param url
+     * @throws IOException
+     * @throws QzException
+     */
+    public void addClassMain2(Long fatherId,String url) throws IOException, QzException {
+//        String url = "http://www.net767.com";
+        EaverydayArticleSpider testspider = new EaverydayArticleSpider();
+//        String prefx = "http://www.net767.com";
+        Document document2 = testspider.MakeArticle(url);
+        //<P style="MARGIN-TOP: 4px; FONT-SIZE: 14px; MARGIN-BOTTOM
+        Elements elements = document2.select("FONT[color=#0d519c]");
+        elements = elements.select("a");
+        if(elements.size() == 0){
+            System.out.println("没有数据");
+            return;
+        }
+        log.info("条数={}", elements.size());
+        for (Element element : elements) {
+            if(element.attr("target") != null && !"".equalsIgnoreCase(element.attr("target"))){
+                continue;
+            }
+            System.out.println(element.toString());
+            String title = element.text();
+            String href = element.attr("href");
+            Wp_terms wp_terms = new Wp_terms();
+            wp_terms.setName(title);
+            wp_terms.setSlug(PinYin.getShortPinYin(title));
+            wp_terms.setTerm_group(0);
 
+            addClass(wp_terms, fatherId, href,url);
+        }
+    }
     /**
      * 新增分类目录
      * @throws IOException
@@ -491,6 +523,7 @@ public class Study766 extends BaseBiz{
         }
         return null;
     }
+
 
 }
 

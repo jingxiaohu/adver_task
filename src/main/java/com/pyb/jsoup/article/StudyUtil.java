@@ -97,7 +97,17 @@ public class StudyUtil extends BaseBiz {
      * 中国邮政编码：[1-9]\d{5}(?!\d) (中国邮政编码为6位数字)
      * IP地址：((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))
      */
-
+    public List<Wp_term_jxh> FindWptermsJxh(long fatherId,long startid,long endid) {
+        try {
+            //首先检查是否存在 wp_terms
+            String sql = "select * from wp_term_jxh where category_father_id=? and ( id > ? and id < ?)";
+            List<Wp_term_jxh> wp_terms_list = getMySelfService().queryListT(sql,Wp_term_jxh.class,fatherId,startid,endid);
+            return wp_terms_list;
+        } catch (Exception e) {
+            log.error("addClass  is error",e);
+        }
+        return null;
+    }
 
     public void spider766_2(String prefx, Wp_term_jxh wp_term_jxh, String url, String classname) {
         try {
