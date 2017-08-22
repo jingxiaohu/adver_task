@@ -179,7 +179,7 @@ public class TestSpiderArticle extends BaseWebTest {
                     String classname = wp_term_jxh.url;
                     String baseurl = wp_term_jxh.fatherurl+classname;
 //                    study766.spider766_3( wp_term_jxh.fatherurl,  wp_term_jxh ,  baseurl, classname,1,8);
-                    studyUtil.spider766_2(wp_term_jxh.fatherurl,wp_term_jxh,baseurl,classname);
+                    studyUtil.spider766_2(wp_term_jxh.fatherurl,wp_term_jxh,baseurl,classname,null);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

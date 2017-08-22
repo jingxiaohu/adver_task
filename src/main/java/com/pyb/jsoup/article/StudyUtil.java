@@ -18,9 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * https://jsoup.org/apidocs/
@@ -109,7 +107,7 @@ public class StudyUtil extends BaseBiz {
         return null;
     }
 
-    public void spider766_2(String prefx, Wp_term_jxh wp_term_jxh, String url, String classname) {
+    public void spider766_2(String prefx, Wp_term_jxh wp_term_jxh, String url, String classname,Set<String> set_List) {
         try {
             EaverydayArticleSpider testspider = new EaverydayArticleSpider();
             //首先验证是否是内容
@@ -120,8 +118,8 @@ public class StudyUtil extends BaseBiz {
                 Elements elements = document
                         .select("a[href ^=" + classname + "]")
                         .select("a[href $= .html]");
-                log.info("条数={}", elements.size());
-                if(elements == null){
+                log.info("内容页数={}", elements.size());
+                if(elements == null || elements.size() == 0){
                         return;
                 }
                 DoWithContent( elements.get(0), prefx, url, testspider, wp_term_jxh);
@@ -131,7 +129,7 @@ public class StudyUtil extends BaseBiz {
                         .select("a[href ^=" + classname + "]")
                         .select("a[href $= .html]");
                 log.info("条数={}", elements.size());
-                if(elements == null){
+                if(elements == null || elements.size() == 0){
                     return;
                 }
                 for (Element element : elements) {
@@ -147,7 +145,21 @@ public class StudyUtil extends BaseBiz {
                         href = prefx + href;
                     }
                     log.info("数据={}", element.text() + "  " + element.attr("href"));
-                    spider766_2( prefx,  wp_term_jxh,  href,  classname);
+                    System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
+                    if(href.indexOf("List_") != -1){
+                        if(set_List == null){
+                            set_List = new HashSet<String>();
+                        }
+                        if(!set_List.add(href)){
+                            return;
+                        }else {
+                            spider766_2( prefx,  wp_term_jxh,  href,  classname,set_List);
+                        }
+                    }else{
+                        spider766_2( prefx,  wp_term_jxh,  href,  classname,null);
+                    }
+
+
                 }
             }
         } catch (Exception e) {
@@ -172,8 +184,24 @@ public class StudyUtil extends BaseBiz {
             if (href == null || title == null) {
                 return;
             }
+            //拿到标题之前先进行验证 是否已经存在了 如果存在则不进行后面的处理了
+            String sql = "select * from wp_post_jxh where title=? limit 1";
+            Wp_post_jxh wp_post_jxh = null;
+            try {
+                wp_post_jxh = getMySelfService().queryUniqueT(sql,Wp_post_jxh.class,title.trim());
+                if(wp_post_jxh != null){
+                    //标题已经存在了
+                    System.out.println(title.trim()+"  已经存在了");
+                    return;
+                }
+            } catch (Exception e) {
+                log.error("查询错误",e);
+            }
+
+
             log.info("数据={}", element.text() + "  " + element.attr("href"));
-            Wp_post_jxh wp_post_jxh = WpPostModel.getWp_post_jxh();
+            System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
+            wp_post_jxh = WpPostModel.getWp_post_jxh();
             wp_post_jxh.setTitle(title.trim());
             if (href.indexOf("http") == -1) {
                 href = prefx + href;

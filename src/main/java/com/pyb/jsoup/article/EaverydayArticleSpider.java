@@ -24,7 +24,7 @@ public class EaverydayArticleSpider extends BaseSpider {
      */
     public Document MakeArticle(String url) throws MalformedURLException ,IOException {
         try {
-            Thread.currentThread().sleep(3000);
+            Thread.currentThread().sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
