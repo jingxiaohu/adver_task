@@ -172,7 +172,7 @@ public class TestSpiderArticle extends BaseWebTest {
         } catch (Exception e) {
         }*/
 
-        List<Wp_term_jxh> list =  studyUtil.FindWptermsJxh(11,40,42);
+        List<Wp_term_jxh> list =  studyUtil.FindWptermsJxh(11,40,68);
         if(list != null && list.size() > 0){
             for (Wp_term_jxh wp_term_jxh : list) {
                 try {
