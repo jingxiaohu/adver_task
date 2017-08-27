@@ -19,11 +19,16 @@ public class TestSpiderArticle_nfcj extends BaseWebTest {
     @Test
     public void executeSql() {
         //添加数据
-                try {
-                    nfcj_singleStock_Spider.addClassMain((long) 5,"http://www.southmoney.com/gegu/");
-                } catch (Exception e) {
+        /*try {
+            nfcj_singleStock_Spider.addClassMain((long) 5,"http://www.southmoney.com/gegu/");
+        } catch (Exception e) {
 
-                }
+        }*/
+        try {
+            nfcj_singleStock_Spider.FindWptermsJxh(5,77,79);
+        } catch (Exception e) {
+
+        }
     }
 
 

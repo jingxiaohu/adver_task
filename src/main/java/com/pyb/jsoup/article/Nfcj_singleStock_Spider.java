@@ -107,11 +107,79 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
         return null;
     }
 
-    public void spider766_2(String prefx, Wp_term_jxh wp_term_jxh, String url, String classname,Set<String> set_List) {
+    /**
+     * 递归出来内容
+     * @param prefx
+     * @param wp_term_jxh
+     * @param url
+     * @param classname
+     * @param set_List
+     */
+    public void DoWithRecursion(String prefx, Wp_term_jxh wp_term_jxh, String url, String classname,Set<String> set_List) {
         try {
+            classname = wp_term_jxh.url.replace(prefx,"");
+            //prefx http://www.southmoney.com
             EaverydayArticleSpider testspider = new EaverydayArticleSpider();
             //首先验证是否是内容
             Document document = testspider.MakeArticle(url);
+            Elements elements = document.select(".newslist");
+            List<String> list_url = new ArrayList<String>();
+
+            //检查是否存在列表
+            Elements elements_list = elements.select(".pagenation").select("a[href $= .html]");
+            if(elements_list != null && elements_list.size() > 0){
+                for (Element element : elements_list) {
+                    //遍历获取当前页面的数据
+
+
+                    list_url.add();
+                }
+
+            }
+
+
+            elements.select("a[href ^=" + classname + "]")
+                    .select("a[href $= .html]");
+            log.info("条数={}", elements.size());
+            if(elements == null || elements.size() == 0){
+                return;
+            }
+            for (Element element : elements) {
+                String text = element.text();
+                String href = element.attr("href");
+                if ("".equalsIgnoreCase(href)) {
+                    return;
+                }
+                if (href == null || text == null) {
+                    return;
+                }
+                if (href.indexOf("http") == -1) {
+                    href = prefx + href;
+                }
+                log.info("数据={}", element.text() + "  " + element.attr("href"));
+                System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
+                if(href.indexOf("List_") != -1){
+                    if(set_List == null){
+                        set_List = new HashSet<String>();
+                    }
+                    if(!set_List.add(href)){
+                        return;
+                    }else {
+                        DoWithRecursion( prefx,  wp_term_jxh,  href,  classname,set_List);
+                    }
+                }else{
+                    DoWithRecursion( prefx,  wp_term_jxh,  href,  classname,null);
+                }
+
+
+            }
+
+
+
+
+
+
+
             boolean iscontent = checkIsContent(testspider, document);
             if (iscontent) {
                 //进行内容处理
@@ -125,47 +193,41 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
                 DoWithContent( elements.get(0), prefx, url, testspider, wp_term_jxh);
             } else {
                 //不是内容进行非内容处理
-                Elements elements = document
-                        .select("a[href ^=" + classname + "]")
-                        .select("a[href $= .html]");
-                log.info("条数={}", elements.size());
-                if(elements == null || elements.size() == 0){
-                    return;
-                }
-                for (Element element : elements) {
-                    String text = element.text();
-                    String href = element.attr("href");
-                    if ("".equalsIgnoreCase(href)) {
-                        return;
-                    }
-                    if (href == null || text == null) {
-                        return;
-                    }
-                    if (href.indexOf("http") == -1) {
-                        href = prefx + href;
-                    }
-                    log.info("数据={}", element.text() + "  " + element.attr("href"));
-                    System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
-                    if(href.indexOf("List_") != -1){
-                        if(set_List == null){
-                            set_List = new HashSet<String>();
-                        }
-                        if(!set_List.add(href)){
-                            return;
-                        }else {
-                            spider766_2( prefx,  wp_term_jxh,  href,  classname,set_List);
-                        }
-                    }else{
-                        spider766_2( prefx,  wp_term_jxh,  href,  classname,null);
-                    }
 
-
-                }
             }
         } catch (Exception e) {
             log.error("spider766_2 is error message={}", e.getMessage());
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /**
      * dowith content s
      * @param element
@@ -435,7 +497,7 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
      */
     public boolean checkIsContent(EaverydayArticleSpider testspider, Document document) {
 
-        Elements elements2 = document.select(".neirong").select("FONT");
+        Elements elements2 = document.select(".articleCon");
         if (elements2.size() > 0) {
             //是内容
             return true;
