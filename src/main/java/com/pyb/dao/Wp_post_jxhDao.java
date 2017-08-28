@@ -1,15 +1,24 @@
 package com.pyb.dao;
 
-import org.slf4j.Logger;import org.slf4j.LoggerFactory;
-import java.util.*;
-
-import java.sql.*;
-import org.springframework.jdbc.core.*;
-import org.springframework.jdbc.core.namedparam.*;
-import org.springframework.jdbc.support.*;
-import com.pyb.bean.*;
-import org.springframework.stereotype.Repository;
 import com.highbeauty.text.EasyTemplate;
+import com.pyb.bean.Wp_post_jxh;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //wp_post_jxh
 

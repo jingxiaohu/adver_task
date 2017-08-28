@@ -18,7 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * https://jsoup.org/apidocs/
@@ -123,6 +128,11 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
             //首先验证是否是内容
             Document document = testspider.MakeArticle(url);
             Elements elements = document.select(".newslist");
+            log.info("条数={}", elements.size());
+            System.out.println(elements.toString());
+            if(elements == null || elements.size() == 0){
+                return;
+            }
             List<String> list_url = new ArrayList<String>();
 
             //检查是否存在列表
@@ -130,73 +140,71 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
             if(elements_list != null && elements_list.size() > 0){
                 for (Element element : elements_list) {
                     //遍历获取当前页面的数据
-
-
-                    list_url.add();
+                    String text = element.text();
+                    String href = element.attr("href");
+                    if( !isContainChinese(text) ){
+                        //没有汉字
+                        if(Integer.parseInt(text) ==  1){
+                            continue;
+                        }
+                        if (href.indexOf("http") == -1) {
+                            href = prefx + href;
+                        }
+                        list_url.add(href);
+                    }
                 }
 
             }
 
-
-            elements.select("a[href ^=" + classname + "]")
-                    .select("a[href $= .html]");
+            //先处理本页的数据
+            elements = elements.select("a[href *=" + classname + "]").select("a[href $= .html]");
             log.info("条数={}", elements.size());
             if(elements == null || elements.size() == 0){
                 return;
             }
             for (Element element : elements) {
+                //拿取本页的URL
                 String text = element.text();
                 String href = element.attr("href");
-                if ("".equalsIgnoreCase(href)) {
-                    return;
-                }
-                if (href == null || text == null) {
-                    return;
-                }
                 if (href.indexOf("http") == -1) {
                     href = prefx + href;
                 }
-                log.info("数据={}", element.text() + "  " + element.attr("href"));
-                System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
-                if(href.indexOf("List_") != -1){
-                    if(set_List == null){
-                        set_List = new HashSet<String>();
-                    }
-                    if(!set_List.add(href)){
-                        return;
-                    }else {
-                        DoWithRecursion( prefx,  wp_term_jxh,  href,  classname,set_List);
-                    }
-                }else{
-                    DoWithRecursion( prefx,  wp_term_jxh,  href,  classname,null);
-                }
-
-
+                /*Document document_content = testspider.MakeArticle(href);
+                boolean iscontent = checkIsContent(testspider, document_content);
+                if (iscontent) {
+                    DoWithContent( element, prefx, url, testspider, wp_term_jxh);
+                }*/
+                DoWithContent( element, prefx, url, testspider, wp_term_jxh);
             }
 
+            //遍历其它页面的数据
+            for (String url2 : list_url) {
+                //如果已经抓取过的就不再做处理了
 
 
-
-
-
-
-            boolean iscontent = checkIsContent(testspider, document);
-            if (iscontent) {
-                //进行内容处理
-                Elements elements = document
-                        .select("a[href ^=" + classname + "]")
-                        .select("a[href $= .html]");
-                log.info("内容页数={}", elements.size());
+                document = testspider.MakeArticle(url2);
+                elements = document.select(".newslist");
+                elements = elements.select("a[href *=" + classname + "]").select("a[href $= .html]");
+                log.info("条数={}", elements.size());
                 if(elements == null || elements.size() == 0){
-                        return;
+                    return;
                 }
-                DoWithContent( elements.get(0), prefx, url, testspider, wp_term_jxh);
-            } else {
-                //不是内容进行非内容处理
-
+                for (Element element : elements) {
+                    String text = element.text();
+                    String href = element.attr("href");
+                    if (href.indexOf("http") == -1) {
+                        href = url + href;
+                    }
+                    /*Document document_content = testspider.MakeArticle(href);
+                    boolean iscontent = checkIsContent(testspider, document_content);
+                    if (iscontent) {
+                        DoWithContent( element, prefx, url, testspider, wp_term_jxh);
+                    }*/
+                    DoWithContent( element, prefx, url, testspider, wp_term_jxh);
+                }
             }
         } catch (Exception e) {
-            log.error("spider766_2 is error message={}", e.getMessage());
+            log.error("DoWithRecursion is error message={}", e.getMessage());
         }
     }
 
@@ -240,6 +248,8 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
         try {
             String title = element.text();
             String href = element.attr("href");
+            //log.info("数据={}", element.text() + "  " + element.attr("href"));
+           // System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
             if ("".equalsIgnoreCase(href)) {
                 return;
             }
@@ -262,108 +272,33 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
 
 
             log.info("数据={}", element.text() + "  " + element.attr("href"));
-            System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
+           // System.out.println("数据={}"+ element.text() + "  " + element.attr("href"));
             wp_post_jxh = WpPostModel.getWp_post_jxh();
             wp_post_jxh.setTitle(title.trim());
             if (href.indexOf("http") == -1) {
                 href = prefx + href;
             }
-            String content = GetContent(href, testspider, prefx);
-            if (content == null) return;
-            wp_post_jxh.setContent(content.replaceAll("767股票学习网", ""));
+            String content = GetContent(href, testspider, prefx,url);
+            if (content == null || "".equals(content)) return;
+            //最后进行 搜索引擎的关键词SEO 优化
+            content = ContentDecorateLast(content);
+
+            wp_post_jxh.setContent(content);
             wp_post_jxh.setDate_time(new Date());
             wp_post_jxh.setCategory_id(wp_term_jxh.category_id);
             wp_post_jxh.setCategory_code(wp_term_jxh.category_code);
             wp_post_jxh.setUrl(href);
             wp_post_jxh.setFather_url(url);
-//                        list2.add(wp_post_jxh);
 
             //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
 
-            daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
-        } catch (SQLException e) {
+            int id = daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
+            log.info("新插入 id==={}"+id);
+        } catch (Exception e) {
             log.error("插入Wp_post_jxh错误", e);
         }
     }
 
-
-    public void spider766_3(String prefx, Wp_term_jxh wp_term_jxh, String baseurl, String classname, int startPage, int endPage) {
-        //https://jsoup.org/apidocs/
-        EaverydayArticleSpider testspider = new EaverydayArticleSpider();
-        for (int i = startPage; i < endPage; i++) {
-            List<Wp_post_jxh> list2 = new ArrayList<Wp_post_jxh>();
-            String url = "";
-            if (i == 1) {
-                url = prefx + wp_term_jxh.url;
-            } else {
-                url = baseurl;
-                url = String.format(url, i);
-            }
-
-            log.info("url={}", url);
-            try {
-                Document document = testspider.MakeArticle(url);
-                Elements elements = document
-                        .select("a[href ^=" + classname + "]")
-                        .select("a[href $= .html]");
-                log.info("条数={}", elements.size());
-
-
-                for (Element element : elements) {
-                    String title = element.text();
-                    String href = element.attr("href");
-                    if ("".equalsIgnoreCase(href)) {
-                        continue;
-                    }
-                    if (href == null || title == null) {
-                        continue;
-                    }
-
-                    if (href != null && href.indexOf("List") != -1) {
-//                        list1.add(href);
-                    } else {
-                        log.info("数据={}", element.text() + "  " + element.attr("href"));
-                        Wp_post_jxh wp_post_jxh = WpPostModel.getWp_post_jxh();
-                        wp_post_jxh.setTitle(title.trim());
-                        if (href.indexOf("http") == -1) {
-                            href = prefx + href;
-                        }
-                        String content = GetContent(href, testspider, prefx);
-                        if (content == null) continue;
-                        wp_post_jxh.setContent(content.replaceAll("767股票学习网", ""));
-                        wp_post_jxh.setDate_time(new Date());
-                        wp_post_jxh.setCategory_id(wp_term_jxh.category_id);
-                        wp_post_jxh.setCategory_code(wp_term_jxh.category_code);
-                        wp_post_jxh.setUrl(href);
-                        wp_post_jxh.setFather_url(url);
-//                        list2.add(wp_post_jxh);
-                        try {
-                            //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
-
-                            daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
-                        } catch (SQLException e) {
-                            log.error("插入Wp_post_jxh错误", e);
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                log.error("错误｛｝", e);
-            }
-            //写入数据库
-            if (list2.size() > 0) {
-                for (Wp_post_jxh wp_post_jxh : list2) {
-                    try {
-                        //每次插入之前先检查是否有标题相同的 如果有则标题名称后面 加一
-
-                        daoFactory.getWp_post_jxhDao().insert(wp_post_jxh);
-                    } catch (SQLException e) {
-                        log.error("插入Wp_post_jxh错误", e);
-                    }
-                }
-            }
-
-        }
-    }
 
     /**
      * 遍历取代
@@ -385,16 +320,15 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
         Document document2 = null;
         try {
             document2 = testspider.MakeArticle(url);
-            Elements elements2 = document2.select(".neirong").select("FONT");
+            Elements elements2 = document2.select(".articleCon");
             if (elements2.size() > 0) {
-//                String content = elements2.get(0).text();
                 Element element = elements2.get(0);
                 element = AddImagePrefx(element, prefx);
-                String content = element.html();
+                String content = ContentDecorate(element);
 //                log.info("content={}",content);
                 //获取里面的连接地址 检查是否还有下一页
                 elements2 = element.select("a");
-                System.out.println("elements2.size()=" + elements2.size());
+                log.info("elements2.size()={}" + elements2.size());
                 if (elements2.size() > 0) {
                     //遍历
                     for (Element element1 : elements2) {
@@ -402,14 +336,8 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
                         if (href == null) {
                             continue;
                         }
-                        if (href.contains("net767.com")) {
-                            //内容清除掉
-                            content = content.replace(element1.toString(), "");
-                        }
                     }
                     //添加内容
-                    Elements elements3 = element.select("div");
-                    content = ReplaceStr(elements3, content);
                 }
                 return content;
             }
@@ -419,49 +347,53 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
         return null;
     }
 
-    public String GetContent(String url, EaverydayArticleSpider testspider, String prefx) {
+    public String GetContent(String url, EaverydayArticleSpider testspider, String prefx,String baseurl) {
         Document document2 = null;
 //        String prefx = "http://www.net767.com";
         try {
             document2 = testspider.MakeArticle(url);
-            Elements elements2 = document2.select(".neirong").select("FONT");
+            Elements elements2 = document2.select(".articleCon");
             if (elements2.size() > 0) {
                 StringBuffer sb = new StringBuffer();
                 Element element = elements2.get(0);
                 element = AddImagePrefx(element, prefx);
-                String content = element.html();
+                String content = ContentDecorate(element);
 //                log.info("content={}",content);
                 //获取里面的连接地址 检查是否还有下一页
-                elements2 = element.select("a");
-                System.out.println("elements2.size()=" + elements2.size());
+                elements2 = element.select(".multipage").select("a");
+                log.info("elements2.size()={}" + elements2.size());
                 if (elements2.size() > 0) {
                     List<String> list = new ArrayList<String>();
                     //遍历
                     for (Element element1 : elements2) {
-                        //System.out.println("element1.outerHtml="+element1.outerHtml());
-                        //System.out.println("element1.toString="+element1.toString());
+                        String text = element1.text();
                         String href = element1.attr("href");
                         if (href == null) {
                             continue;
                         }
-                        if (href.contains("net767.com")) {
-                            //内容清除掉
-                            content = content.replace(element1.toString(), "");
-                        } else {
+                        if( !isContainChinese(text) ){
+                            if(Integer.parseInt(text) ==  1){
+                                continue;
+                            }
+                            // System.out.println("没有汉字");
+                            if (href.indexOf("http") == -1) {
+                                //截取上层目录
+                                url = url.replace(baseurl,"");
+                                url = url.substring(0,url.indexOf("/")+1);
+                                href = baseurl +url+ href;
+                            }
                             list.add(href);
                         }
+
                     }
                     //添加内容
-                    //添加内容
-                    Elements elements3 = element.select("div");
-                    content = ReplaceStr(elements3, content);
                     sb.append(content);
                     //----------------这里处理如果还有没有完全的分页内容-------------------------
                     if (list.size() > 0) {
                         //有数据
                         for (String surl : list) {
                             if (surl.indexOf("http") == -1) {
-                                surl = prefx + surl;
+                                surl = baseurl + surl;
                             }
                             String content_temp = GetContent2(surl, testspider, prefx);
                             if (content_temp == null || "".equalsIgnoreCase(content_temp)) {
@@ -504,6 +436,38 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
         }
         return false;
     }
+
+    /**
+     * 内容装饰器
+     */
+    public String ContentDecorate(Element element){
+        //首先去除--<div style="FLOAT: right;">
+//        element.replaceWith(element.select("div[style=FLOAT: right;]").get(0));
+        Elements elements = element.select("p");
+        //System.out.println("elements=content=="+elements.outerHtml());
+        String  content  = elements.outerHtml().replace("南方财富网","").replace("南财","");
+        return content;
+    }
+
+    /**
+     * 内容装饰器
+     */
+    public String ContentDecorateLast(String content){
+        StringBuffer sb = new StringBuffer();
+        sb.append("<html>\n" +
+                "<head>\n" +
+                "<meta charset=\"gb2312\">\n" +
+                "<title>个股行情,今日个股行情,股市行情</title>\n" +
+                "<meta name=\"description\" content=\"股掌个股行情频道,为您提供最新最及时的个股动态行情及今日股票行情。\">\n" +
+                "<meta name=\"Keywords\" content=\"今日个股行情,个股,个股行情\">\n" +
+                "</head>\n" +
+                "<body>").append("\r\n").append(content).append("\r\n").append("</body>\n" +
+                "</html>");
+        return sb.toString();
+    }
+
+
+
 
     /**
      * 获取目录
@@ -672,6 +636,20 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
         return null;
     }
 
+    /**
+     * 是否存在汉字
+     * @param str
+     * @return
+     */
+    public static boolean isContainChinese(String str) {
+
+        Pattern p = Pattern.compile("[\u4e00-\u9fa5]");
+        Matcher m = p.matcher(str);
+        if (m.find()) {
+            return true;
+        }
+        return false;
+    }
 }
 
 //<!--nextpage-->
