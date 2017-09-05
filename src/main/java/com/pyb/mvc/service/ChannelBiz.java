@@ -27,7 +27,7 @@ public class ChannelBiz extends  BaseBiz{
             int start = (page-1)*size;
             //首先验证用户是否存在
 //			String sql = "select * from channel_info where is_show=0 order by ci_id  asc limit "+start+","+size;
-            String sql = "select *  from (select a.* ,b.ui_nickname,ui_avtar from (select * from channel_info where is_show=0 order by ci_sort  desc limit "+start+","+size+") as a LEFT JOIN user_info as b on a.ui_id=b.ui_id) c order by c.ci_sort desc";
+            String sql = "select *  from (select a.* ,b.ui_nickname,ui_avtar from (select * from channel_info where is_show=0 order by ci_sort  desc limit "+start+","+size+") as a LEFT JOIN user_info_new as b on a.ui_id=b.ui_id) c order by c.ci_sort desc";
 
             Map<String,Object> paramMap = new HashMap<String,Object>();
             List<Map<String,Object>> list = getMySelfService().queryForList(sql, paramMap);

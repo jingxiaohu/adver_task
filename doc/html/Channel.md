@@ -1,0 +1,115 @@
+[[_TOC_]]
+### 渠道管理模块
+#### 1->读取频道信息列表
+|参数名称|值描述|是否可空|限制长度|参数类型|举例|
+|--------|-----|----|--------|-------|-----|
+| sign| MD5数字签名(dtype+ui_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+#### 请求路径
+[/v1/channel_list](/v1/channel_list)
+###### 返回结果
+```json
+{
+	"data":[
+		{
+			"ci_id":"4",
+			"ci_name":"每日精选",
+			"ci_sort":"100",
+			"ci_type":"1",
+			"ctime":"1464015331000",
+			"is_show":"0",
+			"note":"",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		},
+		{
+			"ci_id":"8",
+			"ci_name":"每周精选",
+			"ci_sort":"90",
+			"ci_type":"1",
+			"ctime":"1464704677000",
+			"is_show":"0",
+			"note":"",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		},
+		{
+			"ci_id":"3",
+			"ci_name":"实时大单",
+			"ci_sort":"80",
+			"ci_type":"0",
+			"ctime":"1463469929000",
+			"is_show":"0",
+			"note":"",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		},
+		{
+			"ci_id":"1",
+			"ci_name":"实时新闻",
+			"ci_sort":"70",
+			"ci_type":"0",
+			"ctime":"1457727689000",
+			"is_show":"0",
+			"note":"",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		},
+		{
+			"ci_id":"5",
+			"ci_name":"停复牌提示",
+			"ci_sort":"60",
+			"ci_type":"0",
+			"ctime":"1464170190000",
+			"is_show":"0",
+			"note":"东方财富网抓取",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		},
+		{
+			"ci_id":"6",
+			"ci_name":"定增增发",
+			"ci_sort":"50",
+			"ci_type":"0",
+			"ctime":"1464186308000",
+			"is_show":"0",
+			"note":"东方财富网抓取",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		},
+		{
+			"ci_id":"9",
+			"ci_name":"预案分配",
+			"ci_sort":"45",
+			"ci_type":"0",
+			"ctime":"1465288307000",
+			"is_show":"0",
+			"note":"东方财富网抓取",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		},
+		{
+			"ci_id":"7",
+			"ci_name":"分红转赠",
+			"ci_sort":"40",
+			"ci_type":"0",
+			"ctime":"1464186341000",
+			"is_show":"0",
+			"note":"东方财富网抓取",
+			"ui_avtar":"http://app.qc-wbo.com/file/img/avatar/2017/head251878350@qq.com_27163.jpg",
+			"ui_id":"1",
+			"ui_nickname":"小虎"
+		}
+	],
+	"errorcode":"",
+	"errormsg":"获取成功",
+	"errorno":"0"
+}
+
+```
