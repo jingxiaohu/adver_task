@@ -19,4 +19,8 @@
     }
 
 
-[1.用户管理接口文档](doc/user.html)
+[1.用户管理接口文档](doc_new/user.html)
+[2.笑话理接口文档](doc_new/Joke.html)
+[3.消息管理接口文档](doc_new/Message.html)
+[4.渠道管理接口文档](doc_new/Channel.html)
+
