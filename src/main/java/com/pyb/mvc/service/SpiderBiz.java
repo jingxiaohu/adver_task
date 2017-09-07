@@ -71,6 +71,7 @@ public class SpiderBiz extends BaseBiz{
 	 */
 	public void spiderChannel_1(){
 		try {
+			log.info("spiderChannel_1 spider is start..............");
 			long ci_id= 1;//渠道ID
 			long time = 0;
 			String sql = "select *  from live_info where ci_id=? order by uptime desc  limit 1 ";
@@ -127,6 +128,7 @@ public class SpiderBiz extends BaseBiz{
 						live_info.setUi_id(ui_id);
 						live_info.setTitle_md5(md5);
 						try {
+							log.info("spiderChannel_1 spider insert is do..............");
 							daoFactory.getLive_infoDao().insert(live_info);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
