@@ -7,28 +7,22 @@ import com.pyb.bean.ReturnDataNew;
 import com.pyb.constants.Constants;
 import com.pyb.interceptor.SpringMVCInterceptor;
 import com.pyb.util.RequestUtil;
-
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
 public class BaseV1Controller implements Serializable {
@@ -147,6 +141,7 @@ public class BaseV1Controller implements Serializable {
     if (returnData == null) {
       returnData = new ReturnData();
     }
+    response.setHeader("Access-Control-Allow-Origin", "*");
     response.setContentType("text/json; charset=utf-8");
     response.setCharacterEncoding("utf-8");
     try {
