@@ -55,6 +55,14 @@ protected Wp_termmetaDao wp_termmetaDao;
 protected Wp_term_jxhDao wp_term_jxhDao;
 @Autowired
 protected Wp_post_jxhDao wp_post_jxhDao;
+@Autowired
+protected Joke_segmentDao joke_segmentDao;
+@Autowired
+protected Stock_handDao stock_handDao;
+@Autowired
+protected Day_newsDao day_newsDao;
+@Autowired
+protected Stock_infoDao Stock_infoDao;
 
 /*******************************下面是GET方法**************************************/
 public User_info_newDao getUser_info_newDao() {
@@ -125,6 +133,18 @@ public Wp_term_jxhDao getWp_term_jxhDao() {
 }
 public Wp_post_jxhDao getWp_post_jxhDao() {
 	return wp_post_jxhDao;
+}
+public Joke_segmentDao getJoke_segmentDao() {
+	return joke_segmentDao;
+}
+public Stock_handDao getStock_handDao() {
+	return stock_handDao;
+}
+public Day_newsDao getDay_newsDao() {
+	return day_newsDao;
+}
+public Stock_infoDao getStock_infoDao() {
+	return Stock_infoDao;
 }
 
 

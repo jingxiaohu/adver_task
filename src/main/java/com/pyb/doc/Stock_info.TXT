@@ -1,0 +1,13 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|sid||long|
+|stock_name||String|
+|stock_code||String|
+|stock_type|上海：sh深圳：sz|String|
+|stock_pinyin||String|
+|stock_t_price|最新价|String|
+|stock_y_price|昨天的价格|String|
+|ctime||java.util.Date|
+|note||String|
+

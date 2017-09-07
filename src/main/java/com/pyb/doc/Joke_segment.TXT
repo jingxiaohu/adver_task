@@ -1,0 +1,16 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|js_id||long|
+|jc_id|笑话分类ID|long|
+|content|段子内容|String|
+|is_show|是否显示(0:显示1：不显示)|int|
+|title|段子标题|String|
+|js_type|段子类型(0:爆笑男女1:冷笑话)|int|
+|is_title|是否有标题(0:没有1：有)|int|
+|is_spider|是否是抓取的段子(0:抓取1：自己添加)|int|
+|ctime|创建时间|java.util.Date|
+|js_zan|点赞数|long|
+|read_count|浏览次数|long|
+|note|备注|String|
+

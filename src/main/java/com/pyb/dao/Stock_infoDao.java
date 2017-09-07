@@ -11,18 +11,18 @@ import com.pyb.bean.*;
 import org.springframework.stereotype.Repository;
 import com.highbeauty.text.EasyTemplate;
 
-//wp_post_jxh
+//stock_info
 
-@Repository("wp_post_jxhDao")
-public class Wp_post_jxhDao extends BaseDao{
+@Repository("stock_infoDao")
+public class Stock_infoDao extends BaseDao{
 
-    Logger log = LoggerFactory.getLogger(Wp_post_jxhDao.class);
+    Logger log = LoggerFactory.getLogger(Stock_infoDao.class);
 
 
 
-    private  String TABLE = "wp_post_jxh";
+    private  String TABLE = "stock_info";
 
-    private  String TABLENAME = "wp_post_jxh";
+    private  String TABLENAME = "stock_info";
 
     public  String getTABLE(){
         return  TABLE;
@@ -41,9 +41,9 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"id","post_id","category_id","category_code","url","title","date_time","url_status","content","father_url","note"};
-    private  String coulmns ="id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
-    private  String coulmns2 ="post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
+    private  String[] carrays ={"sid","stock_name","stock_code","stock_type","stock_pinyin","stock_t_price","stock_y_price","ctime","note"};
+    private  String coulmns ="sid,stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note";
+    private  String coulmns2 ="stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -58,15 +58,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //添加数据
-    public int insert(Wp_post_jxh bean) throws SQLException{
+    public int insert(Stock_info bean) throws SQLException{
         return insert(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
+    public int insert(Stock_info bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note) VALUES (:stock_name,:stock_code,:stock_type,:stock_pinyin,:stock_t_price,:stock_y_price,:ctime,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -79,15 +79,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //添加数据
-    public int insert_primarykey(Wp_post_jxh bean) throws SQLException{
+    public int insert_primarykey(Stock_info bean) throws SQLException{
         return insert_primarykey(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert_primarykey(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
+    public int insert_primarykey(Stock_info bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:id,:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (sid,stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note) VALUES (:sid,:stock_name,:stock_code,:stock_type,:stock_pinyin,:stock_t_price,:stock_y_price,:ctime,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -98,15 +98,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //批量添加数据
-    public int[] insert(List<Wp_post_jxh> beans) throws SQLException{
+    public int[] insert(List<Stock_info> beans) throws SQLException{
         return insert(beans, TABLENAME);
     }
 
     //批量添加数据
-    public int[] insert(final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
+    public int[] insert(final List<Stock_info> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note) VALUES (?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -114,17 +114,15 @@ public class Wp_post_jxhDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    Wp_post_jxh bean = beans.get(i);
-                    ps.setLong(1, bean.post_id);
-                    ps.setLong(2, bean.category_id);
-                    ps.setString(3, bean.category_code);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.title);
-                    ps.setTimestamp(6, new Timestamp(bean.date_time.getTime()));
-                    ps.setInt(7, bean.url_status);
-                    ps.setString(8, bean.content);
-                    ps.setString(9, bean.father_url);
-                    ps.setString(10, bean.note);
+                    Stock_info bean = beans.get(i);
+                    ps.setString(1, bean.stock_name);
+                    ps.setString(2, bean.stock_code);
+                    ps.setString(3, bean.stock_type);
+                    ps.setString(4, bean.stock_pinyin);
+                    ps.setString(5, bean.stock_t_price);
+                    ps.setString(6, bean.stock_y_price);
+                    ps.setTimestamp(7, new Timestamp(bean.ctime.getTime()));
+                    ps.setString(8, bean.note);
                 }
             });
         }catch(Exception e){
@@ -135,78 +133,78 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectAll() {
+    public List<Stock_info> selectAll() {
         return selectAll(TABLENAME);
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectAll(String TABLENAME2) {
+    public List<Stock_info> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id";
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT sid,stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note FROM "+TABLENAME2+" ORDER BY sid";
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Stock_info>(Stock_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectAll", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_info>();
         }
     }
 
     //查询最新数据
-    public List<Wp_post_jxh> selectLast(int num) {
+    public List<Stock_info> selectLast(int num) {
         return selectLast(num, TABLENAME);
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectLast(int num ,String TABLENAME2) {
+    public List<Stock_info> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT sid,stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note FROM "+TABLENAME2+" ORDER BY sid DESC LIMIT "+num+"" ;
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Stock_info>(Stock_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectLast", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_info>();
         }
     }
 
     //根据主键查询
-    public List<Wp_post_jxh> selectGtKey(long id) {
-        return selectGtKey(id, TABLENAME);
+    public List<Stock_info> selectGtKey(long sid) {
+        return selectGtKey(sid, TABLENAME);
     }
 
     //根据主键查询
-    public List<Wp_post_jxh> selectGtKey(long id, String TABLENAME2) {
+    public List<Stock_info> selectGtKey(long sid, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id>:id";
+            sql="SELECT sid,stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note FROM "+TABLENAME2+" WHERE sid>:sid";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("id", id);
-            return _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            param.put("sid", sid);
+            return _np.query(sql, param, new BeanPropertyRowMapper<Stock_info>(Stock_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectGtKey", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_info>();
         }
     }
 
     //根据主键查询
-    public Wp_post_jxh selectByKey(long id) {
-        return selectByKey(id, TABLENAME);
+    public Stock_info selectByKey(long sid) {
+        return selectByKey(sid, TABLENAME);
     }
 
     //根据主键查询
-    public Wp_post_jxh selectByKey(long id, String TABLENAME2) {
+    public Stock_info selectByKey(long sid, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id=:id";
+            sql="SELECT sid,stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note FROM "+TABLENAME2+" WHERE sid=:sid";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("id", id);
-            List<Wp_post_jxh> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            param.put("sid", sid);
+            List<Stock_info> list =  _np.query(sql, param, new BeanPropertyRowMapper<Stock_info>(Stock_info.class));
             return (list == null || list.size() == 0) ? null : list.get(0);
         }catch(Exception e){
             //createTable(TABLENAME2);
-            log.error("selectByKey id="+id,e);
+            log.error("selectByKey sid="+sid,e);
             return null;
         }
     }
@@ -230,33 +228,33 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //分页查询
-    public List<Wp_post_jxh> selectByPage(int begin, int num) {
+    public List<Stock_info> selectByPage(int begin, int num) {
         return selectByPage(begin, num, TABLENAME);
     }
 
     //分页查询
-    public List<Wp_post_jxh> selectByPage(int begin, int num, String TABLENAME2) {
+    public List<Stock_info> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
-            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT sid,stock_name,stock_code,stock_type,stock_pinyin,stock_t_price,stock_y_price,ctime,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Stock_info>(Stock_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectByPage",e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_info>();
         }
     }
 
     //修改数据
-    public int updateByKey(Wp_post_jxh bean) {
+    public int updateByKey(Stock_info bean) {
         return updateByKey(bean, TABLENAME);
     }
 
     //修改数据
-    public int updateByKey(Wp_post_jxh bean, String TABLENAME2) {
+    public int updateByKey(Stock_info bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=:post_id,category_id=:category_id,category_code=:category_code,url=:url,title=:title,date_time=:date_time,url_status=:url_status,content=:content,father_url=:father_url,note=:note WHERE id=:id";
+            sql = "UPDATE "+TABLENAME2+" SET stock_name=:stock_name,stock_code=:stock_code,stock_type=:stock_type,stock_pinyin=:stock_pinyin,stock_t_price=:stock_t_price,stock_y_price=:stock_y_price,ctime=:ctime,note=:note WHERE sid=:sid";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -266,15 +264,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<Wp_post_jxh> beans) throws SQLException{
+    public int[] updateByKey (final List<Stock_info> beans) throws SQLException{
         return updateByKey(beans, TABLENAME);
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
+    public int[] updateByKey (final List<Stock_info> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=?,category_id=?,category_code=?,url=?,title=?,date_time=?,url_status=?,content=?,father_url=?,note=? WHERE id=?";
+            sql = "UPDATE "+TABLENAME2+" SET stock_name=?,stock_code=?,stock_type=?,stock_pinyin=?,stock_t_price=?,stock_y_price=?,ctime=?,note=? WHERE sid=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -282,18 +280,16 @@ public class Wp_post_jxhDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    Wp_post_jxh bean = beans.get(i);
-                    ps.setLong(1, bean.post_id);
-                    ps.setLong(2, bean.category_id);
-                    ps.setString(3, bean.category_code);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.title);
-                    ps.setTimestamp(6, new Timestamp(bean.date_time.getTime()));
-                    ps.setInt(7, bean.url_status);
-                    ps.setString(8, bean.content);
-                    ps.setString(9, bean.father_url);
-                    ps.setString(10, bean.note);
-                    ps.setLong(11, bean.id);
+                    Stock_info bean = beans.get(i);
+                    ps.setString(1, bean.stock_name);
+                    ps.setString(2, bean.stock_code);
+                    ps.setString(3, bean.stock_type);
+                    ps.setString(4, bean.stock_pinyin);
+                    ps.setString(5, bean.stock_t_price);
+                    ps.setString(6, bean.stock_y_price);
+                    ps.setTimestamp(7, new Timestamp(bean.ctime.getTime()));
+                    ps.setString(8, bean.note);
+                    ps.setLong(9, bean.sid);
                 }
             });
         }catch(Exception e){
@@ -303,17 +299,17 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //删除单条数据
-    public int deleteByKey(long id) throws SQLException{
-        return deleteByKey(id, TABLENAME);
+    public int deleteByKey(long sid) throws SQLException{
+        return deleteByKey(sid, TABLENAME);
     }
 
     //删除单条数据
-    public int deleteByKey(long id, String TABLENAME2) throws SQLException{
+    public int deleteByKey(long sid, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE id=:id";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE sid=:sid";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("id", id);
+            param.put("sid", sid);
             return _np.update(sql, param);
         }catch(Exception e){
             log.error("deleteByKey", e);
@@ -330,7 +326,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public int[] deleteByKey(final long[] keys, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE id=?";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE sid=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -352,20 +348,16 @@ public class Wp_post_jxhDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`id`  BIGINT UNSIGNED(11) NOT NULL AUTO_INCREMENT COMMENT '//bigint(11) unsigned    '," +
-                 "	`post_id`  BIGINT UNSIGNED(11) NOT NULL COMMENT '//bigint(11) unsigned    '," +
-                 "	`category_id`  BIGINT UNSIGNED(11) NOT NULL COMMENT '//bigint(11) unsigned    '," +
-                 "	`category_code`  VARCHAR(60) COMMENT '//varchar(60)    分类英文代码'," +
-                 "	`url`  TINYTEXT NOT NULL COMMENT '//varchar(1000)    '," +
-                 "	`title`  TINYTEXT COMMENT '//varchar(255)    标题'," +
-                 "	`date_time`  DATETIME NOT NULL COMMENT '//datetime    时间'," +
-                 "	`url_status`  INT(11) NOT NULL COMMENT '//int(11)    发布状态0：还没有发布1：已经发布2：删除'," +
-                 "	`content`  LONGTEXT COMMENT '//longtext    内容'," +
-                 "	`father_url`  TINYTEXT COMMENT '//varchar(1000)    上级的URL'," +
-                 "	`note`  TINYTEXT COMMENT '//varchar(255)    备注'," +
-                 "	PRIMARY KEY (`id`)," +
-                 "	UNIQUE KEY `title` (`title`)," +
-                 "	UNIQUE KEY `url` (`url`)" +
+                 "	`sid`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
+                 "	`stock_name`  VARCHAR(100) COMMENT '//varchar(100)    '," +
+                 "	`stock_code`  VARCHAR(100) COMMENT '//varchar(100)    '," +
+                 "	`stock_type`  VARCHAR(30) COMMENT '//varchar(30)    上海：sh深圳：sz'," +
+                 "	`stock_pinyin`  VARCHAR(60) COMMENT '//varchar(60)    '," +
+                 "	`stock_t_price`  VARCHAR(100) COMMENT '//varchar(100)    最新价'," +
+                 "	`stock_y_price`  VARCHAR(100) COMMENT '//varchar(100)    昨天的价格'," +
+                 "	`ctime`  DATETIME COMMENT '//datetime    '," +
+                 "	`note`  TINYTEXT COMMENT '//varchar(255)    '," +
+                 "	PRIMARY KEY (`sid`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();
             params.put("TABLENAME", TABLENAME2);

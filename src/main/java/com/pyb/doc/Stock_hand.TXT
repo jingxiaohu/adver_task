@@ -1,0 +1,14 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|id||long|
+|s_name|名称|String|
+|s_code|代码|String|
+|s_price|当时价格|String|
+|s_time|当时时间|String|
+|s_type|类型（buy:买sell:卖）|String|
+|s_hand|手数|int|
+|ctime|创建时间|java.util.Date|
+|md5_str|对内容进行MD5进行签名|String|
+|note|备注|String|
+

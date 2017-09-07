@@ -1,0 +1,17 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|dn_id||long|
+|title|标题|String|
+|content_or_url|内容或者URL|String|
+|bk_type|类型（0：自己写的内容1：页面）|int|
+|is_show|是否显示（0：显示1：不显示）|int|
+|ctime|创建时间|java.util.Date|
+|read_count|浏览次数|long|
+|bk_zan|点赞次数|long|
+|bk_sort|权重比|long|
+|note|备注.|String|
+|source_name|来源名称|String|
+|md5|md5|String|
+|type|所属板块类型(例如：个股评级)0:看盘消息1：个股评级2：机构解析3：板块解析4：市场研究5：行业研究6：数据资金|int|
+

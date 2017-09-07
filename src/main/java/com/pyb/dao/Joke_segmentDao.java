@@ -11,18 +11,18 @@ import com.pyb.bean.*;
 import org.springframework.stereotype.Repository;
 import com.highbeauty.text.EasyTemplate;
 
-//wp_post_jxh
+//joke_segment
 
-@Repository("wp_post_jxhDao")
-public class Wp_post_jxhDao extends BaseDao{
+@Repository("joke_segmentDao")
+public class Joke_segmentDao extends BaseDao{
 
-    Logger log = LoggerFactory.getLogger(Wp_post_jxhDao.class);
+    Logger log = LoggerFactory.getLogger(Joke_segmentDao.class);
 
 
 
-    private  String TABLE = "wp_post_jxh";
+    private  String TABLE = "joke_segment";
 
-    private  String TABLENAME = "wp_post_jxh";
+    private  String TABLENAME = "joke_segment";
 
     public  String getTABLE(){
         return  TABLE;
@@ -41,9 +41,9 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"id","post_id","category_id","category_code","url","title","date_time","url_status","content","father_url","note"};
-    private  String coulmns ="id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
-    private  String coulmns2 ="post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
+    private  String[] carrays ={"js_id","jc_id","content","is_show","title","js_type","is_title","is_spider","ctime","js_zan","read_count","note"};
+    private  String coulmns ="js_id,jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note";
+    private  String coulmns2 ="jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -58,15 +58,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //添加数据
-    public int insert(Wp_post_jxh bean) throws SQLException{
+    public int insert(Joke_segment bean) throws SQLException{
         return insert(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
+    public int insert(Joke_segment bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note) VALUES (:jc_id,:content,:is_show,:title,:js_type,:is_title,:is_spider,:ctime,:js_zan,:read_count,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -79,15 +79,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //添加数据
-    public int insert_primarykey(Wp_post_jxh bean) throws SQLException{
+    public int insert_primarykey(Joke_segment bean) throws SQLException{
         return insert_primarykey(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert_primarykey(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
+    public int insert_primarykey(Joke_segment bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:id,:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (js_id,jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note) VALUES (:js_id,:jc_id,:content,:is_show,:title,:js_type,:is_title,:is_spider,:ctime,:js_zan,:read_count,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -98,15 +98,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //批量添加数据
-    public int[] insert(List<Wp_post_jxh> beans) throws SQLException{
+    public int[] insert(List<Joke_segment> beans) throws SQLException{
         return insert(beans, TABLENAME);
     }
 
     //批量添加数据
-    public int[] insert(final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
+    public int[] insert(final List<Joke_segment> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -114,17 +114,18 @@ public class Wp_post_jxhDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    Wp_post_jxh bean = beans.get(i);
-                    ps.setLong(1, bean.post_id);
-                    ps.setLong(2, bean.category_id);
-                    ps.setString(3, bean.category_code);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.title);
-                    ps.setTimestamp(6, new Timestamp(bean.date_time.getTime()));
-                    ps.setInt(7, bean.url_status);
-                    ps.setString(8, bean.content);
-                    ps.setString(9, bean.father_url);
-                    ps.setString(10, bean.note);
+                    Joke_segment bean = beans.get(i);
+                    ps.setLong(1, bean.jc_id);
+                    ps.setString(2, bean.content);
+                    ps.setInt(3, bean.is_show);
+                    ps.setString(4, bean.title);
+                    ps.setInt(5, bean.js_type);
+                    ps.setInt(6, bean.is_title);
+                    ps.setInt(7, bean.is_spider);
+                    ps.setTimestamp(8, new Timestamp(bean.ctime.getTime()));
+                    ps.setLong(9, bean.js_zan);
+                    ps.setLong(10, bean.read_count);
+                    ps.setString(11, bean.note);
                 }
             });
         }catch(Exception e){
@@ -135,78 +136,78 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectAll() {
+    public List<Joke_segment> selectAll() {
         return selectAll(TABLENAME);
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectAll(String TABLENAME2) {
+    public List<Joke_segment> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id";
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT js_id,jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note FROM "+TABLENAME2+" ORDER BY js_id";
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Joke_segment>(Joke_segment.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectAll", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Joke_segment>();
         }
     }
 
     //查询最新数据
-    public List<Wp_post_jxh> selectLast(int num) {
+    public List<Joke_segment> selectLast(int num) {
         return selectLast(num, TABLENAME);
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectLast(int num ,String TABLENAME2) {
+    public List<Joke_segment> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT js_id,jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note FROM "+TABLENAME2+" ORDER BY js_id DESC LIMIT "+num+"" ;
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Joke_segment>(Joke_segment.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectLast", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Joke_segment>();
         }
     }
 
     //根据主键查询
-    public List<Wp_post_jxh> selectGtKey(long id) {
-        return selectGtKey(id, TABLENAME);
+    public List<Joke_segment> selectGtKey(long js_id) {
+        return selectGtKey(js_id, TABLENAME);
     }
 
     //根据主键查询
-    public List<Wp_post_jxh> selectGtKey(long id, String TABLENAME2) {
+    public List<Joke_segment> selectGtKey(long js_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id>:id";
+            sql="SELECT js_id,jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note FROM "+TABLENAME2+" WHERE js_id>:js_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("id", id);
-            return _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            param.put("js_id", js_id);
+            return _np.query(sql, param, new BeanPropertyRowMapper<Joke_segment>(Joke_segment.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectGtKey", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Joke_segment>();
         }
     }
 
     //根据主键查询
-    public Wp_post_jxh selectByKey(long id) {
-        return selectByKey(id, TABLENAME);
+    public Joke_segment selectByKey(long js_id) {
+        return selectByKey(js_id, TABLENAME);
     }
 
     //根据主键查询
-    public Wp_post_jxh selectByKey(long id, String TABLENAME2) {
+    public Joke_segment selectByKey(long js_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id=:id";
+            sql="SELECT js_id,jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note FROM "+TABLENAME2+" WHERE js_id=:js_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("id", id);
-            List<Wp_post_jxh> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            param.put("js_id", js_id);
+            List<Joke_segment> list =  _np.query(sql, param, new BeanPropertyRowMapper<Joke_segment>(Joke_segment.class));
             return (list == null || list.size() == 0) ? null : list.get(0);
         }catch(Exception e){
             //createTable(TABLENAME2);
-            log.error("selectByKey id="+id,e);
+            log.error("selectByKey js_id="+js_id,e);
             return null;
         }
     }
@@ -230,33 +231,33 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //分页查询
-    public List<Wp_post_jxh> selectByPage(int begin, int num) {
+    public List<Joke_segment> selectByPage(int begin, int num) {
         return selectByPage(begin, num, TABLENAME);
     }
 
     //分页查询
-    public List<Wp_post_jxh> selectByPage(int begin, int num, String TABLENAME2) {
+    public List<Joke_segment> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
-            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT js_id,jc_id,content,is_show,title,js_type,is_title,is_spider,ctime,js_zan,read_count,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Joke_segment>(Joke_segment.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectByPage",e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Joke_segment>();
         }
     }
 
     //修改数据
-    public int updateByKey(Wp_post_jxh bean) {
+    public int updateByKey(Joke_segment bean) {
         return updateByKey(bean, TABLENAME);
     }
 
     //修改数据
-    public int updateByKey(Wp_post_jxh bean, String TABLENAME2) {
+    public int updateByKey(Joke_segment bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=:post_id,category_id=:category_id,category_code=:category_code,url=:url,title=:title,date_time=:date_time,url_status=:url_status,content=:content,father_url=:father_url,note=:note WHERE id=:id";
+            sql = "UPDATE "+TABLENAME2+" SET jc_id=:jc_id,content=:content,is_show=:is_show,title=:title,js_type=:js_type,is_title=:is_title,is_spider=:is_spider,ctime=:ctime,js_zan=:js_zan,read_count=:read_count,note=:note WHERE js_id=:js_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -266,15 +267,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<Wp_post_jxh> beans) throws SQLException{
+    public int[] updateByKey (final List<Joke_segment> beans) throws SQLException{
         return updateByKey(beans, TABLENAME);
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
+    public int[] updateByKey (final List<Joke_segment> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=?,category_id=?,category_code=?,url=?,title=?,date_time=?,url_status=?,content=?,father_url=?,note=? WHERE id=?";
+            sql = "UPDATE "+TABLENAME2+" SET jc_id=?,content=?,is_show=?,title=?,js_type=?,is_title=?,is_spider=?,ctime=?,js_zan=?,read_count=?,note=? WHERE js_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -282,18 +283,19 @@ public class Wp_post_jxhDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    Wp_post_jxh bean = beans.get(i);
-                    ps.setLong(1, bean.post_id);
-                    ps.setLong(2, bean.category_id);
-                    ps.setString(3, bean.category_code);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.title);
-                    ps.setTimestamp(6, new Timestamp(bean.date_time.getTime()));
-                    ps.setInt(7, bean.url_status);
-                    ps.setString(8, bean.content);
-                    ps.setString(9, bean.father_url);
-                    ps.setString(10, bean.note);
-                    ps.setLong(11, bean.id);
+                    Joke_segment bean = beans.get(i);
+                    ps.setLong(1, bean.jc_id);
+                    ps.setString(2, bean.content);
+                    ps.setInt(3, bean.is_show);
+                    ps.setString(4, bean.title);
+                    ps.setInt(5, bean.js_type);
+                    ps.setInt(6, bean.is_title);
+                    ps.setInt(7, bean.is_spider);
+                    ps.setTimestamp(8, new Timestamp(bean.ctime.getTime()));
+                    ps.setLong(9, bean.js_zan);
+                    ps.setLong(10, bean.read_count);
+                    ps.setString(11, bean.note);
+                    ps.setLong(12, bean.js_id);
                 }
             });
         }catch(Exception e){
@@ -303,17 +305,17 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //删除单条数据
-    public int deleteByKey(long id) throws SQLException{
-        return deleteByKey(id, TABLENAME);
+    public int deleteByKey(long js_id) throws SQLException{
+        return deleteByKey(js_id, TABLENAME);
     }
 
     //删除单条数据
-    public int deleteByKey(long id, String TABLENAME2) throws SQLException{
+    public int deleteByKey(long js_id, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE id=:id";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE js_id=:js_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("id", id);
+            param.put("js_id", js_id);
             return _np.update(sql, param);
         }catch(Exception e){
             log.error("deleteByKey", e);
@@ -330,7 +332,7 @@ public class Wp_post_jxhDao extends BaseDao{
     public int[] deleteByKey(final long[] keys, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE id=?";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE js_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -352,20 +354,19 @@ public class Wp_post_jxhDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`id`  BIGINT UNSIGNED(11) NOT NULL AUTO_INCREMENT COMMENT '//bigint(11) unsigned    '," +
-                 "	`post_id`  BIGINT UNSIGNED(11) NOT NULL COMMENT '//bigint(11) unsigned    '," +
-                 "	`category_id`  BIGINT UNSIGNED(11) NOT NULL COMMENT '//bigint(11) unsigned    '," +
-                 "	`category_code`  VARCHAR(60) COMMENT '//varchar(60)    分类英文代码'," +
-                 "	`url`  TINYTEXT NOT NULL COMMENT '//varchar(1000)    '," +
-                 "	`title`  TINYTEXT COMMENT '//varchar(255)    标题'," +
-                 "	`date_time`  DATETIME NOT NULL COMMENT '//datetime    时间'," +
-                 "	`url_status`  INT(11) NOT NULL COMMENT '//int(11)    发布状态0：还没有发布1：已经发布2：删除'," +
-                 "	`content`  LONGTEXT COMMENT '//longtext    内容'," +
-                 "	`father_url`  TINYTEXT COMMENT '//varchar(1000)    上级的URL'," +
+                 "	`js_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
+                 "	`jc_id`  BIGINT(20) COMMENT '//bigint(20)    笑话分类ID'," +
+                 "	`content`  TEXT COMMENT '//text    段子内容'," +
+                 "	`is_show`  INT(11) COMMENT '//int(11)    是否显示(0:显示1：不显示)'," +
+                 "	`title`  TINYTEXT COMMENT '//varchar(255)    段子标题'," +
+                 "	`js_type`  INT(11) COMMENT '//int(11)    段子类型(0:爆笑男女1:冷笑话)'," +
+                 "	`is_title`  INT(11) COMMENT '//int(11)    是否有标题(0:没有1：有)'," +
+                 "	`is_spider`  INT(11) COMMENT '//int(11)    是否是抓取的段子(0:抓取1：自己添加)'," +
+                 "	`ctime`  DATETIME COMMENT '//datetime    创建时间'," +
+                 "	`js_zan`  BIGINT(20) COMMENT '//bigint(20)    点赞数'," +
+                 "	`read_count`  BIGINT(20) COMMENT '//bigint(20)    浏览次数'," +
                  "	`note`  TINYTEXT COMMENT '//varchar(255)    备注'," +
-                 "	PRIMARY KEY (`id`)," +
-                 "	UNIQUE KEY `title` (`title`)," +
-                 "	UNIQUE KEY `url` (`url`)" +
+                 "	PRIMARY KEY (`js_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();
             params.put("TABLENAME", TABLENAME2);

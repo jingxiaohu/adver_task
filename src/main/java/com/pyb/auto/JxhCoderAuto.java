@@ -23,7 +23,7 @@ public class JxhCoderAuto {
 				,"live_info","message_info","channel_info","user_external"
 				,"wp_posts","wp_terms","wp_term_taxonomy","wp_termmeta",
 				"wp_term_jxh",
-				"wp_post_jxh"
+				"wp_post_jxh","joke_segment","stock_hand","day_news","Stock_info"
 				};
 //		String ip = "114.55.10.246";
 		String ip = "127.0.0.1";

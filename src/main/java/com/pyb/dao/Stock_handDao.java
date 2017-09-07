@@ -11,18 +11,18 @@ import com.pyb.bean.*;
 import org.springframework.stereotype.Repository;
 import com.highbeauty.text.EasyTemplate;
 
-//wp_post_jxh
+//stock_hand
 
-@Repository("wp_post_jxhDao")
-public class Wp_post_jxhDao extends BaseDao{
+@Repository("stock_handDao")
+public class Stock_handDao extends BaseDao{
 
-    Logger log = LoggerFactory.getLogger(Wp_post_jxhDao.class);
+    Logger log = LoggerFactory.getLogger(Stock_handDao.class);
 
 
 
-    private  String TABLE = "wp_post_jxh";
+    private  String TABLE = "stock_hand";
 
-    private  String TABLENAME = "wp_post_jxh";
+    private  String TABLENAME = "stock_hand";
 
     public  String getTABLE(){
         return  TABLE;
@@ -41,9 +41,9 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"id","post_id","category_id","category_code","url","title","date_time","url_status","content","father_url","note"};
-    private  String coulmns ="id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
-    private  String coulmns2 ="post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note";
+    private  String[] carrays ={"id","s_name","s_code","s_price","s_time","s_type","s_hand","ctime","md5_str","note"};
+    private  String coulmns ="id,s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note";
+    private  String coulmns2 ="s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -58,15 +58,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //添加数据
-    public int insert(Wp_post_jxh bean) throws SQLException{
+    public int insert(Stock_hand bean) throws SQLException{
         return insert(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
+    public int insert(Stock_hand bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note) VALUES (:s_name,:s_code,:s_price,:s_time,:s_type,:s_hand,:ctime,:md5_str,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -79,15 +79,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //添加数据
-    public int insert_primarykey(Wp_post_jxh bean) throws SQLException{
+    public int insert_primarykey(Stock_hand bean) throws SQLException{
         return insert_primarykey(bean, TABLENAME);
     }
 
     //添加数据
-    public int insert_primarykey(Wp_post_jxh bean, String TABLENAME2) throws SQLException{
+    public int insert_primarykey(Stock_hand bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (:id,:post_id,:category_id,:category_code,:url,:title,:date_time,:url_status,:content,:father_url,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (id,s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note) VALUES (:id,:s_name,:s_code,:s_price,:s_time,:s_type,:s_hand,:ctime,:md5_str,:note)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -98,15 +98,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //批量添加数据
-    public int[] insert(List<Wp_post_jxh> beans) throws SQLException{
+    public int[] insert(List<Stock_hand> beans) throws SQLException{
         return insert(beans, TABLENAME);
     }
 
     //批量添加数据
-    public int[] insert(final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
+    public int[] insert(final List<Stock_hand> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note) VALUES (?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note) VALUES (?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -114,17 +114,16 @@ public class Wp_post_jxhDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    Wp_post_jxh bean = beans.get(i);
-                    ps.setLong(1, bean.post_id);
-                    ps.setLong(2, bean.category_id);
-                    ps.setString(3, bean.category_code);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.title);
-                    ps.setTimestamp(6, new Timestamp(bean.date_time.getTime()));
-                    ps.setInt(7, bean.url_status);
-                    ps.setString(8, bean.content);
-                    ps.setString(9, bean.father_url);
-                    ps.setString(10, bean.note);
+                    Stock_hand bean = beans.get(i);
+                    ps.setString(1, bean.s_name);
+                    ps.setString(2, bean.s_code);
+                    ps.setString(3, bean.s_price);
+                    ps.setString(4, bean.s_time);
+                    ps.setString(5, bean.s_type);
+                    ps.setInt(6, bean.s_hand);
+                    ps.setTimestamp(7, new Timestamp(bean.ctime.getTime()));
+                    ps.setString(8, bean.md5_str);
+                    ps.setString(9, bean.note);
                 }
             });
         }catch(Exception e){
@@ -135,74 +134,74 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectAll() {
+    public List<Stock_hand> selectAll() {
         return selectAll(TABLENAME);
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectAll(String TABLENAME2) {
+    public List<Stock_hand> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id";
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT id,s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note FROM "+TABLENAME2+" ORDER BY id";
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Stock_hand>(Stock_hand.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectAll", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_hand>();
         }
     }
 
     //查询最新数据
-    public List<Wp_post_jxh> selectLast(int num) {
+    public List<Stock_hand> selectLast(int num) {
         return selectLast(num, TABLENAME);
     }
 
     //查询所有数据
-    public List<Wp_post_jxh> selectLast(int num ,String TABLENAME2) {
+    public List<Stock_hand> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
-            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT id,s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
+            return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Stock_hand>(Stock_hand.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectLast", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_hand>();
         }
     }
 
     //根据主键查询
-    public List<Wp_post_jxh> selectGtKey(long id) {
+    public List<Stock_hand> selectGtKey(long id) {
         return selectGtKey(id, TABLENAME);
     }
 
     //根据主键查询
-    public List<Wp_post_jxh> selectGtKey(long id, String TABLENAME2) {
+    public List<Stock_hand> selectGtKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id>:id";
+            sql="SELECT id,s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note FROM "+TABLENAME2+" WHERE id>:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
-            return _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            return _np.query(sql, param, new BeanPropertyRowMapper<Stock_hand>(Stock_hand.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectGtKey", e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_hand>();
         }
     }
 
     //根据主键查询
-    public Wp_post_jxh selectByKey(long id) {
+    public Stock_hand selectByKey(long id) {
         return selectByKey(id, TABLENAME);
     }
 
     //根据主键查询
-    public Wp_post_jxh selectByKey(long id, String TABLENAME2) {
+    public Stock_hand selectByKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" WHERE id=:id";
+            sql="SELECT id,s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note FROM "+TABLENAME2+" WHERE id=:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
-            List<Wp_post_jxh> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            List<Stock_hand> list =  _np.query(sql, param, new BeanPropertyRowMapper<Stock_hand>(Stock_hand.class));
             return (list == null || list.size() == 0) ? null : list.get(0);
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -230,33 +229,33 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //分页查询
-    public List<Wp_post_jxh> selectByPage(int begin, int num) {
+    public List<Stock_hand> selectByPage(int begin, int num) {
         return selectByPage(begin, num, TABLENAME);
     }
 
     //分页查询
-    public List<Wp_post_jxh> selectByPage(int begin, int num, String TABLENAME2) {
+    public List<Stock_hand> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT id,post_id,category_id,category_code,url,title,date_time,url_status,content,father_url,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
-            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wp_post_jxh>(Wp_post_jxh.class));
+            sql = "SELECT id,s_name,s_code,s_price,s_time,s_type,s_hand,ctime,md5_str,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Stock_hand>(Stock_hand.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
             log.error("selectByPage",e);
-            return new ArrayList<Wp_post_jxh>();
+            return new ArrayList<Stock_hand>();
         }
     }
 
     //修改数据
-    public int updateByKey(Wp_post_jxh bean) {
+    public int updateByKey(Stock_hand bean) {
         return updateByKey(bean, TABLENAME);
     }
 
     //修改数据
-    public int updateByKey(Wp_post_jxh bean, String TABLENAME2) {
+    public int updateByKey(Stock_hand bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=:post_id,category_id=:category_id,category_code=:category_code,url=:url,title=:title,date_time=:date_time,url_status=:url_status,content=:content,father_url=:father_url,note=:note WHERE id=:id";
+            sql = "UPDATE "+TABLENAME2+" SET s_name=:s_name,s_code=:s_code,s_price=:s_price,s_time=:s_time,s_type=:s_type,s_hand=:s_hand,ctime=:ctime,md5_str=:md5_str,note=:note WHERE id=:id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -266,15 +265,15 @@ public class Wp_post_jxhDao extends BaseDao{
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<Wp_post_jxh> beans) throws SQLException{
+    public int[] updateByKey (final List<Stock_hand> beans) throws SQLException{
         return updateByKey(beans, TABLENAME);
     }
 
     //批量修改数据
-    public int[] updateByKey (final List<Wp_post_jxh> beans, String TABLENAME2) throws SQLException{
+    public int[] updateByKey (final List<Stock_hand> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET post_id=?,category_id=?,category_code=?,url=?,title=?,date_time=?,url_status=?,content=?,father_url=?,note=? WHERE id=?";
+            sql = "UPDATE "+TABLENAME2+" SET s_name=?,s_code=?,s_price=?,s_time=?,s_type=?,s_hand=?,ctime=?,md5_str=?,note=? WHERE id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -282,18 +281,17 @@ public class Wp_post_jxhDao extends BaseDao{
                 }
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
-                    Wp_post_jxh bean = beans.get(i);
-                    ps.setLong(1, bean.post_id);
-                    ps.setLong(2, bean.category_id);
-                    ps.setString(3, bean.category_code);
-                    ps.setString(4, bean.url);
-                    ps.setString(5, bean.title);
-                    ps.setTimestamp(6, new Timestamp(bean.date_time.getTime()));
-                    ps.setInt(7, bean.url_status);
-                    ps.setString(8, bean.content);
-                    ps.setString(9, bean.father_url);
-                    ps.setString(10, bean.note);
-                    ps.setLong(11, bean.id);
+                    Stock_hand bean = beans.get(i);
+                    ps.setString(1, bean.s_name);
+                    ps.setString(2, bean.s_code);
+                    ps.setString(3, bean.s_price);
+                    ps.setString(4, bean.s_time);
+                    ps.setString(5, bean.s_type);
+                    ps.setInt(6, bean.s_hand);
+                    ps.setTimestamp(7, new Timestamp(bean.ctime.getTime()));
+                    ps.setString(8, bean.md5_str);
+                    ps.setString(9, bean.note);
+                    ps.setLong(10, bean.id);
                 }
             });
         }catch(Exception e){
@@ -352,20 +350,17 @@ public class Wp_post_jxhDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`id`  BIGINT UNSIGNED(11) NOT NULL AUTO_INCREMENT COMMENT '//bigint(11) unsigned    '," +
-                 "	`post_id`  BIGINT UNSIGNED(11) NOT NULL COMMENT '//bigint(11) unsigned    '," +
-                 "	`category_id`  BIGINT UNSIGNED(11) NOT NULL COMMENT '//bigint(11) unsigned    '," +
-                 "	`category_code`  VARCHAR(60) COMMENT '//varchar(60)    分类英文代码'," +
-                 "	`url`  TINYTEXT NOT NULL COMMENT '//varchar(1000)    '," +
-                 "	`title`  TINYTEXT COMMENT '//varchar(255)    标题'," +
-                 "	`date_time`  DATETIME NOT NULL COMMENT '//datetime    时间'," +
-                 "	`url_status`  INT(11) NOT NULL COMMENT '//int(11)    发布状态0：还没有发布1：已经发布2：删除'," +
-                 "	`content`  LONGTEXT COMMENT '//longtext    内容'," +
-                 "	`father_url`  TINYTEXT COMMENT '//varchar(1000)    上级的URL'," +
-                 "	`note`  TINYTEXT COMMENT '//varchar(255)    备注'," +
-                 "	PRIMARY KEY (`id`)," +
-                 "	UNIQUE KEY `title` (`title`)," +
-                 "	UNIQUE KEY `url` (`url`)" +
+                 "	`id`  BIGINT UNSIGNED(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20) unsigned    '," +
+                 "	`s_name`  VARCHAR(150) COMMENT '//varchar(150)    名称'," +
+                 "	`s_code`  VARCHAR(100) COMMENT '//varchar(100)    代码'," +
+                 "	`s_price`  VARCHAR(100) COMMENT '//varchar(100)    当时价格'," +
+                 "	`s_time`  VARCHAR(100) COMMENT '//varchar(100)    当时时间'," +
+                 "	`s_type`  TINYTEXT COMMENT '//varchar(255)    类型（buy:买sell:卖）'," +
+                 "	`s_hand`  INT(11) COMMENT '//int(11)    手数'," +
+                 "	`ctime`  DATETIME COMMENT '//datetime    创建时间'," +
+                 "	`md5_str`  VARCHAR(100) COMMENT '//varchar(100)    对内容进行MD5进行签名'," +
+                 "	`note`  VARCHAR(100) COMMENT '//varchar(100)    备注'," +
+                 "	PRIMARY KEY (`id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();
             params.put("TABLENAME", TABLENAME2);
