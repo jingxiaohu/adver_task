@@ -2,7 +2,14 @@ package com.pyb.task;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.pyb.jpush.PushUtil;
+import com.pyb.jpush.PushUtilPDA;
+import com.pyb.jpush.bean.JPushMessageBean;
 
 @Service
 public class AsyncJpushTask {
@@ -62,35 +69,35 @@ public class AsyncJpushTask {
   /**
    * 进行PDA推送
    */
-//  @Async
-//  public void doAppJpush(JPushMessageBean jPushMessageBean, String uuid) {
-//    try {
-//      if (jPushMessageBean != null && StringUtils.hasText(uuid)) {
-//        PushUtil.SendPush(JSON.toJSONString(jPushMessageBean), jPushMessageBean.getMessage(), uuid);
-//      }
-//
-//    } catch (Exception e) {
-//      // TODO Auto-generated catch block
-//      log.error("doPdaJpush(JPushMessageBean jPushMessageBean,String uuid) is error uuid=" + uuid,
-//          e);
-//    }
-//
-//  }
-//
-//  /**
-//   * 进行PDA推送
-//   */
-//  @Async
-//  public void doPdaJpushPDA(JPushMessageBean jPushMessageBean, String pda_mac) {
-//    try {
-//      if (jPushMessageBean != null && pda_mac != null) {
-//        PushUtilPDA.SendPush(jPushMessageBean.getMessageJson().toJSONString(),
-//            jPushMessageBean.getMessage(), pda_mac);
-//      }
-//    } catch (Exception e) {
-//      // TODO Auto-generated catch block
-//      log.error("点播执行doInsertIntoDataBase(List<By_app_categories> list,int pagesize) is error", e);
-//    }
-//
-//  }
+  @Async
+  public void doAppJpush(JPushMessageBean jPushMessageBean, String uuid) {
+    try {
+      if (jPushMessageBean != null && StringUtils.hasText(uuid)) {
+        PushUtil.SendPush(JSON.toJSONString(jPushMessageBean), jPushMessageBean.getMessage(), uuid);
+      }
+
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      log.error("doPdaJpush(JPushMessageBean jPushMessageBean,String uuid) is error uuid=" + uuid,
+          e);
+    }
+
+  }
+
+  /**
+   * 进行PDA推送
+   */
+  @Async
+  public void doPdaJpushPDA(JPushMessageBean jPushMessageBean, String pda_mac) {
+    try {
+      if (jPushMessageBean != null && pda_mac != null) {
+        PushUtilPDA.SendPush(jPushMessageBean.getMessageJson().toJSONString(),
+            jPushMessageBean.getMessage(), pda_mac);
+      }
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      log.error("点播执行doInsertIntoDataBase(List<By_app_categories> list,int pagesize) is error", e);
+    }
+
+  }
 }
