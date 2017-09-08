@@ -7,7 +7,6 @@ import com.pyb.mvc.service.BaseBiz;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -216,13 +215,11 @@ public class NewsEastyWeb extends BaseBiz {
         return element;
     }
 
-  @Test
   public  void dd(){
       EaverydayArticleSpider testspider = new EaverydayArticleSpider();
       String url = "http://finance.eastmoney.com/news/1354,20170907774856751.html";
       GetContent(url,testspider);
   }
-  @Test
   public  void  tt(){
       String url = "http://www.cs.com.cn/gppd/201709/t20170906_5459521_1.html";
       EaverydayArticleSpider testspider = new EaverydayArticleSpider();
