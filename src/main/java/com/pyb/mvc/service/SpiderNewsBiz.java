@@ -28,13 +28,13 @@ public class SpiderNewsBiz extends BaseBiz{
 		//个股评级
 		spiderNews_zz_spider(1,"http://www.cs.com.cn/gppd/tzpj/","个股评级");
 		//市场研究
-		spiderNews_zz_spider(4,"http://www.cs.com.cn/gppd/scyj/","市场研究");
+//		spiderNews_zz_spider(4,"http://www.cs.com.cn/gppd/scyj/","市场研究");
 		//行业研究
 		spiderNews_zz_spider(5,"http://www.cs.com.cn/gppd/hyyj/","行业研究");
 		//数据资金
 		spiderNews_zz_spider(4,"http://www.cs.com.cn/gppd/sjjj/","数据资金");
 		//看盘消息
-		spiderNews_zz_spider(0,"http://www.cs.com.cn/gppd/zzkpd/01/","看盘消息");
+		spiderNews_zz_spider(0,"http://www.cs.com.cn/ssgs/hyzx/","行业");
 	}
 	/**
 	 * 中国证券报·中证网
@@ -141,7 +141,7 @@ public class SpiderNewsBiz extends BaseBiz{
 	}
 	public void spider(){
 		//中国证券网
-		spiderNews_zz();
+		//spiderNews_zz();
 		//东方财富网
 		spiderNews_dfcf();
 	}

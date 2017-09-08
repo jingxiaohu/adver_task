@@ -1,6 +1,7 @@
 package com.pyb.task;
 
 
+import com.pyb.jsoup.article.ZzUtil;
 import com.pyb.mvc.service.SpiderBiz;
 import com.pyb.mvc.service.SpiderNewsBiz;
 import com.pyb.mvc.service.StockInfoBiz;
@@ -18,16 +19,31 @@ public class Channel1Task {
 	private StockInfoBiz stockInfoBiz ;
 	@Autowired
 	private SpiderNewsBiz spiderNewsBiz;
+	@Autowired  //自动注入,默认按名称
+	private ZzUtil zzUtil;
 	/**
 	 * 调度抓取新闻的数据
 	 */
-	@Scheduled(cron = "0 0/5 * * * ?")
+	@Scheduled(cron = "0 0/10 * * * ?")
 	public void dospider(){
 		try{
 				log.info("------------Channel1Task----------------is start---");
 				spiderBiz.spiderChannel_1();
 		}catch (Throwable e) {
 			log.error("Channel1Task.dospider is error", e);
+		}
+
+	}
+	/**
+	 * 调度抓取新闻的数据
+	 */
+	@Scheduled(cron = "0 0 0/3 * * ?")
+	public void zzUtil(){
+		try{
+			log.info("------------Channel1Task-------zzUtil---------is start---");
+			zzUtil.DoWithRecursion();
+		}catch (Throwable e) {
+			log.error("Channel1Task.zzUtil is error", e);
 		}
 
 	}
