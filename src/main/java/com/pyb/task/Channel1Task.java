@@ -23,6 +23,7 @@ public class Channel1Task {
 	private ZzUtil zzUtil;
 	/**
 	 * 调度抓取新闻的数据
+	 * http://www.528ads.com/jxh_publish.php?type=1&ids=5620
 	 */
 	@Scheduled(cron = "0 0/10 * * * ?")
 	public void dospider(){

@@ -112,6 +112,32 @@ public class ZzUtil extends BaseBiz {
             wp_term_jxh.setCategory_code("ggpj");//个股评级
             wp_term_jxh.setCategory_id(84);
             DoWithContent(prefx,url, wp_term_jxh);
+
+
+
+            //行业研究 http://www.cs.com.cn/gppd/hyyj/  90
+            prefx = "http://www.cs.com.cn/gppd/";
+            url = "http://www.cs.com.cn/gppd/hyyj/";
+            wp_term_jxh = new Wp_term_jxh();
+            wp_term_jxh.setCategory_code("hyyj");//行业研究
+            wp_term_jxh.setCategory_id(90);
+            DoWithContent(prefx,url, wp_term_jxh);
+
+            //行业 http://www.cs.com.cn/ssgs/hyzx/
+            prefx = "http://www.cs.com.cn/ssgs/";
+            url = "http://www.cs.com.cn/ssgs/hyzx/";
+            wp_term_jxh = new Wp_term_jxh();
+            wp_term_jxh.setCategory_code("hyyj");//行业
+            wp_term_jxh.setCategory_id(90);
+            DoWithContent(prefx,url, wp_term_jxh);
+
+            //数据资金 http://www.cs.com.cn/gppd/sjjj/  91
+            prefx = "http://www.cs.com.cn/gppd/";
+            url = "http://www.cs.com.cn/gppd/sjjj/";
+            wp_term_jxh = new Wp_term_jxh();
+            wp_term_jxh.setCategory_code("sjzj");//数据资金
+            wp_term_jxh.setCategory_id(91);
+            DoWithContent(prefx,url, wp_term_jxh);
         } catch (Exception e) {
             log.error("DoWithRecursion is error message={}", e.getMessage());
         }
