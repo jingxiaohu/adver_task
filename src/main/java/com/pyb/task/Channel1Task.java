@@ -1,6 +1,7 @@
 package com.pyb.task;
 
 
+import com.pyb.jsoup.article.EastMoneyUtil;
 import com.pyb.jsoup.article.ZzUtil;
 import com.pyb.mvc.service.SpiderBiz;
 import com.pyb.mvc.service.SpiderNewsBiz;
@@ -21,6 +22,8 @@ public class Channel1Task {
 	private SpiderNewsBiz spiderNewsBiz;
 	@Autowired  //自动注入,默认按名称
 	private ZzUtil zzUtil;
+	@Autowired  //自动注入,默认按名称
+	private EastMoneyUtil eastMoneyUtil;
 	/**
 	 * 调度抓取新闻的数据
 	 * http://www.528ads.com/jxh_publish.php?type=1&ids=5620
@@ -38,7 +41,7 @@ public class Channel1Task {
 	/**
 	 * 调度抓取新闻的数据
 	 */
-	@Scheduled(cron = "0 0 0/3 * * ?")
+	@Scheduled(cron = "0 0 0/2 * * ?")
 	public void zzUtil(){
 		try{
 			log.info("------------Channel1Task-------zzUtil---------is start---");
@@ -52,12 +55,13 @@ public class Channel1Task {
 	/**
 	 * 调度抓取实盘大单的数据
 	 */
-	@Scheduled(cron = "0/10 * * * * ?")
+	@Scheduled(cron = "0 0/30 * * * ?")
 	public void dospiderstocklist(){
 		try{
 				log.info("------------Channel3Task----------------is start---");
 				spiderBiz.spiderChannel_3();
-				spiderNewsBiz.spider();
+				//spiderNewsBiz.spider();
+			    eastMoneyUtil.DoWithRecursion();
 		}catch (Throwable e) {
 			log.error("Channel3Task.dospider is error", e);
 		}
