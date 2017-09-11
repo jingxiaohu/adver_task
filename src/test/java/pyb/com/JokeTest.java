@@ -33,7 +33,7 @@ public class JokeTest extends BaseWebTest {
         path = path + "Joke.md";
         InterfaceUtil.AddInterfacePred(path, moduleName,
                 "获取笑话分类列表",
-                "dtype+ui_id",
+                "dtype",
                 "/v1/jokeclass",
                 1,
                 params,
@@ -63,7 +63,7 @@ public class JokeTest extends BaseWebTest {
         path = path + "Joke.md";
         InterfaceUtil.AddInterfacePred(path, moduleName,
                 "获取笑话分类列表",
-                "dtype+ui_id",
+                "dtype+jc_id",
                 "/v1/jokesegment_list",
                 2,
                 params,

@@ -66,11 +66,11 @@ public class Read_jokeSegmentAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
-      /*if (param.ui_id < 1) {
-        returnData.setReturnData(errorcode_param, " ui_id is smaller than zero", null);
+      if (param.jc_id < 1) {
+        returnData.setReturnData(errorcode_param, " jc_id is  zero", null);
         sendResp(returnData, response);
         return null;
-      }*/
+      }
 
       String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.dtype,param.jc_id);
       if (!param.sign.equalsIgnoreCase(sign_str)) {
