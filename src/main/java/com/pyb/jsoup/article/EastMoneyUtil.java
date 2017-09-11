@@ -348,15 +348,18 @@ public class EastMoneyUtil extends BaseBiz {
      */
     public String ContentDecorate(Element element){
         Elements elements = element.select(".pagesize");
+        log.info("pre ===={}",elements.toString());
         if (elements != null) {
             elements.remove();
         }
-        elements = element.select("a[href $=.html]");
+//        elements = element.select("a[href $=.html]");
+        elements = element.select("a");
         if (elements != null && elements.size() > 0) {
             for (int i = 0; i < elements.size(); i++) {
                 Element element2 = elements.get(i);
-                element2.attr("href","");
+                element2.attr("href","#");
             }
+            log.info("last ===={}",elements.toString());
         }
 
         String content = element.html();
