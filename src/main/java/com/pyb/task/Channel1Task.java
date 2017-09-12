@@ -7,6 +7,10 @@ import com.pyb.jsoup.article.ZzUtil;
 import com.pyb.mvc.service.SpiderBiz;
 import com.pyb.mvc.service.SpiderNewsBiz;
 import com.pyb.mvc.service.StockInfoBiz;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -51,6 +55,8 @@ public class Channel1Task {
 			zzUtil.DoWithRecursion();
 			//抓取个股信息
 			nfcj_singleStock_Spider.executeSpider();
+			//发布信息
+			doRequestPHP();
 		}catch (Throwable e) {
 			log.error("Channel1Task.zzUtil is error", e);
 		}
@@ -67,7 +73,8 @@ public class Channel1Task {
 				spiderBiz.spiderChannel_3();
 				//spiderNewsBiz.spider();
 			    eastMoneyUtil.DoWithRecursion();
-
+			//发布信息
+			doRequestPHP();
 		}catch (Throwable e) {
 			log.error("Channel3Task.dospider is error", e);
 		}
@@ -119,6 +126,19 @@ public class Channel1Task {
 
 	}
 
+
+
+	public void doRequestPHP(){
+		try {
+			String url = "http://www.528ads.com/jxh_publish.php?type=100";
+			HttpGet get = new HttpGet(url);
+			CloseableHttpClient httpclient = HttpClients.createDefault();
+			CloseableHttpResponse repose = httpclient.execute(get);
+			System.out.println(repose.getStatusLine().getStatusCode());
+		} catch (Exception e) {
+			log.error("doRequestPHP is error",e);
+		}
+	}
 
 
 }

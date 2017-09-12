@@ -1,6 +1,10 @@
 package pyb.com.spider;
 
 import com.pyb.jsoup.article.EastMoneyUtil;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +27,7 @@ public class TestSpiderArticle_EastMoneyweb extends BaseWebTest {
 
         }
     }
+
 
 
 
