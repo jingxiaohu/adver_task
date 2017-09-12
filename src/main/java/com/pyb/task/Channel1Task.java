@@ -2,6 +2,7 @@ package com.pyb.task;
 
 
 import com.pyb.jsoup.article.EastMoneyUtil;
+import com.pyb.jsoup.article.Nfcj_singleStock_Spider;
 import com.pyb.jsoup.article.ZzUtil;
 import com.pyb.mvc.service.SpiderBiz;
 import com.pyb.mvc.service.SpiderNewsBiz;
@@ -24,6 +25,8 @@ public class Channel1Task {
 	private ZzUtil zzUtil;
 	@Autowired  //自动注入,默认按名称
 	private EastMoneyUtil eastMoneyUtil;
+	@Autowired  //自动注入,默认按名称
+	private Nfcj_singleStock_Spider nfcj_singleStock_Spider;
 	/**
 	 * 调度抓取新闻的数据
 	 * http://www.528ads.com/jxh_publish.php?type=1&ids=5620
@@ -46,6 +49,8 @@ public class Channel1Task {
 		try{
 			log.info("------------Channel1Task-------zzUtil---------is start---");
 			zzUtil.DoWithRecursion();
+			//抓取个股信息
+			nfcj_singleStock_Spider.executeSpider();
 		}catch (Throwable e) {
 			log.error("Channel1Task.zzUtil is error", e);
 		}
@@ -62,6 +67,7 @@ public class Channel1Task {
 				spiderBiz.spiderChannel_3();
 				//spiderNewsBiz.spider();
 			    eastMoneyUtil.DoWithRecursion();
+
 		}catch (Throwable e) {
 			log.error("Channel3Task.dospider is error", e);
 		}

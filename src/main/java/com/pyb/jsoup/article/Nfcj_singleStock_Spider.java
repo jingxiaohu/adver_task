@@ -99,6 +99,38 @@ public class Nfcj_singleStock_Spider extends BaseBiz {
      * 中国邮政编码：[1-9]\d{5}(?!\d) (中国邮政编码为6位数字)
      * IP地址：((?:(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d)\\.){3}(?:25[0-5]|2[0-4]\\d|[01]?\\d?\\d))
      */
+
+
+    public void executeSpider() {
+        //添加数据
+        /*try {
+            nfcj_singleStock_Spider.addClassMain((long) 5,"http://www.southmoney.com/gegu/");
+        } catch (Exception e) {
+
+        }*/
+        try {
+
+            List<Wp_term_jxh> list =  FindWptermsJxh(5);
+            if(list != null && list.size() > 0){
+                String prefx = "http://www.southmoney.com";
+                for (Wp_term_jxh wp_term_jxh : list) {
+                    try {
+                        String classname =  wp_term_jxh.url.replace(prefx,"");
+                        String baseurl = prefx+classname;
+                        DoWithRecursion(prefx,wp_term_jxh,baseurl,classname,null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+
+        }
+    }
+
+
+
+
     public List<Wp_term_jxh> FindWptermsJxh(long fatherId,long startid,long endid) {
         try {
             //首先检查是否存在 wp_terms
