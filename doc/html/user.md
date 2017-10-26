@@ -225,6 +225,73 @@ POST
 |ui_email|保密邮箱|String|
 |ui_reg_type|注册类型（0:未指定1:邮箱2:手机）|int|
 
+
+####1.3.1->第三方用户登录
+|参数名称|值描述|是否可空|限制长度|参数类型|
+|--------|-----|----|--------|-------|
+|up_type| 类型 0微信 1新浪 2腾讯 3人人 4开心 5天涯 6FACEBOOK | 否| 无 |字符串|
+|up_key| 第三方主键ID| 否| 无 |字符串|
+|up_token| 第三方授权码| 否| 无 |字符串|
+|tel_version| 手机型号(例如 HW)| 是| 无 |字符串|
+|avtar| 头像地址| 是| 无 |字符串|
+|nickname| 昵称| 否| 无 |字符串|
+|sex| 性别 0:男 1:女| 否| 无 |整型|
+|sign |MD5数字签名(dtype+up_type+up_key+up_token)按参数的首字母升序顺序进行组装| 否|无|字符串|
+####请求路径
+[http://app.wypyb.com/v1/external_login.php](http://app.wypyb.com/v1/external_login.php)
+######返回结果
+    {
+        "data": {
+            "ui_addr": "",
+            "ui_avatar": "",
+            "ui_birthday": "",
+            "ui_constellation": "",
+            "ui_createtime": 1457336979779,
+            "ui_createtime_str": "2016-03-07 15:49:39",
+            "ui_desc": "",
+            "ui_email": "",
+            "ui_flag": 1,
+            "ui_id": 7,
+            "ui_imei": "351869058577423",
+            "ui_ip": "",
+            "ui_item_type": 0,
+            "ui_leval": 0,
+            "ui_loginname": "15882345446",
+            "ui_mood": "",
+            "ui_nickname": "CGuWmHrp",
+            "ui_note": "",
+            "ui_password": "",
+            "ui_qq": "",
+            "ui_reg_type": 0,
+            "ui_rmb": 0,
+            "ui_score": 0,
+            "ui_sex": 0,
+            "ui_state": 0,
+            "ui_tel": "15882345446",
+            "ui_tel_version": "",
+            "ui_token": "f02f8d5ff7bf209ba591b2e43c72c5bc",
+            "ui_type": 0,
+            "ui_updatetime": 0,
+            "ui_updatetime_str": "",
+            "ui_vc": 0,
+            "ui_wealth": 0,
+            "ui_member":0:不是会员 1:正常会员 2:会员已经过期，
+            "member_endtime":会员结束时间 1466491480206,
+            "uuid": "b2d844a132fdde45a131457336979578"
+        },
+        "errormsg": "登录成功",
+        "errorno": "0"
+    }
+#########返回字段说明
+|名称|值描述|限制长度|参数类型|
+|--------|----|--------|-------|
+| ui_nickname| 用户昵称| 无 |字符串|
+| ui_avatar| 用户头像| 无 |字符串|
+| ui_mood| 用户心情| 无 |字符串|
+| ui_desc| 用户描述| 无 |字符串|
+
+
+
 ####1.4->用户修改密码
 
 ###### 接口地址
