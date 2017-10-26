@@ -23,4 +23,5 @@
 [2.笑话理接口文档](Joke.html)
 [3.消息管理接口文档](Message.html)
 [4.渠道管理接口文档](Channel.html)
+[5.菜单理接口文档](Menu.html)
 
