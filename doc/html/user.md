@@ -240,55 +240,67 @@ POST
 ####请求路径
 [http://app.wypyb.com/v1/external_login.php](http://app.wypyb.com/v1/external_login.php)
 ######返回结果
+
     {
         "data": {
-            "ui_addr": "",
-            "ui_avatar": "",
-            "ui_birthday": "",
-            "ui_constellation": "",
-            "ui_createtime": 1457336979779,
-            "ui_createtime_str": "2016-03-07 15:49:39",
-            "ui_desc": "",
-            "ui_email": "",
-            "ui_flag": 1,
-            "ui_id": 7,
-            "ui_imei": "351869058577423",
-            "ui_ip": "",
-            "ui_item_type": 0,
-            "ui_leval": 0,
-            "ui_loginname": "15882345446",
-            "ui_mood": "",
-            "ui_nickname": "CGuWmHrp",
-            "ui_note": "",
-            "ui_password": "",
-            "ui_qq": "",
-            "ui_reg_type": 0,
-            "ui_rmb": 0,
-            "ui_score": 0,
+            "ctime": 1500180577424,
+            "is_vip": 0,
+            "note": "",
+            "ui_avtar": "",
+            "ui_bind_tel": "251878350@qq.com",
+            "ui_email": "251878350@qq.com",
+            "ui_flag": 2,
+            "ui_id": 1,
+            "ui_lock": 0,
+            "ui_name": "",
+            "ui_nd": "2017071612493744156",
+            "ui_nickname": "m3pdkDN6",
+            "ui_password": "123456",
+            "ui_reg_type": 1,
+            "ui_release": 0,
             "ui_sex": 0,
-            "ui_state": 0,
-            "ui_tel": "15882345446",
-            "ui_tel_version": "",
-            "ui_token": "f02f8d5ff7bf209ba591b2e43c72c5bc",
-            "ui_type": 0,
-            "ui_updatetime": 0,
-            "ui_updatetime_str": "",
+            "ui_sign": 0,
+            "ui_task": 0,
+            "ui_tel": "251878350@qq.com",
+            "ui_tj": 0,
+            "ui_token": "78cd4ce76d37a0c0fc29ff4a6ba53ce2",
             "ui_vc": 0,
-            "ui_wealth": 0,
-            "ui_member":0:不是会员 1:正常会员 2:会员已经过期，
-            "member_endtime":会员结束时间 1466491480206,
-            "uuid": "b2d844a132fdde45a131457336979578"
+            "ui_wx": "",
+            "ui_zfb": "",
+            "utime": 1500180577422
         },
-        "errormsg": "登录成功",
+        "errorcode": "",
+        "errormsg": "登陆成功",
         "errorno": "0"
     }
-#########返回字段说明
-|名称|值描述|限制长度|参数类型|
-|--------|----|--------|-------|
-| ui_nickname| 用户昵称| 无 |字符串|
-| ui_avatar| 用户头像| 无 |字符串|
-| ui_mood| 用户心情| 无 |字符串|
-| ui_desc| 用户描述| 无 |字符串|
+######返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ui_id|主键ID|long|
+|ui_nd|用户nd|String|
+|ui_token|用户登陆token|String|
+|ui_tel|用户账号（手机号码）|String|
+|ui_password|用户密码|String|
+|ui_sex|用户性别0:未知1:男2:女|int|
+|ui_avtar|用户头像|String|
+|ui_bind_tel|用户绑定手机号码|String|
+|ui_name|用户真实姓名|String|
+|ui_zfb|用户支付宝账号|String|
+|ui_wx|用户微信账号|String|
+|ui_vc|用户虚拟币|int|
+|ui_sign|累计签到天数|int|
+|ui_tj|推荐有效好友数|int|
+|ui_lock|是否锁定(0:有效用户1:非法用户)|int|
+|ctime|创建时间|java.util.Date|
+|utime|更新时间|java.util.Date|
+|note|备注|String|
+|ui_release|已发任务数|int|
+|ui_task|已做任务数|int|
+|is_vip|是否是VIP|int|
+|ui_nickname|用户昵称|String|
+|ui_flag|注册来源0:未指定1:web2:android3:ios4:QQ5:微信6:新浪7:阿里|int|
+|ui_email|保密邮箱|String|
+|ui_reg_type|注册类型（0:未指定1:邮箱2:手机）|int|
 
 
 
