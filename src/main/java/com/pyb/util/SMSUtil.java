@@ -1,18 +1,17 @@
 package com.pyb.util;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Date;
-import java.util.Map;
-
+import com.pyb.bean.Sms_running;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.pyb.bean.Sms_running;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Date;
+import java.util.Map;
 
 /**
  * 短信发送接口
@@ -37,11 +36,11 @@ public class SMSUtil {
 	private static String account="N6682459";//用户账号
 	private static String pswd = "Psab0024";//用户密码
 	private static int needstatus = 1;
-	private static String formatmsg_reg = "您验证码是：%s,欢迎您使用手机客户端,我们将竭诚为您服务!"; 
-	private static String formatmsg_change_pass = "尊敬的用户%s,您请求的重置密码的验证码为:%s,我们将竭诚为您服务!";
-	private static String formatmsg_change_tel = "尊敬的用户%s,您请求的修改手机号码的验证码为:%s,我们将竭诚为您服务!";
+	private static String formatmsg_reg = "【您验证码】是：%s,欢迎您使用手机客户端,我们将竭诚为您服务!";
+	private static String formatmsg_change_pass = "【尊敬的用户】%s,您请求的重置密码的验证码为:%s,我们将竭诚为您服务!";
+	private static String formatmsg_change_tel = "【尊敬的用户】%s,您请求的修改手机号码的验证码为:%s,我们将竭诚为您服务!";
 	
-//	@Test
+//   @Test
 	public void ss(){
 		sendMsg("9527","15882345446","1");
 	}

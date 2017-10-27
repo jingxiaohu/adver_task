@@ -32,12 +32,12 @@ public class UserTest extends BaseWebTest {
    */
   @Test
   public void sendCode() throws Exception {
-	String tel = "307881141@qq.com";
+	String tel = "15882345446";
     MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
     params.add("dtype", dtype);
     params.add("tel",tel );
     params.add("vclass", "1");//固定参数：1：注册 2：重置密码 3:重置绑定电话号码  4：绑定银行卡
-    params.add("type", 1+"");//类型（0:未指定 1:邮箱 2:手机）
+    params.add("type", 2+"");//类型（0:未指定 1:邮箱 2:手机）
     
     sign(params, "dtype", "tel", "vclass");
     
