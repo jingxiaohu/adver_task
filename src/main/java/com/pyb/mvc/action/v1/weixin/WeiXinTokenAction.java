@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  * http://blog.csdn.net/maguanghui_2012/article/details/52808139
  */
 @RestController
+@RequestMapping(value = "/v1")
 public class WeiXinTokenAction extends BaseV1Controller {
 //    @Autowired
 //    private UserBiz userBiz;
