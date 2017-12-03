@@ -36,6 +36,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
             pw.append(echostr);
             pw.flush();*/
             sendResp(echostr,response);
+            return;
         } catch (Exception e) {
             log.error("weixin token sign is fail",e);
         }
