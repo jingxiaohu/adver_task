@@ -1,0 +1,15 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ac_id|主键ID|long|
+|ui_id|用户id|long|
+|weixin_no|用户微信号|String|
+|name|用户真实姓名|String|
+|telephone|用户手机号码|String|
+|money|提现金额单位分|int|
+|state|提现状态：0：待审核1：审核通过待打款2：已打款完毕3：提现失败|int|
+|money_old|提现前可供提现金额单位分|int|
+|ctime|创建时间|java.util.Date|
+|utime|修改时间|java.util.Date|
+|note|备注|String|
+

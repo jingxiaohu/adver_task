@@ -1,0 +1,12 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|gd_id|主键ID|long|
+|g_id|商品表主键ID|long|
+|goods_desc|详情介绍|String|
+|img_urls|详情图片URL逗号分割|String|
+|ctime|创建时间|java.util.Date|
+|utime|更新时间|java.util.Date|
+|note|备注|String|
+|is_del|是否逻辑删除:0：不删除1：删除|int|
+

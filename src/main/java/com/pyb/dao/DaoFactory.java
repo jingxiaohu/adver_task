@@ -63,6 +63,28 @@ protected Stock_handDao stock_handDao;
 protected Day_newsDao day_newsDao;
 @Autowired
 protected Stock_infoDao Stock_infoDao;
+@Autowired
+protected Wx_user_infoDao wx_user_infoDao;
+@Autowired
+protected Wx_after_saleDao wx_after_saleDao;
+@Autowired
+protected Wx_evaluateDao wx_evaluateDao;
+@Autowired
+protected Wx_goodsDao wx_goodsDao;
+@Autowired
+protected Wx_goods_detailsDao wx_goods_detailsDao;
+@Autowired
+protected Wx_goods_orderDao wx_goods_orderDao;
+@Autowired
+protected Wx_goods_typeDao wx_goods_typeDao;
+@Autowired
+protected Wx_user_addressDao wx_user_addressDao;
+@Autowired
+protected Wx_apply_cashDao wx_apply_cashDao;
+@Autowired
+protected Wx_recommend_userDao wx_recommend_userDao;
+@Autowired
+protected Wx_recommend_earningsDao wx_recommend_earningsDao;
 
 /*******************************下面是GET方法**************************************/
 public User_info_newDao getUser_info_newDao() {
@@ -145,6 +167,39 @@ public Day_newsDao getDay_newsDao() {
 }
 public Stock_infoDao getStock_infoDao() {
 	return Stock_infoDao;
+}
+public Wx_user_infoDao getWx_user_infoDao() {
+	return wx_user_infoDao;
+}
+public Wx_after_saleDao getWx_after_saleDao() {
+	return wx_after_saleDao;
+}
+public Wx_evaluateDao getWx_evaluateDao() {
+	return wx_evaluateDao;
+}
+public Wx_goodsDao getWx_goodsDao() {
+	return wx_goodsDao;
+}
+public Wx_goods_detailsDao getWx_goods_detailsDao() {
+	return wx_goods_detailsDao;
+}
+public Wx_goods_orderDao getWx_goods_orderDao() {
+	return wx_goods_orderDao;
+}
+public Wx_goods_typeDao getWx_goods_typeDao() {
+	return wx_goods_typeDao;
+}
+public Wx_user_addressDao getWx_user_addressDao() {
+	return wx_user_addressDao;
+}
+public Wx_apply_cashDao getWx_apply_cashDao() {
+	return wx_apply_cashDao;
+}
+public Wx_recommend_userDao getWx_recommend_userDao() {
+	return wx_recommend_userDao;
+}
+public Wx_recommend_earningsDao getWx_recommend_earningsDao() {
+	return wx_recommend_earningsDao;
 }
 
 

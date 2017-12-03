@@ -1,0 +1,12 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|re_id|主键ID|long|
+|earnings_total|推荐人总累积收益|int|
+|allow_drawings|可提现收益|int|
+|drawings|成功提现收益|int|
+|unconfirmed_receiving|待收货未经确认收益|int|
+|ctime|创建时间|java.util.Date|
+|utime|修改时间|java.util.Date|
+|note|备注|String|
+

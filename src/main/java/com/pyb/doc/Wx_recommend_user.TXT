@@ -1,0 +1,13 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ru_id|主键ID|long|
+|recommend_id|推荐人用户ID|long|
+|recommended_id|被推荐人用户ID|long|
+|recommended_nickname|被推荐人用户昵称|String|
+|avatar|被推荐人头像|String|
+|money|被推荐人贡献给推荐人收益单位分|int|
+|ctime|创建时间|java.util.Date|
+|is_del|是否逻辑删除0：不1：是|int|
+|note|备注|String|
+
