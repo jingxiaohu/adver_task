@@ -1,6 +1,8 @@
 package com.pyb.constants;
 
 
+import com.pyb.bean.Wx_accesstoken;
+
 public class Constants {
 
 	
@@ -30,7 +32,19 @@ public class Constants {
 
 	
 	public static String tableTemplate ="WEB-INF/config/properties/TableTemplate.properties";
-	
+
+
+
+	//access_token
+	public static Wx_accesstoken wx_accesstoken = null;
+
+	public static Wx_accesstoken getWx_accesstoken() {
+		return wx_accesstoken;
+	}
+	public static void setWx_accesstoken(Wx_accesstoken wx_accesstoken) {
+		Constants.wx_accesstoken = wx_accesstoken;
+	}
+
 
 	/**
 	 * 用户头像存放路径

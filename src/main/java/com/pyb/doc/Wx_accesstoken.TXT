@@ -1,0 +1,8 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|id|主键ID|long|
+|access_token|access_token|String|
+|expires_in|expires_in|int|
+|utime|刷新时间|java.util.Date|
+

@@ -1,18 +1,20 @@
 package com.pyb.util;
 
+import org.apache.commons.httpclient.*;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.params.HttpClientParams;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.SimpleHttpConnectionManager;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpClientParams;
+import java.util.Map;
 
 public class HttpUtil {
+	static Logger log = LoggerFactory.getLogger(HttpUtil.class);
 
 	/**
 	 * 执行post或者get方法
@@ -91,5 +93,60 @@ public class HttpUtil {
 		line = sb.toString();
 
 		return line;
+	}
+
+	/**
+	 *
+	 * @param url
+	 * @param header
+	 * @param params
+	 * @return
+	 */
+	public static String doGet(String url, Map<String, String> header, NameValuePair[] params) {
+		HttpClient hc = new HttpClient();
+		GetMethod get = null;
+		try {
+			hc.setConnectionTimeout(20 * 1000);
+			hc.setTimeout(20 * 1000);
+			get = new GetMethod(url);
+			if (params != null) {
+				get.setQueryString(params);
+			}
+			get.setRequestHeader("Connection", "close");
+			get.addRequestHeader("Content-Type", "application/json;charset=utf-8");
+			get.addRequestHeader("Accept",
+					"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+			get.addRequestHeader("Accept-Language", "zh-cn,zh;q=0.8,en-us;q=0.5,en;q=0.3");
+			if (header != null) {
+				for (String h : header.keySet()) {
+					get.addRequestHeader(h, header.get(h));
+				}
+			}
+			hc.executeMethod(get);
+			if (get.getStatusCode() == 200) {
+				InputStream resStream = get.getResponseBodyAsStream();
+				BufferedReader br = new BufferedReader(new InputStreamReader(resStream));
+				StringBuffer resBuffer = new StringBuffer();
+				String resTemp = "";
+				while ((resTemp = br.readLine()) != null) {
+					resBuffer.append(resTemp);
+				}
+				String response = resBuffer.toString();
+				//return get.getResponseBodyAsString();
+				return response;
+			} else {
+				log.error(url + " req error StatusCode:" + get.getStatusCode());
+			}
+		} catch (Exception e) {
+			log.error("doGet error", e);
+			return "error";
+		} finally {
+			if (get != null) {
+				get.releaseConnection();
+				//释放链接
+				hc.getHttpConnectionManager().closeIdleConnections(0);
+			}
+		}
+		return "error";
 	}
 }

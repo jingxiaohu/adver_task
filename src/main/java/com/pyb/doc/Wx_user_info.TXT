@@ -6,8 +6,6 @@
 |nickname|用户昵称|String|
 |weixin_no|用户微信号|String|
 |weixin_id|用户微信ID|String|
-|access_token|用户微信access_token|String|
-|expires_in|用户微信expires_in|int|
 |vc|余额单位分|int|
 |score|积分|int|
 |level|用户等级|int|
@@ -23,4 +21,6 @@
 |recommend_nickname|推荐我的人用户昵称|String|
 |recommend_code|我的推荐邀请码（六位数字）|String|
 |token|用户登录刷新token|String|
+|sex|用户性别0：未指定1：男2：女|int|
+|area|用户地区（例如：广东省广州）|String|
 

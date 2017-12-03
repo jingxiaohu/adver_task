@@ -1,11 +1,13 @@
 package com.pyb.mvc.action.v1;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.ReturnData;
 import com.pyb.bean.ReturnDataBase;
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.constants.Constants;
 import com.pyb.interceptor.SpringMVCInterceptor;
+import com.pyb.util.HttpUtil;
 import com.pyb.util.RequestUtil;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -366,4 +368,22 @@ public class BaseV1Controller implements Serializable {
       }
       return false;
   }
+
+  //刷新 access_token
+  public JSONObject RefeshAccessToken(){
+      //获取access_token
+      String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxebee99b0aba36d8f&secret=a4a6df2df45185cf4746a381155cf0fa";
+      String jsondata = HttpUtil.doGet(url,null,null);
+      if(jsondata != null){
+        JSONObject oob = JSON.parseObject(jsondata);
+        if(oob != null){
+//          WeiXinAccessToken = oob.getString("access_token");
+//          String expires_in = oob.getString("expires_in");
+          return oob;
+        }
+      }
+      return  null;
+  }
+
+
 }

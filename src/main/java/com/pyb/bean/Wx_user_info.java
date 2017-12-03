@@ -7,15 +7,13 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_user_info implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","access_token","expires_in","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token"};
+    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area"};
 
     public long ui_id;//bigint(20)    用户主键ID
     public String avatar="";//varchar(150)    用户头像
     public String nickname="";//varchar(80)    用户昵称
     public String weixin_no="";//varchar(80)    用户微信号
     public String weixin_id="";//varchar(80)    用户微信ID
-    public String access_token="";//varchar(100)    用户微信access_token
-    public int expires_in;//int(11)    用户微信expires_in
     public int vc;//int(11)    余额单位分
     public int score;//int(11)    积分
     public int level;//int(11)    用户等级
@@ -31,6 +29,8 @@ public class Wx_user_info implements Cloneable , Serializable{
     public String recommend_nickname="";//varchar(40)    推荐我的人用户昵称
     public String recommend_code="";//varchar(10)    我的推荐邀请码（六位数字）
     public String token="";//varchar(100)    用户登录刷新token
+    public int sex;//int(11)    用户性别0：未指定1：男2：女
+    public String area="";//varchar(60)    用户地区（例如：广东省广州）
 
 
 
@@ -84,25 +84,6 @@ public class Wx_user_info implements Cloneable , Serializable{
            value = "";
         }
         this.weixin_id= value;
-    }
-
-    public String getAccess_token(){
-        return access_token;
-    }
-
-    public void setAccess_token(String value){
-    	if(value == null){
-           value = "";
-        }
-        this.access_token= value;
-    }
-
-    public int getExpires_in(){
-        return expires_in;
-    }
-
-    public void setExpires_in(int value){
-        this.expires_in= value;
     }
 
     public int getVc(){
@@ -246,17 +227,34 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.token= value;
     }
 
+    public int getSex(){
+        return sex;
+    }
+
+    public void setSex(int value){
+        this.sex= value;
+    }
+
+    public String getArea(){
+        return area;
+    }
+
+    public void setArea(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.area= value;
+    }
 
 
-    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, String access_token, int expires_in, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, byte[] note, long recommend_id, String recommend_nickname, String recommend_code, String token) {
+
+    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, byte[] note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area) {
         Wx_user_info ret = new Wx_user_info();
         ret.setUi_id(ui_id);
         ret.setAvatar(avatar);
         ret.setNickname(nickname);
         ret.setWeixin_no(weixin_no);
         ret.setWeixin_id(weixin_id);
-        ret.setAccess_token(access_token);
-        ret.setExpires_in(expires_in);
         ret.setVc(vc);
         ret.setScore(score);
         ret.setLevel(level);
@@ -272,6 +270,8 @@ public class Wx_user_info implements Cloneable , Serializable{
         ret.setRecommend_nickname(recommend_nickname);
         ret.setRecommend_code(recommend_code);
         ret.setToken(token);
+        ret.setSex(sex);
+        ret.setArea(area);
         return ret;    
     }
 
@@ -281,8 +281,6 @@ public class Wx_user_info implements Cloneable , Serializable{
         String nickname = wx_user_info.getNickname();
         String weixin_no = wx_user_info.getWeixin_no();
         String weixin_id = wx_user_info.getWeixin_id();
-        String access_token = wx_user_info.getAccess_token();
-        int expires_in = wx_user_info.getExpires_in();
         int vc = wx_user_info.getVc();
         int score = wx_user_info.getScore();
         int level = wx_user_info.getLevel();
@@ -298,14 +296,14 @@ public class Wx_user_info implements Cloneable , Serializable{
         String recommend_nickname = wx_user_info.getRecommend_nickname();
         String recommend_code = wx_user_info.getRecommend_code();
         String token = wx_user_info.getToken();
+        int sex = wx_user_info.getSex();
+        String area = wx_user_info.getArea();
 
         this.setUi_id(ui_id);
         this.setAvatar(avatar);
         this.setNickname(nickname);
         this.setWeixin_no(weixin_no);
         this.setWeixin_id(weixin_id);
-        this.setAccess_token(access_token);
-        this.setExpires_in(expires_in);
         this.setVc(vc);
         this.setScore(score);
         this.setLevel(level);
@@ -321,6 +319,8 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.setRecommend_nickname(recommend_nickname);
         this.setRecommend_code(recommend_code);
         this.setToken(token);
+        this.setSex(sex);
+        this.setArea(area);
 
     }
 
@@ -331,8 +331,6 @@ public class Wx_user_info implements Cloneable , Serializable{
         String nickname = wx_user_info.getNickname();
         String weixin_no = wx_user_info.getWeixin_no();
         String weixin_id = wx_user_info.getWeixin_id();
-        String access_token = wx_user_info.getAccess_token();
-        int expires_in = wx_user_info.getExpires_in();
         int vc = wx_user_info.getVc();
         int score = wx_user_info.getScore();
         int level = wx_user_info.getLevel();
@@ -348,6 +346,8 @@ public class Wx_user_info implements Cloneable , Serializable{
         String recommend_nickname = wx_user_info.getRecommend_nickname();
         String recommend_code = wx_user_info.getRecommend_code();
         String token = wx_user_info.getToken();
+        int sex = wx_user_info.getSex();
+        String area = wx_user_info.getArea();
     }
 
     public Map<String,Object> toMap(){
@@ -360,8 +360,6 @@ public class Wx_user_info implements Cloneable , Serializable{
         String nickname = wx_user_info.getNickname();
         String weixin_no = wx_user_info.getWeixin_no();
         String weixin_id = wx_user_info.getWeixin_id();
-        String access_token = wx_user_info.getAccess_token();
-        int expires_in = wx_user_info.getExpires_in();
         int vc = wx_user_info.getVc();
         int score = wx_user_info.getScore();
         int level = wx_user_info.getLevel();
@@ -377,6 +375,8 @@ public class Wx_user_info implements Cloneable , Serializable{
         String recommend_nickname = wx_user_info.getRecommend_nickname();
         String recommend_code = wx_user_info.getRecommend_code();
         String token = wx_user_info.getToken();
+        int sex = wx_user_info.getSex();
+        String area = wx_user_info.getArea();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ui_id",ui_id);
@@ -384,8 +384,6 @@ public class Wx_user_info implements Cloneable , Serializable{
         _ret.put("nickname",nickname);
         _ret.put("weixin_no",weixin_no);
         _ret.put("weixin_id",weixin_id);
-        _ret.put("access_token",access_token);
-        _ret.put("expires_in",expires_in);
         _ret.put("vc",vc);
         _ret.put("score",score);
         _ret.put("level",level);
@@ -401,6 +399,8 @@ public class Wx_user_info implements Cloneable , Serializable{
         _ret.put("recommend_nickname",recommend_nickname);
         _ret.put("recommend_code",recommend_code);
         _ret.put("token",token);
+        _ret.put("sex",sex);
+        _ret.put("area",area);
         return _ret;
     }
 
