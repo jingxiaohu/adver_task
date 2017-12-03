@@ -2,7 +2,6 @@ package com.pyb.mvc.weixin.biz;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.Wx_user_info;
-import com.pyb.mvc.service.BaseBiz;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,7 @@ import java.util.Date;
  * @author jingxiaohu
  */
 @Service
-public class Wx_UserBiz extends BaseBiz {
+public class Wx_UserBiz extends BaseWxBiz {
   /**
    * 用户注册
    */

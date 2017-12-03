@@ -35,7 +35,7 @@ import java.util.*;
  * @Transactional(propagation = Propagation.NOT_SUPPORTED) : 不进行事务执行
  */
 @Service
-public class BaseBiz {
+public class BaseWxBiz {
 
   //@Resource(name="CacheManager")
   //private CacheManager cacheManager;
