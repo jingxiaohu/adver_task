@@ -9,6 +9,7 @@ import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.mvc.weixin.bean.RqAndRp;
 import com.pyb.mvc.weixin.biz.Wx_UserBiz;
 import com.pyb.mvc.weixin.messageUtil.CoreService;
+import com.pyb.mvc.weixin.util.MessageUtil;
 import com.pyb.mvc.weixin.util.SignUtil;
 import com.pyb.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
     /**
      * 微信公众号后台回调接口配置验证
      */
-    @RequestMapping(value = "/weixin_token",method = RequestMethod.GET )
+    @RequestMapping(value = "/weixin_token", method = RequestMethod.GET)
     @ResponseBody
     public void CheckCallUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // 微信加密签名
@@ -64,61 +65,89 @@ public class WeiXinTokenAction extends BaseV1Controller {
         out.close();
         out = null;
     }
+
     /**
      * 微信用户关注公众号进行注册
      */
-    @RequestMapping(value = "/weixin_token",method = RequestMethod.POST )
+    @RequestMapping(value = "/weixin_token", method = RequestMethod.POST)
     @ResponseBody
     public void UserReg(HttpServletRequest request, HttpServletResponse response) {
         try {
-        // 消息的接收、处理、响应
-        // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        // 调用核心业务类接收消息、处理消息
-        RqAndRp rqAndRp = CoreService.processRequest(request);
-        String respXml = rqAndRp.getReplyXML();
+            // 消息的接收、处理、响应
+            // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            // 调用核心业务类接收消息、处理消息
+            RqAndRp rqAndRp = CoreService.processRequest(request);
+            String respXml = rqAndRp.getReplyXML();
 //        log.info("respXml={}",respXml);
-        //验证accessToken是否过期 如果过期则进行刷新处理
-        doAccessToken();
+            //验证accessToken是否过期 如果过期则进行刷新处理
+            doAccessToken();
 
-        if(rqAndRp.getMsgType().equalsIgnoreCase("event") && rqAndRp.getEvent().equalsIgnoreCase("subscribe")){
-            //用户关注事件
-            //用户关注微信公众号 通过事件被动消息发送给用户 回调该接口获取到用户绑定该公众号的 openid
-            String openid = request.getParameter("openid");
-            System.out.println("openid:" + openid);
-            //通过accesstoken + openid 获取用户基本信息
-            //https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
-            String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="
-                    +Constants.getWx_accesstoken().getAccess_token()
-                    +"&openid="
-                    +openid
-                    +"&lang=zh_CN ";
-            String jsondata = HttpUtil.doGet(url,null,null);
-            if(jsondata != null){
-                JSONObject oob = JSON.parseObject(jsondata);
-                oob.put("EventKey",rqAndRp.getEventKey());
-                if(oob != null){
-                    boolean flag =  wx_UserBiz.ReturnUserRegister(oob);
-                    if(flag){
-                        //注册成功
+            if (rqAndRp.getMsgType().equalsIgnoreCase("event")) {
+                if (rqAndRp.getEvent().equalsIgnoreCase("subscribe")) {
+                    //用户关注事件
+                    //用户关注微信公众号 通过事件被动消息发送给用户 回调该接口获取到用户绑定该公众号的 openid
+                    String openid = request.getParameter("openid");
+                    System.out.println("openid:" + openid);
+                    //通过accesstoken + openid 获取用户基本信息
+                    //https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+                    String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="
+                            + Constants.getWx_accesstoken().getAccess_token()
+                            + "&openid="
+                            + openid
+                            + "&lang=zh_CN ";
+                    String jsondata = HttpUtil.doGet(url, null, null);
+                    if (jsondata != null) {
+                        JSONObject oob = JSON.parseObject(jsondata);
+                        oob.put("EventKey", rqAndRp.getEventKey());
+                        if (oob != null) {
+                            boolean flag = wx_UserBiz.ReturnUserRegister(oob);
+                            if (flag) {
+                                //注册成功
+                            }
+                        }
                     }
                 }
+                //检查是否是 取消关注
+                if (rqAndRp.getEvent().equalsIgnoreCase(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
+                    //用户关注事件
+                    //用户关注微信公众号 通过事件被动消息发送给用户 回调该接口获取到用户绑定该公众号的 openid
+                    String openid = request.getParameter("openid");
+                    System.out.println("openid:" + openid);
+                    //通过accesstoken + openid 获取用户基本信息
+                    //https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+                    String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="
+                            + Constants.getWx_accesstoken().getAccess_token()
+                            + "&openid="
+                            + openid
+                            + "&lang=zh_CN ";
+                    String jsondata = HttpUtil.doGet(url, null, null);
+                    if (jsondata != null) {
+                        JSONObject oob = JSON.parseObject(jsondata);
+                        boolean flag = wx_UserBiz.UpUserAttentionState(oob);
+                        if (flag) {
+                            //修改关注状态成功
+                        }
+                    }
+
+                }
+
+            }//-- 事件类型判断结束
+
+
+            // 响应消息
+            if (StringUtils.hasLength(respXml)) {
+                PrintWriter out = response.getWriter();
+                out.print(respXml);
+                out.close();
             }
-
-        }
-
-        // 响应消息
-        if(StringUtils.hasLength(respXml)){
-            PrintWriter out = response.getWriter();
-            out.print(respXml);
-            out.close();
-        }
 
         } catch (Exception e) {
             log.error("注册 is fail", e);
         }
     }
+
     /**
      * 获取我的基本信息
      */
@@ -224,7 +253,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
                 if (obj != null) {
                     String WeiXinAccessToken = obj.getString("access_token");
                     String expires_in = obj.getString("expires_in");
-                    List<Wx_accesstoken> wx_accesstoken_list =  wx_accesstokenDao.selectAll();
+                    List<Wx_accesstoken> wx_accesstoken_list = wx_accesstokenDao.selectAll();
                     wx_accesstoken = wx_accesstoken_list.get(0);
 
                     wx_accesstoken.setAccess_token(WeiXinAccessToken);

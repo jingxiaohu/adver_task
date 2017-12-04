@@ -50,6 +50,13 @@ public class Wx_UserBiz extends BaseWxBiz {
         Wx_user_info userinfo = getMySelfService().queryUniqueT(sql,Wx_user_info.class,weixin_id);
         if(userinfo != null){
             //已经注册过了
+            if(userinfo.getAttention_state() == 1){
+                userinfo.setAttention_state(0);
+                int count = daoFactory.getWx_user_infoDao().updateByKey(userinfo);
+                if(count != 1){
+                    log.error("更新用户再次关注状态失败 ui_id={},set Attention_state=0",userinfo.getUi_id());
+                }
+            }
             return true;
         }
 
@@ -120,8 +127,40 @@ public class Wx_UserBiz extends BaseWxBiz {
     }
   }
 
-
-
+    /**
+     * 更新用户取消关注的 关注状态
+     * @param userObj
+     * @return
+     */
+  public boolean UpUserAttentionState(JSONObject userObj) {
+      // TODO Auto-generated method stub
+      try {
+          //用户的标识，对当前公众号唯一
+          String weixin_id = userObj.getString("openid");
+          //首先验证该微信用户是否之前关注过我们平台 如果是则不再创建新的用户ID
+          String sql = "select * from wx_user_info where weixin_id=? limit 1";
+          Wx_user_info userinfo = getMySelfService().queryUniqueT(sql,Wx_user_info.class,weixin_id);
+          if(userinfo != null){
+              //已经注册过了
+              if(userinfo.getAttention_state() == 0){
+                  userinfo.setAttention_state(1);
+                  int count = daoFactory.getWx_user_infoDao().updateByKey(userinfo);
+                  if(count != 1){
+                      log.error("更新用户再次关注状态失败 ui_id={},set Attention_state=1",userinfo.getUi_id());
+                  }
+              }
+          }
+          /**
+           * 返回数据
+           */
+          return true;
+      } catch (Exception e) {
+          // TODO Auto-generated catch block
+          log.error("UserBiz ReturnUserRegister is error", e);
+          // returnData.setReturnData(errorcode_systerm, "system is error", "");
+          return false;
+      }
+  }
   /****************************下面是封装的查询方法********************************/
     /**
      * 通过weixin_no  获取用户基本信息

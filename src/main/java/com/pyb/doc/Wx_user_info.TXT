@@ -24,4 +24,5 @@
 |sex|用户性别0：未指定1：男2：女|int|
 |area|用户地区（例如：广东省广州）|String|
 |ticket|用户推荐微信内部tickt|String|
+|attention_state|关注平台状态0：关注中1：未关注|int|
 

@@ -90,6 +90,7 @@ public class CoreService {
                 // 取消关注
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
                     // TODO 取消订阅后用户不会再收到公众账号发送的消息，因此不需要回复
+
                 }
                 // 扫描带参数二维码
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_SCAN)) {

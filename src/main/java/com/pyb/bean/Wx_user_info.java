@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_user_info implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket"};
+    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket","attention_state"};
 
     public long ui_id;//bigint(20)    用户主键ID
     public String avatar="";//varchar(150)    用户头像
@@ -32,6 +32,7 @@ public class Wx_user_info implements Cloneable , Serializable{
     public int sex;//int(11)    用户性别0：未指定1：男2：女
     public String area="";//varchar(60)    用户地区（例如：广东省广州）
     public String ticket="";//varchar(100)    用户推荐微信内部tickt
+    public int attention_state;//int(11)    关注平台状态0：关注中1：未关注
 
 
 
@@ -261,9 +262,17 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.ticket= value;
     }
 
+    public int getAttention_state(){
+        return attention_state;
+    }
+
+    public void setAttention_state(int value){
+        this.attention_state= value;
+    }
 
 
-    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area, String ticket) {
+
+    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area, String ticket, int attention_state) {
         Wx_user_info ret = new Wx_user_info();
         ret.setUi_id(ui_id);
         ret.setAvatar(avatar);
@@ -288,6 +297,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         ret.setSex(sex);
         ret.setArea(area);
         ret.setTicket(ticket);
+        ret.setAttention_state(attention_state);
         return ret;    
     }
 
@@ -315,6 +325,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         int sex = wx_user_info.getSex();
         String area = wx_user_info.getArea();
         String ticket = wx_user_info.getTicket();
+        int attention_state = wx_user_info.getAttention_state();
 
         this.setUi_id(ui_id);
         this.setAvatar(avatar);
@@ -339,6 +350,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.setSex(sex);
         this.setArea(area);
         this.setTicket(ticket);
+        this.setAttention_state(attention_state);
 
     }
 
@@ -367,6 +379,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         int sex = wx_user_info.getSex();
         String area = wx_user_info.getArea();
         String ticket = wx_user_info.getTicket();
+        int attention_state = wx_user_info.getAttention_state();
     }
 
     public Map<String,Object> toMap(){
@@ -397,6 +410,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         int sex = wx_user_info.getSex();
         String area = wx_user_info.getArea();
         String ticket = wx_user_info.getTicket();
+        int attention_state = wx_user_info.getAttention_state();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ui_id",ui_id);
@@ -422,6 +436,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         _ret.put("sex",sex);
         _ret.put("area",area);
         _ret.put("ticket",ticket);
+        _ret.put("attention_state",attention_state);
         return _ret;
     }
 
