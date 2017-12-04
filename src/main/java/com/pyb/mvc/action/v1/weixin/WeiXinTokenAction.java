@@ -6,6 +6,7 @@ import com.pyb.bean.Wx_accesstoken;
 import com.pyb.constants.Constants;
 import com.pyb.dao.Wx_accesstokenDao;
 import com.pyb.mvc.action.v1.BaseV1Controller;
+import com.pyb.mvc.weixin.bean.RqAndRp;
 import com.pyb.mvc.weixin.biz.Wx_UserBiz;
 import com.pyb.mvc.weixin.messageUtil.CoreService;
 import com.pyb.mvc.weixin.util.SignUtil;
@@ -75,16 +76,23 @@ public class WeiXinTokenAction extends BaseV1Controller {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         // 调用核心业务类接收消息、处理消息
-        String respXml = CoreService.processRequest(request);
+        RqAndRp rqAndRp = CoreService.processRequest(request);
+        String respXml = rqAndRp.getReplyXML();
 //        log.info("respXml={}",respXml);
 
-        //用户关注微信公众号 通过事件被动消息发送给用户 回调该接口获取到用户绑定该公众号的 openid
-        String openid = request.getParameter("openid");
-        System.out.println("openid:" + openid);
-        //通过accesstoken + openid 获取用户基本信息
+
+        //验证accessToken是否过期 如果过期则进行刷新处理
         doAccessToken();
-        //https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
-         String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="
+
+
+        if(rqAndRp.getMsgType().equalsIgnoreCase("event") && rqAndRp.getEvent().equalsIgnoreCase("EventName")){
+            //用户关注事件
+            //用户关注微信公众号 通过事件被动消息发送给用户 回调该接口获取到用户绑定该公众号的 openid
+            String openid = request.getParameter("openid");
+            System.out.println("openid:" + openid);
+            //通过accesstoken + openid 获取用户基本信息
+            //https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+            String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="
                     +Constants.getWx_accesstoken().getAccess_token()
                     +"&openid="
                     +openid
@@ -99,6 +107,9 @@ public class WeiXinTokenAction extends BaseV1Controller {
                     }
                 }
             }
+
+        }
+
         // 响应消息
         PrintWriter out = response.getWriter();
         out.print(respXml);
@@ -107,19 +118,6 @@ public class WeiXinTokenAction extends BaseV1Controller {
             log.error("注册 is fail", e);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * 获取我的基本信息
      */

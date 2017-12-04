@@ -1,5 +1,6 @@
 package com.pyb.mvc.weixin.messageUtil;
 
+import com.pyb.mvc.weixin.bean.RqAndRp;
 import com.pyb.mvc.weixin.replyMessageBean.TextMessage;
 import com.pyb.mvc.weixin.util.MessageUtil;
 import org.slf4j.Logger;
@@ -24,7 +25,8 @@ public class CoreService {
      * @param request
      * @return xml
      */
-    public static String processRequest(HttpServletRequest request) {
+    public static RqAndRp processRequest(HttpServletRequest request) {
+        RqAndRp rqAndRp = new RqAndRp();
         // xml格式的消息数据
         String respXml = null;
         // 默认返回的文本消息内容
@@ -40,14 +42,6 @@ public class CoreService {
             // 消息类型
             String msgType = requestMap.get("MsgType");
             String EventName = requestMap.get("Event");
-            /*if(msgType.equalsIgnoreCase("event") && EventName.equalsIgnoreCase("EventName")){
-                //用户关注事件
-
-
-
-            }*/
-
-
 
             // 回复文本消息
             TextMessage textMessage = new TextMessage();
@@ -113,9 +107,16 @@ public class CoreService {
             textMessage.setContent(respContent);
             // 将文本消息对象转换成xml
             respXml = MessageUtil.messageToXml(textMessage);
+
+
+            rqAndRp.setReplyXML(respXml);
+            rqAndRp.setEvent(EventName);
+            rqAndRp.setMsgType(msgType);
+
         } catch (Exception e) {
             log.error("微信消息发送失败",e);
         }
-        return respXml;
+
+        return rqAndRp;
     }
 }
