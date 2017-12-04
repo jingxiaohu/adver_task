@@ -69,18 +69,43 @@ public class WeiXinTokenAction extends BaseV1Controller {
     @RequestMapping(value = "/weixin_token",method = RequestMethod.POST )
     @ResponseBody
     public void UserReg(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        try {
         // 消息的接收、处理、响应
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-
         // 调用核心业务类接收消息、处理消息
         String respXml = CoreService.processRequest(request);
-        log.info("respXml={}",respXml);
+//        log.info("respXml={}",respXml);
+
+        //用户关注微信公众号 通过事件被动消息发送给用户 回调该接口获取到用户绑定该公众号的 openid
+        String openid = request.getParameter("openid");
+        System.out.println("openid:" + openid);
+        //通过accesstoken + openid 获取用户基本信息
+        doAccessToken();
+        //https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+         String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token="
+                    +Constants.getWx_accesstoken().getAccess_token()
+                    +"&openid="
+                    +openid
+                    +"&lang=zh_CN ";
+            String jsondata = HttpUtil.doGet(url,null,null);
+            if(jsondata != null){
+                JSONObject oob = JSON.parseObject(jsondata);
+                if(oob != null){
+                    boolean flag =  wx_UserBiz.ReturnUserRegister(oob);
+                    if(flag){
+                        //注册成功
+                    }
+                }
+            }
         // 响应消息
         PrintWriter out = response.getWriter();
         out.print(respXml);
         out.close();
+        } catch (Exception e) {
+            log.error("注册 is fail", e);
+        }
     }
 
 

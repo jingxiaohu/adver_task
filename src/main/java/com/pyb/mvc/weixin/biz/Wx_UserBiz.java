@@ -32,9 +32,16 @@ public class Wx_UserBiz extends BaseWxBiz {
       String area = userObj.getString("province")+":"+userObj.getString("city");
       int sex = userObj.getIntValue("sex");
 
+      //首先验证该微信用户是否之前关注过我们平台 如果是则不再创建新的用户ID
+       String sql = "select * from wx_user_info where weixin_id=? limit 1";
+        Wx_user_info userinfo = getMySelfService().queryUniqueT(sql,Wx_user_info.class,weixin_id);
+        if(userinfo != null){
+            //已经注册过了
+            return true;
+        }
 
       //写入用户信息到用户基本信息表中
-      Wx_user_info userinfo = new Wx_user_info();
+      userinfo = new Wx_user_info();
       Date date = new Date();
       userinfo.setAvatar(avatar);
       userinfo.setNickname(nickname);

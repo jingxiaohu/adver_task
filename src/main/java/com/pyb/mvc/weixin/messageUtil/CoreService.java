@@ -2,6 +2,8 @@ package com.pyb.mvc.weixin.messageUtil;
 
 import com.pyb.mvc.weixin.replyMessageBean.TextMessage;
 import com.pyb.mvc.weixin.util.MessageUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -16,6 +18,7 @@ import java.util.Map;
  * 发布版本：V1.0  </br>
  */
 public class CoreService {
+    static Logger log = LoggerFactory.getLogger(CoreService.class);
     /**
      * 处理微信发来的请求
      * @param request
@@ -36,6 +39,15 @@ public class CoreService {
             String toUserName = requestMap.get("ToUserName");
             // 消息类型
             String msgType = requestMap.get("MsgType");
+            String EventName = requestMap.get("Event");
+            /*if(msgType.equalsIgnoreCase("event") && EventName.equalsIgnoreCase("EventName")){
+                //用户关注事件
+
+
+
+            }*/
+
+
 
             // 回复文本消息
             TextMessage textMessage = new TextMessage();
@@ -78,7 +90,7 @@ public class CoreService {
                 String eventType = requestMap.get("Event");
                 // 关注
                 if (eventType.equals(MessageUtil.EVENT_TYPE_SUBSCRIBE)) {
-                    respContent = "谢谢您的关注！";
+                    respContent = "拼一把商业是生活中的小小惊喜，稳稳的小幸福，很高兴认识你！";
                 }
                 // 取消关注
                 else if (eventType.equals(MessageUtil.EVENT_TYPE_UNSUBSCRIBE)) {
@@ -102,7 +114,7 @@ public class CoreService {
             // 将文本消息对象转换成xml
             respXml = MessageUtil.messageToXml(textMessage);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("微信消息发送失败",e);
         }
         return respXml;
     }
