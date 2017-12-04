@@ -339,7 +339,7 @@ public class Wx_accesstokenDao extends BaseDao{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
                  "	`id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    主键ID'," +
-                 "	`access_token`  VARCHAR(100) COMMENT '//varchar(100)    access_token'," +
+                 "	`access_token`  TINYTEXT COMMENT '//varchar(255)    access_token'," +
                  "	`expires_in`  INT(11) COMMENT '//int(11)    expires_in'," +
                  "	`utime`  TIMESTAMP COMMENT '//timestamp    刷新时间'," +
                  "	PRIMARY KEY (`id`)" +

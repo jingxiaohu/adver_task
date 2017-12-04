@@ -10,7 +10,7 @@ public class Wx_accesstoken implements Cloneable , Serializable{
     //public static String[] carrays ={"id","access_token","expires_in","utime"};
 
     public long id;//bigint(20)    主键ID
-    public String access_token="";//varchar(100)    access_token
+    public String access_token="";//varchar(255)    access_token
     public int expires_in;//int(11)    expires_in
     public java.util.Date utime=new java.util.Date();//timestamp    刷新时间
 
