@@ -16,7 +16,7 @@
 |is_forbidden|是否禁用0：不1：禁用|int|
 |telephone|用户提现绑定手机号码|String|
 |name|用户提现真实姓名|String|
-|note|备注|byte[]|
+|note|备注|String|
 |recommend_id|推荐我的人用户ID|long|
 |recommend_nickname|推荐我的人用户昵称|String|
 |recommend_code|我的推荐邀请码（六位数字）|String|

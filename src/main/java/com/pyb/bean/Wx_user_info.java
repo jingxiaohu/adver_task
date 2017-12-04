@@ -24,7 +24,7 @@ public class Wx_user_info implements Cloneable , Serializable{
     public int is_forbidden;//int(11)    是否禁用0：不1：禁用
     public String telephone="";//varchar(30)    用户提现绑定手机号码
     public String name="";//varchar(30)    用户提现真实姓名
-    public byte[] note;//varbinary(60)    备注
+    public String note="";//varchar(60)    备注
     public long recommend_id;//bigint(20)    推荐我的人用户ID
     public String recommend_nickname="";//varchar(40)    推荐我的人用户昵称
     public String recommend_code="";//varchar(10)    我的推荐邀请码（六位数字）
@@ -178,11 +178,14 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.name= value;
     }
 
-    public byte[] getNote(){
+    public String getNote(){
         return note;
     }
 
-    public void setNote(byte[] value){
+    public void setNote(String value){
+    	if(value == null){
+           value = "";
+        }
         this.note= value;
     }
 
@@ -248,7 +251,7 @@ public class Wx_user_info implements Cloneable , Serializable{
 
 
 
-    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, byte[] note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area) {
+    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area) {
         Wx_user_info ret = new Wx_user_info();
         ret.setUi_id(ui_id);
         ret.setAvatar(avatar);
@@ -291,7 +294,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         int is_forbidden = wx_user_info.getIs_forbidden();
         String telephone = wx_user_info.getTelephone();
         String name = wx_user_info.getName();
-        byte[] note = wx_user_info.getNote();
+        String note = wx_user_info.getNote();
         long recommend_id = wx_user_info.getRecommend_id();
         String recommend_nickname = wx_user_info.getRecommend_nickname();
         String recommend_code = wx_user_info.getRecommend_code();
@@ -341,7 +344,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         int is_forbidden = wx_user_info.getIs_forbidden();
         String telephone = wx_user_info.getTelephone();
         String name = wx_user_info.getName();
-        byte[] note = wx_user_info.getNote();
+        String note = wx_user_info.getNote();
         long recommend_id = wx_user_info.getRecommend_id();
         String recommend_nickname = wx_user_info.getRecommend_nickname();
         String recommend_code = wx_user_info.getRecommend_code();
@@ -370,7 +373,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         int is_forbidden = wx_user_info.getIs_forbidden();
         String telephone = wx_user_info.getTelephone();
         String name = wx_user_info.getName();
-        byte[] note = wx_user_info.getNote();
+        String note = wx_user_info.getNote();
         long recommend_id = wx_user_info.getRecommend_id();
         String recommend_nickname = wx_user_info.getRecommend_nickname();
         String recommend_code = wx_user_info.getRecommend_code();

@@ -129,7 +129,7 @@ public class Wx_user_infoDao extends BaseDao{
                     ps.setInt(12, bean.is_forbidden);
                     ps.setString(13, bean.telephone);
                     ps.setString(14, bean.name);
-                    ps.setBytes(15, bean.note);
+                    ps.setString(15, bean.note);
                     ps.setLong(16, bean.recommend_id);
                     ps.setString(17, bean.recommend_nickname);
                     ps.setString(18, bean.recommend_code);
@@ -308,7 +308,7 @@ public class Wx_user_infoDao extends BaseDao{
                     ps.setInt(12, bean.is_forbidden);
                     ps.setString(13, bean.telephone);
                     ps.setString(14, bean.name);
-                    ps.setBytes(15, bean.note);
+                    ps.setString(15, bean.note);
                     ps.setLong(16, bean.recommend_id);
                     ps.setString(17, bean.recommend_nickname);
                     ps.setString(18, bean.recommend_code);
@@ -389,7 +389,7 @@ public class Wx_user_infoDao extends BaseDao{
                  "	`is_forbidden`  INT(11) COMMENT '//int(11)    是否禁用0：不1：禁用'," +
                  "	`telephone`  VARCHAR(30) COMMENT '//varchar(30)    用户提现绑定手机号码'," +
                  "	`name`  VARCHAR(30) COMMENT '//varchar(30)    用户提现真实姓名'," +
-                 "	`note`  VARBINARY(60) COMMENT '//varbinary(60)    备注'," +
+                 "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
                  "	`recommend_id`  BIGINT(20) COMMENT '//bigint(20)    推荐我的人用户ID'," +
                  "	`recommend_nickname`  VARCHAR(40) COMMENT '//varchar(40)    推荐我的人用户昵称'," +
                  "	`recommend_code`  VARCHAR(10) COMMENT '//varchar(10)    我的推荐邀请码（六位数字）'," +
