@@ -85,7 +85,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
         doAccessToken();
 
 
-        if(rqAndRp.getMsgType().equalsIgnoreCase("event") && rqAndRp.getEvent().equalsIgnoreCase("EventName")){
+        if(rqAndRp.getMsgType().equalsIgnoreCase("event") && rqAndRp.getEvent().equalsIgnoreCase("subscribe")){
             //用户关注事件
             //用户关注微信公众号 通过事件被动消息发送给用户 回调该接口获取到用户绑定该公众号的 openid
             String openid = request.getParameter("openid");
