@@ -7,15 +7,20 @@ import com.pyb.constants.Constants;
 import com.pyb.dao.Wx_accesstokenDao;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.mvc.weixin.biz.Wx_UserBiz;
+import com.pyb.mvc.weixin.messageUtil.CoreService;
+import com.pyb.mvc.weixin.util.SignUtil;
 import com.pyb.util.HttpUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -34,9 +39,66 @@ public class WeiXinTokenAction extends BaseV1Controller {
     Wx_UserBiz wx_UserBiz;
 
     /**
+     * 微信公众号后台回调接口配置验证
+     */
+    @RequestMapping(value = "/weixin_token",method = RequestMethod.GET )
+    @ResponseBody
+    public void CheckCallUrl(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 微信加密签名
+        String signature = request.getParameter("signature");
+        // 时间戳
+        String timestamp = request.getParameter("timestamp");
+        // 随机数
+        String nonce = request.getParameter("nonce");
+        // 随机字符串
+        String echostr = request.getParameter("echostr");
+
+        PrintWriter out = response.getWriter();
+
+        // 通过检验signature对请求进行校验，若校验成功则原样返回echostr，表示接入成功，否则接入失败
+        if (SignUtil.checkSignature(signature, timestamp, nonce)) {
+            out.print(echostr);
+        }
+
+        out.close();
+        out = null;
+    }
+    /**
+     * 微信用户关注公众号进行注册
+     */
+    @RequestMapping(value = "/weixin_token",method = RequestMethod.POST )
+    @ResponseBody
+    public void UserReg(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // 消息的接收、处理、响应
+        // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        // 调用核心业务类接收消息、处理消息
+        String respXml = CoreService.processRequest(request);
+        log.info("respXml={}",respXml);
+        // 响应消息
+        PrintWriter out = response.getWriter();
+        out.print(respXml);
+        out.close();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /**
      * 获取我的基本信息
      */
-    @RequestMapping(value = "/weixin_token")
+    @RequestMapping(value = "/weixin_token2")
     @ResponseBody
     public void Read_myinfo(HttpServletRequest request, HttpServletResponse response) {
         try {
