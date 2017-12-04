@@ -25,7 +25,8 @@ public class Wx_UserBiz extends BaseWxBiz {
      String avatar = userObj.getString("headimgurl");
      String nickname = userObj.getString("nickname");
      //只有在用户将公众号绑定到微信开放平台帐号后，才会出现该字段。
-     String weixin_no = userObj.getString("unionid");
+//     String weixin_no = userObj.getString("unionid");
+        String weixin_no = returnUUID();
      //用户的标识，对当前公众号唯一
      String weixin_id = userObj.getString("openid");
       //用户地区

@@ -134,12 +134,12 @@ public class BaseWxBiz {
 
 
   /**
-   * 生成19位UUID
+   * 生成32位UUID
    */
   public String returnUUID() {
 //		return RequestUtil.getUUID().substring(13)+System.currentTimeMillis();
-    return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) + RandomStringUtils
-        .random(5, false, true);
+    return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) +"-"+ RandomStringUtils
+        .random(17, false, true);
   }
 
   /**
