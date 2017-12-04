@@ -10,6 +10,17 @@ public class RqAndRp {
     private String Event;
     //消息类型
     private String msgType;
+    //推荐人信息
+    private String EventKey;
+
+    public String getEventKey() {
+        return EventKey;
+    }
+
+    public void setEventKey(String eventKey) {
+        EventKey = eventKey;
+    }
+
 
     public String getReplyXML() {
         return replyXML;

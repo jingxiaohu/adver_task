@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_user_info implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area"};
+    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket"};
 
     public long ui_id;//bigint(20)    用户主键ID
     public String avatar="";//varchar(150)    用户头像
@@ -31,6 +31,7 @@ public class Wx_user_info implements Cloneable , Serializable{
     public String token="";//varchar(100)    用户登录刷新token
     public int sex;//int(11)    用户性别0：未指定1：男2：女
     public String area="";//varchar(60)    用户地区（例如：广东省广州）
+    public String ticket="";//varchar(100)    用户推荐微信内部tickt
 
 
 
@@ -249,9 +250,20 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.area= value;
     }
 
+    public String getTicket(){
+        return ticket;
+    }
+
+    public void setTicket(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.ticket= value;
+    }
 
 
-    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area) {
+
+    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area, String ticket) {
         Wx_user_info ret = new Wx_user_info();
         ret.setUi_id(ui_id);
         ret.setAvatar(avatar);
@@ -275,6 +287,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         ret.setToken(token);
         ret.setSex(sex);
         ret.setArea(area);
+        ret.setTicket(ticket);
         return ret;    
     }
 
@@ -301,6 +314,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String token = wx_user_info.getToken();
         int sex = wx_user_info.getSex();
         String area = wx_user_info.getArea();
+        String ticket = wx_user_info.getTicket();
 
         this.setUi_id(ui_id);
         this.setAvatar(avatar);
@@ -324,6 +338,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.setToken(token);
         this.setSex(sex);
         this.setArea(area);
+        this.setTicket(ticket);
 
     }
 
@@ -351,6 +366,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String token = wx_user_info.getToken();
         int sex = wx_user_info.getSex();
         String area = wx_user_info.getArea();
+        String ticket = wx_user_info.getTicket();
     }
 
     public Map<String,Object> toMap(){
@@ -380,6 +396,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String token = wx_user_info.getToken();
         int sex = wx_user_info.getSex();
         String area = wx_user_info.getArea();
+        String ticket = wx_user_info.getTicket();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ui_id",ui_id);
@@ -404,6 +421,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         _ret.put("token",token);
         _ret.put("sex",sex);
         _ret.put("area",area);
+        _ret.put("ticket",ticket);
         return _ret;
     }
 

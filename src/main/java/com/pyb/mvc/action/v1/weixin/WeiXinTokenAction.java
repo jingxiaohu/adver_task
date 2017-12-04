@@ -79,11 +79,8 @@ public class WeiXinTokenAction extends BaseV1Controller {
         RqAndRp rqAndRp = CoreService.processRequest(request);
         String respXml = rqAndRp.getReplyXML();
 //        log.info("respXml={}",respXml);
-
-
         //验证accessToken是否过期 如果过期则进行刷新处理
         doAccessToken();
-
 
         if(rqAndRp.getMsgType().equalsIgnoreCase("event") && rqAndRp.getEvent().equalsIgnoreCase("subscribe")){
             //用户关注事件
@@ -100,6 +97,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
             String jsondata = HttpUtil.doGet(url,null,null);
             if(jsondata != null){
                 JSONObject oob = JSON.parseObject(jsondata);
+                oob.put("EventKey",rqAndRp.getEventKey());
                 if(oob != null){
                     boolean flag =  wx_UserBiz.ReturnUserRegister(oob);
                     if(flag){
@@ -111,9 +109,12 @@ public class WeiXinTokenAction extends BaseV1Controller {
         }
 
         // 响应消息
-        PrintWriter out = response.getWriter();
-        out.print(respXml);
-        out.close();
+        if(StringUtils.hasLength(respXml)){
+            PrintWriter out = response.getWriter();
+            out.print(respXml);
+            out.close();
+        }
+
         } catch (Exception e) {
             log.error("注册 is fail", e);
         }
@@ -121,7 +122,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
     /**
      * 获取我的基本信息
      */
-    @RequestMapping(value = "/weixin_token2")
+/*    @RequestMapping(value = "/weixin_token2")
     @ResponseBody
     public void Read_myinfo(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -166,7 +167,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
             log.error("注册 is fail", e);
         }
         sendResp("error", response);
-    }
+    }*/
 
 
     //处理access_tonken

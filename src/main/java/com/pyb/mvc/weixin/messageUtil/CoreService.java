@@ -30,7 +30,7 @@ public class CoreService {
         // xml格式的消息数据
         String respXml = null;
         // 默认返回的文本消息内容
-        String respContent = "未知的消息类型！";
+        String respContent = "";//"未知的消息类型！";
         try {
             // 调用parseXml方法解析请求消息
             Map<String, String> requestMap = MessageUtil.parseXml(request);
@@ -42,6 +42,7 @@ public class CoreService {
             // 消息类型
             String msgType = requestMap.get("MsgType");
             String EventName = requestMap.get("Event");
+            String EventKey = requestMap.get("EventKey");
 
             // 回复文本消息
             TextMessage textMessage = new TextMessage();
@@ -52,31 +53,31 @@ public class CoreService {
 
             // 文本消息
             if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_TEXT)) {
-                respContent = "您发送的是文本消息！";
+//                respContent = "您发送的是文本消息！";
             }
             // 图片消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_IMAGE)) {
-                respContent = "您发送的是图片消息！";
+//                respContent = "您发送的是图片消息！";
             }
             // 语音消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VOICE)) {
-                respContent = "您发送的是语音消息！";
+//                respContent = "您发送的是语音消息！";
             }
             // 视频消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_VIDEO)) {
-                respContent = "您发送的是视频消息！";
+//                respContent = "您发送的是视频消息！";
             }
             // 视频消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_SHORTVIDEO)) {
-                respContent = "您发送的是小视频消息！";
+//                respContent = "您发送的是小视频消息！";
             }
             // 地理位置消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LOCATION)) {
-                respContent = "您发送的是地理位置消息！";
+//                respContent = "您发送的是地理位置消息！";
             }
             // 链接消息
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_LINK)) {
-                respContent = "您发送的是链接消息！";
+//                respContent = "您发送的是链接消息！";
             }
             // 事件推送
             else if (msgType.equals(MessageUtil.REQ_MESSAGE_TYPE_EVENT)) {
@@ -112,6 +113,7 @@ public class CoreService {
             rqAndRp.setReplyXML(respXml);
             rqAndRp.setEvent(EventName);
             rqAndRp.setMsgType(msgType);
+            rqAndRp.setEventKey(EventKey);
 
         } catch (Exception e) {
             log.error("微信消息发送失败",e);
