@@ -69,7 +69,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
      */
     @RequestMapping(value = "/weixin_token",method = RequestMethod.POST )
     @ResponseBody
-    public void UserReg(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void UserReg(HttpServletRequest request, HttpServletResponse response) {
         try {
         // 消息的接收、处理、响应
         // 将请求、响应的编码均设置为UTF-8（防止中文乱码）
