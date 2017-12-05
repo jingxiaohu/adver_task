@@ -107,7 +107,7 @@ dependencies {
 
 
 tomcat {
-    httpPort = 8080
+    httpPort = 8090
     httpsPort = 18443
     stopPort = 18081
     ajpPort = 18009
