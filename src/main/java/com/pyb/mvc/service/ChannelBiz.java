@@ -31,7 +31,7 @@ public class ChannelBiz extends  BaseBiz{
             String sql = "select *  from (select a.* ,b.ui_nickname,ui_avtar from (select * from channel_info where is_show=0 order by ci_sort  desc limit "+start+","+size+") as a LEFT JOIN user_info_new as b on a.ui_id=b.ui_id) c order by c.ci_sort desc";
 
             Map<String,Object> paramMap = new HashMap<String,Object>();
-            List<Map<String,Object>> list = getMySelfService().queryForList(sql, paramMap);
+            List<Map<String,Object>> list = getDB().queryForList(sql, paramMap);
             returnData.setReturnData("0", "获取成功", list);
             return;
 
@@ -56,7 +56,7 @@ public class ChannelBiz extends  BaseBiz{
             //首先获取一级菜单
             String sql = "SELECT b.* FROM wp_term_taxonomy  a INNER JOIN wp_terms b ON   a.parent=0 and a.taxonomy='category' and a.term_id=b.term_id";
             Map<String,Object> paramMap = new HashMap<String,Object>();
-            List<Map<String,Object>> list = getMySelfService().queryForList(sql, paramMap);
+            List<Map<String,Object>> list = getDB().queryForList(sql, paramMap);
             JSONArray array = new JSONArray();
             for (int i = 0; i < list.size(); i++) {
                 //http://www.528ads.com/archives/category/bzrd
@@ -91,7 +91,7 @@ public class ChannelBiz extends  BaseBiz{
             String sql = "SELECT b.* FROM wp_term_taxonomy a INNER JOIN wp_terms b ON a.term_taxonomy_id=b.term_id where a.parent =:term_id";
             Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("term_id",term_id);
-            List<Map<String,Object>> list = getMySelfService().queryForList(sql, paramMap);
+            List<Map<String,Object>> list = getDB().queryForList(sql, paramMap);
             JSONArray array = new JSONArray();
             for (int i = 0; i < list.size(); i++) {
                 //http://www.528ads.com/archives/category/bzrd

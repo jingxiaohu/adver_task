@@ -47,7 +47,7 @@ public class Wx_UserBiz extends BaseWxBiz {
 
       //首先验证该微信用户是否之前关注过我们平台 如果是则不再创建新的用户ID
        String sql = "select * from wx_user_info where weixin_id=? limit 1";
-        Wx_user_info userinfo = getMySelfService().queryUniqueT(sql,Wx_user_info.class,weixin_id);
+        Wx_user_info userinfo = getDB().queryUniqueT(sql,Wx_user_info.class,weixin_id);
         if(userinfo != null){
             //已经注册过了
             if(userinfo.getAttention_state() == 1){
@@ -139,7 +139,7 @@ public class Wx_UserBiz extends BaseWxBiz {
           String weixin_id = userObj.getString("openid");
           //首先验证该微信用户是否之前关注过我们平台 如果是则不再创建新的用户ID
           String sql = "select * from wx_user_info where weixin_id=? limit 1";
-          Wx_user_info userinfo = getMySelfService().queryUniqueT(sql,Wx_user_info.class,weixin_id);
+          Wx_user_info userinfo = getDB().queryUniqueT(sql,Wx_user_info.class,weixin_id);
           if(userinfo != null){
               //已经注册过了
               if(userinfo.getAttention_state() == 0){
@@ -170,7 +170,7 @@ public class Wx_UserBiz extends BaseWxBiz {
     public Wx_user_info FindUserInfoByWeixin_no(String weixin_no){
         try {
             String sql = "select * from wx_user_info where weixin_no=? limit 1";
-            Wx_user_info userinfo = getMySelfService().queryUniqueT(sql,Wx_user_info.class,weixin_no);
+            Wx_user_info userinfo = getDB().queryUniqueT(sql,Wx_user_info.class,weixin_no);
             return userinfo;
         } catch (Exception e) {
             log.error("FindUserInfoByWeixin_no 查询用户信息失败",e);
@@ -187,7 +187,7 @@ public class Wx_UserBiz extends BaseWxBiz {
     public Wx_recommend_user FindRecommendRelation(long recommend_id,long recommended_id){
         try {
             String sql = "select * from wx_recommend_user where recommend_id=? and recommended_id=? limit 1";
-            Wx_recommend_user wx_recommend_user = getMySelfService().queryUniqueT(sql,Wx_recommend_user.class,recommend_id,recommended_id);
+            Wx_recommend_user wx_recommend_user = getDB().queryUniqueT(sql,Wx_recommend_user.class,recommend_id,recommended_id);
             return wx_recommend_user;
         } catch (Exception e) {
             log.error("FindUserInfoByWeixin_no 查询推荐关系信息表失败",e);

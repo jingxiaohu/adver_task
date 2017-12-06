@@ -30,7 +30,7 @@ public class DayNewsBiz extends BaseBiz {
       int start = (page-1)*size;
       String sql  = "";
       sql = "select * from day_news where  is_show=0 order by ctime desc limit "+start+","+size;
-      List<Day_news> list = getMySelfService().queryListT(sql, Day_news.class);
+      List<Day_news> list = getDB().queryListT(sql, Day_news.class);
       returnData.setReturnData(errorcode_success, "获取成功", list);
     } catch (Exception e) {
       // TODO Auto-generated catch block

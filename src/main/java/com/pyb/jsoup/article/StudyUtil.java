@@ -99,7 +99,7 @@ public class StudyUtil extends BaseBiz {
         try {
             //首先检查是否存在 wp_terms
             String sql = "select * from wp_term_jxh where category_father_id=? and ( id > ? and id < ?)";
-            List<Wp_term_jxh> wp_terms_list = getMySelfService().queryListT(sql,Wp_term_jxh.class,fatherId,startid,endid);
+            List<Wp_term_jxh> wp_terms_list = getDB().queryListT(sql,Wp_term_jxh.class,fatherId,startid,endid);
             return wp_terms_list;
         } catch (Exception e) {
             log.error("addClass  is error",e);
@@ -188,7 +188,7 @@ public class StudyUtil extends BaseBiz {
             String sql = "select * from wp_post_jxh where title=? limit 1";
             Wp_post_jxh wp_post_jxh = null;
             try {
-                wp_post_jxh = getMySelfService().queryUniqueT(sql,Wp_post_jxh.class,title.trim());
+                wp_post_jxh = getDB().queryUniqueT(sql,Wp_post_jxh.class,title.trim());
                 if(wp_post_jxh != null){
                     //标题已经存在了
                     System.out.println(title.trim()+"  已经存在了");
@@ -493,7 +493,7 @@ public class StudyUtil extends BaseBiz {
         try {
             //首先检查是否存在 wp_terms
             String sql = "select * from wp_terms where name=? limit 1";
-            Wp_terms wp_terms2 = getMySelfService().queryUniqueT(sql, Wp_terms.class, wp_terms.getName());
+            Wp_terms wp_terms2 = getDB().queryUniqueT(sql, Wp_terms.class, wp_terms.getName());
             if (wp_terms2 != null) {
                 return;
             }
@@ -602,7 +602,7 @@ public class StudyUtil extends BaseBiz {
         try {
             //首先检查是否存在 wp_terms
             String sql = "select * from wp_term_jxh where category_father_id=?";
-            List<Wp_term_jxh> wp_terms_list = getMySelfService().queryListT(sql, Wp_term_jxh.class, fatherId);
+            List<Wp_term_jxh> wp_terms_list = getDB().queryListT(sql, Wp_term_jxh.class, fatherId);
             return wp_terms_list;
         } catch (Exception e) {
             log.error("addClass  is error", e);

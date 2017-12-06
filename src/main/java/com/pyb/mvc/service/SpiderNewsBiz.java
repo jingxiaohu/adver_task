@@ -154,7 +154,7 @@ public class SpiderNewsBiz extends BaseBiz{
 	public Day_news findDay_news(String md5){
 		try {
 			String sql = "select * from day_news where md5=? limit 1";
-			return getMySelfService().queryUniqueT(sql, Day_news.class, md5);
+			return getDB().queryUniqueT(sql, Day_news.class, md5);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.error("findDay_news is error", e);

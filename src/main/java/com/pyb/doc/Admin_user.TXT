@@ -1,0 +1,9 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|au_id||long|
+|au_nickname||String|
+|au_loginname|目标对象关联user_info表里面的用户uuid|String|
+|au_password|信息创建时间|String|
+|au_state||int|
+

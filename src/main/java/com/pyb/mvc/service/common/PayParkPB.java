@@ -26,7 +26,7 @@ public class PayParkPB extends BaseBiz {
   public Pay_park selectOnePayPark(String orderid) {
     try {
       String sql = "SELECT *  FROM pay_park WHERE my_order=? ORDER BY pp_state ASC,ctime DESC LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, Pay_park.class, orderid);
+      return getDB().queryUniqueT(sql, Pay_park.class, orderid);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("PayParkUtil.selectOnePayPark 通过订单编号获取某条订单详情错误", e);
@@ -41,7 +41,7 @@ public class PayParkPB extends BaseBiz {
   public User_pay selectOneUserPay(String orderid) {
     try {
       String sql = "SELECT *  FROM user_pay WHERE order_id=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_pay.class, orderid);
+      return getDB().queryUniqueT(sql, User_pay.class, orderid);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("PayParkUtil.selectOneUserPay 用户充值::通过订单编号获取某条用户充值订单详情错误", e);
@@ -56,7 +56,7 @@ public class PayParkPB extends BaseBiz {
   public Pay_park upPayParkNotify(User_pay user_pay) {
     try {
       String sql = "SELECT *  FROM pay_park WHERE my_order=? LIMIT 1";
-      Pay_park pay_park = getMySelfService()
+      Pay_park pay_park = getDB()
           .queryUniqueT(sql, Pay_park.class, user_pay.getCar_order_id());
       if (pay_park == null) {
         return null;
@@ -87,7 +87,7 @@ public class PayParkPB extends BaseBiz {
   public User_pay findByOrderid(String orderid) {
     try {
       String sql = "SELECT * FROM user_pay WHERE car_order_id=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_pay.class, orderid);
+      return getDB().queryUniqueT(sql, User_pay.class, orderid);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("findByOrderid is error", e);
@@ -104,7 +104,7 @@ public class PayParkPB extends BaseBiz {
   public User_pay isCallPay(String orderid) {
     try {
       String sql = "SELECT * FROM user_pay WHERE car_order_id=? AND state=1 LIMIT 1";
-      User_pay user_pay = getMySelfService().queryUniqueT(sql, User_pay.class, orderid);
+      User_pay user_pay = getDB().queryUniqueT(sql, User_pay.class, orderid);
       if (user_pay != null) {
         return user_pay;
       }

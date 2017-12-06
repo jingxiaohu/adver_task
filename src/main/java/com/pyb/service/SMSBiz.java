@@ -144,7 +144,7 @@ public class SMSBiz extends BaseBiz {
       //检查时间是否过期
       String verify_code = null;
       String sql = "SELECT * FROM sms_validate WHERE v_tel = ? AND v_list = ? AND v_class = ? and type=? LIMIT 1";
-      Sms_validate bsv = getMySelfService()
+      Sms_validate bsv = getDB()
           .queryUniqueT(sql, Sms_validate.class, telephone, verify_list, vclass,type);
       if (bsv == null) {
         returnData.setReturnData(errorcode_data, "验证发送失败", null);
@@ -265,7 +265,7 @@ public class SMSBiz extends BaseBiz {
     //获取该串号的物料码对应的SD卡是否存在
     try {
       String sql = "SELECT * FROM user_info_new WHERE ui_tel=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_info_new.class, telephone);
+      return getDB().queryUniqueT(sql, User_info_new.class, telephone);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("gainUserInfoByTelePhone(String telephone)  telephone=" + telephone + "  is error",

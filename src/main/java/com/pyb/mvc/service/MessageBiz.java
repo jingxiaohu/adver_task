@@ -33,14 +33,14 @@ public class MessageBiz extends BaseBiz {
       List<Live_info> list = null;
       if(RequestUtil.checkObjectBlank(mi_id)){
         String	sql = "select * from live_info where ci_id=?  order by mi_id desc limit "+start+","+size;
-        list = getMySelfService().queryListT(sql, Live_info.class, ci_id);
+        list = getDB().queryListT(sql, Live_info.class, ci_id);
       }else{
         if(type == 0){
           String	sql = "select * from live_info where ci_id=? and mi_id>? order by mi_id desc limit "+start+","+size;
-          list = getMySelfService().queryListT(sql, Live_info.class, ci_id,mi_id);
+          list = getDB().queryListT(sql, Live_info.class, ci_id,mi_id);
         }else{
           String	sql = "select * from live_info where ci_id=? and mi_id<? order by mi_id desc limit "+start+","+size;
-          list = getMySelfService().queryListT(sql, Live_info.class, ci_id,mi_id);
+          list = getDB().queryListT(sql, Live_info.class, ci_id,mi_id);
         }
 
       }
@@ -77,7 +77,7 @@ public class MessageBiz extends BaseBiz {
 
       String sql = "select * from message_info where ui_id=? and mi_link_id=0 order by mi_id desc limit "+start+","+size;
 
-      List<Message_info> list = getMySelfService().queryListT(sql, Message_info.class, ui_id);
+      List<Message_info> list = getDB().queryListT(sql, Message_info.class, ui_id);
       returnData.setReturnData("0", "", list);
       return;
 

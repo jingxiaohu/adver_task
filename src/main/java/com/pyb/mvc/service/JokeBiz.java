@@ -20,7 +20,7 @@ public class JokeBiz extends  BaseBiz{
             String sql  = "";
             sql = "select * from joke_class where  is_show=1 order by jc_id asc limit "+start+","+size;
             Map<String,Object> paramMap = new HashMap<String,Object>();
-            List<Map<String,Object>> list = getMySelfService().queryForList(sql, paramMap);
+            List<Map<String,Object>> list = getDB().queryForList(sql, paramMap);
             returnData.setReturnData("0", "", list);
             return;
         } catch (Exception e) {
@@ -58,7 +58,7 @@ public class JokeBiz extends  BaseBiz{
             sql = "select * from joke_segment where  jc_id=:jc_id and is_show=0 order by jc_id asc"+condition+" limit "+start+","+size;
             Map<String,Object> paramMap = new HashMap<String,Object>();
             paramMap.put("jc_id", jc_id);
-            List<Map<String,Object>> list = getMySelfService().queryForList(sql, paramMap);
+            List<Map<String,Object>> list = getDB().queryForList(sql, paramMap);
             returnData.setReturnData("0", null, list);
             return;
         } catch (Exception e) {

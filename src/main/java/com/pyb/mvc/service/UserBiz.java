@@ -40,7 +40,7 @@ public class UserBiz extends BaseBiz {
       //从什么设备发出的请求  1:android 2:ios 3:web
       //进行验证码的验证
       String sql = "SELECT v_code,v_time FROM sms_validate WHERE v_tel = ? AND v_list = ? AND v_class = ? AND v_code=?  LIMIT 1";
-      Sms_validate bsv = getMySelfService()
+      Sms_validate bsv = getDB()
           .queryUniqueT(sql, Sms_validate.class, telephone, verify_list, vclass, verify_code);
       if (bsv == null) {
         returnData.setReturnData(errorcode_data, "验证码错误", "");
@@ -160,7 +160,7 @@ public class UserBiz extends BaseBiz {
       //从什么设备发出的请求1-收音机2-手机APP 3-WEB
       //进行验证码的验证
       String sql = "SELECT v_code,v_time FROM sms_validate WHERE v_tel = ? AND v_list = ? AND v_class = ? AND v_code=?  LIMIT 1";
-      Sms_validate bsv = getMySelfService()
+      Sms_validate bsv = getDB()
           .queryUniqueT(sql, Sms_validate.class, telephone, verify_list, vclass, verify_code);
       if (bsv == null) {
         returnData.setReturnData(errorcode_data, "验证码错误", null);
@@ -263,7 +263,7 @@ public class UserBiz extends BaseBiz {
     try {
       //检查该用户是否已经注册过了的
       String sql = "SELECT * FROM user_info_new WHERE ui_id=? AND ui_password=? LIMIT 1";
-      User_info_new userinfo = getMySelfService().queryUniqueT(sql, User_info_new.class, ui_id, password);
+      User_info_new userinfo = getDB().queryUniqueT(sql, User_info_new.class, ui_id, password);
       if (userinfo == null) {
         //用户密码错误
         returnData.setReturnData(errorcode_data, "用户密码错误", null);
@@ -375,7 +375,7 @@ public class UserBiz extends BaseBiz {
       //检查该用户是否已经注册过 如果没有则不能进行登录
 //			String sql = "select *  from user_external where up_key=? and up_token=? and up_type=?";
       String sql = "select *  from user_external where up_key=? and up_type=?";
-      User_external user_external = getMySelfService().queryUniqueT(sql, User_external.class, up_key,up_type);
+      User_external user_external = getDB().queryUniqueT(sql, User_external.class, up_key,up_type);
       if(user_external == null){
         //新增入库 并且进行创建一个我们的用户ID信息
         Date date = new Date();
@@ -467,7 +467,7 @@ public class UserBiz extends BaseBiz {
   public User_info_new gainUserInfoByTelePhone(String telephone) throws Exception {
     try {
       String sql = "SELECT * FROM user_info_new WHERE ui_tel=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_info_new.class, telephone);
+      return getDB().queryUniqueT(sql, User_info_new.class, telephone);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("gainUserInfoByTelePhone(String telephone)  telephone=" + telephone + "  is error",
@@ -482,7 +482,7 @@ public class UserBiz extends BaseBiz {
   public User_info_new gainUserInfoByTel_bind(String telephone) throws Exception {
     try {
       String sql = "SELECT * FROM user_info_new WHERE ui_tel=? AND bind_tel=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_info_new.class, telephone);
+      return getDB().queryUniqueT(sql, User_info_new.class, telephone);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("gainUserInfoByTelePhone(String telephone)  telephone=" + telephone + "  is error",

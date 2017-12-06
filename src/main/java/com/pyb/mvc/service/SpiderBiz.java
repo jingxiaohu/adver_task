@@ -75,7 +75,7 @@ public class SpiderBiz extends BaseBiz{
 			long ci_id= 1;//渠道ID
 			long time = 0;
 			String sql = "select *  from live_info where ci_id=? order by uptime desc  limit 1 ";
-			Live_info live_info = getMySelfService().queryUniqueT(sql, Live_info.class,ci_id);
+			Live_info live_info = getDB().queryUniqueT(sql, Live_info.class,ci_id);
 			if(live_info == null){
 				time = System.currentTimeMillis()/1000-3000;
 			}else{
@@ -111,7 +111,7 @@ public class SpiderBiz extends BaseBiz{
 
 					String md5 = DigestUtils.md5Hex(md5_str);
 					sql = "select *  from live_info where ci_id=? and title_md5=?  limit 1";
-					live_info = getMySelfService().queryUniqueT(sql, Live_info.class,ci_id,md5);
+					live_info = getDB().queryUniqueT(sql, Live_info.class,ci_id,md5);
 					if(live_info == null){
 						title = title.replace("<p>", "").replace("</p>", "");
 						content = content.replace("<p>", "").replace("</p>", "");
@@ -169,7 +169,7 @@ public class SpiderBiz extends BaseBiz{
 						String title = "段子"+i+""+System.currentTimeMillis();
 						String content = ct.getString("content");
 						String sql = "select *  from joke_segment where title=? limit 1 ";
-						Joke_segment joke_segment = getMySelfService().queryUniqueT(sql, Joke_segment.class,title);
+						Joke_segment joke_segment = getDB().queryUniqueT(sql, Joke_segment.class,title);
 						if(joke_segment == null){
 							Date date = new Date();
 							joke_segment = new Joke_segment();
@@ -241,7 +241,7 @@ public class SpiderBiz extends BaseBiz{
 	public void spiderJokeInsert(String title,String content,String note,long jc_id){
 		try {
 						String sql = "select *  from joke_segment where title=? limit 1 ";
-						Joke_segment joke_segment = getMySelfService().queryUniqueT(sql, Joke_segment.class,title);
+						Joke_segment joke_segment = getDB().queryUniqueT(sql, Joke_segment.class,title);
 						if(joke_segment == null){
 							Date date = new Date();
 							joke_segment = new Joke_segment();
@@ -268,7 +268,7 @@ public class SpiderBiz extends BaseBiz{
 	public void spiderJokeInsert2(Joke_segment joke_segment){
 		try {
 						String sql = "select *  from joke_segment where title=? limit 1 ";
-						Joke_segment joke_segment2 = getMySelfService().queryUniqueT(sql, Joke_segment.class,joke_segment.getTitle());
+						Joke_segment joke_segment2 = getDB().queryUniqueT(sql, Joke_segment.class,joke_segment.getTitle());
 						if(joke_segment2 == null){
 							try {
 								int indexid = daoFactory.getJoke_segmentDao().insert(joke_segment);
@@ -321,7 +321,7 @@ public class SpiderBiz extends BaseBiz{
 					if(mm != null && mm.length > 0){
 						String code = mm[1].replace("sz", "").replace("sh", "");
 						String sql = "select *  from stock_hand where s_code=? and md5_str=?  limit 1";
-						Stock_hand stock_hand = getMySelfService().queryUniqueT(sql, Stock_hand.class,code,md5);
+						Stock_hand stock_hand = getDB().queryUniqueT(sql, Stock_hand.class,code,md5);
 						if(stock_hand == null){
 							stock_hand = new Stock_hand();
 							stock_hand.setS_time(mm[0]);
@@ -348,7 +348,7 @@ public class SpiderBiz extends BaseBiz{
 
 				String updatedAt = dd[i].substring(0,dd[i].indexOf("~"));
 				String sql = "select *  from live_info where ci_id=? and title_md5=?  limit 1";
-				Live_info live_info = getMySelfService().queryUniqueT(sql, Live_info.class,ci_id,md5);
+				Live_info live_info = getDB().queryUniqueT(sql, Live_info.class,ci_id,md5);
 				if(live_info == null){
 					live_info = new Live_info();
 					live_info.setCi_id(ci_id);
@@ -461,7 +461,7 @@ public class SpiderBiz extends BaseBiz{
 							String updatedAt = "";
 							String md5 = DigestUtils.md5Hex(content);
 							String sql = "select *  from live_info where ci_id=? and title_md5=?  limit 1";
-							Live_info live_info = getMySelfService().queryUniqueT(sql, Live_info.class,ci_id,md5);
+							Live_info live_info = getDB().queryUniqueT(sql, Live_info.class,ci_id,md5);
 							if(live_info == null){
 								Date date = new Date();
 								live_info = new Live_info();
@@ -539,7 +539,7 @@ public class SpiderBiz extends BaseBiz{
 							String updatedAt = "";
 							String md5 = DigestUtils.md5Hex(content);
 							String sql = "select *  from live_info where ci_id=? and title_md5=?  limit 1";
-							Live_info live_info = getMySelfService().queryUniqueT(sql, Live_info.class,ci_id,md5);
+							Live_info live_info = getDB().queryUniqueT(sql, Live_info.class,ci_id,md5);
 							if(live_info == null){
 								Date date = new Date();
 								live_info = new Live_info();
@@ -614,7 +614,7 @@ public class SpiderBiz extends BaseBiz{
 							String updatedAt = "";
 							String md5 = DigestUtils.md5Hex(content);
 							String sql = "select *  from live_info where ci_id=? and title_md5=?  limit 1";
-							Live_info live_info = getMySelfService().queryUniqueT(sql, Live_info.class,ci_id,md5);
+							Live_info live_info = getDB().queryUniqueT(sql, Live_info.class,ci_id,md5);
 							if(live_info == null){
 								Date date = new Date();
 								live_info = new Live_info();
@@ -706,7 +706,7 @@ public class SpiderBiz extends BaseBiz{
 							String updatedAt = "";
 							String md5 = DigestUtils.md5Hex(content);
 							String sql = "select *  from live_info where ci_id=? and title_md5=?  limit 1";
-							Live_info live_info = getMySelfService().queryUniqueT(sql, Live_info.class,ci_id,md5);
+							Live_info live_info = getDB().queryUniqueT(sql, Live_info.class,ci_id,md5);
 							if(live_info == null){
 								Date date = new Date();
 								live_info = new Live_info();

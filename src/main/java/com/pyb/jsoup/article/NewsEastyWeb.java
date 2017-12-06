@@ -114,7 +114,7 @@ public class NewsEastyWeb extends BaseBiz {
             String sql = "select * from wp_post_jxh where title=? limit 1";
             Wp_post_jxh wp_post_jxh = null;
             try {
-                wp_post_jxh = getMySelfService().queryUniqueT(sql,Wp_post_jxh.class,title.trim());
+                wp_post_jxh = getDB().queryUniqueT(sql,Wp_post_jxh.class,title.trim());
                 if(wp_post_jxh != null){
                     //标题已经存在了
                     System.out.println(title.trim()+"  已经存在了");

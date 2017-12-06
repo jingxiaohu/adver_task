@@ -151,7 +151,7 @@ public class PayTransaction extends BaseBiz {
 	            //行为类型 1：充值  2：普通订单支付  
 	            int type = user_pay.getAct_type();
 	            if (type == 2) {
-	                getMySelfService().update(
+	                getDB().update(
 	                        "UPDATE pay_park SET up_orderid=? WHERE my_order=?",
 	                        user_pay.getOrder_id(), user_pay.getCar_order_id());
 	            }

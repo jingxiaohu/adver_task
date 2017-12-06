@@ -87,6 +87,10 @@ protected Wx_recommend_userDao wx_recommend_userDao;
 protected Wx_recommend_earningsDao wx_recommend_earningsDao;
 @Autowired
 protected Wx_accesstokenDao wx_accesstokenDao;
+@Autowired
+protected Admin_userDao admin_userDao;
+@Autowired
+protected Admin_roleDao admin_roleDao;
 
 /*******************************下面是GET方法**************************************/
 public User_info_newDao getUser_info_newDao() {
@@ -205,6 +209,12 @@ public Wx_recommend_earningsDao getWx_recommend_earningsDao() {
 }
 public Wx_accesstokenDao getWx_accesstokenDao() {
 	return wx_accesstokenDao;
+}
+public Admin_userDao getAdmin_userDao() {
+	return admin_userDao;
+}
+public Admin_roleDao getAdmin_roleDao() {
+	return admin_roleDao;
 }
 
 

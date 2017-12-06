@@ -190,7 +190,7 @@ public class UserPayBiz extends BaseBiz {
   public User_pay selectOneUserPay(String orderid) {
     try {
       String sql = "SELECT *  FROM user_pay WHERE order_id=? LIMIT 1";
-      return getMySelfService().queryUniqueT(sql, User_pay.class, orderid);
+      return getDB().queryUniqueT(sql, User_pay.class, orderid);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("PayParkUtil.selectOneUserPay 用户充值::通过订单编号获取某条用户充值订单详情错误", e);

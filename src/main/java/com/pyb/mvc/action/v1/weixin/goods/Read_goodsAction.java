@@ -4,7 +4,7 @@ package com.pyb.mvc.action.v1.weixin.goods;
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.mvc.action.v1.weixin.goods.param.Param_search_goods;
-import com.pyb.mvc.weixin.biz.AdminGoodsBiz;
+import com.pyb.mvc.weixin.biz.admin.AdminGoodsBiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;

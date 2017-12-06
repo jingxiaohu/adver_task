@@ -70,7 +70,7 @@ public class BaseBiz {
   /*****************************************/
   public String ERROR_RESP = "HTTP_GET_ERROR";
 
-  public MySelfService getMySelfService() {
+  public MySelfService getDB() {
     return mySelfService;
   }
   /*public CacheManager getCacheManager() {
@@ -93,7 +93,7 @@ public class BaseBiz {
    */
   @SuppressWarnings({"unchecked", "rawtypes"})
   public <T> T returnListOne(String sql, Class classaa) throws Exception {
-    List<T> list = getMySelfService().executeQuery(sql, classaa);
+    List<T> list = getDB().executeQuery(sql, classaa);
     if (list != null && list.size() > 0) {
       return list.get(0);
     }
@@ -116,7 +116,7 @@ public class BaseBiz {
 		long xx = 0;
 		try {
 			String sql = "select * from client_device where imei=? limit 1";
-			Client_device client_device2 = getMySelfService().queryUniqueT(sql, Client_device.class, client_device.getImei());
+			Client_device client_device2 = getDB().queryUniqueT(sql, Client_device.class, client_device.getImei());
 			if(client_device2 == null){
 				xx = clientDeviceDao.insert(client_device);
 			}else{
@@ -259,7 +259,7 @@ public class BaseBiz {
       String sql = "SELECT * FROM information_schema.TABLES WHERE table_name =:tablename";
       Map<String, Object> paramMap = new HashMap<String, Object>();
       paramMap.put("tablename", tablename);
-      List<Map<String, Object>> list = getMySelfService().queryForList(sql, paramMap);
+      List<Map<String, Object>> list = getDB().queryForList(sql, paramMap);
       if (list != null && list.size() == 1) {
         return true;
       }
@@ -281,7 +281,7 @@ public class BaseBiz {
         return null;
       }
       String sql = "select * from " + tablename + "  where pi_id=? limit 1";
-      return getMySelfService().queryUniqueT(sql, Park_info.class, pi_id);
+      return getDB().queryUniqueT(sql, Park_info.class, pi_id);
     } catch (Exception e) {
       // TODO Auto-generated catch block
       log.error("returnParkInfo is error", e);
