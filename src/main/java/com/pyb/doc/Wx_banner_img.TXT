@@ -1,0 +1,10 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|bi_id|主键ID|long|
+|img_name|图片名称|String|
+|img_url|图片URL|String|
+|img_intro|图片功能简介|String|
+|ctime|创建时间|java.util.Date|
+|note|备注|String|
+

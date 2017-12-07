@@ -28,7 +28,7 @@ public class JxhCoderAuto {
 						,"wx_goods_order"
 						,"wx_goods_type","wx_user_address","wx_apply_cash",
 						"wx_recommend_user","wx_recommend_earnings","wx_accesstoken"
-						,"admin_user","admin_role"};
+						,"admin_user","admin_role","wx_banner_img"};
 //		String ip = "114.55.10.246";
 		String ip = "127.0.0.1";
 		int port = 3306;

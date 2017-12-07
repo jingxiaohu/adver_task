@@ -91,6 +91,8 @@ protected Wx_accesstokenDao wx_accesstokenDao;
 protected Admin_userDao admin_userDao;
 @Autowired
 protected Admin_roleDao admin_roleDao;
+@Autowired
+protected Wx_banner_imgDao wx_banner_imgDao;
 
 /*******************************下面是GET方法**************************************/
 public User_info_newDao getUser_info_newDao() {
@@ -215,6 +217,9 @@ public Admin_userDao getAdmin_userDao() {
 }
 public Admin_roleDao getAdmin_roleDao() {
 	return admin_roleDao;
+}
+public Wx_banner_imgDao getWx_banner_imgDao() {
+	return wx_banner_imgDao;
 }
 
 
