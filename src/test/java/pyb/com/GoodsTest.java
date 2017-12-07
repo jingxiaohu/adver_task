@@ -46,7 +46,7 @@ public class GoodsTest extends BaseWebTest {
                 result);
     }
     /**
-     * 1.1 通过分类获取商品列表例子：
+     * 1.1 通过分类ID获取商品列表例子：
      * <pre>
      * </pre>
      */
