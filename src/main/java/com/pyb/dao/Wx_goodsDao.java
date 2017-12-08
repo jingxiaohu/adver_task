@@ -41,9 +41,9 @@ public class Wx_goodsDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"g_id","name","price_new","price_old","express_price","stock_num","dimension","market_num","evaluate_num","hp_num","zp_num","cp_num","st_num","logo_url","banner_urls","intro","src_intro","hp_percent","express","is_bestseller","is_timelimit","is_recommend","is_promotion","is_postage","is_new","gt_id","is_show","is_putaway","order_num","order_pay_num","is_sellout","modify_admin_id","create_admin_id","ctime","utime","note","is_del"};
-    private  String coulmns ="g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del";
-    private  String coulmns2 ="name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del";
+    private  String[] carrays ={"g_id","name","price_new","price_old","express_price","stock_num","dimension","market_num","evaluate_num","hp_num","zp_num","cp_num","st_num","logo_url","banner_urls","intro","src_intro","hp_percent","express","is_bestseller","is_timelimit","is_recommend","is_promotion","is_postage","is_new","gt_id","is_show","is_putaway","order_num","order_pay_num","is_sellout","modify_admin_id","create_admin_id","ctime","utime","note","is_del","clothing"};
+    private  String coulmns ="g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing";
+    private  String coulmns2 ="name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_goodsDao extends BaseDao{
     public int insert(Wx_goods bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del) VALUES (:name,:price_new,:price_old,:express_price,:stock_num,:dimension,:market_num,:evaluate_num,:hp_num,:zp_num,:cp_num,:st_num,:logo_url,:banner_urls,:intro,:src_intro,:hp_percent,:express,:is_bestseller,:is_timelimit,:is_recommend,:is_promotion,:is_postage,:is_new,:gt_id,:is_show,:is_putaway,:order_num,:order_pay_num,:is_sellout,:modify_admin_id,:create_admin_id,:ctime,:utime,:note,:is_del)";
+            sql = "INSERT INTO "+TABLENAME2+" (name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing) VALUES (:name,:price_new,:price_old,:express_price,:stock_num,:dimension,:market_num,:evaluate_num,:hp_num,:zp_num,:cp_num,:st_num,:logo_url,:banner_urls,:intro,:src_intro,:hp_percent,:express,:is_bestseller,:is_timelimit,:is_recommend,:is_promotion,:is_postage,:is_new,:gt_id,:is_show,:is_putaway,:order_num,:order_pay_num,:is_sellout,:modify_admin_id,:create_admin_id,:ctime,:utime,:note,:is_del,:clothing)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wx_goodsDao extends BaseDao{
     public int insert_primarykey(Wx_goods bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del) VALUES (:g_id,:name,:price_new,:price_old,:express_price,:stock_num,:dimension,:market_num,:evaluate_num,:hp_num,:zp_num,:cp_num,:st_num,:logo_url,:banner_urls,:intro,:src_intro,:hp_percent,:express,:is_bestseller,:is_timelimit,:is_recommend,:is_promotion,:is_postage,:is_new,:gt_id,:is_show,:is_putaway,:order_num,:order_pay_num,:is_sellout,:modify_admin_id,:create_admin_id,:ctime,:utime,:note,:is_del)";
+            sql = "INSERT INTO "+TABLENAME2+" (g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing) VALUES (:g_id,:name,:price_new,:price_old,:express_price,:stock_num,:dimension,:market_num,:evaluate_num,:hp_num,:zp_num,:cp_num,:st_num,:logo_url,:banner_urls,:intro,:src_intro,:hp_percent,:express,:is_bestseller,:is_timelimit,:is_recommend,:is_promotion,:is_postage,:is_new,:gt_id,:is_show,:is_putaway,:order_num,:order_pay_num,:is_sellout,:modify_admin_id,:create_admin_id,:ctime,:utime,:note,:is_del,:clothing)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wx_goodsDao extends BaseDao{
     public int[] insert(final List<Wx_goods> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -151,6 +151,7 @@ public class Wx_goodsDao extends BaseDao{
                     ps.setTimestamp(34, new Timestamp(bean.utime.getTime()));
                     ps.setString(35, bean.note);
                     ps.setInt(36, bean.is_del);
+                    ps.setString(37, bean.clothing);
                 }
             });
         }catch(Exception e){
@@ -169,7 +170,7 @@ public class Wx_goodsDao extends BaseDao{
     public List<Wx_goods> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del FROM "+TABLENAME2+" ORDER BY g_id";
+            sql = "SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing FROM "+TABLENAME2+" ORDER BY g_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_goods>(Wx_goods.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -187,7 +188,7 @@ public class Wx_goodsDao extends BaseDao{
     public List<Wx_goods> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del FROM "+TABLENAME2+" ORDER BY g_id DESC LIMIT "+num+"" ;
+            sql = "SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing FROM "+TABLENAME2+" ORDER BY g_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_goods>(Wx_goods.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -205,7 +206,7 @@ public class Wx_goodsDao extends BaseDao{
     public List<Wx_goods> selectGtKey(long g_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del FROM "+TABLENAME2+" WHERE g_id>:g_id";
+            sql="SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing FROM "+TABLENAME2+" WHERE g_id>:g_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("g_id", g_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_goods>(Wx_goods.class));
@@ -225,7 +226,7 @@ public class Wx_goodsDao extends BaseDao{
     public Wx_goods selectByKey(long g_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del FROM "+TABLENAME2+" WHERE g_id=:g_id";
+            sql="SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing FROM "+TABLENAME2+" WHERE g_id=:g_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("g_id", g_id);
             List<Wx_goods> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_goods>(Wx_goods.class));
@@ -264,7 +265,7 @@ public class Wx_goodsDao extends BaseDao{
     public List<Wx_goods> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT g_id,name,price_new,price_old,express_price,stock_num,dimension,market_num,evaluate_num,hp_num,zp_num,cp_num,st_num,logo_url,banner_urls,intro,src_intro,hp_percent,express,is_bestseller,is_timelimit,is_recommend,is_promotion,is_postage,is_new,gt_id,is_show,is_putaway,order_num,order_pay_num,is_sellout,modify_admin_id,create_admin_id,ctime,utime,note,is_del,clothing FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_goods>(Wx_goods.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -282,7 +283,7 @@ public class Wx_goodsDao extends BaseDao{
     public int updateByKey(Wx_goods bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET name=:name,price_new=:price_new,price_old=:price_old,express_price=:express_price,stock_num=:stock_num,dimension=:dimension,market_num=:market_num,evaluate_num=:evaluate_num,hp_num=:hp_num,zp_num=:zp_num,cp_num=:cp_num,st_num=:st_num,logo_url=:logo_url,banner_urls=:banner_urls,intro=:intro,src_intro=:src_intro,hp_percent=:hp_percent,express=:express,is_bestseller=:is_bestseller,is_timelimit=:is_timelimit,is_recommend=:is_recommend,is_promotion=:is_promotion,is_postage=:is_postage,is_new=:is_new,gt_id=:gt_id,is_show=:is_show,is_putaway=:is_putaway,order_num=:order_num,order_pay_num=:order_pay_num,is_sellout=:is_sellout,modify_admin_id=:modify_admin_id,create_admin_id=:create_admin_id,ctime=:ctime,utime=:utime,note=:note,is_del=:is_del WHERE g_id=:g_id";
+            sql = "UPDATE "+TABLENAME2+" SET name=:name,price_new=:price_new,price_old=:price_old,express_price=:express_price,stock_num=:stock_num,dimension=:dimension,market_num=:market_num,evaluate_num=:evaluate_num,hp_num=:hp_num,zp_num=:zp_num,cp_num=:cp_num,st_num=:st_num,logo_url=:logo_url,banner_urls=:banner_urls,intro=:intro,src_intro=:src_intro,hp_percent=:hp_percent,express=:express,is_bestseller=:is_bestseller,is_timelimit=:is_timelimit,is_recommend=:is_recommend,is_promotion=:is_promotion,is_postage=:is_postage,is_new=:is_new,gt_id=:gt_id,is_show=:is_show,is_putaway=:is_putaway,order_num=:order_num,order_pay_num=:order_pay_num,is_sellout=:is_sellout,modify_admin_id=:modify_admin_id,create_admin_id=:create_admin_id,ctime=:ctime,utime=:utime,note=:note,is_del=:is_del,clothing=:clothing WHERE g_id=:g_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -300,7 +301,7 @@ public class Wx_goodsDao extends BaseDao{
     public int[] updateByKey (final List<Wx_goods> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET name=?,price_new=?,price_old=?,express_price=?,stock_num=?,dimension=?,market_num=?,evaluate_num=?,hp_num=?,zp_num=?,cp_num=?,st_num=?,logo_url=?,banner_urls=?,intro=?,src_intro=?,hp_percent=?,express=?,is_bestseller=?,is_timelimit=?,is_recommend=?,is_promotion=?,is_postage=?,is_new=?,gt_id=?,is_show=?,is_putaway=?,order_num=?,order_pay_num=?,is_sellout=?,modify_admin_id=?,create_admin_id=?,ctime=?,utime=?,note=?,is_del=? WHERE g_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET name=?,price_new=?,price_old=?,express_price=?,stock_num=?,dimension=?,market_num=?,evaluate_num=?,hp_num=?,zp_num=?,cp_num=?,st_num=?,logo_url=?,banner_urls=?,intro=?,src_intro=?,hp_percent=?,express=?,is_bestseller=?,is_timelimit=?,is_recommend=?,is_promotion=?,is_postage=?,is_new=?,gt_id=?,is_show=?,is_putaway=?,order_num=?,order_pay_num=?,is_sellout=?,modify_admin_id=?,create_admin_id=?,ctime=?,utime=?,note=?,is_del=?,clothing=? WHERE g_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -345,7 +346,8 @@ public class Wx_goodsDao extends BaseDao{
                     ps.setTimestamp(34, new Timestamp(bean.utime.getTime()));
                     ps.setString(35, bean.note);
                     ps.setInt(36, bean.is_del);
-                    ps.setLong(37, bean.g_id);
+                    ps.setString(37, bean.clothing);
+                    ps.setLong(38, bean.g_id);
                 }
             });
         }catch(Exception e){
@@ -441,6 +443,7 @@ public class Wx_goodsDao extends BaseDao{
                  "	`utime`  TIMESTAMP COMMENT '//timestamp    修改时间'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
                  "	`is_del`  INT(11) COMMENT '//int(11)    是否逻辑删除:0：不删除1：删除'," +
+                 "	`clothing`  TINYTEXT COMMENT '//varchar(255)    服装类商品尺码颜色JSON{'size':[120,130,140,150],'color':['黄色','红色','蓝色']}'," +
                  "	PRIMARY KEY (`g_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

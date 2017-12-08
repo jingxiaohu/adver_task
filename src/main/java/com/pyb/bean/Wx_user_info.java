@@ -7,12 +7,12 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_user_info implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket","attention_state"};
+    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket","attention_state","user_weixin"};
 
     public long ui_id;//bigint(20)    用户主键ID
     public String avatar="";//varchar(150)    用户头像
     public String nickname="";//varchar(80)    用户昵称
-    public String weixin_no="";//varchar(80)    用户微信号
+    public String weixin_no="";//varchar(80)    用户微信对应公众号的唯一ID（openid）
     public String weixin_id="";//varchar(80)    用户微信ID
     public int vc;//int(11)    余额单位分
     public int score;//int(11)    积分
@@ -33,6 +33,7 @@ public class Wx_user_info implements Cloneable , Serializable{
     public String area="";//varchar(60)    用户地区（例如：广东省广州）
     public String ticket="";//varchar(100)    用户推荐微信内部tickt
     public int attention_state;//int(11)    关注平台状态0：关注中1：未关注
+    public String user_weixin="";//varchar(50)    用户微信号码
 
 
 
@@ -270,9 +271,20 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.attention_state= value;
     }
 
+    public String getUser_weixin(){
+        return user_weixin;
+    }
+
+    public void setUser_weixin(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.user_weixin= value;
+    }
 
 
-    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area, String ticket, int attention_state) {
+
+    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area, String ticket, int attention_state, String user_weixin) {
         Wx_user_info ret = new Wx_user_info();
         ret.setUi_id(ui_id);
         ret.setAvatar(avatar);
@@ -298,6 +310,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         ret.setArea(area);
         ret.setTicket(ticket);
         ret.setAttention_state(attention_state);
+        ret.setUser_weixin(user_weixin);
         return ret;    
     }
 
@@ -326,6 +339,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String area = wx_user_info.getArea();
         String ticket = wx_user_info.getTicket();
         int attention_state = wx_user_info.getAttention_state();
+        String user_weixin = wx_user_info.getUser_weixin();
 
         this.setUi_id(ui_id);
         this.setAvatar(avatar);
@@ -351,6 +365,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.setArea(area);
         this.setTicket(ticket);
         this.setAttention_state(attention_state);
+        this.setUser_weixin(user_weixin);
 
     }
 
@@ -380,6 +395,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String area = wx_user_info.getArea();
         String ticket = wx_user_info.getTicket();
         int attention_state = wx_user_info.getAttention_state();
+        String user_weixin = wx_user_info.getUser_weixin();
     }
 
     public Map<String,Object> toMap(){
@@ -411,6 +427,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String area = wx_user_info.getArea();
         String ticket = wx_user_info.getTicket();
         int attention_state = wx_user_info.getAttention_state();
+        String user_weixin = wx_user_info.getUser_weixin();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ui_id",ui_id);
@@ -437,6 +454,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         _ret.put("area",area);
         _ret.put("ticket",ticket);
         _ret.put("attention_state",attention_state);
+        _ret.put("user_weixin",user_weixin);
         return _ret;
     }
 

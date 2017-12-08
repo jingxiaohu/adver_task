@@ -23,18 +23,20 @@ public class JxhCoderAuto {
 				,"live_info","message_info","channel_info","user_external"
 				,"wp_posts","wp_terms","wp_term_taxonomy","wp_termmeta",
 				"wp_term_jxh",
-				"wp_post_jxh","joke_segment","stock_hand","day_news","Stock_info",
-				"wx_user_info","wx_after_sale","wx_evaluate","wx_goods","wx_goods_details"
+				"wp_post_jxh","joke_segment","stock_hand","day_news","stock_info",
+				"wx_user_info"
+						,"wx_after_sale","wx_evaluate","wx_goods","wx_goods_details"
 						,"wx_goods_order"
 						,"wx_goods_type","wx_user_address","wx_apply_cash",
 						"wx_recommend_user","wx_recommend_earnings","wx_accesstoken"
-						,"admin_user","admin_role","wx_banner_img"};
-//		String ip = "114.55.10.246";
-		String ip = "127.0.0.1";
+						,"admin_user","admin_role","wx_banner_img"
+				};
+		String ip = "114.55.10.246";
+//		String ip = "127.0.0.1";
 		int port = 3306;
 		String user = "root";
-//		String password = "jxh@@jingling123";
-		String password = "root";
+		String password = "jxh@@jingling123";
+//		String password = "root";
 		String databaseName = "wypyb";
 		ABuilder.AutoCoder(is_maven,src,moduleName, pkg, tablenames, ip, port, user, password, databaseName);
 	}

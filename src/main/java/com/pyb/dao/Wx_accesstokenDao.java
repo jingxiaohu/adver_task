@@ -341,7 +341,7 @@ public class Wx_accesstokenDao extends BaseDao{
                  "	`id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    主键ID'," +
                  "	`access_token`  TINYTEXT COMMENT '//varchar(255)    access_token'," +
                  "	`expires_in`  INT(11) COMMENT '//int(11)    expires_in'," +
-                 "	`utime`  TIMESTAMP COMMENT '//timestamp    刷新时间'," +
+                 "	`utime`  TIMESTAMP NOT NULL COMMENT '//timestamp    刷新时间'," +
                  "	PRIMARY KEY (`id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

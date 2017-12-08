@@ -4,7 +4,7 @@
 |ui_id|用户主键ID|long|
 |avatar|用户头像|String|
 |nickname|用户昵称|String|
-|weixin_no|用户微信号|String|
+|weixin_no|用户微信对应公众号的唯一ID（openid）|String|
 |weixin_id|用户微信ID|String|
 |vc|余额单位分|int|
 |score|积分|int|
@@ -25,4 +25,5 @@
 |area|用户地区（例如：广东省广州）|String|
 |ticket|用户推荐微信内部tickt|String|
 |attention_state|关注平台状态0：关注中1：未关注|int|
+|user_weixin|用户微信号码|String|
 

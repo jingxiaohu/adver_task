@@ -346,7 +346,7 @@ public class Wx_banner_imgDao extends BaseDao{
                  "	`img_name`  VARCHAR(80) COMMENT '//varchar(80)    图片名称'," +
                  "	`img_url`  VARCHAR(200) COMMENT '//varchar(200)    图片URL'," +
                  "	`img_intro`  TINYTEXT COMMENT '//varchar(255)    图片功能简介'," +
-                 "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
+                 "	`ctime`  TIMESTAMP NOT NULL COMMENT '//timestamp    创建时间'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
                  "	PRIMARY KEY (`bi_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";

@@ -62,7 +62,7 @@ protected Stock_handDao stock_handDao;
 @Autowired
 protected Day_newsDao day_newsDao;
 @Autowired
-protected Stock_infoDao Stock_infoDao;
+protected Stock_infoDao stock_infoDao;
 @Autowired
 protected Wx_user_infoDao wx_user_infoDao;
 @Autowired
@@ -174,7 +174,7 @@ public Day_newsDao getDay_newsDao() {
 	return day_newsDao;
 }
 public Stock_infoDao getStock_infoDao() {
-	return Stock_infoDao;
+	return stock_infoDao;
 }
 public Wx_user_infoDao getWx_user_infoDao() {
 	return wx_user_infoDao;

@@ -1,14 +1,18 @@
 package com.pyb.mvc.weixin.biz;
 
 import com.alibaba.fastjson.JSONObject;
+import com.pyb.bean.ReturnDataNew;
+import com.pyb.bean.Wx_goods;
 import com.pyb.bean.Wx_recommend_user;
 import com.pyb.bean.Wx_user_info;
+import com.pyb.mvc.action.v1.weixin.goods.param.Param_search_goods_class;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 用户信息管理
@@ -161,6 +165,10 @@ public class Wx_UserBiz extends BaseWxBiz {
           return false;
       }
   }
+
+
+
+
   /****************************下面是封装的查询方法********************************/
     /**
      * 通过weixin_no  获取用户基本信息

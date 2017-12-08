@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_goods implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"g_id","name","price_new","price_old","express_price","stock_num","dimension","market_num","evaluate_num","hp_num","zp_num","cp_num","st_num","logo_url","banner_urls","intro","src_intro","hp_percent","express","is_bestseller","is_timelimit","is_recommend","is_promotion","is_postage","is_new","gt_id","is_show","is_putaway","order_num","order_pay_num","is_sellout","modify_admin_id","create_admin_id","ctime","utime","note","is_del"};
+    //public static String[] carrays ={"g_id","name","price_new","price_old","express_price","stock_num","dimension","market_num","evaluate_num","hp_num","zp_num","cp_num","st_num","logo_url","banner_urls","intro","src_intro","hp_percent","express","is_bestseller","is_timelimit","is_recommend","is_promotion","is_postage","is_new","gt_id","is_show","is_putaway","order_num","order_pay_num","is_sellout","modify_admin_id","create_admin_id","ctime","utime","note","is_del","clothing"};
 
     public long g_id;//bigint(20)    主键ID
     public String name="";//varchar(60)    商品名称
@@ -46,6 +46,7 @@ public class Wx_goods implements Cloneable , Serializable{
     public java.util.Date utime=new java.util.Date();//timestamp    修改时间
     public String note="";//varchar(60)    备注
     public int is_del;//int(11)    是否逻辑删除:0：不删除1：删除
+    public String clothing="";//varchar(255)    服装类商品尺码颜色JSON{"size":[120,130,140,150],"color":["黄色","红色","蓝色"]}
 
 
 
@@ -381,9 +382,20 @@ public class Wx_goods implements Cloneable , Serializable{
         this.is_del= value;
     }
 
+    public String getClothing(){
+        return clothing;
+    }
+
+    public void setClothing(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.clothing= value;
+    }
 
 
-    public static Wx_goods newWx_goods(long g_id, String name, int price_new, int price_old, String express_price, int stock_num, String dimension, int market_num, int evaluate_num, int hp_num, int zp_num, int cp_num, int st_num, String logo_url, String banner_urls, String intro, String src_intro, String hp_percent, String express, int is_bestseller, int is_timelimit, int is_recommend, int is_promotion, int is_postage, int is_new, long gt_id, int is_show, int is_putaway, int order_num, int order_pay_num, int is_sellout, long modify_admin_id, long create_admin_id, java.util.Date ctime, java.util.Date utime, String note, int is_del) {
+
+    public static Wx_goods newWx_goods(long g_id, String name, int price_new, int price_old, String express_price, int stock_num, String dimension, int market_num, int evaluate_num, int hp_num, int zp_num, int cp_num, int st_num, String logo_url, String banner_urls, String intro, String src_intro, String hp_percent, String express, int is_bestseller, int is_timelimit, int is_recommend, int is_promotion, int is_postage, int is_new, long gt_id, int is_show, int is_putaway, int order_num, int order_pay_num, int is_sellout, long modify_admin_id, long create_admin_id, java.util.Date ctime, java.util.Date utime, String note, int is_del, String clothing) {
         Wx_goods ret = new Wx_goods();
         ret.setG_id(g_id);
         ret.setName(name);
@@ -422,6 +434,7 @@ public class Wx_goods implements Cloneable , Serializable{
         ret.setUtime(utime);
         ret.setNote(note);
         ret.setIs_del(is_del);
+        ret.setClothing(clothing);
         return ret;    
     }
 
@@ -463,6 +476,7 @@ public class Wx_goods implements Cloneable , Serializable{
         java.util.Date utime = wx_goods.getUtime();
         String note = wx_goods.getNote();
         int is_del = wx_goods.getIs_del();
+        String clothing = wx_goods.getClothing();
 
         this.setG_id(g_id);
         this.setName(name);
@@ -501,6 +515,7 @@ public class Wx_goods implements Cloneable , Serializable{
         this.setUtime(utime);
         this.setNote(note);
         this.setIs_del(is_del);
+        this.setClothing(clothing);
 
     }
 
@@ -543,6 +558,7 @@ public class Wx_goods implements Cloneable , Serializable{
         java.util.Date utime = wx_goods.getUtime();
         String note = wx_goods.getNote();
         int is_del = wx_goods.getIs_del();
+        String clothing = wx_goods.getClothing();
     }
 
     public Map<String,Object> toMap(){
@@ -587,6 +603,7 @@ public class Wx_goods implements Cloneable , Serializable{
         java.util.Date utime = wx_goods.getUtime();
         String note = wx_goods.getNote();
         int is_del = wx_goods.getIs_del();
+        String clothing = wx_goods.getClothing();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("g_id",g_id);
@@ -626,6 +643,7 @@ public class Wx_goods implements Cloneable , Serializable{
         _ret.put("utime",utime);
         _ret.put("note",note);
         _ret.put("is_del",is_del);
+        _ret.put("clothing",clothing);
         return _ret;
     }
 
