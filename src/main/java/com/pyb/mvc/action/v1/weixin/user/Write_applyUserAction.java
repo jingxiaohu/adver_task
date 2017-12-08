@@ -55,6 +55,13 @@ public class Write_applyUserAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
+
+      if (RequestUtil.checkObjectBlank(param.getUi_id())) {
+        returnData.setReturnData(errorcode_param, " ui_id is null", "");
+        sendResp(returnData, response);
+        return null;
+      }
+
       //对封装的参数对象中的属性进行 非空等规则验证
       if (RequestUtil.checkObjectBlank(param.sign)) {
         returnData.setReturnData(errorcode_param, " sign is null", "");
@@ -69,12 +76,12 @@ public class Write_applyUserAction extends BaseV1Controller {
         return null;
       }
 
-      userManageBiz.GainUserInfo(returnData,param);
+      userManageBiz.ApplyUser(returnData,param);
       sendResp(returnData, response);
       return null;
 
     } catch (Exception e) {
-      log.error("Read_userInfoAction.user_info is error  获取用户个人信息 - P", e);
+      log.error("Write_applyUserAction.apply_user is error  申请成为推荐合作人 - P", e);
       returnData.setReturnData(errorcode_systerm, "system is error", "");
     }
     sendResp(returnData, response);

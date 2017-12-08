@@ -43,4 +43,56 @@ public class WxUserTest extends BaseWebTest {
               result);
   }
 
+    /**
+     * 申请成为推荐合作人例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void B_apply_user() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        sign(params, "ui_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/apply_user").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "申请成为推荐合作人",
+                "ui_id",
+                "/goods/apply_user",
+                2,
+                params,
+                Param_userinfo.class,
+                result);
+    }
+
+
+    /**
+     * 获取推荐合作人例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void C_read_cooperator() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        sign(params, "ui_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/read_cooperator").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取推荐合作人",
+                "ui_id",
+                "/goods/read_cooperator",
+                3,
+                params,
+                Param_userinfo.class,
+                result);
+    }
 }

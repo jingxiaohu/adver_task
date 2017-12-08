@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 获取用户信息
+ * 获取推荐合作人
  *
  * @author jingxiaohu
  */
 @RestController
 @RequestMapping(value = "/v1")
-public class Read_userInfoAction extends BaseV1Controller {
+public class Read_applyUserAction extends BaseV1Controller {
 
   /**
    *
@@ -33,11 +33,11 @@ public class Read_userInfoAction extends BaseV1Controller {
   UserManageBiz userManageBiz;
 
   /**
-   * 获取用户个人信息
+   * 申请成为推荐合作人信息
    */
-  @RequestMapping(value = "/goods/user_info")
+  @RequestMapping(value = "/goods/read_cooperator")
   @ResponseBody
-  public String user_info(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
+  public String read_cooperator(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
 
 
     ReturnDataNew returnData = new ReturnDataNew();
@@ -55,6 +55,7 @@ public class Read_userInfoAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
+
       if (RequestUtil.checkObjectBlank(param.getUi_id())) {
         returnData.setReturnData(errorcode_param, " ui_id is null", "");
         sendResp(returnData, response);
@@ -76,17 +77,19 @@ public class Read_userInfoAction extends BaseV1Controller {
         return null;
       }
 
-      userManageBiz.GainUserInfo(returnData,param);
+      userManageBiz.GainApplyUser(returnData,param);
       sendResp(returnData, response);
       return null;
 
     } catch (Exception e) {
-      log.error("Read_userInfoAction.user_info is error  获取用户个人信息 - P", e);
+      log.error("Read_applyUserAction.read_cooperator is error  获取推荐合作人信息 - P", e);
       returnData.setReturnData(errorcode_systerm, "system is error", "");
     }
     sendResp(returnData, response);
     return null;
   }
+
+
 
 
 }
