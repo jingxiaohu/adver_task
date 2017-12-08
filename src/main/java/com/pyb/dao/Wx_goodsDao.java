@@ -406,7 +406,7 @@ public class Wx_goodsDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`g_id`  BIGINT(20) NOT NULL COMMENT '//bigint(20)    主键ID'," +
+                 "	`g_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    主键ID'," +
                  "	`name`  VARCHAR(60) COMMENT '//varchar(60)    商品名称'," +
                  "	`price_new`  INT(11) COMMENT '//int(11)    商品卖价单位分'," +
                  "	`price_old`  INT(11) COMMENT '//int(11)    商品原价单位分'," +

@@ -41,9 +41,9 @@ public class Wx_recommend_earningsDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"re_id","earnings_total","allow_drawings","drawings","unconfirmed_receiving","ctime","utime","note"};
-    private  String coulmns ="re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note";
-    private  String coulmns2 ="earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note";
+    private  String[] carrays ={"re_id","earnings_total","allow_drawings","drawings","unconfirmed_receiving","ctime","utime","note","ui_id","state","weixin_id","re_type"};
+    private  String coulmns ="re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type";
+    private  String coulmns2 ="earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public int insert(Wx_recommend_earnings bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note) VALUES (:earnings_total,:allow_drawings,:drawings,:unconfirmed_receiving,:ctime,:utime,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type) VALUES (:earnings_total,:allow_drawings,:drawings,:unconfirmed_receiving,:ctime,:utime,:note,:ui_id,:state,:weixin_id,:re_type)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public int insert_primarykey(Wx_recommend_earnings bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note) VALUES (:re_id,:earnings_total,:allow_drawings,:drawings,:unconfirmed_receiving,:ctime,:utime,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type) VALUES (:re_id,:earnings_total,:allow_drawings,:drawings,:unconfirmed_receiving,:ctime,:utime,:note,:ui_id,:state,:weixin_id,:re_type)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public int[] insert(final List<Wx_recommend_earnings> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note) VALUES (?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -122,6 +122,10 @@ public class Wx_recommend_earningsDao extends BaseDao{
                     ps.setTimestamp(5, new Timestamp(bean.ctime.getTime()));
                     ps.setTimestamp(6, new Timestamp(bean.utime.getTime()));
                     ps.setString(7, bean.note);
+                    ps.setLong(8, bean.ui_id);
+                    ps.setInt(9, bean.state);
+                    ps.setString(10, bean.weixin_id);
+                    ps.setInt(11, bean.re_type);
                 }
             });
         }catch(Exception e){
@@ -140,7 +144,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public List<Wx_recommend_earnings> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note FROM "+TABLENAME2+" ORDER BY re_id";
+            sql = "SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type FROM "+TABLENAME2+" ORDER BY re_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_recommend_earnings>(Wx_recommend_earnings.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -158,7 +162,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public List<Wx_recommend_earnings> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note FROM "+TABLENAME2+" ORDER BY re_id DESC LIMIT "+num+"" ;
+            sql = "SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type FROM "+TABLENAME2+" ORDER BY re_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_recommend_earnings>(Wx_recommend_earnings.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -176,7 +180,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public List<Wx_recommend_earnings> selectGtKey(long re_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note FROM "+TABLENAME2+" WHERE re_id>:re_id";
+            sql="SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type FROM "+TABLENAME2+" WHERE re_id>:re_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("re_id", re_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_recommend_earnings>(Wx_recommend_earnings.class));
@@ -196,7 +200,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public Wx_recommend_earnings selectByKey(long re_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note FROM "+TABLENAME2+" WHERE re_id=:re_id";
+            sql="SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type FROM "+TABLENAME2+" WHERE re_id=:re_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("re_id", re_id);
             List<Wx_recommend_earnings> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_recommend_earnings>(Wx_recommend_earnings.class));
@@ -235,7 +239,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public List<Wx_recommend_earnings> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT re_id,earnings_total,allow_drawings,drawings,unconfirmed_receiving,ctime,utime,note,ui_id,state,weixin_id,re_type FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_recommend_earnings>(Wx_recommend_earnings.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -253,7 +257,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public int updateByKey(Wx_recommend_earnings bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET earnings_total=:earnings_total,allow_drawings=:allow_drawings,drawings=:drawings,unconfirmed_receiving=:unconfirmed_receiving,ctime=:ctime,utime=:utime,note=:note WHERE re_id=:re_id";
+            sql = "UPDATE "+TABLENAME2+" SET earnings_total=:earnings_total,allow_drawings=:allow_drawings,drawings=:drawings,unconfirmed_receiving=:unconfirmed_receiving,ctime=:ctime,utime=:utime,note=:note,ui_id=:ui_id,state=:state,weixin_id=:weixin_id,re_type=:re_type WHERE re_id=:re_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -271,7 +275,7 @@ public class Wx_recommend_earningsDao extends BaseDao{
     public int[] updateByKey (final List<Wx_recommend_earnings> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET earnings_total=?,allow_drawings=?,drawings=?,unconfirmed_receiving=?,ctime=?,utime=?,note=? WHERE re_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET earnings_total=?,allow_drawings=?,drawings=?,unconfirmed_receiving=?,ctime=?,utime=?,note=?,ui_id=?,state=?,weixin_id=?,re_type=? WHERE re_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -287,7 +291,11 @@ public class Wx_recommend_earningsDao extends BaseDao{
                     ps.setTimestamp(5, new Timestamp(bean.ctime.getTime()));
                     ps.setTimestamp(6, new Timestamp(bean.utime.getTime()));
                     ps.setString(7, bean.note);
-                    ps.setLong(8, bean.re_id);
+                    ps.setLong(8, bean.ui_id);
+                    ps.setInt(9, bean.state);
+                    ps.setString(10, bean.weixin_id);
+                    ps.setInt(11, bean.re_type);
+                    ps.setLong(12, bean.re_id);
                 }
             });
         }catch(Exception e){
@@ -354,6 +362,10 @@ public class Wx_recommend_earningsDao extends BaseDao{
                  "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
                  "	`utime`  TIMESTAMP COMMENT '//timestamp    修改时间'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
+                 "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    推荐合伙人用户ID'," +
+                 "	`state`  INT(11) COMMENT '//int(11)    是否审核通过0：申请中待审核1：审核通过2：审核不通过'," +
+                 "	`weixin_id`  VARCHAR(80) COMMENT '//varchar(80)    推荐合伙人对公众平台微信IDweixin_id'," +
+                 "	`re_type`  INT(11) COMMENT '//int(11)    合伙人类型：0：普通推荐合伙人1：中级推荐合伙人2：高级推荐合伙人'," +
                  "	PRIMARY KEY (`re_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

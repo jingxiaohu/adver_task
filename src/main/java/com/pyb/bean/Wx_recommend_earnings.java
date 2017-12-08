@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_recommend_earnings implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"re_id","earnings_total","allow_drawings","drawings","unconfirmed_receiving","ctime","utime","note"};
+    //public static String[] carrays ={"re_id","earnings_total","allow_drawings","drawings","unconfirmed_receiving","ctime","utime","note","ui_id","state","weixin_id","re_type"};
 
     public long re_id;//bigint(20)    主键ID
     public int earnings_total;//int(11)    推荐人总累积收益
@@ -17,6 +17,10 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
     public java.util.Date ctime=new java.util.Date();//timestamp    创建时间
     public java.util.Date utime=new java.util.Date();//timestamp    修改时间
     public String note="";//varchar(60)    备注
+    public long ui_id;//bigint(20)    推荐合伙人用户ID
+    public int state;//int(11)    是否审核通过0：申请中待审核1：审核通过2：审核不通过
+    public String weixin_id="";//varchar(80)    推荐合伙人对公众平台微信IDweixin_id
+    public int re_type;//int(11)    合伙人类型：0：普通推荐合伙人1：中级推荐合伙人2：高级推荐合伙人
 
 
 
@@ -93,9 +97,44 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         this.note= value;
     }
 
+    public long getUi_id(){
+        return ui_id;
+    }
+
+    public void setUi_id(long value){
+        this.ui_id= value;
+    }
+
+    public int getState(){
+        return state;
+    }
+
+    public void setState(int value){
+        this.state= value;
+    }
+
+    public String getWeixin_id(){
+        return weixin_id;
+    }
+
+    public void setWeixin_id(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.weixin_id= value;
+    }
+
+    public int getRe_type(){
+        return re_type;
+    }
+
+    public void setRe_type(int value){
+        this.re_type= value;
+    }
 
 
-    public static Wx_recommend_earnings newWx_recommend_earnings(long re_id, int earnings_total, int allow_drawings, int drawings, int unconfirmed_receiving, java.util.Date ctime, java.util.Date utime, String note) {
+
+    public static Wx_recommend_earnings newWx_recommend_earnings(long re_id, int earnings_total, int allow_drawings, int drawings, int unconfirmed_receiving, java.util.Date ctime, java.util.Date utime, String note, long ui_id, int state, String weixin_id, int re_type) {
         Wx_recommend_earnings ret = new Wx_recommend_earnings();
         ret.setRe_id(re_id);
         ret.setEarnings_total(earnings_total);
@@ -105,6 +144,10 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         ret.setCtime(ctime);
         ret.setUtime(utime);
         ret.setNote(note);
+        ret.setUi_id(ui_id);
+        ret.setState(state);
+        ret.setWeixin_id(weixin_id);
+        ret.setRe_type(re_type);
         return ret;    
     }
 
@@ -117,6 +160,10 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         java.util.Date ctime = wx_recommend_earnings.getCtime();
         java.util.Date utime = wx_recommend_earnings.getUtime();
         String note = wx_recommend_earnings.getNote();
+        long ui_id = wx_recommend_earnings.getUi_id();
+        int state = wx_recommend_earnings.getState();
+        String weixin_id = wx_recommend_earnings.getWeixin_id();
+        int re_type = wx_recommend_earnings.getRe_type();
 
         this.setRe_id(re_id);
         this.setEarnings_total(earnings_total);
@@ -126,6 +173,10 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         this.setCtime(ctime);
         this.setUtime(utime);
         this.setNote(note);
+        this.setUi_id(ui_id);
+        this.setState(state);
+        this.setWeixin_id(weixin_id);
+        this.setRe_type(re_type);
 
     }
 
@@ -139,6 +190,10 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         java.util.Date ctime = wx_recommend_earnings.getCtime();
         java.util.Date utime = wx_recommend_earnings.getUtime();
         String note = wx_recommend_earnings.getNote();
+        long ui_id = wx_recommend_earnings.getUi_id();
+        int state = wx_recommend_earnings.getState();
+        String weixin_id = wx_recommend_earnings.getWeixin_id();
+        int re_type = wx_recommend_earnings.getRe_type();
     }
 
     public Map<String,Object> toMap(){
@@ -154,6 +209,10 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         java.util.Date ctime = wx_recommend_earnings.getCtime();
         java.util.Date utime = wx_recommend_earnings.getUtime();
         String note = wx_recommend_earnings.getNote();
+        long ui_id = wx_recommend_earnings.getUi_id();
+        int state = wx_recommend_earnings.getState();
+        String weixin_id = wx_recommend_earnings.getWeixin_id();
+        int re_type = wx_recommend_earnings.getRe_type();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("re_id",re_id);
@@ -164,6 +223,10 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         _ret.put("ctime",ctime);
         _ret.put("utime",utime);
         _ret.put("note",note);
+        _ret.put("ui_id",ui_id);
+        _ret.put("state",state);
+        _ret.put("weixin_id",weixin_id);
+        _ret.put("re_type",re_type);
         return _ret;
     }
 
