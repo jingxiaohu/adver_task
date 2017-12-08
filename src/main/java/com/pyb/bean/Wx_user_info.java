@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_user_info implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket","attention_state","user_weixin"};
+    //public static String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket","attention_state","user_weixin","g_logo_url"};
 
     public long ui_id;//bigint(20)    用户主键ID
     public String avatar="";//varchar(150)    用户头像
@@ -34,6 +34,7 @@ public class Wx_user_info implements Cloneable , Serializable{
     public String ticket="";//varchar(100)    用户推荐微信内部tickt
     public int attention_state;//int(11)    关注平台状态0：关注中1：未关注
     public String user_weixin="";//varchar(50)    用户微信号码
+    public String g_logo_url="";//varchar(200)    商品logo图片
 
 
 
@@ -282,9 +283,20 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.user_weixin= value;
     }
 
+    public String getG_logo_url(){
+        return g_logo_url;
+    }
+
+    public void setG_logo_url(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.g_logo_url= value;
+    }
 
 
-    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area, String ticket, int attention_state, String user_weixin) {
+
+    public static Wx_user_info newWx_user_info(long ui_id, String avatar, String nickname, String weixin_no, String weixin_id, int vc, int score, int level, int recommend_num, int is_partner, java.util.Date ctime, java.util.Date utime, int is_forbidden, String telephone, String name, String note, long recommend_id, String recommend_nickname, String recommend_code, String token, int sex, String area, String ticket, int attention_state, String user_weixin, String g_logo_url) {
         Wx_user_info ret = new Wx_user_info();
         ret.setUi_id(ui_id);
         ret.setAvatar(avatar);
@@ -311,6 +323,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         ret.setTicket(ticket);
         ret.setAttention_state(attention_state);
         ret.setUser_weixin(user_weixin);
+        ret.setG_logo_url(g_logo_url);
         return ret;    
     }
 
@@ -340,6 +353,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String ticket = wx_user_info.getTicket();
         int attention_state = wx_user_info.getAttention_state();
         String user_weixin = wx_user_info.getUser_weixin();
+        String g_logo_url = wx_user_info.getG_logo_url();
 
         this.setUi_id(ui_id);
         this.setAvatar(avatar);
@@ -366,6 +380,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         this.setTicket(ticket);
         this.setAttention_state(attention_state);
         this.setUser_weixin(user_weixin);
+        this.setG_logo_url(g_logo_url);
 
     }
 
@@ -396,6 +411,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String ticket = wx_user_info.getTicket();
         int attention_state = wx_user_info.getAttention_state();
         String user_weixin = wx_user_info.getUser_weixin();
+        String g_logo_url = wx_user_info.getG_logo_url();
     }
 
     public Map<String,Object> toMap(){
@@ -428,6 +444,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         String ticket = wx_user_info.getTicket();
         int attention_state = wx_user_info.getAttention_state();
         String user_weixin = wx_user_info.getUser_weixin();
+        String g_logo_url = wx_user_info.getG_logo_url();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ui_id",ui_id);
@@ -455,6 +472,7 @@ public class Wx_user_info implements Cloneable , Serializable{
         _ret.put("ticket",ticket);
         _ret.put("attention_state",attention_state);
         _ret.put("user_weixin",user_weixin);
+        _ret.put("g_logo_url",g_logo_url);
         return _ret;
     }
 

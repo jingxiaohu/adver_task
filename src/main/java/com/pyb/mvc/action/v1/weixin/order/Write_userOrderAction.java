@@ -1,11 +1,11 @@
 
-package com.pyb.mvc.action.v1.weixin.user;
+package com.pyb.mvc.action.v1.weixin.order;
 
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
-import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
-import com.pyb.mvc.weixin.biz.UserManageBiz;
+import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
+import com.pyb.mvc.weixin.biz.UserOrderBiz;
 import com.pyb.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 获取用户信息
+ * 用户取消订单
  *
  * @author jingxiaohu
  */
 @RestController
 @RequestMapping(value = "/v1")
-public class Read_userInfoAction extends BaseV1Controller {
+public class Write_userOrderAction extends BaseV1Controller {
 
   /**
    *
@@ -30,14 +30,14 @@ public class Read_userInfoAction extends BaseV1Controller {
   private static final long serialVersionUID = 6891425545908564737L;
 
   @Autowired
-  UserManageBiz userManageBiz;
+  UserOrderBiz userOrderBiz;
 
   /**
-   * 获取用户个人信息
+   * 用户取消订单
    */
-  @RequestMapping(value = "/goods/user_info")
+  @RequestMapping(value = "/goods/order_cancel")
   @ResponseBody
-  public String user_info(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
+  public String order_cancel(HttpServletRequest request, HttpServletResponse response, Param_order param) {
 
 
     ReturnDataNew returnData = new ReturnDataNew();
@@ -55,13 +55,31 @@ public class Read_userInfoAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
+      if (RequestUtil.checkObjectBlank(param.getUi_id())) {
+        returnData.setReturnData(errorcode_param, " ui_id is null", "");
+        sendResp(returnData, response);
+        return null;
+      }
+      if (RequestUtil.checkObjectBlank(param.getGo_id())) {
+        returnData.setReturnData(errorcode_param, " go_id is null", "");
+        sendResp(returnData, response);
+        return null;
+      }
+      if (RequestUtil.checkObjectBlank(param.getOrder_id())) {
+        returnData.setReturnData(errorcode_param, " order_id is null", "");
+        sendResp(returnData, response);
+        return null;
+      }
+
+
+
       //对封装的参数对象中的属性进行 非空等规则验证
       if (RequestUtil.checkObjectBlank(param.sign)) {
         returnData.setReturnData(errorcode_param, " sign is null", "");
         sendResp(returnData, response);
         return null;
       }
-      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.ui_id);
+      String sign_str = getSignature(Constants.getSystemKey(param.dtype),param.getUi_id(),param.getGo_id(),param.getOrder_id());
       if (!param.sign.equalsIgnoreCase(sign_str)) {
         log.warn("sign=" + param.sign + "  sign_str=" + sign_str);
         returnData.setReturnData(errorcode_param, " sign is not right", null);
@@ -69,12 +87,12 @@ public class Read_userInfoAction extends BaseV1Controller {
         return null;
       }
 
-      userManageBiz.GainUserInfo(returnData,param);
+      userOrderBiz.UserCancelOrder(returnData,param);
       sendResp(returnData, response);
       return null;
 
     } catch (Exception e) {
-      log.error("Read_userInfoAction.user_info is error  获取用户个人信息 - P", e);
+      log.error("order_cancel is error  用户取消订单 - P", e);
       returnData.setReturnData(errorcode_systerm, "system is error", "");
     }
     sendResp(returnData, response);

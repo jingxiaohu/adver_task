@@ -41,9 +41,9 @@ public class Wx_user_infoDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket","attention_state","user_weixin"};
-    private  String coulmns ="ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin";
-    private  String coulmns2 ="avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin";
+    private  String[] carrays ={"ui_id","avatar","nickname","weixin_no","weixin_id","vc","score","level","recommend_num","is_partner","ctime","utime","is_forbidden","telephone","name","note","recommend_id","recommend_nickname","recommend_code","token","sex","area","ticket","attention_state","user_weixin","g_logo_url"};
+    private  String coulmns ="ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url";
+    private  String coulmns2 ="avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_user_infoDao extends BaseDao{
     public int insert(Wx_user_info bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin) VALUES (:avatar,:nickname,:weixin_no,:weixin_id,:vc,:score,:level,:recommend_num,:is_partner,:ctime,:utime,:is_forbidden,:telephone,:name,:note,:recommend_id,:recommend_nickname,:recommend_code,:token,:sex,:area,:ticket,:attention_state,:user_weixin)";
+            sql = "INSERT INTO "+TABLENAME2+" (avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url) VALUES (:avatar,:nickname,:weixin_no,:weixin_id,:vc,:score,:level,:recommend_num,:is_partner,:ctime,:utime,:is_forbidden,:telephone,:name,:note,:recommend_id,:recommend_nickname,:recommend_code,:token,:sex,:area,:ticket,:attention_state,:user_weixin,:g_logo_url)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wx_user_infoDao extends BaseDao{
     public int insert_primarykey(Wx_user_info bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin) VALUES (:ui_id,:avatar,:nickname,:weixin_no,:weixin_id,:vc,:score,:level,:recommend_num,:is_partner,:ctime,:utime,:is_forbidden,:telephone,:name,:note,:recommend_id,:recommend_nickname,:recommend_code,:token,:sex,:area,:ticket,:attention_state,:user_weixin)";
+            sql = "INSERT INTO "+TABLENAME2+" (ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url) VALUES (:ui_id,:avatar,:nickname,:weixin_no,:weixin_id,:vc,:score,:level,:recommend_num,:is_partner,:ctime,:utime,:is_forbidden,:telephone,:name,:note,:recommend_id,:recommend_nickname,:recommend_code,:token,:sex,:area,:ticket,:attention_state,:user_weixin,:g_logo_url)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wx_user_infoDao extends BaseDao{
     public int[] insert(final List<Wx_user_info> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -139,6 +139,7 @@ public class Wx_user_infoDao extends BaseDao{
                     ps.setString(22, bean.ticket);
                     ps.setInt(23, bean.attention_state);
                     ps.setString(24, bean.user_weixin);
+                    ps.setString(25, bean.g_logo_url);
                 }
             });
         }catch(Exception e){
@@ -157,7 +158,7 @@ public class Wx_user_infoDao extends BaseDao{
     public List<Wx_user_info> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin FROM "+TABLENAME2+" ORDER BY ui_id";
+            sql = "SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url FROM "+TABLENAME2+" ORDER BY ui_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_user_info>(Wx_user_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -175,7 +176,7 @@ public class Wx_user_infoDao extends BaseDao{
     public List<Wx_user_info> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin FROM "+TABLENAME2+" ORDER BY ui_id DESC LIMIT "+num+"" ;
+            sql = "SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url FROM "+TABLENAME2+" ORDER BY ui_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_user_info>(Wx_user_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -193,7 +194,7 @@ public class Wx_user_infoDao extends BaseDao{
     public List<Wx_user_info> selectGtKey(long ui_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin FROM "+TABLENAME2+" WHERE ui_id>:ui_id";
+            sql="SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url FROM "+TABLENAME2+" WHERE ui_id>:ui_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ui_id", ui_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_user_info>(Wx_user_info.class));
@@ -213,7 +214,7 @@ public class Wx_user_infoDao extends BaseDao{
     public Wx_user_info selectByKey(long ui_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin FROM "+TABLENAME2+" WHERE ui_id=:ui_id";
+            sql="SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url FROM "+TABLENAME2+" WHERE ui_id=:ui_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ui_id", ui_id);
             List<Wx_user_info> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_user_info>(Wx_user_info.class));
@@ -252,7 +253,7 @@ public class Wx_user_infoDao extends BaseDao{
     public List<Wx_user_info> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT ui_id,avatar,nickname,weixin_no,weixin_id,vc,score,level,recommend_num,is_partner,ctime,utime,is_forbidden,telephone,name,note,recommend_id,recommend_nickname,recommend_code,token,sex,area,ticket,attention_state,user_weixin,g_logo_url FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_user_info>(Wx_user_info.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -270,7 +271,7 @@ public class Wx_user_infoDao extends BaseDao{
     public int updateByKey(Wx_user_info bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET avatar=:avatar,nickname=:nickname,weixin_no=:weixin_no,weixin_id=:weixin_id,vc=:vc,score=:score,level=:level,recommend_num=:recommend_num,is_partner=:is_partner,ctime=:ctime,utime=:utime,is_forbidden=:is_forbidden,telephone=:telephone,name=:name,note=:note,recommend_id=:recommend_id,recommend_nickname=:recommend_nickname,recommend_code=:recommend_code,token=:token,sex=:sex,area=:area,ticket=:ticket,attention_state=:attention_state,user_weixin=:user_weixin WHERE ui_id=:ui_id";
+            sql = "UPDATE "+TABLENAME2+" SET avatar=:avatar,nickname=:nickname,weixin_no=:weixin_no,weixin_id=:weixin_id,vc=:vc,score=:score,level=:level,recommend_num=:recommend_num,is_partner=:is_partner,ctime=:ctime,utime=:utime,is_forbidden=:is_forbidden,telephone=:telephone,name=:name,note=:note,recommend_id=:recommend_id,recommend_nickname=:recommend_nickname,recommend_code=:recommend_code,token=:token,sex=:sex,area=:area,ticket=:ticket,attention_state=:attention_state,user_weixin=:user_weixin,g_logo_url=:g_logo_url WHERE ui_id=:ui_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -288,7 +289,7 @@ public class Wx_user_infoDao extends BaseDao{
     public int[] updateByKey (final List<Wx_user_info> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET avatar=?,nickname=?,weixin_no=?,weixin_id=?,vc=?,score=?,level=?,recommend_num=?,is_partner=?,ctime=?,utime=?,is_forbidden=?,telephone=?,name=?,note=?,recommend_id=?,recommend_nickname=?,recommend_code=?,token=?,sex=?,area=?,ticket=?,attention_state=?,user_weixin=? WHERE ui_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET avatar=?,nickname=?,weixin_no=?,weixin_id=?,vc=?,score=?,level=?,recommend_num=?,is_partner=?,ctime=?,utime=?,is_forbidden=?,telephone=?,name=?,note=?,recommend_id=?,recommend_nickname=?,recommend_code=?,token=?,sex=?,area=?,ticket=?,attention_state=?,user_weixin=?,g_logo_url=? WHERE ui_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -321,7 +322,8 @@ public class Wx_user_infoDao extends BaseDao{
                     ps.setString(22, bean.ticket);
                     ps.setInt(23, bean.attention_state);
                     ps.setString(24, bean.user_weixin);
-                    ps.setLong(25, bean.ui_id);
+                    ps.setString(25, bean.g_logo_url);
+                    ps.setLong(26, bean.ui_id);
                 }
             });
         }catch(Exception e){
@@ -405,6 +407,7 @@ public class Wx_user_infoDao extends BaseDao{
                  "	`ticket`  VARCHAR(100) COMMENT '//varchar(100)    用户推荐微信内部tickt'," +
                  "	`attention_state`  INT(11) COMMENT '//int(11)    关注平台状态0：关注中1：未关注'," +
                  "	`user_weixin`  VARCHAR(50) COMMENT '//varchar(50)    用户微信号码'," +
+                 "	`g_logo_url`  VARCHAR(200) COMMENT '//varchar(200)    商品logo图片'," +
                  "	PRIMARY KEY (`ui_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

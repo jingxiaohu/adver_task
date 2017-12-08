@@ -26,4 +26,5 @@
 |ticket|用户推荐微信内部tickt|String|
 |attention_state|关注平台状态0：关注中1：未关注|int|
 |user_weixin|用户微信号码|String|
+|g_logo_url|商品logo图片|String|
 
