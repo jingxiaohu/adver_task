@@ -5,6 +5,9 @@ import com.pyb.mvc.weixin.util.WeixinUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 /**
  * 类名: MenuManager </br>
  * 包名： com.souvc.weixin.main
@@ -16,12 +19,18 @@ import org.slf4j.LoggerFactory;
  */
 public class MenuManager {
     private static Logger log = LoggerFactory.getLogger(MenuManager.class);
-
+    static String scope = "snsapi_userinfo";//"snsapi_base";
+    // 第三方用户唯一凭证
+    static String appId = "wxebee99b0aba36d8f";
+    // 第三方用户唯一凭证密钥
+    static String appSecret = "a4a6df2df45185cf4746a381155cf0fa";
+    static String redirect_baseurl = "https://open.weixin.qq.com/connect/oauth2/authorize?appid="
+            +appId
+            +"&redirect_uri=REDIRECT_URI&response_type=code&scope="
+            +scope
+            +"&state=1#wechat_redirect";
     public static void main(String[] args) {
-        // 第三方用户唯一凭证
-        String appId = "wxebee99b0aba36d8f";
-        // 第三方用户唯一凭证密钥
-        String appSecret = "a4a6df2df45185cf4746a381155cf0fa";
+
 
         // 调用接口获取access_token
 //        AccessToken at = WeixinUtil.getAccessToken(appId, appSecret);
@@ -75,7 +84,11 @@ public class MenuManager {
         CommonButton mainBtn2 = new CommonButton();
         mainBtn2.setName("拼把动态");
 //        mainBtn2.setUrl("http://www.51pyb.com");
-        mainBtn2.setUrl("http://task.51pyb.com/v1/goods/test.php");
+        try {
+            mainBtn2.setUrl(redirect_baseurl.replace("REDIRECT_URI", URLEncoder.encode("http://task.51pyb.com/v1/goods/test.php","UTF-8")) );
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         mainBtn2.setType("view");
 
 

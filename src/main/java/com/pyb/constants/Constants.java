@@ -5,8 +5,11 @@ import com.pyb.bean.Wx_accesstoken;
 
 public class Constants {
 
-	
-	
+
+	// 第三方用户唯一凭证
+	public static String appId = "wxebee99b0aba36d8f";
+	// 第三方用户唯一凭证密钥
+	public static String appSecret = "a4a6df2df45185cf4746a381155cf0fa";
 	
 	/**
 	 * 系统跟路径
