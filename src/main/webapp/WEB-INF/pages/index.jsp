@@ -14,7 +14,7 @@
 <body>
      jingxiaohu:${message}
      <script>
-         window.location.href="www.528ads.com?data=${message}";
+         window.location.href=www.528ads.com?data=${message};
      </script>
 
 </body>
