@@ -45,12 +45,13 @@ public class test extends BaseV1Controller {
 
                  "scope":"SCOPE" }
                  */
-                System.out.println(jsondata);
+                //System.out.println(jsondata);
             }
 //            return new ModelAndView(new RedirectView("http://www.528ads.com?jsondata="+jsondata));
             ModelAndView mav = new ModelAndView();
             mav.setViewName("index"); //返回的文件名
-            mav.addObject("message",jsondata);
+            System.out.println("返回页面：message="+jsondata);
+            mav.addObject("message","  asdsadsadsadsa121321321231");
             return mav;
 
         } catch (Exception e) {
