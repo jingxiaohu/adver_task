@@ -6,20 +6,17 @@ import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.util.HttpUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 @RestController
 @RequestMapping(value = "/v1")
 public class test extends BaseV1Controller {
     @RequestMapping(value = "/goods/test")
-    @ResponseBody
-    public void user_info(HttpServletRequest request, HttpServletResponse response) {
+//    @ResponseBody
+    public String GainUserOpenId(HttpServletRequest request, HttpServletResponse response) {
         try {
             String str = request.getQueryString();
             System.out.println("str=" + str);
@@ -36,21 +33,24 @@ public class test extends BaseV1Controller {
             JSONObject oob = null;
             if (jsondata != null) {
                  oob = JSON.parseObject(jsondata);
-            }
-            if(oob != null){
-                PrintWriter out = response.getWriter();
-                out.print(oob.toJSONString());
-                out.close();
-                out = null;
-            }else{
-                PrintWriter out = response.getWriter();
-                out.print(str);
-                out.close();
-                out = null;
-            }
+                /**
+                 * { "access_token":"ACCESS_TOKEN",
 
-        } catch (IOException e) {
-            e.printStackTrace();
+                 "expires_in":7200,
+
+                 "refresh_token":"REFRESH_TOKEN",
+
+                 "openid":"OPENID",
+
+                 "scope":"SCOPE" }
+                 */
+                System.out.println(jsondata);
+            }
+            return "http://www.528ads.com?jsondata="+jsondata;
+
+        } catch (Exception e) {
+            log.error("获取用户授权后的用户信息",e);
         }
+        return "http://www.528ads.com";
     }
 }
