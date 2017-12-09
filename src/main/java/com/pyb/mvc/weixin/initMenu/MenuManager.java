@@ -26,7 +26,7 @@ public class MenuManager {
         // 调用接口获取access_token
 //        AccessToken at = WeixinUtil.getAccessToken(appId, appSecret);
         AccessToken at = new AccessToken();
-        at.setToken("4DXtufFFEh2xxXGfPHEN46kQYYucbZNxeLzfhdOecopJg7OQHTlmMD5yjQrtn3ZZylivwUEX1DD9A6z8Y3rsmgcUSKKN0kYc8DSF5uEmiy-2_opgFfK65l1U8OSGclaIPZDjABAZJN");
+        at.setToken("yT7y0Sq_pM1plJoQbvDwaFHS0DoSzd9hkeHavIlV9x9pzf1E0ZzelWE3G4nMz9F8IDx8FWfV7zZmpVGenXl9x9957Yqw6uYn4RRX0zabkPKTak-xbxvT1BsHh_DH66jiWOBfABAKCP");
         at.setExpiresIn(7200);
         if (null != at) {
             // 调用接口创建菜单
@@ -74,7 +74,8 @@ public class MenuManager {
 
         CommonButton mainBtn2 = new CommonButton();
         mainBtn2.setName("拼把动态");
-        mainBtn2.setUrl("http://www.51pyb.com");
+//        mainBtn2.setUrl("http://www.51pyb.com");
+        mainBtn2.setUrl("http://task.51pyb.com/v1/goods/test.php");
         mainBtn2.setType("view");
 
 

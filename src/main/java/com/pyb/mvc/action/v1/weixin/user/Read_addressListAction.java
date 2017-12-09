@@ -1,11 +1,11 @@
 
-package com.pyb.mvc.action.v1.weixin.order;
+package com.pyb.mvc.action.v1.weixin.user;
 
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
-import com.pyb.mvc.weixin.biz.UserOrderBiz;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
+import com.pyb.mvc.weixin.biz.UserManageBiz;
 import com.pyb.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,13 +16,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 用户取消订单  用户下单
+ * 获取用户收货地址信息列表
  *
  * @author jingxiaohu
  */
 @RestController
 @RequestMapping(value = "/v1")
-public class Write_userOrderAction extends BaseV1Controller {
+public class Read_addressListAction extends BaseV1Controller {
 
   /**
    *
@@ -30,14 +30,14 @@ public class Write_userOrderAction extends BaseV1Controller {
   private static final long serialVersionUID = 6891425545908564737L;
 
   @Autowired
-  UserOrderBiz userOrderBiz;
+  UserManageBiz userManageBiz;
 
   /**
-   * 用户取消订单
+   * 获取用户收货地址信息列表
    */
-  @RequestMapping(value = "/goods/order_cancel")
+  @RequestMapping(value = "/goods/user_address_list")
   @ResponseBody
-  public String order_cancel(HttpServletRequest request, HttpServletResponse response, Param_order param) {
+  public String user_address_list(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
 
 
     ReturnDataNew returnData = new ReturnDataNew();
@@ -60,17 +60,6 @@ public class Write_userOrderAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
-      if (RequestUtil.checkObjectBlank(param.getGo_id())) {
-        returnData.setReturnData(errorcode_param, " go_id is null", "");
-        sendResp(returnData, response);
-        return null;
-      }
-      if (RequestUtil.checkObjectBlank(param.getOrder_id())) {
-        returnData.setReturnData(errorcode_param, " order_id is null", "");
-        sendResp(returnData, response);
-        return null;
-      }
-
 
 
       //对封装的参数对象中的属性进行 非空等规则验证
@@ -79,7 +68,7 @@ public class Write_userOrderAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
-      String sign_str = getSignature(Constants.getSystemKey(param.dtype),param.getUi_id(),param.getGo_id(),param.getOrder_id());
+      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.ui_id);
       if (!param.sign.equalsIgnoreCase(sign_str)) {
         log.warn("sign=" + param.sign + "  sign_str=" + sign_str);
         returnData.setReturnData(errorcode_param, " sign is not right", null);
@@ -87,12 +76,12 @@ public class Write_userOrderAction extends BaseV1Controller {
         return null;
       }
 
-      userOrderBiz.UserCancelOrder(returnData,param);
+      userManageBiz.GainUserAddressList(returnData,param);
       sendResp(returnData, response);
       return null;
 
     } catch (Exception e) {
-      log.error("order_cancel is error  用户取消订单 - P", e);
+      log.error("Read_userInfoAction.user_address_list is error  获取用户收货地址信息列表 - P", e);
       returnData.setReturnData(errorcode_systerm, "system is error", "");
     }
     sendResp(returnData, response);

@@ -2,9 +2,12 @@ package com.pyb.mvc.weixin.biz;
 
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Wx_recommend_earnings;
+import com.pyb.bean.Wx_user_address;
 import com.pyb.bean.Wx_user_info;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 用户管理
@@ -69,7 +72,23 @@ public class UserManageBiz extends BaseWxBiz {
             returnData.setReturnData(errorcode_systerm, "GoodsBiz GainApplyUser is error", "");
         }
     }
+    /**
+     * 获取用户收货地址信息列表
+     */
+    public void GainUserAddressList(ReturnDataNew returnData, Param_userinfo param) {
+        try {
+            int page = param.getPage();
+            int size = param.getSize();
+            int start = (page - 1) * size;
 
+            String sql = "select * from wx_user_address where ui_id =? order by is_defaut desc limit " + start + "," + size;
+            List<Wx_user_address> list = getDB().queryListT(sql,Wx_user_address.class,param.getUi_id());
+            returnData.setReturnData(errorcode_success, "获取用户收货地址信息列表成功", list);
+        } catch (Exception e) {
+            log.error("GoodsBiz GainUserAddressList is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainUserAddressList is error", "");
+        }
+    }
     /****************************下面是封装的查询方法********************************/
     /**
      * 通过weixin_id  获取用户基本信息
