@@ -7,6 +7,7 @@ import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.util.HttpUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class test extends BaseV1Controller {
     @RequestMapping(value = "/goods/test")
 //    @ResponseBody
-    public String GainUserOpenId(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView GainUserOpenId(HttpServletRequest request, HttpServletResponse response,ModelAndView     model) {
         try {
             String str = request.getQueryString();
             System.out.println("str=" + str);
@@ -47,12 +48,14 @@ public class test extends BaseV1Controller {
                 System.out.println(jsondata);
             }
 //            return new ModelAndView(new RedirectView("http://www.528ads.com?jsondata="+jsondata));
-            return "index.html";
+            model.addObject("jsondata",jsondata);
+            model.setViewName("forward:index.jsp");
+            return  model;
 
         } catch (Exception e) {
             log.error("获取用户授权后的用户信息",e);
         }
 //        return new ModelAndView(new RedirectView("http://www.528ads.com?jsondata="));
-        return "index.html";
+        return  model;
     }
 }
