@@ -2,7 +2,9 @@ package pyb.com;
 
 import apidoc.jxh.cn.InterfaceUtil;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.MultiValueMap;
 
@@ -14,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  *
  * @author Peter Wu
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class WxUserTest extends BaseWebTest {
 	public String moduleName = "用户管理模块";
 
