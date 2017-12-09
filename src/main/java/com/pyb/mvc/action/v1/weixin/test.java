@@ -51,7 +51,7 @@ public class test extends BaseV1Controller {
             ModelAndView mav = new ModelAndView();
             mav.setViewName("index"); //返回的文件名
             System.out.println("返回页面：message="+jsondata);
-            mav.addObject("message","  asdsadsadsadsa121321321231");
+            mav.addObject("message",jsondata);
             return mav;
 
         } catch (Exception e) {
