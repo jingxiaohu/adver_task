@@ -12,6 +12,6 @@
     <title>拼一把</title>
 </head>
 <body>
-     jingxiaohu:${jsondata}
+     jingxiaohu:${message}
 </body>
 </html>

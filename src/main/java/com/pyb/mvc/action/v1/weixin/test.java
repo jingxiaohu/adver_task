@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public class test extends BaseV1Controller {
     @RequestMapping(value = "/goods/test")
 //    @ResponseBody
-    public ModelAndView GainUserOpenId(HttpServletRequest request, HttpServletResponse response,ModelAndView     model) {
+    public ModelAndView GainUserOpenId(HttpServletRequest request, HttpServletResponse response) {
         try {
             String str = request.getQueryString();
             System.out.println("str=" + str);
@@ -48,14 +48,19 @@ public class test extends BaseV1Controller {
                 System.out.println(jsondata);
             }
 //            return new ModelAndView(new RedirectView("http://www.528ads.com?jsondata="+jsondata));
-            model.addObject("jsondata",jsondata);
-            model.setViewName("forward:index.jsp");
-            return  model;
+            ModelAndView mav = new ModelAndView();
+            mav.setViewName("index"); //返回的文件名
+            mav.addObject("message",jsondata);
+            return mav;
 
         } catch (Exception e) {
             log.error("获取用户授权后的用户信息",e);
         }
 //        return new ModelAndView(new RedirectView("http://www.528ads.com?jsondata="));
-        return  model;
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("index"); //返回的文件名
+        mav.addObject("message","没有");
+        return mav;
+
     }
 }
