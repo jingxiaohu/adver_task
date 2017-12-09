@@ -32,7 +32,8 @@
     <!-- 视图处理器 -->  
     <bean id="viewResolver"  
         class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
-        <!-- <property name="prefix" value="/WEB-INF/views/jsp/function/" /> -->  
+        <!-- <property name="prefix" value="/WEB-INF/views/jsp/function/" /> -->
+        <property name="prefix" value="/WEB-INF/pages/" />
         <property name="suffix" value=".jsp" />  
     </bean>  
   
@@ -150,7 +151,7 @@
    <mvc:annotation-driven />
    <mvc:resources location="/img/" mapping="/img/**"/>  
    <mvc:resources location="/js/" mapping="/js/**"/>  
-   <mvc:resources location="/html/" mapping="/html/**"/> 
+   <!-- <mvc:resources location="/html/" mapping="/html/**"/>  -->
    <mvc:resources location="/jsp/" mapping="/jsp/**"/>  
    <mvc:resources location="/resources/" mapping="/resources/**"/>
     </beans>

@@ -6,19 +6,17 @@ import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.util.HttpUtil;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 
 @RestController
 @RequestMapping(value = "/v1")
 public class test extends BaseV1Controller {
     @RequestMapping(value = "/goods/test")
-    @ResponseBody
-    public void GainUserOpenId(HttpServletRequest request, HttpServletResponse response) {
+//    @ResponseBody
+    public String GainUserOpenId(HttpServletRequest request, HttpServletResponse response) {
         try {
             String str = request.getQueryString();
             System.out.println("str=" + str);
@@ -48,16 +46,13 @@ public class test extends BaseV1Controller {
                  */
                 System.out.println(jsondata);
             }
-
-            String dd = "<html><body><script type=\"text/javascript\">\n"
-                    + "window.location.href=\n" +"http://www.528ads.com?jsondata="+jsondata
-                    + "</script></body></html>";
-            PrintWriter out = response.getWriter();
-            out.print(dd);
-            out.close();
+//            return new ModelAndView(new RedirectView("http://www.528ads.com?jsondata="+jsondata));
+            return "index.html";
 
         } catch (Exception e) {
             log.error("获取用户授权后的用户信息",e);
         }
+//        return new ModelAndView(new RedirectView("http://www.528ads.com?jsondata="));
+        return "index.html";
     }
 }
