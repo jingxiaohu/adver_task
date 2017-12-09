@@ -12,9 +12,7 @@
     <title>拼一把</title>
 </head>
 <body>
-     jingxiaohu:${message}
      <script language="javascript" type="text/javascript">
-         alert("你好");
          window.location.href="http://www.528ads.com?data=${message}";
      </script>
 

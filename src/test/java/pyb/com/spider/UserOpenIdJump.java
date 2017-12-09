@@ -5,7 +5,7 @@ import org.junit.Test;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class test {
+public class UserOpenIdJump {
     //判断，返回布尔值
     public static boolean isMobileNO(String mobiles) {
 //			Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(18[0,1,3,5-9])|(17[0,1,3,5-9]))\\d{8}$");

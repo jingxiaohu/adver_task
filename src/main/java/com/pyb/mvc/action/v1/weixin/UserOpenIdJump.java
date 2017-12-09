@@ -11,11 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 
 @RestController
 @RequestMapping(value = "/v1")
-public class test extends BaseV1Controller {
-    @RequestMapping(value = "/goods/test")
+public class UserOpenIdJump extends BaseV1Controller {
+    @RequestMapping(value = "/goods/openid_jump")
 //    @ResponseBody
     public ModelAndView GainUserOpenId(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -51,7 +52,7 @@ public class test extends BaseV1Controller {
             ModelAndView mav = new ModelAndView();
             mav.setViewName("index"); //返回的文件名
             System.out.println("返回页面：message="+jsondata);
-            mav.addObject("message",jsondata);
+            mav.addObject("message", URLEncoder.encode(jsondata,"UTF-8"));
             return mav;
 
         } catch (Exception e) {

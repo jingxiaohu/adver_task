@@ -35,7 +35,7 @@ public class MenuManager {
         // 调用接口获取access_token
 //        AccessToken at = WeixinUtil.getAccessToken(appId, appSecret);
         AccessToken at = new AccessToken();
-        at.setToken("yT7y0Sq_pM1plJoQbvDwaFHS0DoSzd9hkeHavIlV9x9pzf1E0ZzelWE3G4nMz9F8IDx8FWfV7zZmpVGenXl9x9957Yqw6uYn4RRX0zabkPKTak-xbxvT1BsHh_DH66jiWOBfABAKCP");
+        at.setToken("aQTxLm8ukjnISrx4VmJLIcKOHGnhmWnt91Ydj9qG-9Tgfs0i6oPRquDrWXW_DeYPnZsqNJR8seS_cbE-0LATu0g74nL-iMGuHq0Zrxc55QEKW_62Z0-DHrljUvE8YaXxFJJgAIANRR");
         at.setExpiresIn(7200);
         if (null != at) {
             // 调用接口创建菜单
@@ -85,7 +85,7 @@ public class MenuManager {
         mainBtn2.setName("拼把动态");
 //        mainBtn2.setUrl("http://www.51pyb.com");
         try {
-            mainBtn2.setUrl(redirect_baseurl.replace("REDIRECT_URI", URLEncoder.encode("http://task.51pyb.com/v1/goods/test.php","UTF-8")) );
+            mainBtn2.setUrl(redirect_baseurl.replace("REDIRECT_URI", URLEncoder.encode("http://task.51pyb.com/v1/goods/openid_jump.php","UTF-8")) );
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
