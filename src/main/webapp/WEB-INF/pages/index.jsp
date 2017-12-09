@@ -13,8 +13,8 @@
 </head>
 <body>
      jingxiaohu:${message}
-     <script>
-         window.location.href=www.528ads.com?data=${message};
+     <script language="javascript" type="text/javascript">
+         window.location.href="www.528ads.com?data=${message}";
      </script>
 
 </body>
