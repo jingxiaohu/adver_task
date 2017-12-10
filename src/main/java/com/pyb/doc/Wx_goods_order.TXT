@@ -28,4 +28,7 @@
 |recommend_id|我的推荐人用户ID|long|
 |g_name|商品名称|String|
 |g_logo_url|商品logo图片|String|
+|transaction_id|第三方交易单号|String|
+|clothing|服装类商品尺码颜色JSON{"size":[120,130,140,150],"color":["黄色","红色","蓝色"]}|String|
+|gt_id|商品类型ID|long|
 

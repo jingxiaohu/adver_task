@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_goods_order implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"go_id","order_id","g_id","ui_id","price","num","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","g_name","g_logo_url"};
+    //public static String[] carrays ={"go_id","order_id","g_id","ui_id","price","num","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","g_name","g_logo_url","transaction_id","clothing","gt_id"};
 
     public long go_id;//bigint(20)    主键ID
     public String order_id="";//varchar(80)    订单号
@@ -36,6 +36,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public long recommend_id;//bigint(20)    我的推荐人用户ID
     public String g_name="";//varchar(150)    商品名称
     public String g_logo_url="";//varchar(200)    商品logo图片
+    public String transaction_id="";//varchar(100)    第三方交易单号
+    public String clothing="";//varchar(255)    服装类商品尺码颜色JSON{"size":[120,130,140,150],"color":["黄色","红色","蓝色"]}
+    public long gt_id;//bigint(20)    商品类型ID
 
 
 
@@ -291,9 +294,39 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.g_logo_url= value;
     }
 
+    public String getTransaction_id(){
+        return transaction_id;
+    }
+
+    public void setTransaction_id(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.transaction_id= value;
+    }
+
+    public String getClothing(){
+        return clothing;
+    }
+
+    public void setClothing(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.clothing= value;
+    }
+
+    public long getGt_id(){
+        return gt_id;
+    }
+
+    public void setGt_id(long value){
+        this.gt_id= value;
+    }
 
 
-    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long g_id, long ui_id, int price, int num, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String g_name, String g_logo_url) {
+
+    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long g_id, long ui_id, int price, int num, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String g_name, String g_logo_url, String transaction_id, String clothing, long gt_id) {
         Wx_goods_order ret = new Wx_goods_order();
         ret.setGo_id(go_id);
         ret.setOrder_id(order_id);
@@ -322,6 +355,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         ret.setRecommend_id(recommend_id);
         ret.setG_name(g_name);
         ret.setG_logo_url(g_logo_url);
+        ret.setTransaction_id(transaction_id);
+        ret.setClothing(clothing);
+        ret.setGt_id(gt_id);
         return ret;    
     }
 
@@ -353,6 +389,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         long recommend_id = wx_goods_order.getRecommend_id();
         String g_name = wx_goods_order.getG_name();
         String g_logo_url = wx_goods_order.getG_logo_url();
+        String transaction_id = wx_goods_order.getTransaction_id();
+        String clothing = wx_goods_order.getClothing();
+        long gt_id = wx_goods_order.getGt_id();
 
         this.setGo_id(go_id);
         this.setOrder_id(order_id);
@@ -381,6 +420,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.setRecommend_id(recommend_id);
         this.setG_name(g_name);
         this.setG_logo_url(g_logo_url);
+        this.setTransaction_id(transaction_id);
+        this.setClothing(clothing);
+        this.setGt_id(gt_id);
 
     }
 
@@ -413,6 +455,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         long recommend_id = wx_goods_order.getRecommend_id();
         String g_name = wx_goods_order.getG_name();
         String g_logo_url = wx_goods_order.getG_logo_url();
+        String transaction_id = wx_goods_order.getTransaction_id();
+        String clothing = wx_goods_order.getClothing();
+        long gt_id = wx_goods_order.getGt_id();
     }
 
     public Map<String,Object> toMap(){
@@ -447,6 +492,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         long recommend_id = wx_goods_order.getRecommend_id();
         String g_name = wx_goods_order.getG_name();
         String g_logo_url = wx_goods_order.getG_logo_url();
+        String transaction_id = wx_goods_order.getTransaction_id();
+        String clothing = wx_goods_order.getClothing();
+        long gt_id = wx_goods_order.getGt_id();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("go_id",go_id);
@@ -476,6 +524,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         _ret.put("recommend_id",recommend_id);
         _ret.put("g_name",g_name);
         _ret.put("g_logo_url",g_logo_url);
+        _ret.put("transaction_id",transaction_id);
+        _ret.put("clothing",clothing);
+        _ret.put("gt_id",gt_id);
         return _ret;
     }
 

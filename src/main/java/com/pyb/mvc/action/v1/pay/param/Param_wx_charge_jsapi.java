@@ -27,6 +27,9 @@ public class Param_wx_charge_jsapi extends BaseParam {
     public Integer pay_price;//充值金额或者商品价格总计 单位 分
     @TargetComment(value = "商品购买数量", isnull = "是")
     public Integer num;//购买数量
+
+    @TargetComment(value = "服装类商品尺码颜色JSON{\"size\":[ 120,130,140,150],\"color\":[\"黄色\",\"红色\",\"蓝色\"]}", isnull = "是")
+    public String clothing;//服装类商品尺码颜色JSON{"size":[ 120,130,140,150],"color":["黄色","红色","蓝色"]}
     /**
      * 收货人信息
      */
@@ -37,8 +40,16 @@ public class Param_wx_charge_jsapi extends BaseParam {
     @TargetComment(value = "收货人电话号码", isnull = "否")
     public String telephone;//收货人电话号码
 
-    /************************get set 方法区****************************/
 
+
+    /************************get set 方法区****************************/
+    public String getClothing() {
+        return clothing;
+    }
+
+    public void setClothing(String clothing) {
+        this.clothing = clothing;
+    }
 
     public long getT() {
         return t;

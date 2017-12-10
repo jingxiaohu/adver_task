@@ -72,6 +72,8 @@ public class WxPayBiz extends BaseBiz {
       wx_goods_order.setG_logo_url(wx_goods.getLogo_url());//商品URL
       wx_goods_order.setMoney(param.getPay_price());
       wx_goods_order.setPrice(wx_goods.getPrice_new());
+      wx_goods_order.setClothing(param.getClothing());
+      wx_goods_order.setGt_id(wx_goods.getGt_id());
 
       //新增
       int id = daoFactory.getWx_goods_orderDao().insert(wx_goods_order);

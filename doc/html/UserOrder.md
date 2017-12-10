@@ -269,10 +269,11 @@
 |pay_price|充值金额或者商品价格总计 单位 分|否|无|整型|51|
 |g_id|商品主键ID|否|无|长整型|1|
 |address|收货地址|否|无|字符串|四川省成都市龙泉驿区十陵灵龙路23号|
-|t|时间戳ms|否|无|长整型|1512907119086|
+|t|时间戳ms|否|无|长整型|1512909475849|
 |openid|用户对于微信公众号APPID唯一ID|是|无|字符串|oA_cb0jLCM68XRZMlQ5Z_VHX5onI|
 |num|商品购买数量|是|无|整型|2|
 |name|收货人姓名|否|无|字符串|敬小虎|
+|clothing|服装类商品尺码颜色JSON{"size":[ 120,130,140,150],"color":["黄色","红色","蓝色"]}|是|无|字符串|{"size":[ 120,130,140,150],"color":["黄色","红色","蓝色"]}|
 |telephone|收货人电话号码|否|无|字符串|15882345446|
 |type|用户token|是|无|整型|0|
 |token|用户token|否|无|字符串|d7d87c21bedc6d236b1f77ca36c1a770|
@@ -285,12 +286,12 @@
 	"data":	{
 		"appid":"wxebee99b0aba36d8f",
 		"mch_id":"1486469632",
-		"nonce_str":"c601Qn4fRybxNqlq",
-		"prepay_id":"wx2017121019583813b8a859bf0787379787",
+		"nonce_str":"RE3FYq7OzY7rPvVw",
+		"prepay_id":"wx2017121020375670d21f76940566124686",
 		"result_code":"SUCCESS",
 		"return_code":"SUCCESS",
 		"return_msg":"OK",
-		"sign":"CE998AB6115D2AEF98D86F7CB507612D",
+		"sign":"589755DB84015C1BBA3E6A615FC77BB1",
 		"trade_type":"JSAPI"
 	},
 	"errorcode":"",

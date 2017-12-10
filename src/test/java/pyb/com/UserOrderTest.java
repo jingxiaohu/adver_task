@@ -117,6 +117,7 @@ public class UserOrderTest extends BaseWebTest {
         Long g_id = 1L;//商品主键ID
         Integer pay_price = 51;//充值金额或者商品价格总计 单位 分
         Integer num = 2;//购买数量
+        String clothing = "{\"size\":[ 120,130,140,150],\"color\":[\"黄色\",\"红色\",\"蓝色\"]}";
         /**
          * 收货人信息
          */
@@ -134,6 +135,7 @@ public class UserOrderTest extends BaseWebTest {
         params.add("name",name);
         params.add("telephone",telephone);
         params.add("openid",openid);
+        params.add("clothing",clothing);
 
         sign(params, "dtype","ui_id","type","pay_price","t","token","g_id","num","telephone");
 
