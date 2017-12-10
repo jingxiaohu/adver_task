@@ -56,7 +56,7 @@ public abstract class BaseWebTest {
   private String ui_id="1";//用户ID
   private String ui_nd="2017072815195331778";//用户UUID
   private int vnum=1;//当前内部版本号
-  private String token="559a778edef011aeeaabc210de0e615e";//用户登陆后的令牌
+  private String token="d7d87c21bedc6d236b1f77ca36c1a770";//用户登陆后的令牌
 
   public  MultiValueMap<String, String> params = null;
   public MultiValueMap<String, String> getParams() {

@@ -1,7 +1,6 @@
 
 package com.pyb.mvc.action.v1.pay;
 
-import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Wx_goods_order;
 import com.pyb.constants.Constants;
@@ -55,9 +54,9 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
         Notify_WeiXinction.class.getMethod("notify_weixin", HttpServletRequest.class, HttpServletResponse.class)).withSelfRel().getHref()+ ".php";
   }
 
-  @RequestMapping(value = "/weixin_charge_jsapi")
+  @RequestMapping(value = "/goods/weixin_charge_jsapi")
   @ResponseBody
-  public String weixin_charge_face(HttpServletRequest request, HttpServletResponse response,Param_wx_charge_jsapi param) {
+  public String weixin_charge_jsapi(HttpServletRequest request, HttpServletResponse response,Param_wx_charge_jsapi param) {
 
     ReturnDataNew returnData = new ReturnDataNew();
     //参数检查
@@ -110,6 +109,12 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
     if (RequestUtil.checkObjectBlank(param.token)) {
       //token不能为空
       returnData.setReturnData(errorcode_param, "token不能为空", "");
+      sendResp(returnData, response);
+      return null;
+    }
+    if (RequestUtil.checkObjectBlank(param.openid)) {
+      //openid不能为空
+      returnData.setReturnData(errorcode_param, "openid不能为空", "");
       sendResp(returnData, response);
       return null;
     }
@@ -180,13 +185,14 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
 
       if (wx_goods_order != null && returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
         long money = wx_goods_order.getMoney();
-        JSONObject obj = (JSONObject) JSONObject.toJSON(returnData.getData());
+        subject = wx_goods_order.getG_name();
+//        JSONObject obj = (JSONObject) JSONObject.toJSON(returnData.getData());
         if (money == 0) {
-          returnData.setReturnData(errorcode_success, "微信充值成功", obj);
+          returnData.setReturnData(errorcode_data, "微信充值失败", "");
           sendResp(returnData, response);
           return null;
         }
-        String out_trade_no = obj.getString("order_id");
+        String out_trade_no = wx_goods_order.getOrder_id();
         Map<String, String> params = new HashMap<String, String>();
         params.put("appid", appid);
         params.put("mch_id", partner);
@@ -201,7 +207,14 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
         params.put("total_fee", String.valueOf(money));
         params.put("spbill_create_ip", ip);
         params.put("notify_url", getNotify_url());
-        params.put("trade_type", "NATIVE");
+
+        /**
+         * 3、交易类型
+         JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里
+         MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口
+         */
+        params.put("trade_type", "JSAPI");
+        params.put("openid",param.openid);
         params.put("product_id", out_trade_no);
         String sign = getSign(params);
         //设置SIGN
@@ -212,13 +225,14 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
         if (log.isDebugEnabled()) {
           log.debug("微信下单返回结果：" + resultStr);
         }
+        //组装返回数据
+//        JSONObject obj = new JSONObject();
         Map<String, String> result = XMLBeanUtils.xml2Map(resultStr);
-        if (getSign(result).equals(result.get("sign")) && "SUCCESS"
-            .equals(result.get("return_code")) && "SUCCESS".equals(result.get("result_code"))) {
-          obj.put("orderInfo", result.get("code_url"));
+        if (result != null && getSign(result).equals(result.get("sign")) && "SUCCESS".equals(result.get("return_code")) && "SUCCESS".equals(result.get("result_code"))) {
+          /*obj.put("orderInfo", result.get("code_url"));
           obj.put("sign", "");
-          obj.put("timestamp", sf.format(new Date()));
-          returnData.setReturnData(errorcode_success, "微信充值成功", obj);
+          obj.put("timestamp", sf.format(new Date()));*/
+          returnData.setReturnData(errorcode_success, "微信充值成功", result);
           sendResp(returnData, response);
           return null;
         }
@@ -227,8 +241,8 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
       return null;
 
     } catch (Throwable e) {
-      log.error("ZFB_Pay_faceAction.zfb_charge_face is error 用户微信充值", e);
-      returnData.setReturnData("1", "-1", "");
+      log.error("Wx_WeiXin_JsApiPayAction.weixin_charge_face is error 用户微信充值", e);
+      returnData.setReturnData(errorcode_systerm, "systerm is error", "");
     }
     sendResp(returnData, response);
     return null;

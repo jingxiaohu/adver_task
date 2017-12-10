@@ -70,6 +70,8 @@ public class WxPayBiz extends BaseBiz {
       wx_goods_order.setG_id(param.getG_id());//商品主键ID
       wx_goods_order.setG_name(wx_goods.getName());//商品名称
       wx_goods_order.setG_logo_url(wx_goods.getLogo_url());//商品URL
+      wx_goods_order.setMoney(param.getPay_price());
+      wx_goods_order.setPrice(wx_goods.getPrice_new());
 
       //新增
       int id = daoFactory.getWx_goods_orderDao().insert(wx_goods_order);
