@@ -5,6 +5,7 @@ import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Wx_goods_order;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
+import com.pyb.mvc.action.v1.notify.Notify_WeiXinJsApiction;
 import com.pyb.mvc.action.v1.notify.Notify_WeiXinction;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.weixin.biz.WxPayBiz;
@@ -51,7 +52,7 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
 
   public String getNotify_url() throws NoSuchMethodException {
     return ControllerLinkBuilder.linkTo(Notify_WeiXinction.class,
-        Notify_WeiXinction.class.getMethod("notify_weixin", HttpServletRequest.class, HttpServletResponse.class)).withSelfRel().getHref()+ ".php";
+            Notify_WeiXinJsApiction.class.getMethod("notify_weixin_jsapi", HttpServletRequest.class, HttpServletResponse.class)).withSelfRel().getHref()+ ".php";
   }
 
   @RequestMapping(value = "/goods/weixin_charge_jsapi")

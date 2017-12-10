@@ -1,13 +1,12 @@
 package com.pyb.mvc.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.springframework.stereotype.Service;
-
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.User_pay;
 import com.pyb.exception.QzException;
+import org.springframework.stereotype.Service;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class UserPayBiz extends BaseBiz {
@@ -141,6 +140,16 @@ public class UserPayBiz extends BaseBiz {
       String trade_no, String type, long money) {
     // TODO Auto-generated method stub
     try {
+      //首先根据type进行判断是 支付 还是 充值   是支付 还是 充值  0:订单支付 1：充值
+      if("0".equalsIgnoreCase(type)){
+
+      }else{
+
+
+      }
+
+
+
       //是支付 还是 充值  1：充值  2：普通订单支付  3：租赁订单支付
       //首先检查该条订单是否存在
       User_pay user_pay = selectOneUserPay(orderid);

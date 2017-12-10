@@ -1,17 +1,17 @@
 package com.pyb.mvc.weixin.biz;
 
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.Wx_goods;
-import com.pyb.bean.Wx_goods_order;
-import com.pyb.bean.Wx_user_info;
+import com.pyb.bean.*;
+import com.pyb.exception.QzException;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.service.BaseBiz;
 import com.pyb.mvc.service.common.PayParkPB;
 import com.pyb.transaction.PayTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Service
 public class WxPayBiz extends BaseBiz {
@@ -89,6 +89,53 @@ public class WxPayBiz extends BaseBiz {
       returnData.setReturnData(errorcode_data, "下单失败", "");
     }
     return null;
+  }
+
+
+
+  /**
+   * 微信通知监听接口
+   */
+  @Transactional(rollbackFor = QzException.class)
+  public void notify_weixin(ReturnDataNew returnData, String orderid,
+                            String trade_no, String type, long money) {
+    // TODO Auto-generated method stub
+    try {
+      //首先根据type进行判断是 支付 还是 充值   是支付 还是 充值  0:订单支付 1：充值
+      if("0".equalsIgnoreCase(type)){
+        String sql = "select * from wx_goods_order where order_id=? and is_del=0 and is_pay=0 limit 1";
+        Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,orderid);
+        if(wx_goods_order == null){
+          returnData.setReturnData(errorcode_param, "订单不存在", "");
+          return;
+        }
+        //验证是否金额一致 如果不一致有可能是被抓包  恶意刷我们的钱包
+        if (wx_goods_order.getMoney() != money) {
+          returnData.setReturnData(errorcode_param, "金额不匹配", "");
+          return;
+        }
+        wx_goods_order.setIs_pay(1);//支付成功
+        wx_goods_order.setTransaction_id(trade_no);//交易事物号
+        wx_goods_order.setState(1);//订单状态 0：待付款 1：待发货 2：待收货 3：已完成
+        wx_goods_order.setPtime(new Date());//支付时间
+        int count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
+        if(count == 1){
+          returnData.setReturnData(errorcode_success, "通知更新成功", wx_goods_order);
+          return;
+        }else{
+          returnData.setReturnData(errorcode_param, "通知更新失败", "");
+          return;
+        }
+      }
+
+      returnData.setReturnData(errorcode_param, "通知更新失败", "");
+      return;
+
+    } catch (Exception e) {
+      log.error("WxPayBiz.notify_weixin is error", e);
+      returnData.setReturnData(errorcode_data, "通知更新失败", "");
+      return;
+    }
   }
   /*****************************************************************************************/
 
