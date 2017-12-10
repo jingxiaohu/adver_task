@@ -1,14 +1,15 @@
 package com.pyb.mvc.weixin.biz;
 
-import com.pyb.bean.*;
-import com.pyb.exception.QzException;
+import com.pyb.bean.ReturnDataNew;
+import com.pyb.bean.Wx_goods;
+import com.pyb.bean.Wx_goods_order;
+import com.pyb.bean.Wx_user_info;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.service.BaseBiz;
 import com.pyb.mvc.service.common.PayParkPB;
 import com.pyb.transaction.PayTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -96,7 +97,7 @@ public class WxPayBiz extends BaseBiz {
   /**
    * 微信通知监听接口
    */
-  @Transactional(rollbackFor = QzException.class)
+//  @Transactional(rollbackFor = QzException.class)
   public void notify_weixin(ReturnDataNew returnData, String orderid,
                             String trade_no, String type, long money) {
     // TODO Auto-generated method stub

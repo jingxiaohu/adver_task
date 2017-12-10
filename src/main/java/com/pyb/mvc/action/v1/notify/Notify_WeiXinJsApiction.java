@@ -3,7 +3,6 @@ package com.pyb.mvc.action.v1.notify;
 
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.mvc.action.v1.BaseV1Controller;
-import com.pyb.mvc.service.UserPayBiz;
 import com.pyb.mvc.weixin.biz.WxPayBiz;
 import com.pyb.util.XMLBeanUtils;
 import com.weixin.config.HttpTool;
@@ -35,9 +34,6 @@ public class Notify_WeiXinJsApiction extends BaseV1Controller {
 	*/ 
 	private static final long serialVersionUID = -3599663972160625262L;
 
-
-	@Autowired
-	private UserPayBiz userPayBiz;
 	@Autowired
 	private WxPayBiz wxPayBiz;
 
@@ -107,7 +103,7 @@ public class Notify_WeiXinJsApiction extends BaseV1Controller {
 				//金额
 				long money = Long.parseLong(params.get("total_fee")); 
 				try {
-						userPayBiz.notify_weixin(returnData,orderid,trade_no,type,money);
+					wxPayBiz.notify_weixin(returnData,orderid,trade_no,type,money);
 						if(returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())){
 							WeixinNotifyReponse repon = new WeixinNotifyReponse();
 							repon.setReturn_msg("OK");
