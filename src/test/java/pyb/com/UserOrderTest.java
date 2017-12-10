@@ -91,7 +91,7 @@ public class UserOrderTest extends BaseWebTest {
         String path = this.getClass().getResource(".").getPath();
         path = path + "UserOrder.md";
         InterfaceUtil.AddInterfacePred(path, moduleName,
-                "用户取消订单",
+                "获取订单详情",
                 "ui_id+go_id",
                 "/goods/order_info",
                 3,
