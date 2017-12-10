@@ -41,9 +41,9 @@ public class Wx_user_addressDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"ua_id","ui_id","name","telephone","area","address","ctime","note"};
-    private  String coulmns ="ua_id,ui_id,name,telephone,area,address,ctime,note";
-    private  String coulmns2 ="ui_id,name,telephone,area,address,ctime,note";
+    private  String[] carrays ={"ua_id","ui_id","name","telephone","area","address","ctime","note","is_defaut"};
+    private  String coulmns ="ua_id,ui_id,name,telephone,area,address,ctime,note,is_defaut";
+    private  String coulmns2 ="ui_id,name,telephone,area,address,ctime,note,is_defaut";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_user_addressDao extends BaseDao{
     public int insert(Wx_user_address bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ui_id,name,telephone,area,address,ctime,note) VALUES (:ui_id,:name,:telephone,:area,:address,:ctime,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (ui_id,name,telephone,area,address,ctime,note,is_defaut) VALUES (:ui_id,:name,:telephone,:area,:address,:ctime,:note,:is_defaut)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wx_user_addressDao extends BaseDao{
     public int insert_primarykey(Wx_user_address bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ua_id,ui_id,name,telephone,area,address,ctime,note) VALUES (:ua_id,:ui_id,:name,:telephone,:area,:address,:ctime,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (ua_id,ui_id,name,telephone,area,address,ctime,note,is_defaut) VALUES (:ua_id,:ui_id,:name,:telephone,:area,:address,:ctime,:note,:is_defaut)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wx_user_addressDao extends BaseDao{
     public int[] insert(final List<Wx_user_address> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (ui_id,name,telephone,area,address,ctime,note) VALUES (?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (ui_id,name,telephone,area,address,ctime,note,is_defaut) VALUES (?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -122,6 +122,7 @@ public class Wx_user_addressDao extends BaseDao{
                     ps.setString(5, bean.address);
                     ps.setTimestamp(6, new Timestamp(bean.ctime.getTime()));
                     ps.setString(7, bean.note);
+                    ps.setInt(8, bean.is_defaut);
                 }
             });
         }catch(Exception e){
@@ -140,7 +141,7 @@ public class Wx_user_addressDao extends BaseDao{
     public List<Wx_user_address> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ua_id,ui_id,name,telephone,area,address,ctime,note FROM "+TABLENAME2+" ORDER BY ua_id";
+            sql = "SELECT ua_id,ui_id,name,telephone,area,address,ctime,note,is_defaut FROM "+TABLENAME2+" ORDER BY ua_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_user_address>(Wx_user_address.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -158,7 +159,7 @@ public class Wx_user_addressDao extends BaseDao{
     public List<Wx_user_address> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT ua_id,ui_id,name,telephone,area,address,ctime,note FROM "+TABLENAME2+" ORDER BY ua_id DESC LIMIT "+num+"" ;
+            sql = "SELECT ua_id,ui_id,name,telephone,area,address,ctime,note,is_defaut FROM "+TABLENAME2+" ORDER BY ua_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_user_address>(Wx_user_address.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -176,7 +177,7 @@ public class Wx_user_addressDao extends BaseDao{
     public List<Wx_user_address> selectGtKey(long ua_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ua_id,ui_id,name,telephone,area,address,ctime,note FROM "+TABLENAME2+" WHERE ua_id>:ua_id";
+            sql="SELECT ua_id,ui_id,name,telephone,area,address,ctime,note,is_defaut FROM "+TABLENAME2+" WHERE ua_id>:ua_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ua_id", ua_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_user_address>(Wx_user_address.class));
@@ -196,7 +197,7 @@ public class Wx_user_addressDao extends BaseDao{
     public Wx_user_address selectByKey(long ua_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT ua_id,ui_id,name,telephone,area,address,ctime,note FROM "+TABLENAME2+" WHERE ua_id=:ua_id";
+            sql="SELECT ua_id,ui_id,name,telephone,area,address,ctime,note,is_defaut FROM "+TABLENAME2+" WHERE ua_id=:ua_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("ua_id", ua_id);
             List<Wx_user_address> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_user_address>(Wx_user_address.class));
@@ -235,7 +236,7 @@ public class Wx_user_addressDao extends BaseDao{
     public List<Wx_user_address> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT ua_id,ui_id,name,telephone,area,address,ctime,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT ua_id,ui_id,name,telephone,area,address,ctime,note,is_defaut FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_user_address>(Wx_user_address.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -253,7 +254,7 @@ public class Wx_user_addressDao extends BaseDao{
     public int updateByKey(Wx_user_address bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET ui_id=:ui_id,name=:name,telephone=:telephone,area=:area,address=:address,ctime=:ctime,note=:note WHERE ua_id=:ua_id";
+            sql = "UPDATE "+TABLENAME2+" SET ui_id=:ui_id,name=:name,telephone=:telephone,area=:area,address=:address,ctime=:ctime,note=:note,is_defaut=:is_defaut WHERE ua_id=:ua_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -271,7 +272,7 @@ public class Wx_user_addressDao extends BaseDao{
     public int[] updateByKey (final List<Wx_user_address> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET ui_id=?,name=?,telephone=?,area=?,address=?,ctime=?,note=? WHERE ua_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET ui_id=?,name=?,telephone=?,area=?,address=?,ctime=?,note=?,is_defaut=? WHERE ua_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -287,7 +288,8 @@ public class Wx_user_addressDao extends BaseDao{
                     ps.setString(5, bean.address);
                     ps.setTimestamp(6, new Timestamp(bean.ctime.getTime()));
                     ps.setString(7, bean.note);
-                    ps.setLong(8, bean.ua_id);
+                    ps.setInt(8, bean.is_defaut);
+                    ps.setLong(9, bean.ua_id);
                 }
             });
         }catch(Exception e){
@@ -354,6 +356,7 @@ public class Wx_user_addressDao extends BaseDao{
                  "	`address`  VARCHAR(200) COMMENT '//varchar(200)    详细地址'," +
                  "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
+                 "	`is_defaut`  INT(11) COMMENT '//int(11)    是否设置为默认地址0：不是1:是'," +
                  "	PRIMARY KEY (`ua_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

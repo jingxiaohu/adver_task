@@ -5,7 +5,7 @@
 |name|商品名称|String|
 |price_new|商品卖价单位分|int|
 |price_old|商品原价单位分|int|
-|express_price|快递费用（区间）|String|
+|express_price|快递费用|int|
 |stock_num|商品库存数量|int|
 |dimension|商品量纲单位|String|
 |market_num|商品销量|int|
@@ -39,4 +39,5 @@
 |note|备注|String|
 |is_del|是否逻辑删除:0：不删除1：删除|int|
 |clothing|服装类商品尺码颜色JSON{"size":[120,130,140,150],"color":["黄色","红色","蓝色"]}|String|
+|express_price_str|快递费用（区间）|String|
 

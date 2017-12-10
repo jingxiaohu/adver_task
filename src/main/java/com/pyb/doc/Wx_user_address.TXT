@@ -9,4 +9,5 @@
 |address|详细地址|String|
 |ctime|创建时间|java.util.Date|
 |note|备注|String|
+|is_defaut|是否设置为默认地址0：不是1:是|int|
 

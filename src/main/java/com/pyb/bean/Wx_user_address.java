@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_user_address implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"ua_id","ui_id","name","telephone","area","address","ctime","note"};
+    //public static String[] carrays ={"ua_id","ui_id","name","telephone","area","address","ctime","note","is_defaut"};
 
     public long ua_id;//bigint(20)    主键ID
     public long ui_id;//bigint(20)    用户ID
@@ -17,6 +17,7 @@ public class Wx_user_address implements Cloneable , Serializable{
     public String address="";//varchar(200)    详细地址
     public java.util.Date ctime=new java.util.Date();//timestamp    创建时间
     public String note="";//varchar(60)    备注
+    public int is_defaut;//int(11)    是否设置为默认地址0：不是1:是
 
 
 
@@ -102,9 +103,17 @@ public class Wx_user_address implements Cloneable , Serializable{
         this.note= value;
     }
 
+    public int getIs_defaut(){
+        return is_defaut;
+    }
+
+    public void setIs_defaut(int value){
+        this.is_defaut= value;
+    }
 
 
-    public static Wx_user_address newWx_user_address(long ua_id, long ui_id, String name, String telephone, String area, String address, java.util.Date ctime, String note) {
+
+    public static Wx_user_address newWx_user_address(long ua_id, long ui_id, String name, String telephone, String area, String address, java.util.Date ctime, String note, int is_defaut) {
         Wx_user_address ret = new Wx_user_address();
         ret.setUa_id(ua_id);
         ret.setUi_id(ui_id);
@@ -114,6 +123,7 @@ public class Wx_user_address implements Cloneable , Serializable{
         ret.setAddress(address);
         ret.setCtime(ctime);
         ret.setNote(note);
+        ret.setIs_defaut(is_defaut);
         return ret;    
     }
 
@@ -126,6 +136,7 @@ public class Wx_user_address implements Cloneable , Serializable{
         String address = wx_user_address.getAddress();
         java.util.Date ctime = wx_user_address.getCtime();
         String note = wx_user_address.getNote();
+        int is_defaut = wx_user_address.getIs_defaut();
 
         this.setUa_id(ua_id);
         this.setUi_id(ui_id);
@@ -135,6 +146,7 @@ public class Wx_user_address implements Cloneable , Serializable{
         this.setAddress(address);
         this.setCtime(ctime);
         this.setNote(note);
+        this.setIs_defaut(is_defaut);
 
     }
 
@@ -148,6 +160,7 @@ public class Wx_user_address implements Cloneable , Serializable{
         String address = wx_user_address.getAddress();
         java.util.Date ctime = wx_user_address.getCtime();
         String note = wx_user_address.getNote();
+        int is_defaut = wx_user_address.getIs_defaut();
     }
 
     public Map<String,Object> toMap(){
@@ -163,6 +176,7 @@ public class Wx_user_address implements Cloneable , Serializable{
         String address = wx_user_address.getAddress();
         java.util.Date ctime = wx_user_address.getCtime();
         String note = wx_user_address.getNote();
+        int is_defaut = wx_user_address.getIs_defaut();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("ua_id",ua_id);
@@ -173,6 +187,7 @@ public class Wx_user_address implements Cloneable , Serializable{
         _ret.put("address",address);
         _ret.put("ctime",ctime);
         _ret.put("note",note);
+        _ret.put("is_defaut",is_defaut);
         return _ret;
     }
 

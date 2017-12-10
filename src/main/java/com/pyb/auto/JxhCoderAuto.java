@@ -31,12 +31,12 @@ public class JxhCoderAuto {
 						"wx_recommend_user","wx_recommend_earnings","wx_accesstoken"
 						,"admin_user","admin_role","wx_banner_img"
 				};
-		String ip = "114.55.10.246";
-//		String ip = "127.0.0.1";
+//		String ip = "114.55.10.246";
+		String ip = "127.0.0.1";
 		int port = 3306;
 		String user = "root";
-		String password = "jxh@@jingling123";
-//		String password = "root";
+//		String password = "jxh@@jingling123";
+		String password = "root";
 		String databaseName = "wypyb";
 		ABuilder.AutoCoder(is_maven,src,moduleName, pkg, tablenames, ip, port, user, password, databaseName);
 	}

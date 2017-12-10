@@ -1,12 +1,12 @@
 package pyb.com;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Test;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class WeiXin_PayFaceActionTest  extends BaseWebTest{
 	  /**
@@ -22,7 +22,7 @@ public class WeiXin_PayFaceActionTest  extends BaseWebTest{
 	    String subject = "股掌微信支付";//商品名称
 	    int system_type = 1;//操作系统类型（IOS Android web） 1:android 2:IOS 3:web
 	    long t = System.currentTimeMillis();//时间戳ms
-	    String token = "bae13cd6ef7127fe6f2ed2895ce88d3f";//令牌
+	    String token = "559a778edef011aeeaabc210de0e615e";//令牌
 	    int type = 1;////是支付 还是 充值  1：充值  2：普通订单支付  3：租赁订单支付
 	    //收银台页面上，商品展示的超链接，必填
 	    String show_url = "";

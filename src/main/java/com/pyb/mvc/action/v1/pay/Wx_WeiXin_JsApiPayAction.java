@@ -3,12 +3,12 @@ package com.pyb.mvc.action.v1.pay;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.User_pay;
+import com.pyb.bean.Wx_goods_order;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.mvc.action.v1.notify.Notify_WeiXinction;
-import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_face;
-import com.pyb.mvc.service.FaceUserPayBiz;
+import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
+import com.pyb.mvc.weixin.biz.WxPayBiz;
 import com.pyb.util.RequestUtil;
 import com.pyb.util.XMLBeanUtils;
 import com.weixin.config.HttpTool;
@@ -26,13 +26,13 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * 微信 -- 用户充值
+ * 微信 -- 用户下单支付
  *
  * @author jingxiaohu
  */
 @Controller
 @RequestMapping(value = "/v1")
-public class WeiXin_FaceAction extends BaseV1Controller {
+public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
 
   /**
    *
@@ -42,11 +42,11 @@ public class WeiXin_FaceAction extends BaseV1Controller {
 
   //商户相关资料
   private static String appid = WeixinPayConstants.appid;
-  private static String appsecret = WeixinPayConstants.appsecret;
+  private static String appsecret = WeixinPayConstants.appsecret_gzh;
   private static String partner = WeixinPayConstants.partner;
 
   @Autowired
-  private FaceUserPayBiz userPayBiz;
+  private WxPayBiz wxPayBiz;
 
   private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
@@ -55,10 +55,9 @@ public class WeiXin_FaceAction extends BaseV1Controller {
         Notify_WeiXinction.class.getMethod("notify_weixin", HttpServletRequest.class, HttpServletResponse.class)).withSelfRel().getHref()+ ".php";
   }
 
-  @RequestMapping(value = "/weixin_charge_face")
+  @RequestMapping(value = "/weixin_charge_jsapi")
   @ResponseBody
-  public String weixin_charge_face(HttpServletRequest request, HttpServletResponse response,
-		  Param_wx_charge_face param) {
+  public String weixin_charge_face(HttpServletRequest request, HttpServletResponse response,Param_wx_charge_jsapi param) {
 
     ReturnDataNew returnData = new ReturnDataNew();
     //参数检查
@@ -76,19 +75,33 @@ public class WeiXin_FaceAction extends BaseV1Controller {
     }
     //对封装的参数对象中的属性进行 非空等规则验证
     //非空验证
+    if (param.ui_id < 1) {
+      //ui_id必须大于0
+      returnData.setReturnData(errorcode_param, "ui_id is null", "");
+      sendResp(returnData, response);
+      return null;
+
+    }
+    if (param.type == null) {
+      returnData.setReturnData(errorcode_param, "type is null", "");
+      sendResp(returnData, response);
+      return null;
+
+    }
     if (System.currentTimeMillis() - param.t > 3 * 60 * 1000) {
       //如果请求超出120秒则认为是 废弃请求
       returnData.setReturnData(errorcode_param, "是 废弃请求", "");
       sendResp(returnData, response);
       return null;
     }
-    if (param.type < 1) {
-      //type必须大于0
-      returnData.setReturnData(errorcode_param, "type必须大于0", "");
+    if (param.pay_price == null) {
+      //pay_price必须大于0
+      returnData.setReturnData(errorcode_param, "pay_price is null", "");
       sendResp(returnData, response);
       return null;
+
     }
-    if (param.pay_price < 1 ) {
+    if(param.pay_price < 1 ){
       //pay_price必须大于0
       returnData.setReturnData(errorcode_param, "pay_price必须大于0", "");
       sendResp(returnData, response);
@@ -100,10 +113,50 @@ public class WeiXin_FaceAction extends BaseV1Controller {
       sendResp(returnData, response);
       return null;
     }
+    if (RequestUtil.checkObjectBlank(param.g_id)) {
+      returnData.setReturnData(errorcode_param, "g_id不能为空", "");
+      sendResp(returnData, response);
+      return null;
+    }
+    if (RequestUtil.checkObjectBlank(param.num)) {
+      //token不能为空
+      returnData.setReturnData(errorcode_param, "num不能为空", "");
+      sendResp(returnData, response);
+      return null;
+    }
+    if(param.num < 1){
+      returnData.setReturnData(errorcode_param, "num必须大于0", "");
+      sendResp(returnData, response);
+      return null;
+    }
+    if (RequestUtil.checkObjectBlank(param.address)) {
+      returnData.setReturnData(errorcode_param, "address不能为空", "");
+      sendResp(returnData, response);
+      return null;
+    }
+    if (RequestUtil.checkObjectBlank(param.name)) {
+      returnData.setReturnData(errorcode_param, "name不能为空", "");
+      sendResp(returnData, response);
+      return null;
+    }
+    if (RequestUtil.checkObjectBlank(param.telephone)) {
+      returnData.setReturnData(errorcode_param, "telephone不能为空", "");
+      sendResp(returnData, response);
+      return null;
+    }
     //MD5验证
     if (param.sign != null) {
-      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.dtype, param.ui_id, param.pay_type,
-          param.pay_price, param.t, param.token);
+      String sign_str = getSignature(Constants.getSystemKey(param.dtype),
+              param.dtype,
+              param.ui_id,
+              param.type,
+              param.pay_price,
+              param.t,
+              param.token,
+              param.g_id,
+              param.num,
+              param.telephone
+              );
       //MD5散列(pay_type+uid+pay_price+t+token+app_key）
       if (!param.sign.equalsIgnoreCase(sign_str)) {
         log.warn("sign=" + param.sign + "  sign_str=" + sign_str);
@@ -122,13 +175,11 @@ public class WeiXin_FaceAction extends BaseV1Controller {
 //      }
       //元 转变成分
       int pay_price_fen = param.pay_price;
-      param.subject = "股掌扫码支付";
-      User_pay user_pay = userPayBiz
-          .weixin_charge(returnData, param.pay_type, param.ui_id, pay_price_fen, param.version,
-              param.system_type, param.subject, ip, param.token, param.type, param.orderid);
+      String subject = "";//商品名称
+      Wx_goods_order wx_goods_order = wxPayBiz.weixin_charge(returnData,param);
 
-      if (returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
-        long money = user_pay.getMoney();
+      if (wx_goods_order != null && returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
+        long money = wx_goods_order.getMoney();
         JSONObject obj = (JSONObject) JSONObject.toJSON(returnData.getData());
         if (money == 0) {
           returnData.setReturnData(errorcode_success, "微信充值成功", obj);
@@ -140,7 +191,7 @@ public class WeiXin_FaceAction extends BaseV1Controller {
         params.put("appid", appid);
         params.put("mch_id", partner);
         params.put("attach", String.valueOf(param.type));
-        params.put("body", param.subject);
+        params.put("body", subject);
         params.put("nonce_str", RandomStringUtils.random(32, true, true));
         params.put("out_trade_no", out_trade_no);
 
