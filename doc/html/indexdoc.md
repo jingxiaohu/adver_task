@@ -29,4 +29,5 @@
 [1.商品管理接口文档](Goods.html)
 [2.用户管理接口文档](WxUser.html)
 [3.订单管理接口文档](UserOrder.html)
+[3.轮播图管理接口文档](Banner.html)
 

@@ -1,10 +1,8 @@
 package com.pyb.mvc.weixin.biz;
 
 import com.alibaba.fastjson.JSONObject;
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.Wx_goods;
-import com.pyb.bean.Wx_goods_details;
-import com.pyb.bean.Wx_goods_type;
+import com.pyb.bean.*;
+import com.pyb.mvc.action.v1.param.BaseParam;
 import com.pyb.mvc.action.v1.weixin.goods.param.Param_goodsClassList;
 import com.pyb.mvc.action.v1.weixin.goods.param.Param_goods_info;
 import com.pyb.mvc.action.v1.weixin.goods.param.Param_goods_list;
@@ -154,4 +152,25 @@ public class GoodsBiz extends BaseWxBiz {
         }
     }
 
+
+
+    /**
+     * 获取首页banner图片列表
+     *
+     * @param returnData
+     * @param param
+     */
+    public void GainBannerList(ReturnDataNew returnData, BaseParam param) {
+        try {
+            int page = param.getPage();
+            int size = param.getSize();
+            int start = (page - 1) * size;
+            String sql = "select *  from wx_banner_img  order by  weight desc  limit " + start + "," + size;
+            List<Wx_banner_img> list = getDB().queryListT(sql, Wx_banner_img.class);
+            returnData.setReturnData("0", "获取成功", list);
+        } catch (Exception e) {
+            log.error("GoodsBiz goodsClassList is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainBannerList is error", "");
+        }
+    }
 }
