@@ -125,7 +125,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>springmvc</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>*.php</url-pattern>
     </servlet-mapping>
 
 
