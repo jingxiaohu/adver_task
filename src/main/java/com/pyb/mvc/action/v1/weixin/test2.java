@@ -40,9 +40,9 @@ public class test2 extends BaseV1Controller {
          Data	String	推送物流单号轨迹集合	R
          */
         try {
-//            System.out.println(convertStreamToString(request.getInputStream()));
-            Map<String, String> map =  parseXml( request);
-            System.out.println("map="+map);
+            System.out.println(inputStream2String3(request.getInputStream()));
+            /*Map<String, String> map =  parseXml( request);
+            System.out.println("map="+map);*/
         } catch (Exception e) {
 
             e.printStackTrace();
