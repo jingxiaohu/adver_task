@@ -20,6 +20,7 @@ public class test2 extends BaseV1Controller {
     @RequestMapping(value = "/kuaidi")
     public void kuaidi(HttpServletRequest request, HttpServletResponse response) {
         System.out.println(request.getQueryString());
+        sendRespHtml("SUCCESS",response);
     }
 }
 
