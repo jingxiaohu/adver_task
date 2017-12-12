@@ -1,7 +1,7 @@
 #########返回字段说明
 |名称|描述|类型|
 |----|----|---|
-|e_id|主键ID|long|
+|we_id|主键ID|long|
 |order_id|订单号|String|
 |g_id|商品主键ID|long|
 |ui_id|用户ID|long|

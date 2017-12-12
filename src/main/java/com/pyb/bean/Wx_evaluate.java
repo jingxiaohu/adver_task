@@ -7,9 +7,9 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_evaluate implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"e_id","order_id","g_id","ui_id","nickname","avatar","content","father_e_id","big_img_url","small_img_url","is_show","type","img_num","ctime","note","is_del"};
+    //public static String[] carrays ={"we_id","order_id","g_id","ui_id","nickname","avatar","content","father_e_id","big_img_url","small_img_url","is_show","type","img_num","ctime","note","is_del"};
 
-    public long e_id;//bigint(20)    主键ID
+    public long we_id;//bigint(20)    主键ID
     public String order_id="";//varchar(80)    订单号
     public long g_id;//bigint(20)    商品主键ID
     public long ui_id;//bigint(20)    用户ID
@@ -28,12 +28,12 @@ public class Wx_evaluate implements Cloneable , Serializable{
 
 
 
-    public long getE_id(){
-        return e_id;
+    public long getWe_id(){
+        return we_id;
     }
 
-    public void setE_id(long value){
-        this.e_id= value;
+    public void setWe_id(long value){
+        this.we_id= value;
     }
 
     public String getOrder_id(){
@@ -182,9 +182,9 @@ public class Wx_evaluate implements Cloneable , Serializable{
 
 
 
-    public static Wx_evaluate newWx_evaluate(long e_id, String order_id, long g_id, long ui_id, String nickname, String avatar, String content, long father_e_id, String big_img_url, String small_img_url, int is_show, int type, int img_num, java.util.Date ctime, String note, int is_del) {
+    public static Wx_evaluate newWx_evaluate(long we_id, String order_id, long g_id, long ui_id, String nickname, String avatar, String content, long father_e_id, String big_img_url, String small_img_url, int is_show, int type, int img_num, java.util.Date ctime, String note, int is_del) {
         Wx_evaluate ret = new Wx_evaluate();
-        ret.setE_id(e_id);
+        ret.setWe_id(we_id);
         ret.setOrder_id(order_id);
         ret.setG_id(g_id);
         ret.setUi_id(ui_id);
@@ -204,7 +204,7 @@ public class Wx_evaluate implements Cloneable , Serializable{
     }
 
     public void assignment(Wx_evaluate wx_evaluate) {
-        long e_id = wx_evaluate.getE_id();
+        long we_id = wx_evaluate.getWe_id();
         String order_id = wx_evaluate.getOrder_id();
         long g_id = wx_evaluate.getG_id();
         long ui_id = wx_evaluate.getUi_id();
@@ -221,7 +221,7 @@ public class Wx_evaluate implements Cloneable , Serializable{
         String note = wx_evaluate.getNote();
         int is_del = wx_evaluate.getIs_del();
 
-        this.setE_id(e_id);
+        this.setWe_id(we_id);
         this.setOrder_id(order_id);
         this.setG_id(g_id);
         this.setUi_id(ui_id);
@@ -242,7 +242,7 @@ public class Wx_evaluate implements Cloneable , Serializable{
 
     @SuppressWarnings("unused")
     public static void getWx_evaluate(Wx_evaluate wx_evaluate ){
-        long e_id = wx_evaluate.getE_id();
+        long we_id = wx_evaluate.getWe_id();
         String order_id = wx_evaluate.getOrder_id();
         long g_id = wx_evaluate.getG_id();
         long ui_id = wx_evaluate.getUi_id();
@@ -265,7 +265,7 @@ public class Wx_evaluate implements Cloneable , Serializable{
     }
 
     public static Map<String,Object> toEnMap(Wx_evaluate wx_evaluate){
-        long e_id = wx_evaluate.getE_id();
+        long we_id = wx_evaluate.getWe_id();
         String order_id = wx_evaluate.getOrder_id();
         long g_id = wx_evaluate.getG_id();
         long ui_id = wx_evaluate.getUi_id();
@@ -283,7 +283,7 @@ public class Wx_evaluate implements Cloneable , Serializable{
         int is_del = wx_evaluate.getIs_del();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
-        _ret.put("e_id",e_id);
+        _ret.put("we_id",we_id);
         _ret.put("order_id",order_id);
         _ret.put("g_id",g_id);
         _ret.put("ui_id",ui_id);

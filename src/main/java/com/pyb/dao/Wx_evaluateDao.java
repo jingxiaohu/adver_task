@@ -41,8 +41,8 @@ public class Wx_evaluateDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"e_id","order_id","g_id","ui_id","nickname","avatar","content","father_e_id","big_img_url","small_img_url","is_show","type","img_num","ctime","note","is_del"};
-    private  String coulmns ="e_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del";
+    private  String[] carrays ={"we_id","order_id","g_id","ui_id","nickname","avatar","content","father_e_id","big_img_url","small_img_url","is_show","type","img_num","ctime","note","is_del"};
+    private  String coulmns ="we_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del";
     private  String coulmns2 ="order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del";
 
     public  String[] getCarrays(){
@@ -87,7 +87,7 @@ public class Wx_evaluateDao extends BaseDao{
     public int insert_primarykey(Wx_evaluate bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (e_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del) VALUES (:e_id,:order_id,:g_id,:ui_id,:nickname,:avatar,:content,:father_e_id,:big_img_url,:small_img_url,:is_show,:type,:img_num,:ctime,:note,:is_del)";
+            sql = "INSERT INTO "+TABLENAME2+" (we_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del) VALUES (:we_id,:order_id,:g_id,:ui_id,:nickname,:avatar,:content,:father_e_id,:big_img_url,:small_img_url,:is_show,:type,:img_num,:ctime,:note,:is_del)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -148,7 +148,7 @@ public class Wx_evaluateDao extends BaseDao{
     public List<Wx_evaluate> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT e_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" ORDER BY e_id";
+            sql = "SELECT we_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" ORDER BY we_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_evaluate>(Wx_evaluate.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -166,7 +166,7 @@ public class Wx_evaluateDao extends BaseDao{
     public List<Wx_evaluate> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT e_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" ORDER BY e_id DESC LIMIT "+num+"" ;
+            sql = "SELECT we_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" ORDER BY we_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_evaluate>(Wx_evaluate.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -176,17 +176,17 @@ public class Wx_evaluateDao extends BaseDao{
     }
 
     //根据主键查询
-    public List<Wx_evaluate> selectGtKey(long e_id) {
-        return selectGtKey(e_id, TABLENAME);
+    public List<Wx_evaluate> selectGtKey(long we_id) {
+        return selectGtKey(we_id, TABLENAME);
     }
 
     //根据主键查询
-    public List<Wx_evaluate> selectGtKey(long e_id, String TABLENAME2) {
+    public List<Wx_evaluate> selectGtKey(long we_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT e_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" WHERE e_id>:e_id";
+            sql="SELECT we_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" WHERE we_id>:we_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("e_id", e_id);
+            param.put("we_id", we_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_evaluate>(Wx_evaluate.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -196,22 +196,22 @@ public class Wx_evaluateDao extends BaseDao{
     }
 
     //根据主键查询
-    public Wx_evaluate selectByKey(long e_id) {
-        return selectByKey(e_id, TABLENAME);
+    public Wx_evaluate selectByKey(long we_id) {
+        return selectByKey(we_id, TABLENAME);
     }
 
     //根据主键查询
-    public Wx_evaluate selectByKey(long e_id, String TABLENAME2) {
+    public Wx_evaluate selectByKey(long we_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT e_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" WHERE e_id=:e_id";
+            sql="SELECT we_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" WHERE we_id=:we_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("e_id", e_id);
+            param.put("we_id", we_id);
             List<Wx_evaluate> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_evaluate>(Wx_evaluate.class));
             return (list == null || list.size() == 0) ? null : list.get(0);
         }catch(Exception e){
             //createTable(TABLENAME2);
-            log.error("selectByKey e_id="+e_id,e);
+            log.error("selectByKey we_id="+we_id,e);
             return null;
         }
     }
@@ -243,7 +243,7 @@ public class Wx_evaluateDao extends BaseDao{
     public List<Wx_evaluate> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT e_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT we_id,order_id,g_id,ui_id,nickname,avatar,content,father_e_id,big_img_url,small_img_url,is_show,type,img_num,ctime,note,is_del FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_evaluate>(Wx_evaluate.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -261,7 +261,7 @@ public class Wx_evaluateDao extends BaseDao{
     public int updateByKey(Wx_evaluate bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET order_id=:order_id,g_id=:g_id,ui_id=:ui_id,nickname=:nickname,avatar=:avatar,content=:content,father_e_id=:father_e_id,big_img_url=:big_img_url,small_img_url=:small_img_url,is_show=:is_show,type=:type,img_num=:img_num,ctime=:ctime,note=:note,is_del=:is_del WHERE e_id=:e_id";
+            sql = "UPDATE "+TABLENAME2+" SET order_id=:order_id,g_id=:g_id,ui_id=:ui_id,nickname=:nickname,avatar=:avatar,content=:content,father_e_id=:father_e_id,big_img_url=:big_img_url,small_img_url=:small_img_url,is_show=:is_show,type=:type,img_num=:img_num,ctime=:ctime,note=:note,is_del=:is_del WHERE we_id=:we_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -279,7 +279,7 @@ public class Wx_evaluateDao extends BaseDao{
     public int[] updateByKey (final List<Wx_evaluate> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET order_id=?,g_id=?,ui_id=?,nickname=?,avatar=?,content=?,father_e_id=?,big_img_url=?,small_img_url=?,is_show=?,type=?,img_num=?,ctime=?,note=?,is_del=? WHERE e_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET order_id=?,g_id=?,ui_id=?,nickname=?,avatar=?,content=?,father_e_id=?,big_img_url=?,small_img_url=?,is_show=?,type=?,img_num=?,ctime=?,note=?,is_del=? WHERE we_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -303,7 +303,7 @@ public class Wx_evaluateDao extends BaseDao{
                     ps.setTimestamp(13, new Timestamp(bean.ctime.getTime()));
                     ps.setString(14, bean.note);
                     ps.setInt(15, bean.is_del);
-                    ps.setLong(16, bean.e_id);
+                    ps.setLong(16, bean.we_id);
                 }
             });
         }catch(Exception e){
@@ -313,17 +313,17 @@ public class Wx_evaluateDao extends BaseDao{
     }
 
     //删除单条数据
-    public int deleteByKey(long e_id) throws SQLException{
-        return deleteByKey(e_id, TABLENAME);
+    public int deleteByKey(long we_id) throws SQLException{
+        return deleteByKey(we_id, TABLENAME);
     }
 
     //删除单条数据
-    public int deleteByKey(long e_id, String TABLENAME2) throws SQLException{
+    public int deleteByKey(long we_id, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE e_id=:e_id";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE we_id=:we_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("e_id", e_id);
+            param.put("we_id", we_id);
             return _np.update(sql, param);
         }catch(Exception e){
             log.error("deleteByKey", e);
@@ -340,7 +340,7 @@ public class Wx_evaluateDao extends BaseDao{
     public int[] deleteByKey(final long[] keys, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE e_id=?";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE we_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -362,7 +362,7 @@ public class Wx_evaluateDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`e_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    主键ID'," +
+                 "	`we_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    主键ID'," +
                  "	`order_id`  VARCHAR(80) COMMENT '//varchar(80)    订单号'," +
                  "	`g_id`  BIGINT(20) COMMENT '//bigint(20)    商品主键ID'," +
                  "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    用户ID'," +
@@ -378,7 +378,7 @@ public class Wx_evaluateDao extends BaseDao{
                  "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
                  "	`is_del`  INT(11) COMMENT '//int(11)    是否逻辑删除:0：不删除1：删除'," +
-                 "	PRIMARY KEY (`e_id`)" +
+                 "	PRIMARY KEY (`we_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();
             params.put("TABLENAME", TABLENAME2);
