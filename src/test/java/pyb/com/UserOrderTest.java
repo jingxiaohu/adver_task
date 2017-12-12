@@ -2,6 +2,7 @@ package pyb.com;
 
 import apidoc.jxh.cn.InterfaceUtil;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
+import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
 import org.junit.FixMethodOrder;
@@ -154,5 +155,30 @@ public class UserOrderTest extends BaseWebTest {
                 Param_wx_charge_jsapi.class,
                 result);
     }
+    /**
+     * 1.4 获取订单快递信息列表例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void E_kdwl() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("order_id","2017121019061509600");
+        sign(params, "dtype","order_id");
 
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/kdwl").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "UserOrder.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取订单快递信息列表",
+                "dtype+order_id",
+                "/goods/kdwl",
+                5,
+                params,
+                Param_kdwl.class,
+                result);
+    }
 }

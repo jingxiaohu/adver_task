@@ -1,5 +1,7 @@
 package com.pyb.mvc.weixin.util;
 
+import org.springframework.stereotype.Repository;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,7 +23,7 @@ import java.util.Map;
  *
  * ID和Key请到官网申请：http://www.kdniao.com/ServiceApply.aspx
  */
-
+@Repository("kdniaoTrackQueryAPI")
 public class KdniaoTrackQueryAPI {
     public static Map<String, String> getWLNameMap() {
         if(WLNameMap == null){

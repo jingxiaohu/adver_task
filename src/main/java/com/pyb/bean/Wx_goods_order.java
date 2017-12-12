@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_goods_order implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"go_id","order_id","g_id","ui_id","price","num","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","g_name","g_logo_url","transaction_id","clothing","gt_id"};
+    //public static String[] carrays ={"go_id","order_id","g_id","ui_id","price","num","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","g_name","g_logo_url","transaction_id","clothing","gt_id","logistic_code","shipper_name","shipper_code"};
 
     public long go_id;//bigint(20)    主键ID
     public String order_id="";//varchar(80)    订单号
@@ -39,6 +39,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public String transaction_id="";//varchar(100)    第三方交易单号
     public String clothing="";//varchar(255)    服装类商品尺码颜色JSON{"size":[120,130,140,150],"color":["黄色","红色","蓝色"]}
     public long gt_id;//bigint(20)    商品类型ID
+    public String logistic_code="";//varchar(100)    快递单号
+    public String shipper_name="";//varchar(100)    快递公司名称
+    public String shipper_code="";//varchar(30)    快鸟-快递公司编码
 
 
 
@@ -324,9 +327,42 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.gt_id= value;
     }
 
+    public String getLogistic_code(){
+        return logistic_code;
+    }
+
+    public void setLogistic_code(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.logistic_code= value;
+    }
+
+    public String getShipper_name(){
+        return shipper_name;
+    }
+
+    public void setShipper_name(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.shipper_name= value;
+    }
+
+    public String getShipper_code(){
+        return shipper_code;
+    }
+
+    public void setShipper_code(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.shipper_code= value;
+    }
 
 
-    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long g_id, long ui_id, int price, int num, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String g_name, String g_logo_url, String transaction_id, String clothing, long gt_id) {
+
+    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long g_id, long ui_id, int price, int num, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String g_name, String g_logo_url, String transaction_id, String clothing, long gt_id, String logistic_code, String shipper_name, String shipper_code) {
         Wx_goods_order ret = new Wx_goods_order();
         ret.setGo_id(go_id);
         ret.setOrder_id(order_id);
@@ -358,6 +394,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         ret.setTransaction_id(transaction_id);
         ret.setClothing(clothing);
         ret.setGt_id(gt_id);
+        ret.setLogistic_code(logistic_code);
+        ret.setShipper_name(shipper_name);
+        ret.setShipper_code(shipper_code);
         return ret;    
     }
 
@@ -392,6 +431,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String transaction_id = wx_goods_order.getTransaction_id();
         String clothing = wx_goods_order.getClothing();
         long gt_id = wx_goods_order.getGt_id();
+        String logistic_code = wx_goods_order.getLogistic_code();
+        String shipper_name = wx_goods_order.getShipper_name();
+        String shipper_code = wx_goods_order.getShipper_code();
 
         this.setGo_id(go_id);
         this.setOrder_id(order_id);
@@ -423,6 +465,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.setTransaction_id(transaction_id);
         this.setClothing(clothing);
         this.setGt_id(gt_id);
+        this.setLogistic_code(logistic_code);
+        this.setShipper_name(shipper_name);
+        this.setShipper_code(shipper_code);
 
     }
 
@@ -458,6 +503,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String transaction_id = wx_goods_order.getTransaction_id();
         String clothing = wx_goods_order.getClothing();
         long gt_id = wx_goods_order.getGt_id();
+        String logistic_code = wx_goods_order.getLogistic_code();
+        String shipper_name = wx_goods_order.getShipper_name();
+        String shipper_code = wx_goods_order.getShipper_code();
     }
 
     public Map<String,Object> toMap(){
@@ -495,6 +543,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String transaction_id = wx_goods_order.getTransaction_id();
         String clothing = wx_goods_order.getClothing();
         long gt_id = wx_goods_order.getGt_id();
+        String logistic_code = wx_goods_order.getLogistic_code();
+        String shipper_name = wx_goods_order.getShipper_name();
+        String shipper_code = wx_goods_order.getShipper_code();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("go_id",go_id);
@@ -527,6 +578,9 @@ public class Wx_goods_order implements Cloneable , Serializable{
         _ret.put("transaction_id",transaction_id);
         _ret.put("clothing",clothing);
         _ret.put("gt_id",gt_id);
+        _ret.put("logistic_code",logistic_code);
+        _ret.put("shipper_name",shipper_name);
+        _ret.put("shipper_code",shipper_code);
         return _ret;
     }
 

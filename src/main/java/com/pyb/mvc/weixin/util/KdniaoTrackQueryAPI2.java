@@ -1,5 +1,7 @@
 package com.pyb.mvc.weixin.util;
 
+import org.springframework.stereotype.Repository;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,19 +16,21 @@ import java.util.Map;
 
 /**
  *
- * 快递鸟单号识别接口
+ * 快递鸟在途监控：即时查询(增值版)接口
  *
+ * @see: http://kdniao.com/api-monitor
+ * @copyright: 深圳市快金数据技术服务有限公司
  *
- * ID和Key请到官网申请：http://www.kdniao.com/ServiceApply.aspx
+ * ID和Key请到官网申请：http://kdniao.com/reg
  */
-
-public class KdApiOrderDistinguish {
+@Repository("kdniaoTrackQueryAPI2")
+public class KdniaoTrackQueryAPI2 {
 
     //DEMO
     public static void main(String[] args) {
-        KdApiOrderDistinguish api = new KdApiOrderDistinguish();
+        KdniaoTrackQueryAPI2 api = new KdniaoTrackQueryAPI2();
         try {
-            String result = api.getOrderTracesByJson("70049959949838");
+            String result = api.getOrderTracesByJson("YZPY", "9891649961956");
             System.out.print(result);
 
         } catch (Exception e) {
@@ -42,42 +46,16 @@ public class KdApiOrderDistinguish {
     private String ReqURL="http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx";
 
     /**
-     * Json方式 单号识别
+     * Json方式 查询订单物流轨迹
      * @throws Exception
      */
-    public String getOrderTracesByJson(String expNo) throws Exception{
-        String requestData= "{'LogisticCode':'" + expNo + "'}";
+    public String getOrderTracesByJson(String expCode, String expNo) throws Exception{
+        String requestData= "{'OrderCode':'','ShipperCode':'" + expCode + "','LogisticCode':'" + expNo + "'}";
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("RequestData", urlEncoder(requestData, "UTF-8"));
         params.put("EBusinessID", EBusinessID);
-        params.put("RequestType", "2002");
-        String dataSign=encrypt(requestData, AppKey, "UTF-8");
-        params.put("DataSign", urlEncoder(dataSign, "UTF-8"));
-        params.put("DataType", "2-json");
-
-        String result=sendPost(ReqURL, params);
-
-        //根据公司业务处理返回的信息......
-
-        return result;
-    }
-
-
-
-
-
-    /**
-     * Json方式 单号识别
-     * @throws Exception
-     */
-    public String getOrderTracesByJson(String LogisticCode,String ShipperCode) throws Exception{
-        String requestData= "{'LogisticCode':'" + LogisticCode + "'}";
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("RequestData", urlEncoder(requestData, "UTF-8"));
-        params.put("EBusinessID", EBusinessID);
-        params.put("RequestType", "2002");
+        params.put("RequestType", "8001");
         String dataSign=encrypt(requestData, AppKey, "UTF-8");
         params.put("DataSign", urlEncoder(dataSign, "UTF-8"));
         params.put("DataType", "2");
@@ -88,16 +66,6 @@ public class KdApiOrderDistinguish {
 
         return result;
     }
-
-
-
-
-
-
-
-
-
-
 
     /**
      * MD5加密
@@ -271,3 +239,4 @@ public class KdApiOrderDistinguish {
         return sb.toString();
     }
 }
+

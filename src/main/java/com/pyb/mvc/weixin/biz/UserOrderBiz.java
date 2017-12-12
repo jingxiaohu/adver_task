@@ -2,8 +2,11 @@ package com.pyb.mvc.weixin.biz;
 
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Wx_goods_order;
+import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
+import com.pyb.mvc.weixin.util.KdniaoTrackQueryAPI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
  */
 @Service
 public class UserOrderBiz extends  BaseWxBiz{
+    @Autowired
+    KdniaoTrackQueryAPI kdniaoTrackQueryAPI;
     /**
      * 获取我的订单列表
      */
@@ -73,6 +78,26 @@ public class UserOrderBiz extends  BaseWxBiz{
         } catch (Exception e) {
             log.error("UserOrderBiz UserCancelOrder is error", e);
             returnData.setReturnData(errorcode_systerm, "UserOrderBiz UserCancelOrder is error", "");
+        }
+    }
+
+
+    /**
+     * 用户获取订单快递物流情况
+     */
+    public void GainOrderKDWL(ReturnDataNew returnData, Param_kdwl param) {
+        try {
+            String sql = "select * from wx_goods_order where order_id=? limit 1";
+            Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,param.getOrder_id());
+            if(wx_goods_order == null){
+                returnData.setReturnData(errorcode_data, "订单不存在", "","1");
+                return;
+            }
+            String str = kdniaoTrackQueryAPI.getOrderTracesByJson(wx_goods_order.getShipper_code(),wx_goods_order.getLogistic_code());
+            returnData.setReturnData(errorcode_success, "用户获取订单快递物流情况成功", str);
+        } catch (Exception e) {
+            log.error("UserOrderBiz GainOrderKDWL is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserOrderBiz GainOrderKDWL is error", "");
         }
     }
 

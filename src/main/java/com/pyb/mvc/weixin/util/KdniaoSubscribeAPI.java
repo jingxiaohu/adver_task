@@ -52,7 +52,7 @@ public class KdniaoSubscribeAPI {
      * @throws Exception
      */
     public String orderTracesSubByJson() throws Exception{
-        String requestData="{'OrderCode': 'SF201608081055208281'," +
+        String requestData="{'OrderCode': 'SF201608081055208282'," +
                 "'ShipperCode':'SF'," +
                 "'LogisticCode':'3100707578976'," +
                 "'PayType':1," +

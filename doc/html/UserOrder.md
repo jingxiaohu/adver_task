@@ -300,3 +300,20 @@
 }
 
 ```
+#### 5->获取订单快递信息列表
+|参数名称|值描述|是否可空|限制长度|参数类型|举例|
+|--------|-----|----|--------|-------|-----|
+|order_id|订单编号|否|无|字符串|2017121019061509600|
+| sign| MD5数字签名(dtype+order_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+#### 请求路径
+[/goods/kdwl](/goods/kdwl)
+###### 返回结果
+```json
+{
+	"data":"{  'LogisticCode' : '9891649961956',  'ShipperCode' : 'YZPY',  'Traces' : [ {    'AcceptStation' : '【<a>江西省赣县邮政营销中心</a>】已收寄',    'AcceptTime' : '2017-11-28 18:48:24'  }, {    'AcceptStation' : '离开【赣县邮政营销中心】，下一站【赣县】',    'AcceptTime' : '2017-11-28 18:54:00'  }, {    'AcceptStation' : '到达【<a>赣州中心</a>】',    'AcceptTime' : '2017-11-28 19:51:44'  }, {    'AcceptStation' : '离开【赣州中心】，下一站【南昌中心】',    'AcceptTime' : '2017-11-28 22:10:58'  }, {    'AcceptStation' : '到达【<a>南昌中心</a>】',    'AcceptTime' : '2017-11-29 05:25:36'  }, {    'AcceptStation' : '离开【南昌中心】，下一站【成都中心】',    'AcceptTime' : '2017-11-29 21:08:02'  }, {    'AcceptStation' : '到达【<a>成都中心</a>】',    'AcceptTime' : '2017-12-01 01:20:19'  }, {    'AcceptStation' : '离开【成都中心】，下一站【龙泉驿】',    'AcceptTime' : '2017-12-01 05:36:20'  }, {    'AcceptStation' : '到达【<a>龙泉驿</a>】',    'AcceptTime' : '2017-12-01 07:31:42'  }, {    'AcceptStation' : '离开【龙泉驿】，下一站【龙泉十陵】',    'AcceptTime' : '2017-12-01 11:19:25'  }, {    'AcceptStation' : '【<a>龙泉驿区十陵投递</a>】接收',    'AcceptTime' : '2017-12-01 13:15:45'  }, {    'AcceptStation' : '【<a>龙泉驿区十陵投递</a>】正在投递,投递员：王槐志 18728538852',    'AcceptTime' : '2017-12-01 13:59:11'  }, {    'AcceptStation' : '已签收,万科金色城菜鸟驿站 代收,投递员：王槐志 18728538852 ',    'AcceptTime' : '2017-12-01 14:43:41'  } ],  'State' : '3',  'EBusinessID' : '1315771',  'Success' : true}",
+	"errorcode":"",
+	"errormsg":"用户获取订单快递物流情况成功",
+	"errorno":"0"
+}
+
+```

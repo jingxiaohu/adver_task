@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_banner_img implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"bi_id","img_name","img_url","img_intro","ctime","note"};
+    //public static String[] carrays ={"bi_id","img_name","img_url","img_intro","ctime","note","weight"};
 
     public long bi_id;//bigint(20)    主键ID
     public String img_name="";//varchar(80)    图片名称
@@ -15,6 +15,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
     public String img_intro="";//varchar(255)    图片功能简介
     public java.util.Date ctime=new java.util.Date();//timestamp    创建时间
     public String note="";//varchar(60)    备注
+    public int weight;//int(11)    权重
 
 
 
@@ -81,9 +82,17 @@ public class Wx_banner_img implements Cloneable , Serializable{
         this.note= value;
     }
 
+    public int getWeight(){
+        return weight;
+    }
+
+    public void setWeight(int value){
+        this.weight= value;
+    }
 
 
-    public static Wx_banner_img newWx_banner_img(long bi_id, String img_name, String img_url, String img_intro, java.util.Date ctime, String note) {
+
+    public static Wx_banner_img newWx_banner_img(long bi_id, String img_name, String img_url, String img_intro, java.util.Date ctime, String note, int weight) {
         Wx_banner_img ret = new Wx_banner_img();
         ret.setBi_id(bi_id);
         ret.setImg_name(img_name);
@@ -91,6 +100,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         ret.setImg_intro(img_intro);
         ret.setCtime(ctime);
         ret.setNote(note);
+        ret.setWeight(weight);
         return ret;    
     }
 
@@ -101,6 +111,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         String img_intro = wx_banner_img.getImg_intro();
         java.util.Date ctime = wx_banner_img.getCtime();
         String note = wx_banner_img.getNote();
+        int weight = wx_banner_img.getWeight();
 
         this.setBi_id(bi_id);
         this.setImg_name(img_name);
@@ -108,6 +119,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         this.setImg_intro(img_intro);
         this.setCtime(ctime);
         this.setNote(note);
+        this.setWeight(weight);
 
     }
 
@@ -119,6 +131,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         String img_intro = wx_banner_img.getImg_intro();
         java.util.Date ctime = wx_banner_img.getCtime();
         String note = wx_banner_img.getNote();
+        int weight = wx_banner_img.getWeight();
     }
 
     public Map<String,Object> toMap(){
@@ -132,6 +145,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         String img_intro = wx_banner_img.getImg_intro();
         java.util.Date ctime = wx_banner_img.getCtime();
         String note = wx_banner_img.getNote();
+        int weight = wx_banner_img.getWeight();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("bi_id",bi_id);
@@ -140,6 +154,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         _ret.put("img_intro",img_intro);
         _ret.put("ctime",ctime);
         _ret.put("note",note);
+        _ret.put("weight",weight);
         return _ret;
     }
 
