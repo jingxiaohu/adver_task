@@ -43,9 +43,9 @@ public class KdniaoSubscribeAPI {
     //电商加密私钥，快递鸟提供，注意保管，不要泄漏
     private String AppKey="c5e15323-d221-442a-ac8e-717303a0c5a3";
     //测试请求url
-    private String ReqURL = "http://testapi.kdniao.cc:8081/api/dist";
+//    private String ReqURL = "http://testapi.kdniao.cc:8081/api/dist";
     //正式请求url
-    //private String ReqURL = "http://api.kdniao.cc/api/dist";
+    private String ReqURL = "http://api.kdniao.cc/api/dist";
 
     /**
      * Json方式  物流信息订阅
