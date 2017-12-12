@@ -77,7 +77,12 @@ public class MenuManager {
 
         CommonButton mainBtn1 = new CommonButton();
         mainBtn1.setName("拼把商城");
-        mainBtn1.setUrl("http://www.528ads.com");
+//        mainBtn1.setUrl("http://www.528ads.com");//http://task.51pyb.com/wx/index.html
+        try {
+            mainBtn1.setUrl(redirect_baseurl.replace("REDIRECT_URI", URLEncoder.encode("http://task.51pyb.com/v1/goods/openid_jump.php","UTF-8")) );
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         mainBtn1.setType("view");
 
 
