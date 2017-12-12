@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 @RestController
 public class test2 extends BaseV1Controller {
@@ -24,7 +23,7 @@ public class test2 extends BaseV1Controller {
         return mav;
     }
     @RequestMapping(value = "/kuaidi",method = RequestMethod.POST)
-    public void kuaidi(HttpServletRequest request, HttpServletResponse response, @RequestBody Map<String, Object> map
+    public void kuaidi(HttpServletRequest request, HttpServletResponse response, @RequestBody JSONObject map
     ) {
         System.out.println("getQueryString="+request.getQueryString());
         /**
