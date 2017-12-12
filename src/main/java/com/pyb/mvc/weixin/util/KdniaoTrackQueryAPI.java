@@ -1,7 +1,5 @@
 package com.pyb.mvc.weixin.util;
 
-import com.pyb.util.HttpUtil;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,18 +23,51 @@ import java.util.Map;
  */
 
 public class KdniaoTrackQueryAPI {
+    public static Map<String, String> getWLNameMap() {
+        if(WLNameMap == null){
+            WLNameMap = new HashMap<String,String>();
+            WLNameMap.put("顺丰","SF");
+            WLNameMap.put("百世快递","HTKY");
+            WLNameMap.put("百世快运","BTWL");
+            WLNameMap.put("申通","STO");
+            WLNameMap.put("中通","ZTO");
+            WLNameMap.put("圆通","YTO");
+            WLNameMap.put("韵达","YD");
+            WLNameMap.put("EMS","EMS");
+            WLNameMap.put("宅急送","ZJS");
+            WLNameMap.put("德邦","DBL");
+            WLNameMap.put("全峰","QFKD");
+            WLNameMap.put("如风达","RFD");
+            WLNameMap.put("优速快递","UC");
+            WLNameMap.put("龙邦","LB");
+            WLNameMap.put("增益","ZENY");
+            WLNameMap.put("华航快递","HHKD");
+            WLNameMap.put("运通快递","YTKD");
+            WLNameMap.put("希优特","XYT");
+            WLNameMap.put("民邦物流","MB");
+            WLNameMap.put("长沙创一","CSCY");
+            WLNameMap.put("安能物流","ANE");
+            WLNameMap.put("精英速运","JYSY");
+            WLNameMap.put("邮政快递","YZPY");
+        }
+        return WLNameMap;
+    }
+
+    public static Map<String,String> WLNameMap = null;
 
     //DEMO
     public static void main(String[] args) {
-       /* KdniaoTrackQueryAPI api = new KdniaoTrackQueryAPI();
+        KdniaoTrackQueryAPI api = new KdniaoTrackQueryAPI();
         try {
-            String result = api.getOrderTracesByJson("HTKY", "70049954752928");
+           /* String result = api.getOrderTracesByJson(getWLNameMap().get("百世快递"), "70049954752928");
+            System.out.print(result);*/
+            String result = api.getOrderTracesByJson(getWLNameMap().get("邮政快递"), "9891649961956");
             System.out.print(result);
-
+           /* String result = api.getOrderRecognitionByJson("9891649961956");
+            System.out.print(result);*/
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
-        myself("70049954752928");
+        }
     }
 
     //电商ID
@@ -45,22 +76,10 @@ public class KdniaoTrackQueryAPI {
     private String AppKey="c5e15323-d221-442a-ac8e-717303a0c5a3";
     //请求url
     private String ReqURL="http://api.kdniao.cc/Ebusiness/EbusinessOrderHandle.aspx";
+    //单号识别服务--测试
+    private  String SBurl = "http://testapi.kdniao.cc:8081/Ebusiness/EbusinessOrderHandle.aspx";
 
 
-
-
-
-
-    public static void myself(String no){
-        String url = "http://www.kdcx.cn/index.php?r=site/query&nu="+no+"&exname=youzhengguonei";
-       String str =  HttpUtil.doGet(url,null,null);
-       /*if(str != null && !"error".equalsIgnoreCase(str)){
-           str = str.substring(str.indexOf("{"),str.lastIndexOf("}")+1);
-       }*/
-//        System.out.println("str="+str);
-        System.out.println("str="+UStr_2_Str(str));
-
-    }
 
     /* 将字符串转化为\\u形式的字符串，如： "U字符" -> "\\u55\\u5b57\\u7b26" ;U字符为字符串中每个字符的16进制信息 */
     public static String to_U_Str(String str)
@@ -126,6 +145,31 @@ public class KdniaoTrackQueryAPI {
 
         return result;
     }
+
+
+    /**
+     * Json方式 查询订单物流 单号识别
+     * @throws Exception
+     */
+    public String getOrderRecognitionByJson(String expNo) throws Exception{
+        String requestData= "{'LogisticCode':'" + expNo + "'}";
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("RequestData", urlEncoder(requestData, "UTF-8"));
+        params.put("EBusinessID", EBusinessID);
+        params.put("RequestType", "2002");
+        String dataSign=encrypt(requestData, AppKey, "UTF-8");
+        params.put("DataSign", urlEncoder(dataSign, "UTF-8"));
+        params.put("DataType", "2");
+
+        String result=sendPost(ReqURL, params);
+
+        //根据公司业务处理返回的信息......
+
+        return result;
+    }
+
+
 
     /**
      * MD5加密

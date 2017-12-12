@@ -17,5 +17,9 @@ public class test2 extends BaseV1Controller {
         mav.addObject("message","hello kitty");
         return mav;
     }
+    @RequestMapping(value = "/kuaidi")
+    public void kuaidi(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getQueryString());
+    }
 }
 
