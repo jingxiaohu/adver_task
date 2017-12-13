@@ -163,6 +163,32 @@
 </li>
 </ul>
 </li>
+<li><span class="title">
+<a href="#6-&gt;用户确认收货" title="6->用户确认收货">6-&gt;用户确认收货</a>
+</span>
+<!--span class="number">
+18
+</span-->
+</li>
+<li><span class="title">
+<a href="#请求路径-5" title="请求路径">请求路径</a>
+</span>
+<!--span class="number">
+19
+</span-->
+<ul>
+<li><ul>
+<li><span class="title">
+<a href="#返回结果-5" title="返回结果">返回结果</a>
+</span>
+<!--span class="number">
+20
+</span-->
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1070,6 +1096,55 @@
     "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">"{  'LogisticCode' : '9891649961956',  'ShipperCode' : 'YZPY',  'Traces' : [ {    'AcceptStation' : '【&lt;a&gt;江西省赣县邮政营销中心&lt;/a&gt;】已收寄',    'AcceptTime' : '2017-11-28 18:48:24'  }, {    'AcceptStation' : '离开【赣县邮政营销中心】，下一站【赣县】',    'AcceptTime' : '2017-11-28 18:54:00'  }, {    'AcceptStation' : '到达【&lt;a&gt;赣州中心&lt;/a&gt;】',    'AcceptTime' : '2017-11-28 19:51:44'  }, {    'AcceptStation' : '离开【赣州中心】，下一站【南昌中心】',    'AcceptTime' : '2017-11-28 22:10:58'  }, {    'AcceptStation' : '到达【&lt;a&gt;南昌中心&lt;/a&gt;】',    'AcceptTime' : '2017-11-29 05:25:36'  }, {    'AcceptStation' : '离开【南昌中心】，下一站【成都中心】',    'AcceptTime' : '2017-11-29 21:08:02'  }, {    'AcceptStation' : '到达【&lt;a&gt;成都中心&lt;/a&gt;】',    'AcceptTime' : '2017-12-01 01:20:19'  }, {    'AcceptStation' : '离开【成都中心】，下一站【龙泉驿】',    'AcceptTime' : '2017-12-01 05:36:20'  }, {    'AcceptStation' : '到达【&lt;a&gt;龙泉驿&lt;/a&gt;】',    'AcceptTime' : '2017-12-01 07:31:42'  }, {    'AcceptStation' : '离开【龙泉驿】，下一站【龙泉十陵】',    'AcceptTime' : '2017-12-01 11:19:25'  }, {    'AcceptStation' : '【&lt;a&gt;龙泉驿区十陵投递&lt;/a&gt;】接收',    'AcceptTime' : '2017-12-01 13:15:45'  }, {    'AcceptStation' : '【&lt;a&gt;龙泉驿区十陵投递&lt;/a&gt;】正在投递,投递员：王槐志 18728538852',    'AcceptTime' : '2017-12-01 13:59:11'  }, {    'AcceptStation' : '已签收,万科金色城菜鸟驿站 代收,投递员：王槐志 18728538852 ',    'AcceptTime' : '2017-12-01 14:43:41'  } ],  'State' : '3',  'EBusinessID' : '1315771',  'Success' : true}"</span></span>,
     "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"用户获取订单快递物流情况成功"</span></span>,
+    "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}
+</code></pre><h4 id="6->用户确认收货"><a name="6->用户确认收货" href="#6-&gt;用户确认收货"></a>6-&gt;用户确认收货</h4><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>值描述</th>
+<th>是否可空</th>
+<th>限制长度</th>
+<th>参数类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>go_id</td>
+<td>订单主键ID</td>
+<td>否</td>
+<td>无</td>
+<td>长整型</td>
+<td>1</td>
+</tr>
+<tr>
+<td>order_id</td>
+<td>订单编号</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>2017121019061509600</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>MD5数字签名(ui_id+go_id+order_id)按参数的首字母升序顺序进行组装</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>—-</td>
+</tr>
+</tbody>
+</table><h4 id="请求路径"><a name="请求路径" href="#请求路径"></a>请求路径</h4><p><a href="/goods/order_sure">/goods/order_sure</a></p><h6 id="返回结果"><a name="返回结果" href="#返回结果"></a>返回结果</h6><pre class="json hljs"><code class="json" data-origin="<pre><code class=&quot;json&quot;>{
+    &quot;data&quot;:&quot;&quot;,
+    &quot;errorcode&quot;:&quot;&quot;,
+    &quot;errormsg&quot;:&quot;用户确认收货成功&quot;,
+    &quot;errorno&quot;:&quot;0&quot;
+}
+</code></pre>">{
+    "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"用户确认收货成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
 </span>}
 </code></pre>

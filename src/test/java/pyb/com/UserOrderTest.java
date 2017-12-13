@@ -181,4 +181,32 @@ public class UserOrderTest extends BaseWebTest {
                 Param_kdwl.class,
                 result);
     }
+
+    /**
+     * 1.5 用户确认收货例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void F_order_sure() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("go_id","1");
+        params.add("order_id","2017121019061509600");
+        sign(params, "ui_id","go_id","order_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/order_sure").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "UserOrder.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "用户确认收货",
+                "ui_id+go_id+order_id",
+                "/goods/order_sure",
+                6,
+                params,
+                Param_order.class,
+                result);
+    }
 }

@@ -101,6 +101,37 @@ public class UserOrderBiz extends  BaseWxBiz{
         }
     }
 
+
+
+    /**
+     * 用户确认收货
+     */
+    public void UserOrderSure(ReturnDataNew returnData, Param_order param) {
+        try {
+            String sql = "select * from wx_goods_order where go_id=? and order_id=? and ui_id=? limit 1";
+            Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,param.getGo_id(),param.getOrder_id(),param.getUi_id());
+            if(wx_goods_order == null){
+                returnData.setReturnData(errorcode_data, "订单不存在", "","1");
+                return;
+            }
+            //订单状态 0：待付款 1：待发货 2：待收货 3：已完成
+            if(wx_goods_order.getState() == 3){
+                returnData.setReturnData(errorcode_data, "你已经确认过了", "","2");
+                return;
+            }
+            wx_goods_order.setState(3);
+            int count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
+            if(count != 1){
+                returnData.setReturnData(errorcode_data, "用户确认收货失败", "","3");
+                return;
+            }
+            returnData.setReturnData(errorcode_success, "用户确认收货成功", "");
+        } catch (Exception e) {
+            log.error("UserOrderBiz UserOrderSure is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserOrderBiz UserOrderSure is error", "");
+        }
+    }
+
     /****************************下面是封装的查询方法********************************/
 
 }
