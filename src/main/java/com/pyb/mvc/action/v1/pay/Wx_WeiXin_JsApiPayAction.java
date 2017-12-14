@@ -94,19 +94,13 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
       sendResp(returnData, response);
       return null;
     }
-    if (param.pay_price == null) {
-      //pay_price必须大于0
-      returnData.setReturnData(errorcode_param, "pay_price is null", "");
+    if (param.getGoods_list() == null ) {
+      returnData.setReturnData(errorcode_param, "Goods_list is null", "");
       sendResp(returnData, response);
       return null;
 
     }
-    if(param.pay_price < 1 ){
-      //pay_price必须大于0
-      returnData.setReturnData(errorcode_param, "pay_price必须大于0", "");
-      sendResp(returnData, response);
-      return null;
-    }
+
     if (RequestUtil.checkObjectBlank(param.token)) {
       //token不能为空
       returnData.setReturnData(errorcode_param, "token不能为空", "");
@@ -119,7 +113,7 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
       sendResp(returnData, response);
       return null;
     }
-    if (RequestUtil.checkObjectBlank(param.g_id)) {
+/*    if (RequestUtil.checkObjectBlank(param.g_id)) {
       returnData.setReturnData(errorcode_param, "g_id不能为空", "");
       sendResp(returnData, response);
       return null;
@@ -135,6 +129,12 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
       sendResp(returnData, response);
       return null;
     }
+    if(param.pay_price < 1 ){
+      //pay_price必须大于0
+      returnData.setReturnData(errorcode_param, "pay_price必须大于0", "");
+      sendResp(returnData, response);
+      return null;
+    }*/
     if (RequestUtil.checkObjectBlank(param.address)) {
       returnData.setReturnData(errorcode_param, "address不能为空", "");
       sendResp(returnData, response);
@@ -156,11 +156,8 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
               param.dtype,
               param.ui_id,
               param.type,
-              param.pay_price,
               param.t,
               param.token,
-              param.g_id,
-              param.num,
               param.telephone
               );
       //MD5散列(pay_type+uid+pay_price+t+token+app_key）
@@ -180,13 +177,13 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
 //        return null;
 //      }
       //元 转变成分
-      int pay_price_fen = param.pay_price;
-      String subject = "";//商品名称
+//      int pay_price_fen = param.pay_price;
+      String subject = "拼一把商品";//商品名称
       Wx_goods_order wx_goods_order = wxPayBiz.weixin_charge(returnData,param);
 
       if (wx_goods_order != null && returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
         long money = wx_goods_order.getMoney();
-        subject = wx_goods_order.getG_name();
+//        subject = wx_goods_order.getG_name();
 //        JSONObject obj = (JSONObject) JSONObject.toJSON(returnData.getData());
         if (money == 0) {
           returnData.setReturnData(errorcode_data, "微信充值失败", "");

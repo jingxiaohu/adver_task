@@ -1,6 +1,7 @@
 package pyb.com;
 
 import apidoc.jxh.cn.InterfaceUtil;
+import com.pyb.mvc.action.v1.param.BaseParam;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -96,6 +97,32 @@ public class WxUserTest extends BaseWebTest {
                 3,
                 params,
                 Param_userinfo.class,
+                result);
+    }
+
+    /**
+     * 获取我推荐的人例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void D_read_cooperator() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        sign(params, "ui_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/read_my_tj").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取我推荐的人",
+                "ui_id",
+                "/goods/read_my_tj",
+                4,
+                params,
+                BaseParam.class,
                 result);
     }
 }

@@ -52,7 +52,7 @@ public class Notify_WeiXinJsApiction extends BaseV1Controller {
 	 */
 	@RequestMapping(value = "/notify_weixin_jsapi")
 	@ResponseBody
-	public String notify_weixin(HttpServletRequest request,HttpServletResponse response){
+	public String notify_weixin_jsapi(HttpServletRequest request,HttpServletResponse response){
 		ReturnDataNew returnData = new ReturnDataNew();
 		//非空验证
 		try {

@@ -76,6 +76,8 @@ protected Wx_goods_detailsDao wx_goods_detailsDao;
 @Autowired
 protected Wx_goods_orderDao wx_goods_orderDao;
 @Autowired
+protected Wx_order_goodsDao wx_order_goodsDao;
+@Autowired
 protected Wx_goods_typeDao wx_goods_typeDao;
 @Autowired
 protected Wx_user_addressDao wx_user_addressDao;
@@ -193,6 +195,9 @@ public Wx_goods_detailsDao getWx_goods_detailsDao() {
 }
 public Wx_goods_orderDao getWx_goods_orderDao() {
 	return wx_goods_orderDao;
+}
+public Wx_order_goodsDao getWx_order_goodsDao() {
+	return wx_order_goodsDao;
 }
 public Wx_goods_typeDao getWx_goods_typeDao() {
 	return wx_goods_typeDao;

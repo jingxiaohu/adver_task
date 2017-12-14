@@ -1,6 +1,41 @@
 [TOC]
 ### 订单管理模块
-#### 1->获取用户订单列表
+#### 1->用户商品下单
+|参数名称|值描述|是否可空|限制长度|参数类型|举例|
+|--------|-----|----|--------|-------|-----|
+|address|收货地址|否|无|字符串|四川省成都市龙泉驿区十陵灵龙路23号|
+|goods_list|商品列表JSONARRAY数组字符串[{"clothing":"{\"size\":[ 120,130,140,150],\"color\":[\"黄色\",\"红色\",\"蓝色\"]}","g_id":1,"num":2,"pay_price":51}]|是|无|字符串|[{"clothing":"{\"size\":[ 120,130,140,150],\"color\":[\"黄色\",\"红色\",\"蓝色\"]}","g_id":1,"num":2,"pay_price":51}]|
+|t|时间戳ms|否|无|长整型|1513266349545|
+|openid|用户对于微信公众号APPID唯一ID|是|无|字符串|oA_cb0jLCM68XRZMlQ5Z_VHX5onI|
+|name|收货人姓名|否|无|字符串|敬小虎|
+|telephone|收货人电话号码|否|无|字符串|15882345446|
+|type|用户token|是|无|整型|0|
+|token|用户token|否|无|字符串|d7d87c21bedc6d236b1f77ca36c1a770|
+| sign| MD5数字签名(dtype+ui_id+type+t+token+telephone)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+#### 请求路径
+[/goods/weixin_charge_jsapi](/goods/weixin_charge_jsapi)
+###### 返回结果
+```json
+{
+	"data":	{
+		"appid":"wxebee99b0aba36d8f",
+		"mch_id":"1486469632",
+		"nonce_str":"48IAhXrrvFFAA2WZ",
+		"prepay_id":"wx20171214234551c05239662d0576944130",
+		"result_code":"SUCCESS",
+		"return_code":"SUCCESS",
+		"return_msg":"OK",
+		"sign":"E84E34C45D54B39A4155FF509FEA3380",
+		"trade_type":"JSAPI"
+	},
+	"errorcode":"",
+	"errormsg":"微信充值成功",
+	"errorno":"0"
+}
+
+```
+
+#### 2->获取用户订单列表
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|
 |--------|-----|----|--------|-------|-----|
 |state|订单状态 0：待付款 1：待发货 2：待收货 3：已完成|是|无|整型|0|
@@ -13,118 +48,198 @@
 	"data":[
 		{
 			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
-			"ctime":"1512904810000",
+			"ctime":"1513265580000",
 			"express_info":"",
-			"express_time":"1512904810000",
-			"freight_price":"1000",
-			"g_id":"1",
-			"g_logo_url":"https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=15128",
-			"g_name":"橘子",
+			"express_time":"1513265580000",
+			"freight_price":"500",
+			"go_id":"7",
+			"is_after_sale":"0",
+			"is_del":"0",
+			"is_evaluate":"0",
+			"is_pay":"0",
+			"is_send":"0",
+			"logistic_code":"",
+			"money":"20000",
+			"name":"敬小虎",
+			"note":"",
+			"order_id":"2017121423330000367",
+			"ptime":"1513265580000",
+			"recommend_id":"0",
+			"shipper_code":"",
+			"shipper_name":"",
+			"state":"0",
+			"stime":"1513265580000",
+			"subtotal":"0",
+			"telephone":"15882345446",
+			"transaction_id":"",
+			"ui_id":"1"
+		},
+		{
+			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
+			"ctime":"1513265303000",
+			"express_info":"",
+			"express_time":"1513265303000",
+			"freight_price":"500",
+			"go_id":"6",
+			"is_after_sale":"0",
+			"is_del":"0",
+			"is_evaluate":"0",
+			"is_pay":"0",
+			"is_send":"0",
+			"logistic_code":"",
+			"money":"20000",
+			"name":"敬小虎",
+			"note":"",
+			"order_id":"2017121423282392998",
+			"ptime":"1513265303000",
+			"recommend_id":"0",
+			"shipper_code":"",
+			"shipper_name":"",
+			"state":"0",
+			"stime":"1513265303000",
+			"subtotal":"0",
+			"telephone":"15882345446",
+			"transaction_id":"",
+			"ui_id":"1"
+		},
+		{
+			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
+			"ctime":"1513265215000",
+			"express_info":"",
+			"express_time":"1513265215000",
+			"freight_price":"500",
+			"go_id":"5",
+			"is_after_sale":"0",
+			"is_del":"0",
+			"is_evaluate":"0",
+			"is_pay":"0",
+			"is_send":"0",
+			"logistic_code":"",
+			"money":"20000",
+			"name":"敬小虎",
+			"note":"",
+			"order_id":"2017121423265527173",
+			"ptime":"1513265215000",
+			"recommend_id":"0",
+			"shipper_code":"",
+			"shipper_name":"",
+			"state":"0",
+			"stime":"1513265215000",
+			"subtotal":"0",
+			"telephone":"15882345446",
+			"transaction_id":"",
+			"ui_id":"1"
+		},
+		{
+			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
+			"ctime":"1513264891000",
+			"express_info":"",
+			"express_time":"1513264891000",
+			"freight_price":"500",
 			"go_id":"4",
 			"is_after_sale":"0",
 			"is_del":"0",
 			"is_evaluate":"0",
 			"is_pay":"0",
 			"is_send":"0",
-			"money":"51",
+			"logistic_code":"",
+			"money":"20000",
 			"name":"敬小虎",
 			"note":"",
-			"num":"2",
-			"order_id":"2017121019201074573",
-			"price":"4100",
-			"ptime":"1512904810000",
+			"order_id":"2017121423213190135",
+			"ptime":"1513264891000",
 			"recommend_id":"0",
+			"shipper_code":"",
+			"shipper_name":"",
 			"state":"0",
-			"stime":"1512904810000",
+			"stime":"1513264891000",
 			"subtotal":"0",
 			"telephone":"15882345446",
+			"transaction_id":"",
 			"ui_id":"1"
 		},
 		{
 			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
-			"ctime":"1512904353000",
+			"ctime":"1513264656000",
 			"express_info":"",
-			"express_time":"1512904353000",
-			"freight_price":"1000",
-			"g_id":"1",
-			"g_logo_url":"https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=15128",
-			"g_name":"橘子",
+			"express_time":"1513264656000",
+			"freight_price":"500",
 			"go_id":"3",
 			"is_after_sale":"0",
 			"is_del":"0",
 			"is_evaluate":"0",
 			"is_pay":"0",
 			"is_send":"0",
-			"money":"51",
+			"logistic_code":"",
+			"money":"20000",
 			"name":"敬小虎",
 			"note":"",
-			"num":"2",
-			"order_id":"2017121019123350997",
-			"price":"4100",
-			"ptime":"1512904353000",
+			"order_id":"2017121423173699860",
+			"ptime":"1513264656000",
 			"recommend_id":"0",
+			"shipper_code":"",
+			"shipper_name":"",
 			"state":"0",
-			"stime":"1512904353000",
+			"stime":"1513264656000",
 			"subtotal":"0",
 			"telephone":"15882345446",
+			"transaction_id":"",
 			"ui_id":"1"
 		},
 		{
 			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
-			"ctime":"1512904110000",
+			"ctime":"1513264398000",
 			"express_info":"",
-			"express_time":"1512904110000",
-			"freight_price":"1000",
-			"g_id":"1",
-			"g_logo_url":"https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=15128",
-			"g_name":"橘子",
+			"express_time":"1513264398000",
+			"freight_price":"500",
 			"go_id":"2",
 			"is_after_sale":"0",
 			"is_del":"0",
 			"is_evaluate":"0",
 			"is_pay":"0",
 			"is_send":"0",
-			"money":"51",
+			"logistic_code":"",
+			"money":"20000",
 			"name":"敬小虎",
 			"note":"",
-			"num":"2",
-			"order_id":"2017121019083014318",
-			"price":"4100",
-			"ptime":"1512904110000",
+			"order_id":"2017121423131874066",
+			"ptime":"1513264398000",
 			"recommend_id":"0",
+			"shipper_code":"",
+			"shipper_name":"",
 			"state":"0",
-			"stime":"1512904110000",
+			"stime":"1513264398000",
 			"subtotal":"0",
 			"telephone":"15882345446",
+			"transaction_id":"",
 			"ui_id":"1"
 		},
 		{
 			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
-			"ctime":"1512903975000",
+			"ctime":"1513264333000",
 			"express_info":"",
-			"express_time":"1512903975000",
-			"freight_price":"1000",
-			"g_id":"1",
-			"g_logo_url":"https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=15128",
-			"g_name":"橘子",
+			"express_time":"1513264333000",
+			"freight_price":"500",
 			"go_id":"1",
 			"is_after_sale":"0",
 			"is_del":"0",
 			"is_evaluate":"0",
 			"is_pay":"0",
 			"is_send":"0",
-			"money":"51",
+			"logistic_code":"9891649961956",
+			"money":"20000",
 			"name":"敬小虎",
 			"note":"",
-			"num":"2",
-			"order_id":"2017121019061509600",
-			"price":"4100",
-			"ptime":"1512903975000",
+			"order_id":"2017121423121300935",
+			"ptime":"1513264333000",
 			"recommend_id":"0",
+			"shipper_code":"YZPY",
+			"shipper_name":"邮政快递",
 			"state":"0",
-			"stime":"1512903975000",
+			"stime":"1513264333000",
 			"subtotal":"0",
 			"telephone":"15882345446",
+			"transaction_id":"",
 			"ui_id":"1"
 		}
 	],
@@ -134,43 +249,12 @@
 }
 
 ```
-#########返回字段说明
-|名称|描述|类型|
-|----|----|---|
-|go_id|主键ID|long|
-|order_id|订单号|String|
-|g_id|商品表主键ID|long|
-|ui_id|用户ID|long|
-|price|商品单价|int|
-|num|商品数量|int|
-|express_info|快递信息（例如：已经签收收发室代收投递员：宋李鹏15608194018）|String|
-|express_time|快递签收时间（2017-12-0116：49：35）|java.util.Date|
-|address|收货地址（四川省成都市青羊区四川省成都市青羊区金丝街22号）|String|
-|name|收货人姓名|String|
-|telephone|收货人手机号码|String|
-|subtotal|商品小计金额单位分|int|
-|freight_price|运费单位分|int|
-|money|实付金额（含运费）单位分|int|
-|ctime|创建时间|java.util.Date|
-|ptime|支付时间|java.util.Date|
-|stime|发货时间|java.util.Date|
-|is_after_sale|是否申请了售后0：没有1：有|int|
-|is_pay|是否支付成功0：没有1：支付成功|int|
-|state|订单状态0：待付款1：待发货2：待收货3：已完成|int|
-|is_send|卖家是否发货0：没有1：已经发货|int|
-|is_evaluate|是否待评价0：待评价1：已评价|int|
-|note|备注|String|
-|is_del|是否逻辑删除:0：不删除1：删除|int|
-|recommend_id|我的推荐人用户ID|long|
-|g_name|商品名称|String|
-|g_logo_url|商品logo图片|String|
 
-
-#### 2->用户取消订单
+#### 3->用户取消订单
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|
 |--------|-----|----|--------|-------|-----|
 |go_id|订单主键ID|否|无|长整型|1|
-|order_id|订单编号|否|无|字符串|1|
+|order_id|订单编号|否|无|字符串|2017121423121300935|
 | sign| MD5数字签名(ui_id+go_id+order_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
 #### 请求路径
 [/goods/order_cancel](/goods/order_cancel)
@@ -178,14 +262,14 @@
 ```json
 {
 	"data":"",
-	"errorcode":"1",
-	"errormsg":"订单不存在",
-	"errorno":"1002"
+	"errorcode":"",
+	"errormsg":"用户取消订单成功",
+	"errorno":"0"
 }
 
 ```
 
-#### 3->获取订单详情
+#### 4->获取订单详情
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|
 |--------|-----|----|--------|-------|-----|
 |go_id|订单主键ID|否|无|长整型|1|
@@ -198,112 +282,111 @@
 {
 	"data":	{
 		"address":"四川省成都市龙泉驿区十陵灵龙路23号",
-		"ctime":"1512903975000",
+		"ctime":"1513264333000",
 		"express_info":"",
-		"express_time":"1512903975000",
-		"freight_price":"1000",
-		"g_id":"1",
-		"g_logo_url":"https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=15128",
-		"g_name":"橘子",
+		"express_time":"1513264333000",
+		"freight_price":"500",
 		"go_id":"1",
 		"is_after_sale":"0",
-		"is_del":"0",
+		"is_del":"1",
 		"is_evaluate":"0",
 		"is_pay":"0",
 		"is_send":"0",
-		"money":"51",
+		"logistic_code":"9891649961956",
+		"money":"20000",
 		"name":"敬小虎",
 		"note":"",
-		"num":"2",
-		"order_id":"2017121019061509600",
-		"price":"4100",
-		"ptime":"1512903975000",
+		"order_id":"2017121423121300935",
+		"ptime":"1513264333000",
 		"recommend_id":"0",
+		"shipper_code":"YZPY",
+		"shipper_name":"邮政快递",
 		"state":"0",
-		"stime":"1512903975000",
+		"stime":"1513264333000",
 		"subtotal":"0",
 		"telephone":"15882345446",
+		"transaction_id":"",
 		"ui_id":"1"
 	},
 	"errorcode":"",
-	"errormsg":"用户取消订单成功",
+	"errormsg":"用户获取订单详情成功",
 	"errorno":"0"
 }
 
 ```
-#########返回字段说明
-|名称|描述|类型|
-|----|----|---|
-|go_id|主键ID|long|
-|order_id|订单号|String|
-|g_id|商品表主键ID|long|
-|ui_id|用户ID|long|
-|price|商品单价|int|
-|num|商品数量|int|
-|express_info|快递信息（例如：已经签收收发室代收投递员：宋李鹏15608194018）|String|
-|express_time|快递签收时间（2017-12-0116：49：35）|java.util.Date|
-|address|收货地址（四川省成都市青羊区四川省成都市青羊区金丝街22号）|String|
-|name|收货人姓名|String|
-|telephone|收货人手机号码|String|
-|subtotal|商品小计金额单位分|int|
-|freight_price|运费单位分|int|
-|money|实付金额（含运费）单位分|int|
-|ctime|创建时间|java.util.Date|
-|ptime|支付时间|java.util.Date|
-|stime|发货时间|java.util.Date|
-|is_after_sale|是否申请了售后0：没有1：有|int|
-|is_pay|是否支付成功0：没有1：支付成功|int|
-|state|订单状态0：待付款1：待发货2：待收货3：已完成|int|
-|is_send|卖家是否发货0：没有1：已经发货|int|
-|is_evaluate|是否待评价0：待评价1：已评价|int|
-|note|备注|String|
-|is_del|是否逻辑删除:0：不删除1：删除|int|
-|recommend_id|我的推荐人用户ID|long|
-|g_name|商品名称|String|
-|g_logo_url|商品logo图片|String|
 
-
-#### 4->用户商品下单
+#### 5->获取用户订单对应商品列表
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|
 |--------|-----|----|--------|-------|-----|
-|pay_price|充值金额或者商品价格总计 单位 分|否|无|整型|51|
-|g_id|商品主键ID|否|无|长整型|1|
-|address|收货地址|否|无|字符串|四川省成都市龙泉驿区十陵灵龙路23号|
-|t|时间戳ms|否|无|长整型|1512909475849|
-|openid|用户对于微信公众号APPID唯一ID|是|无|字符串|oA_cb0jLCM68XRZMlQ5Z_VHX5onI|
-|num|商品购买数量|是|无|整型|2|
-|name|收货人姓名|否|无|字符串|敬小虎|
-|clothing|服装类商品尺码颜色JSON{"size":[ 120,130,140,150],"color":["黄色","红色","蓝色"]}|是|无|字符串|{"size":[ 120,130,140,150],"color":["黄色","红色","蓝色"]}|
-|telephone|收货人电话号码|否|无|字符串|15882345446|
-|type|用户token|是|无|整型|0|
-|token|用户token|否|无|字符串|d7d87c21bedc6d236b1f77ca36c1a770|
-| sign| MD5数字签名(dtype+ui_id+type+pay_price+t+token+g_id+num+telephone)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+|go_id|订单主键ID|否|无|长整型|1|
+|order_id|订单编号|否|无|字符串||
+| sign| MD5数字签名(ui_id+go_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
 #### 请求路径
-[/goods/weixin_charge_jsapi](/goods/weixin_charge_jsapi)
+[/goods/order_info_goods](/goods/order_info_goods)
 ###### 返回结果
 ```json
 {
 	"data":	{
-		"appid":"wxebee99b0aba36d8f",
-		"mch_id":"1486469632",
-		"nonce_str":"RE3FYq7OzY7rPvVw",
-		"prepay_id":"wx2017121020375670d21f76940566124686",
-		"result_code":"SUCCESS",
-		"return_code":"SUCCESS",
-		"return_msg":"OK",
-		"sign":"589755DB84015C1BBA3E6A615FC77BB1",
-		"trade_type":"JSAPI"
+[
+			{
+				"clothing":"{'size':[ 120,130,140,150],'color':['黄色','红色','蓝色']}",
+				"ctime":"1513264333000",
+				"freight_price":"0",
+				"g_id":"1",
+				"g_logo_url":"",
+				"g_name":"衣服",
+				"gt_id":"2",
+				"is_del":"0",
+				"money":"20000",
+				"note":"",
+				"num":"2",
+				"og_id":"1",
+				"order_id":"2017121423121300935",
+				"price":"10000",
+				"subtotal":"20000",
+				"ui_id":"1"
+			}
+		],
+		{
+			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
+			"ctime":"1513264333000",
+			"express_info":"",
+			"express_time":"1513264333000",
+			"freight_price":"500",
+			"go_id":"1",
+			"is_after_sale":"0",
+			"is_del":"1",
+			"is_evaluate":"0",
+			"is_pay":"0",
+			"is_send":"0",
+			"logistic_code":"9891649961956",
+			"money":"20000",
+			"name":"敬小虎",
+			"note":"",
+			"order_id":"2017121423121300935",
+			"ptime":"1513264333000",
+			"recommend_id":"0",
+			"shipper_code":"YZPY",
+			"shipper_name":"邮政快递",
+			"state":"0",
+			"stime":"1513264333000",
+			"subtotal":"0",
+			"telephone":"15882345446",
+			"transaction_id":"",
+			"ui_id":"1"
+		}
 	},
 	"errorcode":"",
-	"errormsg":"微信充值成功",
+	"errormsg":"获取用户订单对应商品列表成功",
 	"errorno":"0"
 }
 
 ```
-#### 5->获取订单快递信息列表
+
+#### 6->获取订单快递信息列表
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|
 |--------|-----|----|--------|-------|-----|
-|order_id|订单编号|否|无|字符串|2017121019061509600|
+|order_id|订单编号|否|无|字符串|2017121423121300935|
 | sign| MD5数字签名(dtype+order_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
 #### 请求路径
 [/goods/kdwl](/goods/kdwl)
@@ -318,12 +401,11 @@
 
 ```
 
-
-#### 6->用户确认收货
+#### 7->用户确认收货
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|
 |--------|-----|----|--------|-------|-----|
 |go_id|订单主键ID|否|无|长整型|1|
-|order_id|订单编号|否|无|字符串|2017121019061509600|
+|order_id|订单编号|否|无|字符串|2017121423121300935|
 | sign| MD5数字签名(ui_id+go_id+order_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
 #### 请求路径
 [/goods/order_sure](/goods/order_sure)

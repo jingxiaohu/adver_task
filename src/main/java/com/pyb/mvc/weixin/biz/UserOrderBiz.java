@@ -1,7 +1,9 @@
 package com.pyb.mvc.weixin.biz;
 
+import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Wx_goods_order;
+import com.pyb.bean.Wx_order_goods;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
@@ -38,6 +40,16 @@ public class UserOrderBiz extends  BaseWxBiz{
                 sql = "select * from wx_goods_order where ui_id=? and state=? and is_del=0 order by ctime desc limit " + start + "," + size;
                 list = getDB().queryListT(sql,Wx_goods_order.class,param.getUi_id(),param.getState());
             }
+
+            /*if(list != null && list.size() > 0){
+                //遍历订单列表 获取 订单对应的商品数据
+
+
+
+            }*/
+
+
+
             returnData.setReturnData(errorcode_success, "获取我的订单列表成功", list);
         } catch (Exception e) {
             log.error("UserOrderBiz GainUserOrderList is error", e);
@@ -51,10 +63,39 @@ public class UserOrderBiz extends  BaseWxBiz{
         try {
             String sql = "select * from wx_goods_order where go_id=?  and ui_id=? limit 1";
             Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,param.getGo_id(),param.getUi_id());
-            returnData.setReturnData(errorcode_success, "用户取消订单成功", wx_goods_order);
+            returnData.setReturnData(errorcode_success, "用户获取订单详情成功", wx_goods_order);
         } catch (Exception e) {
             log.error("UserOrderBiz GainOrderInfo is error", e);
             returnData.setReturnData(errorcode_systerm, "UserOrderBiz GainOrderInfo is error", "");
+        }
+    }
+    /**
+     * 获取用户订单对应商品列表
+     */
+    public void GainOrderInfoGoods(ReturnDataNew returnData, Param_order param) {
+        try {
+            JSONObject obj = new JSONObject();
+            obj.put("order_info","");//订单信息
+            obj.put("order_goods","");//订单信息对应的商品列表
+
+            String sql = "select * from wx_goods_order where go_id=?  and ui_id=? limit 1";
+            Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,param.getGo_id(),param.getUi_id());
+            if(wx_goods_order == null){
+                obj.put("order_info","");//订单信息
+            }else{
+                obj.put("order_info",wx_goods_order);//订单信息
+            }
+            sql = "select * from wx_order_goods where  order_id=?";
+            List<Wx_order_goods> list = getDB().queryListT(sql,Wx_order_goods.class,wx_goods_order.getOrder_id());
+            if(list == null){
+                obj.put("order_goods","");//订单信息对应的商品列表
+            }else{
+                obj.put("order_goods",list);//订单信息对应的商品列表
+            }
+            returnData.setReturnData(errorcode_success, "获取用户订单对应商品列表成功", obj);
+        } catch (Exception e) {
+            log.error("UserOrderBiz GainOrderInfoGoods is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserOrderBiz GainOrderInfoGoods is error", "");
         }
     }
     /**

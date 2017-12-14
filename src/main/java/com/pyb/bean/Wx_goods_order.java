@@ -7,14 +7,11 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_goods_order implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"go_id","order_id","g_id","ui_id","price","num","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","g_name","g_logo_url","transaction_id","clothing","gt_id","logistic_code","shipper_name","shipper_code"};
+    //public static String[] carrays ={"go_id","order_id","ui_id","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","transaction_id","logistic_code","shipper_name","shipper_code"};
 
     public long go_id;//bigint(20)    主键ID
     public String order_id="";//varchar(80)    订单号
-    public long g_id;//bigint(20)    商品表主键ID
     public long ui_id;//bigint(20)    用户ID
-    public int price;//int(11)    商品单价
-    public int num;//int(11)    商品数量
     public String express_info="";//varchar(255)    快递信息（例如：已经签收收发室代收投递员：宋李鹏15608194018）
     public java.util.Date express_time=new java.util.Date();//timestamp    快递签收时间（2017-12-0116：49：35）
     public String address="";//varchar(255)    收货地址（四川省成都市青羊区四川省成都市青羊区金丝街22号）
@@ -34,11 +31,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public String note="";//varchar(60)    备注
     public int is_del;//int(11)    是否逻辑删除:0：不删除1：删除
     public long recommend_id;//bigint(20)    我的推荐人用户ID
-    public String g_name="";//varchar(150)    商品名称
-    public String g_logo_url="";//varchar(200)    商品logo图片
     public String transaction_id="";//varchar(100)    第三方交易单号
-    public String clothing="";//varchar(255)    服装类商品尺码颜色JSON{"size":[120,130,140,150],"color":["黄色","红色","蓝色"]}
-    public long gt_id;//bigint(20)    商品类型ID
     public String logistic_code="";//varchar(100)    快递单号
     public String shipper_name="";//varchar(100)    快递公司名称
     public String shipper_code="";//varchar(30)    快鸟-快递公司编码
@@ -64,36 +57,12 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.order_id= value;
     }
 
-    public long getG_id(){
-        return g_id;
-    }
-
-    public void setG_id(long value){
-        this.g_id= value;
-    }
-
     public long getUi_id(){
         return ui_id;
     }
 
     public void setUi_id(long value){
         this.ui_id= value;
-    }
-
-    public int getPrice(){
-        return price;
-    }
-
-    public void setPrice(int value){
-        this.price= value;
-    }
-
-    public int getNum(){
-        return num;
-    }
-
-    public void setNum(int value){
-        this.num= value;
     }
 
     public String getExpress_info(){
@@ -275,28 +244,6 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.recommend_id= value;
     }
 
-    public String getG_name(){
-        return g_name;
-    }
-
-    public void setG_name(String value){
-    	if(value == null){
-           value = "";
-        }
-        this.g_name= value;
-    }
-
-    public String getG_logo_url(){
-        return g_logo_url;
-    }
-
-    public void setG_logo_url(String value){
-    	if(value == null){
-           value = "";
-        }
-        this.g_logo_url= value;
-    }
-
     public String getTransaction_id(){
         return transaction_id;
     }
@@ -306,25 +253,6 @@ public class Wx_goods_order implements Cloneable , Serializable{
            value = "";
         }
         this.transaction_id= value;
-    }
-
-    public String getClothing(){
-        return clothing;
-    }
-
-    public void setClothing(String value){
-    	if(value == null){
-           value = "";
-        }
-        this.clothing= value;
-    }
-
-    public long getGt_id(){
-        return gt_id;
-    }
-
-    public void setGt_id(long value){
-        this.gt_id= value;
     }
 
     public String getLogistic_code(){
@@ -362,14 +290,11 @@ public class Wx_goods_order implements Cloneable , Serializable{
 
 
 
-    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long g_id, long ui_id, int price, int num, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String g_name, String g_logo_url, String transaction_id, String clothing, long gt_id, String logistic_code, String shipper_name, String shipper_code) {
+    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long ui_id, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String transaction_id, String logistic_code, String shipper_name, String shipper_code) {
         Wx_goods_order ret = new Wx_goods_order();
         ret.setGo_id(go_id);
         ret.setOrder_id(order_id);
-        ret.setG_id(g_id);
         ret.setUi_id(ui_id);
-        ret.setPrice(price);
-        ret.setNum(num);
         ret.setExpress_info(express_info);
         ret.setExpress_time(express_time);
         ret.setAddress(address);
@@ -389,11 +314,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         ret.setNote(note);
         ret.setIs_del(is_del);
         ret.setRecommend_id(recommend_id);
-        ret.setG_name(g_name);
-        ret.setG_logo_url(g_logo_url);
         ret.setTransaction_id(transaction_id);
-        ret.setClothing(clothing);
-        ret.setGt_id(gt_id);
         ret.setLogistic_code(logistic_code);
         ret.setShipper_name(shipper_name);
         ret.setShipper_code(shipper_code);
@@ -403,10 +324,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public void assignment(Wx_goods_order wx_goods_order) {
         long go_id = wx_goods_order.getGo_id();
         String order_id = wx_goods_order.getOrder_id();
-        long g_id = wx_goods_order.getG_id();
         long ui_id = wx_goods_order.getUi_id();
-        int price = wx_goods_order.getPrice();
-        int num = wx_goods_order.getNum();
         String express_info = wx_goods_order.getExpress_info();
         java.util.Date express_time = wx_goods_order.getExpress_time();
         String address = wx_goods_order.getAddress();
@@ -426,21 +344,14 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String note = wx_goods_order.getNote();
         int is_del = wx_goods_order.getIs_del();
         long recommend_id = wx_goods_order.getRecommend_id();
-        String g_name = wx_goods_order.getG_name();
-        String g_logo_url = wx_goods_order.getG_logo_url();
         String transaction_id = wx_goods_order.getTransaction_id();
-        String clothing = wx_goods_order.getClothing();
-        long gt_id = wx_goods_order.getGt_id();
         String logistic_code = wx_goods_order.getLogistic_code();
         String shipper_name = wx_goods_order.getShipper_name();
         String shipper_code = wx_goods_order.getShipper_code();
 
         this.setGo_id(go_id);
         this.setOrder_id(order_id);
-        this.setG_id(g_id);
         this.setUi_id(ui_id);
-        this.setPrice(price);
-        this.setNum(num);
         this.setExpress_info(express_info);
         this.setExpress_time(express_time);
         this.setAddress(address);
@@ -460,11 +371,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.setNote(note);
         this.setIs_del(is_del);
         this.setRecommend_id(recommend_id);
-        this.setG_name(g_name);
-        this.setG_logo_url(g_logo_url);
         this.setTransaction_id(transaction_id);
-        this.setClothing(clothing);
-        this.setGt_id(gt_id);
         this.setLogistic_code(logistic_code);
         this.setShipper_name(shipper_name);
         this.setShipper_code(shipper_code);
@@ -475,10 +382,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public static void getWx_goods_order(Wx_goods_order wx_goods_order ){
         long go_id = wx_goods_order.getGo_id();
         String order_id = wx_goods_order.getOrder_id();
-        long g_id = wx_goods_order.getG_id();
         long ui_id = wx_goods_order.getUi_id();
-        int price = wx_goods_order.getPrice();
-        int num = wx_goods_order.getNum();
         String express_info = wx_goods_order.getExpress_info();
         java.util.Date express_time = wx_goods_order.getExpress_time();
         String address = wx_goods_order.getAddress();
@@ -498,11 +402,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String note = wx_goods_order.getNote();
         int is_del = wx_goods_order.getIs_del();
         long recommend_id = wx_goods_order.getRecommend_id();
-        String g_name = wx_goods_order.getG_name();
-        String g_logo_url = wx_goods_order.getG_logo_url();
         String transaction_id = wx_goods_order.getTransaction_id();
-        String clothing = wx_goods_order.getClothing();
-        long gt_id = wx_goods_order.getGt_id();
         String logistic_code = wx_goods_order.getLogistic_code();
         String shipper_name = wx_goods_order.getShipper_name();
         String shipper_code = wx_goods_order.getShipper_code();
@@ -515,10 +415,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public static Map<String,Object> toEnMap(Wx_goods_order wx_goods_order){
         long go_id = wx_goods_order.getGo_id();
         String order_id = wx_goods_order.getOrder_id();
-        long g_id = wx_goods_order.getG_id();
         long ui_id = wx_goods_order.getUi_id();
-        int price = wx_goods_order.getPrice();
-        int num = wx_goods_order.getNum();
         String express_info = wx_goods_order.getExpress_info();
         java.util.Date express_time = wx_goods_order.getExpress_time();
         String address = wx_goods_order.getAddress();
@@ -538,11 +435,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String note = wx_goods_order.getNote();
         int is_del = wx_goods_order.getIs_del();
         long recommend_id = wx_goods_order.getRecommend_id();
-        String g_name = wx_goods_order.getG_name();
-        String g_logo_url = wx_goods_order.getG_logo_url();
         String transaction_id = wx_goods_order.getTransaction_id();
-        String clothing = wx_goods_order.getClothing();
-        long gt_id = wx_goods_order.getGt_id();
         String logistic_code = wx_goods_order.getLogistic_code();
         String shipper_name = wx_goods_order.getShipper_name();
         String shipper_code = wx_goods_order.getShipper_code();
@@ -550,10 +443,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("go_id",go_id);
         _ret.put("order_id",order_id);
-        _ret.put("g_id",g_id);
         _ret.put("ui_id",ui_id);
-        _ret.put("price",price);
-        _ret.put("num",num);
         _ret.put("express_info",express_info);
         _ret.put("express_time",express_time);
         _ret.put("address",address);
@@ -573,11 +463,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         _ret.put("note",note);
         _ret.put("is_del",is_del);
         _ret.put("recommend_id",recommend_id);
-        _ret.put("g_name",g_name);
-        _ret.put("g_logo_url",g_logo_url);
         _ret.put("transaction_id",transaction_id);
-        _ret.put("clothing",clothing);
-        _ret.put("gt_id",gt_id);
         _ret.put("logistic_code",logistic_code);
         _ret.put("shipper_name",shipper_name);
         _ret.put("shipper_code",shipper_code);

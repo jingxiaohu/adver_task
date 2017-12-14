@@ -77,3 +77,48 @@
 }
 
 ```
+#### 4->获取我推荐的人
+|参数名称|值描述|是否可空|限制长度|参数类型|举例|
+|--------|-----|----|--------|-------|-----|
+| sign| MD5数字签名(ui_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+#### 请求路径
+[/goods/read_my_tj](/goods/read_my_tj)
+###### 返回结果
+```json
+{
+	"data":[
+		{
+			"area":"四川:成都",
+			"attention_state":"0",
+			"avatar":"http://wx.qlogo.cn/mmopen/PiajxSqBRaELfh04A2Jtl6aiaWHiaxmD8wLUy8Jg4tc3uDGT92Qujnsa7JC5L9hiamicJZoPWA2G3WCCmlmtqfVyB1Q/0",
+			"ctime":"1513253735000",
+			"g_logo_url":"",
+			"is_forbidden":"0",
+			"is_partner":"0",
+			"level":"0",
+			"name":"",
+			"nickname":"X.hell",
+			"note":"",
+			"recommend_code":"538931",
+			"recommend_id":"1",
+			"recommend_nickname":"tom",
+			"recommend_num":"0",
+			"score":"0",
+			"sex":"1",
+			"telephone":"",
+			"ticket":"",
+			"token":"78a486543244dcea93d41ad1f2efdd3b",
+			"ui_id":"2",
+			"user_weixin":"",
+			"utime":"1512377252000",
+			"vc":"0",
+			"weixin_id":"oA_cb0kgkRifepbeNlzO3kf7tL1U",
+			"weixin_no":"20171204164732-84982412199482767"
+		}
+	],
+	"errorcode":"",
+	"errormsg":"获取合伙人的收益汇总成功",
+	"errorno":"0"
+}
+
+```

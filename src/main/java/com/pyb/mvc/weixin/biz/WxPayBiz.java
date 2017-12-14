@@ -1,10 +1,11 @@
 package com.pyb.mvc.weixin.biz;
 
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.Wx_goods;
-import com.pyb.bean.Wx_goods_order;
-import com.pyb.bean.Wx_user_info;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.pyb.bean.*;
+import com.pyb.exception.QzException;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
+import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi_goods;
 import com.pyb.mvc.service.BaseBiz;
 import com.pyb.mvc.service.common.PayParkPB;
 import com.pyb.transaction.PayTransaction;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class WxPayBiz extends BaseBiz {
@@ -27,7 +29,7 @@ public class WxPayBiz extends BaseBiz {
   /**
    * 微信 -- 用户充值
    */
-  public Wx_goods_order weixin_charge(ReturnDataNew returnData,Param_wx_charge_jsapi param) {
+  public Wx_goods_order weixin_charge(ReturnDataNew returnData,Param_wx_charge_jsapi param) throws QzException{
     // TODO Auto-generated method stub
     try {
       String callbackurl = "";//回调地址
@@ -47,49 +49,83 @@ public class WxPayBiz extends BaseBiz {
       }
       tel = userinfo.getTelephone();
 
-      //获取商品信息
-      Wx_goods wx_goods = daoFactory.getWx_goodsDao().selectByKey(param.getG_id());
-      if(wx_goods == null ){
-        returnData.setReturnData(errorcode_param, "该商品不存在", "");
-        return null;
-      }
-
       //处理返回数据和业务逻辑
       Wx_goods_order wx_goods_order = new Wx_goods_order();
       wx_goods_order.setOrder_id(returnUUID());
       wx_goods_order.setAddress(param.getAddress());
       wx_goods_order.setTelephone(param.getTelephone());
       wx_goods_order.setName(param.getName());
-      wx_goods_order.setNum(param.getNum());
+
       wx_goods_order.setExpress_info("");
       wx_goods_order.setExpress_time(null);
       wx_goods_order.setStime(null);
-      wx_goods_order.setFreight_price(wx_goods.getExpress_price());//运费 单位分
+
       wx_goods_order.setUi_id(param.getUi_id());
 
       wx_goods_order.setRecommend_id(userinfo.getRecommend_id());//我的推荐人用户ID
-      wx_goods_order.setG_id(param.getG_id());//商品主键ID
-      wx_goods_order.setG_name(wx_goods.getName());//商品名称
-      wx_goods_order.setG_logo_url(wx_goods.getLogo_url());//商品URL
-      wx_goods_order.setMoney(param.getPay_price());
-      wx_goods_order.setPrice(wx_goods.getPrice_new());
-      wx_goods_order.setClothing(param.getClothing());
-      wx_goods_order.setGt_id(wx_goods.getGt_id());
 
+
+
+
+      /**
+       * 这里进行订单商品关系记录
+       */
+      int yf = 0;//运费小计
+      int money = 0;//实付金额
+      List<Param_wx_charge_jsapi_goods> list = JSONArray.parseArray(JSON.parseArray(param.getGoods_list()).toJSONString(),Param_wx_charge_jsapi_goods.class);
+//              JSONArray.parseArray(param.getGoods_list().toJSONString(),Param_wx_charge_jsapi_goods.class);
+
+      for (Param_wx_charge_jsapi_goods param_goods : list) {
+        if(param_goods.getNum() < 1 ){
+          throw new QzException("param_goods.getNum() is zero g_id="+param_goods.getG_id());
+        }
+        //获取商品信息
+        Wx_goods wx_goods = daoFactory.getWx_goodsDao().selectByKey(param_goods.getG_id());
+        if(wx_goods == null ){
+         throw new QzException("wx_goods == null g_id="+param_goods.getG_id());
+        }
+        Wx_order_goods order_goods = new Wx_order_goods();
+        order_goods.setNum(param_goods.getNum());
+        order_goods.setG_id(param_goods.getG_id());//商品主键ID
+        order_goods.setG_name(wx_goods.getName());//商品名称
+        order_goods.setG_logo_url(wx_goods.getLogo_url());//商品URL
+        order_goods.setPrice(wx_goods.getPrice_new());
+        order_goods.setSubtotal(wx_goods.getPrice_new()*param_goods.getNum());//总计
+        order_goods.setMoney(wx_goods.getPrice_new()*param_goods.getNum());//实付金额
+        order_goods.setClothing(param_goods.getClothing());
+        order_goods.setGt_id(wx_goods.getGt_id());
+        order_goods.setOrder_id(wx_goods_order.getOrder_id());
+        order_goods.setUi_id(wx_goods_order.getUi_id());
+        order_goods.setCtime(new Date());
+        int g_id = daoFactory.getWx_order_goodsDao().insert(order_goods);
+        if(g_id  < 1){
+          throw new QzException("insert Wx_order_goods is error g_id="+param_goods.getG_id());
+        }
+
+        money = money+order_goods.getMoney();
+        yf = yf+ wx_goods.getExpress_price();
+      }
+
+      wx_goods_order.setFreight_price(yf);//运费 单位分
+      wx_goods_order.setMoney(money);
       //新增
       int id = daoFactory.getWx_goods_orderDao().insert(wx_goods_order);
       if(id < 1){
         returnData.setReturnData(errorcode_data, "下单失败", "");
-        return null;
+        throw new QzException("insert wx_goods_order is error");
       }
       wx_goods_order.setGo_id(id);
+
+
+
+
       returnData.setReturnData("0", "下单成功", wx_goods_order);
       return wx_goods_order;
     } catch (Exception e) {
       log.error("WxPayBiz.weixin_charge is error", e);
       returnData.setReturnData(errorcode_data, "下单失败", "");
+      throw new QzException("处理用户下单失败",e);
     }
-    return null;
   }
 
 

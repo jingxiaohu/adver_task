@@ -4,6 +4,7 @@ import com.pyb.bean.ReturnDataNew;
 import com.pyb.bean.Wx_recommend_earnings;
 import com.pyb.bean.Wx_user_address;
 import com.pyb.bean.Wx_user_info;
+import com.pyb.mvc.action.v1.param.BaseParam;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
 import org.springframework.stereotype.Service;
 
@@ -72,6 +73,7 @@ public class UserManageBiz extends BaseWxBiz {
             returnData.setReturnData(errorcode_systerm, "GoodsBiz GainApplyUser is error", "");
         }
     }
+
     /**
      * 获取用户收货地址信息列表
      */
@@ -89,6 +91,22 @@ public class UserManageBiz extends BaseWxBiz {
             returnData.setReturnData(errorcode_systerm, "GoodsBiz GainUserAddressList is error", "");
         }
     }
+
+    /**
+     * 获取我推荐的人
+     */
+    public void GainMyRecommendUser(ReturnDataNew returnData, BaseParam param) {
+        try {
+            String sql = "select * from wx_user_info where recommend_id=?  limit 1";
+            List<Wx_user_info> list = getDB().queryListT(sql, Wx_user_info.class, param.getUi_id());
+            returnData.setReturnData("0", "获取合伙人的收益汇总成功", list);
+        } catch (Exception e) {
+            log.error("GoodsBiz GainMyRecommendUser is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainMyRecommendUser is error", "");
+        }
+    }
+
+
     /****************************下面是封装的查询方法********************************/
     /**
      * 通过weixin_id  获取用户基本信息

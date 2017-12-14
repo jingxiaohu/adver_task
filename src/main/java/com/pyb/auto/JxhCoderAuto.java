@@ -26,7 +26,7 @@ public class JxhCoderAuto {
 				"wp_post_jxh","joke_segment","stock_hand","day_news","stock_info",
 				"wx_user_info"
 						,"wx_after_sale","wx_evaluate","wx_goods","wx_goods_details"
-						,"wx_goods_order"
+						,"wx_goods_order","wx_order_goods"
 						,"wx_goods_type","wx_user_address","wx_apply_cash",
 						"wx_recommend_user","wx_recommend_earnings","wx_accesstoken"
 						,"admin_user","admin_role","wx_banner_img"

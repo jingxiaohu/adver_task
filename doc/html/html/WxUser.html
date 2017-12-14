@@ -97,6 +97,32 @@
 </li>
 </ul>
 </li>
+<li><span class="title">
+<a href="#4-&gt;获取我推荐的人" title="4->获取我推荐的人">4-&gt;获取我推荐的人</a>
+</span>
+<!--span class="number">
+10
+</span-->
+</li>
+<li><span class="title">
+<a href="#请求路径-3" title="请求路径">请求路径</a>
+</span>
+<!--span class="number">
+11
+</span-->
+<ul>
+<li><ul>
+<li><span class="title">
+<a href="#返回结果-3" title="返回结果">返回结果</a>
+</span>
+<!--span class="number">
+12
+</span-->
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -254,6 +280,97 @@
 }
 </code></pre>">{
     "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"获取合伙人的收益汇总成功"</span></span>,
+    "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}
+</code></pre><h4 id="4->获取我推荐的人"><a name="4->获取我推荐的人" href="#4-&gt;获取我推荐的人"></a>4-&gt;获取我推荐的人</h4><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>值描述</th>
+<th>是否可空</th>
+<th>限制长度</th>
+<th>参数类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sign</td>
+<td>MD5数字签名(ui_id)按参数的首字母升序顺序进行组装</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>—-</td>
+</tr>
+</tbody>
+</table><h4 id="请求路径"><a name="请求路径" href="#请求路径"></a>请求路径</h4><p><a href="/goods/read_my_tj">/goods/read_my_tj</a></p><h6 id="返回结果"><a name="返回结果" href="#返回结果"></a>返回结果</h6><pre class="json hljs"><code class="json" data-origin="<pre><code class=&quot;json&quot;>{
+    &quot;data&quot;:[
+        {
+            &quot;area&quot;:&quot;四川:成都&quot;,
+            &quot;attention_state&quot;:&quot;0&quot;,
+            &quot;avatar&quot;:&quot;http://wx.qlogo.cn/mmopen/PiajxSqBRaELfh04A2Jtl6aiaWHiaxmD8wLUy8Jg4tc3uDGT92Qujnsa7JC5L9hiamicJZoPWA2G3WCCmlmtqfVyB1Q/0&quot;,
+            &quot;ctime&quot;:&quot;1513253735000&quot;,
+            &quot;g_logo_url&quot;:&quot;&quot;,
+            &quot;is_forbidden&quot;:&quot;0&quot;,
+            &quot;is_partner&quot;:&quot;0&quot;,
+            &quot;level&quot;:&quot;0&quot;,
+            &quot;name&quot;:&quot;&quot;,
+            &quot;nickname&quot;:&quot;X.hell&quot;,
+            &quot;note&quot;:&quot;&quot;,
+            &quot;recommend_code&quot;:&quot;538931&quot;,
+            &quot;recommend_id&quot;:&quot;1&quot;,
+            &quot;recommend_nickname&quot;:&quot;tom&quot;,
+            &quot;recommend_num&quot;:&quot;0&quot;,
+            &quot;score&quot;:&quot;0&quot;,
+            &quot;sex&quot;:&quot;1&quot;,
+            &quot;telephone&quot;:&quot;&quot;,
+            &quot;ticket&quot;:&quot;&quot;,
+            &quot;token&quot;:&quot;78a486543244dcea93d41ad1f2efdd3b&quot;,
+            &quot;ui_id&quot;:&quot;2&quot;,
+            &quot;user_weixin&quot;:&quot;&quot;,
+            &quot;utime&quot;:&quot;1512377252000&quot;,
+            &quot;vc&quot;:&quot;0&quot;,
+            &quot;weixin_id&quot;:&quot;oA_cb0kgkRifepbeNlzO3kf7tL1U&quot;,
+            &quot;weixin_no&quot;:&quot;20171204164732-84982412199482767&quot;
+        }
+    ],
+    &quot;errorcode&quot;:&quot;&quot;,
+    &quot;errormsg&quot;:&quot;获取合伙人的收益汇总成功&quot;,
+    &quot;errorno&quot;:&quot;0&quot;
+}
+</code></pre>">{
+    "<span class="hljs-attribute">data</span>":<span class="hljs-value">[
+        {
+            "<span class="hljs-attribute">area</span>":<span class="hljs-value"><span class="hljs-string">"四川:成都"</span></span>,
+            "<span class="hljs-attribute">attention_state</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">avatar</span>":<span class="hljs-value"><span class="hljs-string">"http://wx.qlogo.cn/mmopen/PiajxSqBRaELfh04A2Jtl6aiaWHiaxmD8wLUy8Jg4tc3uDGT92Qujnsa7JC5L9hiamicJZoPWA2G3WCCmlmtqfVyB1Q/0"</span></span>,
+            "<span class="hljs-attribute">ctime</span>":<span class="hljs-value"><span class="hljs-string">"1513253735000"</span></span>,
+            "<span class="hljs-attribute">g_logo_url</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">is_forbidden</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">is_partner</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">level</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">name</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">nickname</span>":<span class="hljs-value"><span class="hljs-string">"X.hell"</span></span>,
+            "<span class="hljs-attribute">note</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">recommend_code</span>":<span class="hljs-value"><span class="hljs-string">"538931"</span></span>,
+            "<span class="hljs-attribute">recommend_id</span>":<span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+            "<span class="hljs-attribute">recommend_nickname</span>":<span class="hljs-value"><span class="hljs-string">"tom"</span></span>,
+            "<span class="hljs-attribute">recommend_num</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">score</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">sex</span>":<span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+            "<span class="hljs-attribute">telephone</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">ticket</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">token</span>":<span class="hljs-value"><span class="hljs-string">"78a486543244dcea93d41ad1f2efdd3b"</span></span>,
+            "<span class="hljs-attribute">ui_id</span>":<span class="hljs-value"><span class="hljs-string">"2"</span></span>,
+            "<span class="hljs-attribute">user_weixin</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">utime</span>":<span class="hljs-value"><span class="hljs-string">"1512377252000"</span></span>,
+            "<span class="hljs-attribute">vc</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">weixin_id</span>":<span class="hljs-value"><span class="hljs-string">"oA_cb0kgkRifepbeNlzO3kf7tL1U"</span></span>,
+            "<span class="hljs-attribute">weixin_no</span>":<span class="hljs-value"><span class="hljs-string">"20171204164732-84982412199482767"</span>
+        </span>}
+    ]</span>,
     "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"获取合伙人的收益汇总成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
