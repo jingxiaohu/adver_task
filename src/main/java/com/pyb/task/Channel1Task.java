@@ -13,7 +13,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -35,7 +34,7 @@ public class Channel1Task {
 	 * 调度抓取新闻的数据
 	 * http://www.528ads.com/jxh_publish.php?type=1&ids=5620
 	 */
-	@Scheduled(cron = "0 0/10 * * * ?")
+//	@Scheduled(cron = "0 0/10 * * * ?")
 	public void dospider(){
 		try{
 				log.info("------------Channel1Task----------------is start---");
@@ -48,7 +47,7 @@ public class Channel1Task {
 	/**
 	 * 调度抓取新闻的数据
 	 */
-	@Scheduled(cron = "0 0 0/2 * * ?")
+//	@Scheduled(cron = "0 0 0/2 * * ?")
 	public void zzUtil(){
 		try{
 			log.info("------------Channel1Task-------zzUtil---------is start---");
@@ -66,7 +65,7 @@ public class Channel1Task {
 	/**
 	 * 调度抓取实盘大单的数据
 	 */
-	@Scheduled(cron = "0 0/30 * * * ?")
+//	@Scheduled(cron = "0 0/30 * * * ?")
 	public void dospiderstocklist(){
 		try{
 				log.info("------------Channel3Task----------------is start---");
@@ -84,7 +83,7 @@ public class Channel1Task {
 	/**
 	 * 每三小时抓取一次 停复牌提示
 	 */
-	@Scheduled(cron = "0 0 0/1 * * ?")
+//	@Scheduled(cron = "0 0 0/1 * * ?")
 	public void dospiderDFCF(){
 		try{
 				log.info("------------Channel567Task----------------is start---");
