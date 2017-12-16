@@ -11,6 +11,8 @@ import com.pyb.mvc.service.common.PayParkPB;
 import com.pyb.transaction.PayTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -130,6 +132,208 @@ public class WxPayBiz extends BaseBiz {
 
 
 
+  //weixin_charge_userpay
+
+  /**
+   * 微信 -- 用户充值
+   */
+  public Wx_user_pay weixin_charge_userpay(ReturnDataNew returnData,Param_wx_charge_jsapi param) throws QzException{
+    // TODO Auto-generated method stub
+    try {
+      String callbackurl = "";//回调地址
+      String uuid = "";
+      String tel = "";
+      //PDA系统除开
+      Wx_user_info userinfo = daoFactory.getWx_user_infoDao().selectByKey(param.getUi_id());
+      if (userinfo == null) {
+        //用户不存在
+        returnData.setReturnData(errorcode_param, "用户不存在", "");
+        return null;
+      }
+      if (!userinfo.getToken().equalsIgnoreCase(param.getToken())) {
+        //用户不合法
+        returnData.setReturnData(errorcode_param, "用户未授权", "");
+        return null;
+      }
+      tel = userinfo.getTelephone();
+
+      //处理返回数据和业务逻辑
+      Wx_goods_order wx_goods_order = new Wx_goods_order();
+      wx_goods_order.setOrder_id(returnUUID());
+      wx_goods_order.setAddress(param.getAddress());
+      wx_goods_order.setTelephone(param.getTelephone());
+      wx_goods_order.setName(param.getName());
+
+      wx_goods_order.setExpress_info("");
+      wx_goods_order.setExpress_time(null);
+      wx_goods_order.setStime(null);
+
+      wx_goods_order.setUi_id(param.getUi_id());
+
+      wx_goods_order.setRecommend_id(userinfo.getRecommend_id());//我的推荐人用户ID
+
+
+
+
+      /**
+       * 这里进行订单商品关系记录
+       */
+      int yf = 0;//运费小计
+      int money = 0;//实付金额
+      List<Param_wx_charge_jsapi_goods> list = JSONArray.parseArray(JSON.parseArray(param.getGoods_list()).toJSONString(),Param_wx_charge_jsapi_goods.class);
+//              JSONArray.parseArray(param.getGoods_list().toJSONString(),Param_wx_charge_jsapi_goods.class);
+
+      for (Param_wx_charge_jsapi_goods param_goods : list) {
+        if(param_goods.getNum() < 1 ){
+          throw new QzException("param_goods.getNum() is zero g_id="+param_goods.getG_id());
+        }
+        //获取商品信息
+        Wx_goods wx_goods = daoFactory.getWx_goodsDao().selectByKey(param_goods.getG_id());
+        if(wx_goods == null ){
+          throw new QzException("wx_goods == null g_id="+param_goods.getG_id());
+        }
+        Wx_order_goods order_goods = new Wx_order_goods();
+        order_goods.setNum(param_goods.getNum());
+        order_goods.setG_id(param_goods.getG_id());//商品主键ID
+        order_goods.setG_name(wx_goods.getName());//商品名称
+        order_goods.setG_logo_url(wx_goods.getLogo_url());//商品URL
+        order_goods.setPrice(wx_goods.getPrice_new());
+        order_goods.setSubtotal(wx_goods.getPrice_new()*param_goods.getNum());//总计
+        order_goods.setMoney(wx_goods.getPrice_new()*param_goods.getNum());//实付金额
+        order_goods.setClothing(param_goods.getClothing());
+        order_goods.setGt_id(wx_goods.getGt_id());
+        order_goods.setOrder_id(wx_goods_order.getOrder_id());
+        order_goods.setUi_id(wx_goods_order.getUi_id());
+        order_goods.setCtime(new Date());
+        int g_id = daoFactory.getWx_order_goodsDao().insert(order_goods);
+        if(g_id  < 1){
+          throw new QzException("insert Wx_order_goods is error g_id="+param_goods.getG_id());
+        }
+
+        money = money+order_goods.getMoney();
+        yf = yf+ wx_goods.getExpress_price();
+      }
+
+      wx_goods_order.setFreight_price(yf);//运费 单位分
+      wx_goods_order.setMoney(money);
+      //新增
+      int id = daoFactory.getWx_goods_orderDao().insert(wx_goods_order);
+      if(id < 1){
+        returnData.setReturnData(errorcode_data, "下单失败", "");
+        throw new QzException("insert wx_goods_order is error");
+      }
+      wx_goods_order.setGo_id(id);
+      //这里在Wx_user_pay 表中生成一条支付订单
+      Wx_user_pay user_pay = new Wx_user_pay();
+      //type  是支付 还是 充值  1：充值  2：普通订单支付  3：租赁订单支付
+      //生成订单
+      Date date = new Date();
+      user_pay.setAct_type(2);//INT    行为类型1：充值2：普通订单支付3：租赁订单支付
+      user_pay.setCtime(date);
+      user_pay.setEtime(date);
+      user_pay.setUtime(date);
+      user_pay.setMoney(money);
+      user_pay.setOrder_id(returnUUID());
+      user_pay.setReturn_url(callbackurl);
+      user_pay.setState(0);//交易状态(0:未支付1：已支付2：支付失败)
+      user_pay.setSystem_type(3);//操作系统类型（IOSAndroidweb）1:android2:IOS3:web4:PDA
+      user_pay.setTransaction_id("");
+      user_pay.setType(2);//支付类型1:支付宝 2：微信 3：银联
+      user_pay.setUi_id(param.getUi_id());
+//      user_pay.setUi_nd(ui_nd);
+//      user_pay.setVersion_code(version);
+      user_pay.setCar_order_id(wx_goods_order.getOrder_id());
+      user_pay.setSubject("拼一把商品");
+//      user_pay.setIp(ip);
+      user_pay.setTel(userinfo.getTelephone());
+
+      id = daoFactory.getWx_user_payDao().insert(user_pay);
+      if (id < 1) {
+        //插入失败
+        throw new QzException("下订单失败");
+      }
+      user_pay.setId(id);
+      returnData.setReturnData("0", "下单成功", user_pay);
+      return user_pay;
+
+    } catch (Exception e) {
+      log.error("WxPayBiz.weixin_charge is error", e);
+      returnData.setReturnData(errorcode_data, "下单失败", "");
+      throw new QzException("处理用户下单失败",e);
+    }
+  }
+
+  /**
+   * 微信通知监听接口
+   */
+  @Transactional(rollbackFor = QzException.class)
+  public void notify_weixin_userpay(ReturnDataNew returnData, String orderid,
+                            String trade_no, String type, long money) {
+    // TODO Auto-generated method stub
+    try {
+      Wx_user_pay  wx_user_pay  = selectOneUserPay( orderid);
+      if(wx_user_pay == null){
+        returnData.setReturnData(errorcode_param, "订单不存在", "");
+        return;
+      }
+      //验证是否金额一致 如果不一致有可能是被抓包  恶意刷我们的钱包
+      if (wx_user_pay.getMoney() != money) {
+        returnData.setReturnData(errorcode_param, "金额不匹配", "");
+        return;
+      }
+      //判断是 用户充值回调 还是  用户支付回调
+      //更新通知状态
+      wx_user_pay.setState(1);//交易状态(0:未支付1：已支付2：支付失败)
+      wx_user_pay.setTransaction_id(trade_no);//交易事物号
+      Date date = new Date();
+      wx_user_pay.setUtime(date);
+      wx_user_pay.setEtime(date);
+      int count = daoFactory.getWx_user_payDao().updateByKey(wx_user_pay);
+      if (count < 1) {
+        //更新失败
+        log.error("更新通知状态失败 type=" + type + "  orderid=" + wx_user_pay.getOrder_id());
+        throw new QzException("更新通知状态失败 type=" + type + "  orderid=" + wx_user_pay.getOrder_id());
+      }
+      //首先根据type进行判断是 支付 还是 充值   是支付 还是 充值  0:订单支付 1：充值
+      if("0".equalsIgnoreCase(type) && wx_user_pay.getState() == 1 && StringUtils.hasLength(wx_user_pay.getCar_order_id())){
+         String sql = "select * from wx_goods_order where order_id=? and is_del=0 and is_pay=0 limit 1";
+         Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,wx_user_pay.getCar_order_id());
+        if(wx_goods_order == null){
+          returnData.setReturnData(errorcode_param, "订单不存在", "");
+          return;
+        }
+        //验证是否金额一致 如果不一致有可能是被抓包  恶意刷我们的钱包
+        if (wx_goods_order.getMoney() != money) {
+          returnData.setReturnData(errorcode_param, "金额不匹配", "");
+          return;
+        }
+        wx_goods_order.setIs_pay(1);//支付成功
+        wx_goods_order.setTransaction_id(trade_no);//交易事物号
+        wx_goods_order.setState(1);//订单状态 0：待付款 1：待发货 2：待收货 3：已完成
+        wx_goods_order.setPtime(new Date());//支付时间
+        count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
+        if(count == 1){
+          returnData.setReturnData(errorcode_success, "通知更新成功", wx_goods_order);
+          return;
+        }else{
+          returnData.setReturnData(errorcode_param, "通知更新失败", "");
+          return;
+        }
+      }
+
+      returnData.setReturnData(errorcode_param, "通知更新失败", "");
+      return;
+
+    } catch (Exception e) {
+      log.error("WxPayBiz.notify_weixin is error", e);
+      returnData.setReturnData(errorcode_data, "通知更新失败", "");
+      return;
+    }
+  }
+
+
+
+
   /**
    * 微信通知监听接口
    */
@@ -175,5 +379,17 @@ public class WxPayBiz extends BaseBiz {
     }
   }
   /*****************************************************************************************/
-
+  /**
+   * 用户充值::通过订单编号获取某条用户充值订单详情
+   */
+  public Wx_user_pay selectOneUserPay(String orderid) {
+    try {
+      String sql = "SELECT *  FROM wx_user_pay WHERE order_id=? LIMIT 1";
+      return getDB().queryUniqueT(sql, Wx_user_pay.class, orderid);
+    } catch (Exception e) {
+      // TODO Auto-generated catch block
+      log.error("selectOneUserPay 用户充值::通过订单编号获取某条用户充值订单详情错误", e);
+    }
+    return null;
+  }
 }

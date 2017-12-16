@@ -103,7 +103,8 @@ public class Notify_WeiXinJsApiction extends BaseV1Controller {
 				//金额
 				long money = Long.parseLong(params.get("total_fee")); 
 				try {
-					wxPayBiz.notify_weixin(returnData,orderid,trade_no,type,money);
+//					wxPayBiz.notify_weixin(returnData,orderid,trade_no,type,money);
+					wxPayBiz.notify_weixin_userpay(returnData,orderid,trade_no,type,money);
 						if(returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())){
 							WeixinNotifyReponse repon = new WeixinNotifyReponse();
 							repon.setReturn_msg("OK");

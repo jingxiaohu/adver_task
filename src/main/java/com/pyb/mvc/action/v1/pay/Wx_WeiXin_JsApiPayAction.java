@@ -2,7 +2,7 @@
 package com.pyb.mvc.action.v1.pay;
 
 import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.Wx_goods_order;
+import com.pyb.bean.Wx_user_pay;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.mvc.action.v1.notify.Notify_WeiXinJsApiction;
@@ -179,10 +179,14 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
       //元 转变成分
 //      int pay_price_fen = param.pay_price;
       String subject = "拼一把商品";//商品名称
-      Wx_goods_order wx_goods_order = wxPayBiz.weixin_charge(returnData,param);
+/*      Wx_goods_order wx_goods_order = wxPayBiz.weixin_charge(returnData,param);
 
       if (wx_goods_order != null && returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
-        long money = wx_goods_order.getMoney();
+        long money = wx_goods_order.getMoney();*/
+      Wx_user_pay user_pay = wxPayBiz.weixin_charge_userpay(returnData,param);
+
+      if (user_pay != null && returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
+        int money = user_pay.getMoney();
 //        subject = wx_goods_order.getG_name();
 //        JSONObject obj = (JSONObject) JSONObject.toJSON(returnData.getData());
         if (money == 0) {
@@ -190,7 +194,7 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
           sendResp(returnData, response);
           return null;
         }
-        String out_trade_no = wx_goods_order.getOrder_id();
+        String out_trade_no = user_pay.getCar_order_id();
         Map<String, String> params = new HashMap<String, String>();
         params.put("appid", appid);
         params.put("mch_id", partner);
