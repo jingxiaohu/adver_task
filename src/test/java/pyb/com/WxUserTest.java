@@ -125,4 +125,34 @@ public class WxUserTest extends BaseWebTest {
                 BaseParam.class,
                 result);
     }
+
+
+
+
+    /**
+     * 获取用户个人信息-openid例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void E_user_info_openid() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("openid","oA_cb0jLCM68XRZMlQ5Z_VHX5onI");
+        sign(params, "openid");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/user_info_openid").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取用户个人信息-openid",
+                "ui_id",
+                "/goods/user_info_openid",
+                5,
+                params,
+                Param_userinfo.class,
+                result);
+    }
 }

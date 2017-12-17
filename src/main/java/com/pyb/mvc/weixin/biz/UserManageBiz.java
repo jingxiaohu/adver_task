@@ -18,6 +18,22 @@ import java.util.List;
  */
 @Service
 public class UserManageBiz extends BaseWxBiz {
+
+    /**
+     * 获取用户基本信息-openid
+     */
+    public void GainUserInfoByOpenId(ReturnDataNew returnData, Param_userinfo param) {
+        try {
+            String sql = "select * from wx_user_info where weixin_id=? limit 1";
+
+            Wx_user_info userinfo = getDB().queryUniqueT(sql,Wx_user_info.class,param.getOpenid());
+            returnData.setReturnData("0", "获取用户信息成功", userinfo);
+        } catch (Exception e) {
+            log.error("GoodsBiz GainUserInfoByOpenId is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainUserInfoByOpenId is error", "");
+        }
+    }
+
     /**
      * 获取用户基本信息
      */
@@ -30,6 +46,8 @@ public class UserManageBiz extends BaseWxBiz {
             returnData.setReturnData(errorcode_systerm, "GoodsBiz GainUserInfo is error", "");
         }
     }
+
+
 
     /**
      * 申请成为推荐合作人

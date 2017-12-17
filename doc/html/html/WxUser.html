@@ -123,6 +123,39 @@
 </li>
 </ul>
 </li>
+<li><span class="title">
+<a href="#5-&gt;获取用户个人信息-openid" title="5->获取用户个人信息-openid">5-&gt;获取用户个人信息-openid</a>
+</span>
+<!--span class="number">
+13
+</span-->
+</li>
+<li><span class="title">
+<a href="#请求路径-4" title="请求路径">请求路径</a>
+</span>
+<!--span class="number">
+14
+</span-->
+<ul>
+<li><ul>
+<li><span class="title">
+<a href="#返回结果-4" title="返回结果">返回结果</a>
+</span>
+<!--span class="number">
+15
+</span-->
+</li>
+<li><span class="title">
+<a href="####返回字段说明" title="###返回字段说明">###返回字段说明</a>
+</span>
+<!--span class="number">
+16
+</span-->
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -375,7 +408,242 @@
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"获取合伙人的收益汇总成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
 </span>}
-</code></pre>
+</code></pre><h4 id="5->获取用户个人信息-openid"><a name="5->获取用户个人信息-openid" href="#5-&gt;获取用户个人信息-openid"></a>5-&gt;获取用户个人信息-openid</h4><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>值描述</th>
+<th>是否可空</th>
+<th>限制长度</th>
+<th>参数类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>openid</td>
+<td>用户微信对应平台的openid</td>
+<td>是</td>
+<td>无</td>
+<td>字符串</td>
+<td>oA_cb0jLCM68XRZMlQ5Z_VHX5onI</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>MD5数字签名(ui_id)按参数的首字母升序顺序进行组装</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>—-</td>
+</tr>
+</tbody>
+</table><h4 id="请求路径"><a name="请求路径" href="#请求路径"></a>请求路径</h4><p><a href="/goods/user_info_openid">/goods/user_info_openid</a></p><h6 id="返回结果"><a name="返回结果" href="#返回结果"></a>返回结果</h6><pre class="json hljs"><code class="json" data-origin="<pre><code class=&quot;json&quot;>{
+    &quot;data&quot;:    {
+        &quot;area&quot;:&quot;四川:成都&quot;,
+        &quot;attention_state&quot;:&quot;0&quot;,
+        &quot;avatar&quot;:&quot;http://wx.qlogo.cn/mmopen/lAc4GXjRfWluedaaDbHD5AbUgEFbNGlvR3xfKRsLcVoPsMp4U9d0XKlshbPFW86L1jN2QmjLJjEXVncGCUaw8A7hEayctA9n/0&quot;,
+        &quot;ctime&quot;:&quot;1512803357000&quot;,
+        &quot;g_logo_url&quot;:&quot;&quot;,
+        &quot;is_forbidden&quot;:&quot;0&quot;,
+        &quot;is_partner&quot;:&quot;0&quot;,
+        &quot;level&quot;:&quot;0&quot;,
+        &quot;name&quot;:&quot;&quot;,
+        &quot;nickname&quot;:&quot;tom&quot;,
+        &quot;note&quot;:&quot;&quot;,
+        &quot;recommend_code&quot;:&quot;065387&quot;,
+        &quot;recommend_id&quot;:&quot;0&quot;,
+        &quot;recommend_nickname&quot;:&quot;&quot;,
+        &quot;recommend_num&quot;:&quot;0&quot;,
+        &quot;score&quot;:&quot;0&quot;,
+        &quot;sex&quot;:&quot;1&quot;,
+        &quot;telephone&quot;:&quot;&quot;,
+        &quot;ticket&quot;:&quot;&quot;,
+        &quot;token&quot;:&quot;d7d87c21bedc6d236b1f77ca36c1a770&quot;,
+        &quot;ui_id&quot;:&quot;1&quot;,
+        &quot;user_weixin&quot;:&quot;&quot;,
+        &quot;utime&quot;:&quot;1512373749000&quot;,
+        &quot;vc&quot;:&quot;0&quot;,
+        &quot;weixin_id&quot;:&quot;oA_cb0jLCM68XRZMlQ5Z_VHX5onI&quot;,
+        &quot;weixin_no&quot;:&quot;20171204154909-18205228126080618&quot;
+    },
+    &quot;errorcode&quot;:&quot;&quot;,
+    &quot;errormsg&quot;:&quot;获取用户信息成功&quot;,
+    &quot;errorno&quot;:&quot;0&quot;
+}
+</code></pre>">{
+    "<span class="hljs-attribute">data</span>":    <span class="hljs-value">{
+        "<span class="hljs-attribute">area</span>":<span class="hljs-value"><span class="hljs-string">"四川:成都"</span></span>,
+        "<span class="hljs-attribute">attention_state</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">avatar</span>":<span class="hljs-value"><span class="hljs-string">"http://wx.qlogo.cn/mmopen/lAc4GXjRfWluedaaDbHD5AbUgEFbNGlvR3xfKRsLcVoPsMp4U9d0XKlshbPFW86L1jN2QmjLJjEXVncGCUaw8A7hEayctA9n/0"</span></span>,
+        "<span class="hljs-attribute">ctime</span>":<span class="hljs-value"><span class="hljs-string">"1512803357000"</span></span>,
+        "<span class="hljs-attribute">g_logo_url</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+        "<span class="hljs-attribute">is_forbidden</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">is_partner</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">level</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">name</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+        "<span class="hljs-attribute">nickname</span>":<span class="hljs-value"><span class="hljs-string">"tom"</span></span>,
+        "<span class="hljs-attribute">note</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+        "<span class="hljs-attribute">recommend_code</span>":<span class="hljs-value"><span class="hljs-string">"065387"</span></span>,
+        "<span class="hljs-attribute">recommend_id</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">recommend_nickname</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+        "<span class="hljs-attribute">recommend_num</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">score</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">sex</span>":<span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+        "<span class="hljs-attribute">telephone</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+        "<span class="hljs-attribute">ticket</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+        "<span class="hljs-attribute">token</span>":<span class="hljs-value"><span class="hljs-string">"d7d87c21bedc6d236b1f77ca36c1a770"</span></span>,
+        "<span class="hljs-attribute">ui_id</span>":<span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+        "<span class="hljs-attribute">user_weixin</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+        "<span class="hljs-attribute">utime</span>":<span class="hljs-value"><span class="hljs-string">"1512373749000"</span></span>,
+        "<span class="hljs-attribute">vc</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+        "<span class="hljs-attribute">weixin_id</span>":<span class="hljs-value"><span class="hljs-string">"oA_cb0jLCM68XRZMlQ5Z_VHX5onI"</span></span>,
+        "<span class="hljs-attribute">weixin_no</span>":<span class="hljs-value"><span class="hljs-string">"20171204154909-18205228126080618"</span>
+    </span>}</span>,
+    "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"获取用户信息成功"</span></span>,
+    "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}
+</code></pre><h6 id="###返回字段说明"><a name="###返回字段说明" href="####返回字段说明"></a>###返回字段说明</h6><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ui_id</td>
+<td>用户主键ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>avatar</td>
+<td>用户头像</td>
+<td>String</td>
+</tr>
+<tr>
+<td>nickname</td>
+<td>用户昵称</td>
+<td>String</td>
+</tr>
+<tr>
+<td>weixin_no</td>
+<td>用户微信对应公众号的唯一ID（openid）</td>
+<td>String</td>
+</tr>
+<tr>
+<td>weixin_id</td>
+<td>用户微信ID</td>
+<td>String</td>
+</tr>
+<tr>
+<td>vc</td>
+<td>余额单位分</td>
+<td>int</td>
+</tr>
+<tr>
+<td>score</td>
+<td>积分</td>
+<td>int</td>
+</tr>
+<tr>
+<td>level</td>
+<td>用户等级</td>
+<td>int</td>
+</tr>
+<tr>
+<td>recommend_num</td>
+<td>用户推荐人数</td>
+<td>int</td>
+</tr>
+<tr>
+<td>is_partner</td>
+<td>是否是合伙人0：不是1：是</td>
+<td>int</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>创建时间</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>utime</td>
+<td>修改时间</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>is_forbidden</td>
+<td>是否禁用0：不1：禁用</td>
+<td>int</td>
+</tr>
+<tr>
+<td>telephone</td>
+<td>用户提现绑定手机号码</td>
+<td>String</td>
+</tr>
+<tr>
+<td>name</td>
+<td>用户提现真实姓名</td>
+<td>String</td>
+</tr>
+<tr>
+<td>note</td>
+<td>备注</td>
+<td>String</td>
+</tr>
+<tr>
+<td>recommend_id</td>
+<td>推荐我的人用户ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>recommend_nickname</td>
+<td>推荐我的人用户昵称</td>
+<td>String</td>
+</tr>
+<tr>
+<td>recommend_code</td>
+<td>我的推荐邀请码（六位数字）</td>
+<td>String</td>
+</tr>
+<tr>
+<td>token</td>
+<td>用户登录刷新token</td>
+<td>String</td>
+</tr>
+<tr>
+<td>sex</td>
+<td>用户性别0：未指定1：男2：女</td>
+<td>int</td>
+</tr>
+<tr>
+<td>area</td>
+<td>用户地区（例如：广东省广州）</td>
+<td>String</td>
+</tr>
+<tr>
+<td>ticket</td>
+<td>用户推荐微信内部tickt</td>
+<td>String</td>
+</tr>
+<tr>
+<td>attention_state</td>
+<td>关注平台状态0：关注中1：未关注</td>
+<td>int</td>
+</tr>
+<tr>
+<td>user_weixin</td>
+<td>用户微信号码</td>
+<td>String</td>
+</tr>
+<tr>
+<td>g_logo_url</td>
+<td>商品logo图片</td>
+<td>String</td>
+</tr>
+</tbody>
+</table>
 
 <footer style="position:fixed; font-size:.8em; text-align:right; bottom:0px; margin-left:-25px; height:20px; width:100%;">generated by <a href="http://pad.haroopress.com" target="_blank">haroopad</a></footer>
 </body>

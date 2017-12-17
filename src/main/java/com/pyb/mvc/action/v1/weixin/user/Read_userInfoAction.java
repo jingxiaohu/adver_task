@@ -89,4 +89,60 @@ public class Read_userInfoAction extends BaseV1Controller {
   }
 
 
+
+
+  /**
+   * 获取用户个人信息-openid
+   */
+  @RequestMapping(value = "/goods/user_info_openid")
+  @ResponseBody
+  public String user_info_openid(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
+
+
+    ReturnDataNew returnData = new ReturnDataNew();
+    try {
+      //参数检查
+      if (param == null) {
+        //参数传递错误
+        returnData.setReturnData(errorcode_param, "参数传递错误", "");
+        sendResp(returnData, response);
+        return null;
+      }
+      //检查是否进行了参数签名认证
+      if (!param.checkRequest()) {
+        returnData.setReturnData(errorcode_param, "没有进行参数签名认证", "");
+        sendResp(returnData, response);
+        return null;
+      }
+      if (RequestUtil.checkObjectBlank(param.getOpenid())) {
+        returnData.setReturnData(errorcode_param, " openid is null", "");
+        sendResp(returnData, response);
+        return null;
+      }
+      //对封装的参数对象中的属性进行 非空等规则验证
+      if (RequestUtil.checkObjectBlank(param.sign)) {
+        returnData.setReturnData(errorcode_param, " sign is null", "");
+        sendResp(returnData, response);
+        return null;
+      }
+      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.getOpenid());
+      if (!param.sign.equalsIgnoreCase(sign_str)) {
+        log.warn("sign=" + param.sign + "  sign_str=" + sign_str);
+        returnData.setReturnData(errorcode_param, " sign is not right", null);
+        sendResp(returnData, response);
+        return null;
+      }
+
+      userManageBiz.GainUserInfoByOpenId(returnData,param);
+      sendResp(returnData, response);
+      return null;
+
+    } catch (Exception e) {
+      log.error("Read_userInfoAction.user_info_openid is error  获取用户个人信息-openid - P", e);
+      returnData.setReturnData(errorcode_systerm, "system is error", "");
+    }
+    sendResp(returnData, response);
+    return null;
+  }
+
 }
