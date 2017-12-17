@@ -32,6 +32,20 @@
 }
 
 ```
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ua_id|主键ID|long|
+|ui_id|用户ID|long|
+|name|收件人|String|
+|telephone|联系电话|String|
+|area|所在地区（四川省成都市龙泉驿区）|String|
+|address|详细地址|String|
+|ctime|创建时间|java.util.Date|
+|note|备注|String|
+|is_defaut|是否设置为默认地址0：不是1:是|int|
+
+
 
 #### 2->修改地址
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|
@@ -65,6 +79,19 @@
 }
 
 ```
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|ua_id|主键ID|long|
+|ui_id|用户ID|long|
+|name|收件人|String|
+|telephone|联系电话|String|
+|area|所在地区（四川省成都市龙泉驿区）|String|
+|address|详细地址|String|
+|ctime|创建时间|java.util.Date|
+|note|备注|String|
+|is_defaut|是否设置为默认地址0：不是1:是|int|
+
 
 #### 3->设置为默认地址
 |参数名称|值描述|是否可空|限制长度|参数类型|举例|

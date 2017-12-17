@@ -41,6 +41,13 @@
 3
 </span-->
 </li>
+<li><span class="title">
+<a href="####返回字段说明" title="###返回字段说明">###返回字段说明</a>
+</span>
+<!--span class="number">
+4
+</span-->
+</li>
 </ul>
 </li>
 </ul>
@@ -49,14 +56,14 @@
 <a href="#2-&gt;修改地址" title="2->修改地址">2-&gt;修改地址</a>
 </span>
 <!--span class="number">
-4
+5
 </span-->
 </li>
 <li><span class="title">
 <a href="#请求路径-1" title="请求路径">请求路径</a>
 </span>
 <!--span class="number">
-5
+6
 </span-->
 <ul>
 <li><ul>
@@ -64,7 +71,14 @@
 <a href="#返回结果-1" title="返回结果">返回结果</a>
 </span>
 <!--span class="number">
-6
+7
+</span-->
+</li>
+<li><span class="title">
+<a href="####返回字段说明-1" title="###返回字段说明">###返回字段说明</a>
+</span>
+<!--span class="number">
+8
 </span-->
 </li>
 </ul>
@@ -75,14 +89,14 @@
 <a href="#3-&gt;设置为默认地址" title="3->设置为默认地址">3-&gt;设置为默认地址</a>
 </span>
 <!--span class="number">
-7
+9
 </span-->
 </li>
 <li><span class="title">
 <a href="#请求路径-2" title="请求路径">请求路径</a>
 </span>
 <!--span class="number">
-8
+10
 </span-->
 <ul>
 <li><ul>
@@ -90,7 +104,7 @@
 <a href="#返回结果-2" title="返回结果">返回结果</a>
 </span>
 <!--span class="number">
-9
+11
 </span-->
 </li>
 </ul>
@@ -101,14 +115,14 @@
 <a href="#4-&gt;删除地址" title="4->删除地址">4-&gt;删除地址</a>
 </span>
 <!--span class="number">
-10
+12
 </span-->
 </li>
 <li><span class="title">
 <a href="#请求路径-3" title="请求路径">请求路径</a>
 </span>
 <!--span class="number">
-11
+13
 </span-->
 <ul>
 <li><ul>
@@ -116,7 +130,7 @@
 <a href="#返回结果-3" title="返回结果">返回结果</a>
 </span>
 <!--span class="number">
-12
+14
 </span-->
 </li>
 </ul>
@@ -232,7 +246,62 @@
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"新增地址成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
 </span>}
-</code></pre><h4 id="2->修改地址"><a name="2->修改地址" href="#2-&gt;修改地址"></a>2-&gt;修改地址</h4><table>
+</code></pre><h6 id="###返回字段说明"><a name="###返回字段说明" href="####返回字段说明"></a>###返回字段说明</h6><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ua_id</td>
+<td>主键ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>ui_id</td>
+<td>用户ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>name</td>
+<td>收件人</td>
+<td>String</td>
+</tr>
+<tr>
+<td>telephone</td>
+<td>联系电话</td>
+<td>String</td>
+</tr>
+<tr>
+<td>area</td>
+<td>所在地区（四川省成都市龙泉驿区）</td>
+<td>String</td>
+</tr>
+<tr>
+<td>address</td>
+<td>详细地址</td>
+<td>String</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>创建时间</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>note</td>
+<td>备注</td>
+<td>String</td>
+</tr>
+<tr>
+<td>is_defaut</td>
+<td>是否设置为默认地址0：不是1:是</td>
+<td>int</td>
+</tr>
+</tbody>
+</table><h4 id="2->修改地址"><a name="2->修改地址" href="#2-&gt;修改地址"></a>2-&gt;修改地址</h4><table>
 <thead>
 <tr>
 <th>参数名称</th>
@@ -333,7 +402,62 @@
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"修改地址成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
 </span>}
-</code></pre><h4 id="3->设置为默认地址"><a name="3->设置为默认地址" href="#3-&gt;设置为默认地址"></a>3-&gt;设置为默认地址</h4><table>
+</code></pre><h6 id="###返回字段说明"><a name="###返回字段说明" href="####返回字段说明"></a>###返回字段说明</h6><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ua_id</td>
+<td>主键ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>ui_id</td>
+<td>用户ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>name</td>
+<td>收件人</td>
+<td>String</td>
+</tr>
+<tr>
+<td>telephone</td>
+<td>联系电话</td>
+<td>String</td>
+</tr>
+<tr>
+<td>area</td>
+<td>所在地区（四川省成都市龙泉驿区）</td>
+<td>String</td>
+</tr>
+<tr>
+<td>address</td>
+<td>详细地址</td>
+<td>String</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>创建时间</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>note</td>
+<td>备注</td>
+<td>String</td>
+</tr>
+<tr>
+<td>is_defaut</td>
+<td>是否设置为默认地址0：不是1:是</td>
+<td>int</td>
+</tr>
+</tbody>
+</table><h4 id="3->设置为默认地址"><a name="3->设置为默认地址" href="#3-&gt;设置为默认地址"></a>3-&gt;设置为默认地址</h4><table>
 <thead>
 <tr>
 <th>参数名称</th>
