@@ -1,6 +1,7 @@
 package pyb.com;
 
 import apidoc.jxh.cn.InterfaceUtil;
+import com.pyb.mvc.action.v1.param.BaseParam;
 import com.pyb.mvc.action.v1.user.param.Param_addOrUpdate_Address;
 import com.pyb.mvc.action.v1.user.param.Param_del_Address;
 import org.junit.FixMethodOrder;
@@ -139,7 +140,31 @@ public class WxUserAddressTest extends BaseWebTest {
                 Param_del_Address.class,
                 result);
     }
+    /**
+     * 获取用户收货地址信息列表例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void E_address_list() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        sign(params, "ui_id");
 
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/address_list").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUserAddress.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取用户收货地址信息列表",
+                "ui_id",
+                "/goods/address_list",
+                5,
+                params,
+                BaseParam.class,
+                result);
+    }
 
 
 }

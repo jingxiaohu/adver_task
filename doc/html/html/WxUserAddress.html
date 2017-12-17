@@ -137,6 +137,32 @@
 </li>
 </ul>
 </li>
+<li><span class="title">
+<a href="#5-&gt;获取用户收货地址信息列表" title="5->获取用户收货地址信息列表">5-&gt;获取用户收货地址信息列表</a>
+</span>
+<!--span class="number">
+15
+</span-->
+</li>
+<li><span class="title">
+<a href="#请求路径-4" title="请求路径">请求路径</a>
+</span>
+<!--span class="number">
+16
+</span-->
+<ul>
+<li><ul>
+<li><span class="title">
+<a href="#返回结果-4" title="返回结果">返回结果</a>
+</span>
+<!--span class="number">
+17
+</span-->
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -553,6 +579,63 @@
     "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"删除地址成功"</span></span>,
+    "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}
+</code></pre><h4 id="5->获取用户收货地址信息列表"><a name="5->获取用户收货地址信息列表" href="#5-&gt;获取用户收货地址信息列表"></a>5-&gt;获取用户收货地址信息列表</h4><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>值描述</th>
+<th>是否可空</th>
+<th>限制长度</th>
+<th>参数类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sign</td>
+<td>MD5数字签名(ui_id)按参数的首字母升序顺序进行组装</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>—-</td>
+</tr>
+</tbody>
+</table><h4 id="请求路径"><a name="请求路径" href="#请求路径"></a>请求路径</h4><p><a href="/goods/address_list">/goods/address_list</a></p><h6 id="返回结果"><a name="返回结果" href="#返回结果"></a>返回结果</h6><pre class="json hljs"><code class="json" data-origin="<pre><code class=&quot;json&quot;>{
+    &quot;data&quot;:[
+        {
+            &quot;address&quot;:&quot;十陵灵龙路218号&quot;,
+            &quot;area&quot;:&quot;四川省成都市龙泉驿区&quot;,
+            &quot;ctime&quot;:&quot;1513495776000&quot;,
+            &quot;is_defaut&quot;:&quot;1&quot;,
+            &quot;name&quot;:&quot;敬小虎&quot;,
+            &quot;note&quot;:&quot;&quot;,
+            &quot;telephone&quot;:&quot;15882345446&quot;,
+            &quot;ua_id&quot;:&quot;2&quot;,
+            &quot;ui_id&quot;:&quot;1&quot;
+        }
+    ],
+    &quot;errorcode&quot;:&quot;&quot;,
+    &quot;errormsg&quot;:&quot;获取用户收货地址信息列表成功&quot;,
+    &quot;errorno&quot;:&quot;0&quot;
+}
+</code></pre>">{
+    "<span class="hljs-attribute">data</span>":<span class="hljs-value">[
+        {
+            "<span class="hljs-attribute">address</span>":<span class="hljs-value"><span class="hljs-string">"十陵灵龙路218号"</span></span>,
+            "<span class="hljs-attribute">area</span>":<span class="hljs-value"><span class="hljs-string">"四川省成都市龙泉驿区"</span></span>,
+            "<span class="hljs-attribute">ctime</span>":<span class="hljs-value"><span class="hljs-string">"1513495776000"</span></span>,
+            "<span class="hljs-attribute">is_defaut</span>":<span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+            "<span class="hljs-attribute">name</span>":<span class="hljs-value"><span class="hljs-string">"敬小虎"</span></span>,
+            "<span class="hljs-attribute">note</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">telephone</span>":<span class="hljs-value"><span class="hljs-string">"15882345446"</span></span>,
+            "<span class="hljs-attribute">ua_id</span>":<span class="hljs-value"><span class="hljs-string">"2"</span></span>,
+            "<span class="hljs-attribute">ui_id</span>":<span class="hljs-value"><span class="hljs-string">"1"</span>
+        </span>}
+    ]</span>,
+    "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"获取用户收货地址信息列表成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
 </span>}
 </code></pre>

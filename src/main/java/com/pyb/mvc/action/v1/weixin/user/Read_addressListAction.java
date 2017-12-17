@@ -35,9 +35,9 @@ public class Read_addressListAction extends BaseV1Controller {
   /**
    * 获取用户收货地址信息列表
    */
-  @RequestMapping(value = "/goods/user_address_list")
+  @RequestMapping(value = "/goods/address_list")
   @ResponseBody
-  public String user_address_list(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
+  public String address_list(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
 
 
     ReturnDataNew returnData = new ReturnDataNew();
@@ -81,7 +81,7 @@ public class Read_addressListAction extends BaseV1Controller {
       return null;
 
     } catch (Exception e) {
-      log.error("Read_userInfoAction.user_address_list is error  获取用户收货地址信息列表 - P", e);
+      log.error("Read_userInfoAction.address_list is error  获取用户收货地址信息列表 - P", e);
       returnData.setReturnData(errorcode_systerm, "system is error", "");
     }
     sendResp(returnData, response);
