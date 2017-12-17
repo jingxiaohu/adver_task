@@ -30,4 +30,5 @@
 [2.用户管理接口文档](WxUser.html)
 [3.订单管理接口文档](UserOrder.html)
 [3.轮播图管理接口文档](Banner.html)
+[4.收货地址管理接口文档](WxUserAddress.html)
 

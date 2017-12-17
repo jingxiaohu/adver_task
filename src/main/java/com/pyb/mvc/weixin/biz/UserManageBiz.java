@@ -5,8 +5,11 @@ import com.pyb.bean.Wx_recommend_earnings;
 import com.pyb.bean.Wx_user_address;
 import com.pyb.bean.Wx_user_info;
 import com.pyb.mvc.action.v1.param.BaseParam;
+import com.pyb.mvc.action.v1.user.param.Param_addOrUpdate_Address;
+import com.pyb.mvc.action.v1.user.param.Param_del_Address;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -107,6 +110,120 @@ public class UserManageBiz extends BaseWxBiz {
     }
 
 
+    /**
+     * 新增地址
+     */
+    public void AddAddress(ReturnDataNew returnData, Param_addOrUpdate_Address param) {
+        try {
+
+            Wx_user_address wx_user_address = new  Wx_user_address();
+            wx_user_address.setName(param.getName());
+            wx_user_address.setTelephone(param.getTelephone());
+            wx_user_address.setArea(param.getArea());
+            wx_user_address.setAddress(param.getAddress());
+            wx_user_address.setUi_id(param.getUi_id());
+            if(param.getIs_defaut() != null){
+                wx_user_address.setIs_defaut(param.getIs_defaut());
+            }
+            int id  = daoFactory.getWx_user_addressDao().insert(wx_user_address);
+            if(id < 1){
+                //新增失败
+                returnData.setReturnData(errorcode_data, "新增地址失败", "");
+                return;
+            }
+            wx_user_address.setUa_id(id);
+            returnData.setReturnData(errorcode_success, "新增地址成功", wx_user_address);
+        } catch (Exception e) {
+            log.error("GoodsBiz AddAddress is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz AddAddress is error", "");
+        }
+    }
+    /**
+     * 修改地址
+     */
+    public void upAddress(ReturnDataNew returnData, Param_addOrUpdate_Address param) {
+        try {
+            Wx_user_address wx_user_address = daoFactory.getWx_user_addressDao().selectByKey(param.getUa_id());
+            if(wx_user_address == null){
+                returnData.setReturnData(errorcode_data, "该地址不存在", "");
+                return;
+            }
+            if(wx_user_address.getUi_id() != param.getUi_id()){
+                returnData.setReturnData(errorcode_data, "该地址与用户信息不批对", "");
+                return;
+            }
+            if(StringUtils.hasLength(param.getName())){
+                wx_user_address.setName(param.getName());
+            }
+            if(StringUtils.hasLength(param.getTelephone())){
+                wx_user_address.setTelephone(param.getTelephone());
+            }
+            if(StringUtils.hasLength(param.getArea())){
+                wx_user_address.setArea(param.getArea());
+            }
+            if(StringUtils.hasLength(param.getAddress())){
+                wx_user_address.setAddress(param.getAddress());
+            }
+            if(param.getIs_defaut() != null){
+                wx_user_address.setIs_defaut(param.getIs_defaut());
+            }
+            int count  = daoFactory.getWx_user_addressDao().updateByKey(wx_user_address);
+            if(count != 1){
+                //新增失败
+                returnData.setReturnData(errorcode_data, "修改地址失败", "");
+                return;
+            }
+            returnData.setReturnData(errorcode_success, "修改地址成功", wx_user_address);
+        } catch (Exception e) {
+            log.error("GoodsBiz upAddress is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz upAddress is error", "");
+        }
+    }
+
+    /**
+     * 删除地址
+     */
+    public void DelAddress(ReturnDataNew returnData, Param_del_Address param) {
+        try {
+           int count =  daoFactory.getWx_user_addressDao().deleteByKey(param.getUa_id());
+            if(count != 1){
+                //新增失败
+                returnData.setReturnData(errorcode_data, "删除地址失败", "");
+                return;
+            }
+            returnData.setReturnData(errorcode_success, "删除地址成功", "");
+        } catch (Exception e) {
+            log.error("GoodsBiz DelAddress is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz DelAddress is error", "");
+        }
+    }
+
+    /**
+     * 设置为默认地址
+     */
+    public void isdefault_address(ReturnDataNew returnData, Param_del_Address param) {
+        try {
+            Wx_user_address wx_user_address = daoFactory.getWx_user_addressDao().selectByKey(param.getUa_id());
+            if(wx_user_address == null){
+                returnData.setReturnData(errorcode_data, "该地址不存在", "");
+                return;
+            }
+            if(param.getIs_defaut() != null){
+                wx_user_address.setIs_defaut(param.getIs_defaut());
+            }
+
+            int count  = daoFactory.getWx_user_addressDao().updateByKey(wx_user_address);
+            if(count != 1){
+                //新增失败
+                returnData.setReturnData(errorcode_data, "设置为默认地址失败", "");
+                return;
+            }
+            returnData.setReturnData(errorcode_success, "设置为默认地址成功", "");
+        } catch (Exception e) {
+            log.error("GoodsBiz isdefault_address is error", e);
+            returnData.setReturnData(errorcode_systerm, "GoodsBiz isdefault_address is error", "");
+        }
+    }
     /****************************下面是封装的查询方法********************************/
     /**
      * 通过weixin_id  获取用户基本信息
