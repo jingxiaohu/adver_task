@@ -148,7 +148,7 @@ public class WxUserTest extends BaseWebTest {
         path = path + "WxUser.md";
         InterfaceUtil.AddInterfacePred(path, moduleName,
                 "获取用户个人信息-openid",
-                "ui_id",
+                "openid",
                 "/goods/user_info_openid",
                 5,
                 params,
