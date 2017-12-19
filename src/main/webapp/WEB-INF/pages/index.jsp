@@ -14,7 +14,7 @@
 <body>
      <script language="javascript" type="text/javascript">
          //window.location.href="http://www.528ads.com?data=}";
-         window.location.href="http://task.51pyb.com/wx/index.html?data=${message}";
+         window.location.href="http://task.51pyb.com/wx/index.html?openid=${message}";
      </script>
 
 </body>

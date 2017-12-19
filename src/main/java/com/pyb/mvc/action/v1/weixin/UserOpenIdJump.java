@@ -52,8 +52,11 @@ public class UserOpenIdJump extends BaseV1Controller {
             ModelAndView mav = new ModelAndView();
             mav.setViewName("index"); //返回的文件名
             System.out.println("返回页面：message="+jsondata);
-            mav.addObject("message", URLEncoder.encode(jsondata,"UTF-8"));
+            //openid
+//            mav.addObject("message", URLEncoder.encode(jsondata,"UTF-8"));
+            mav.addObject("message", URLEncoder.encode(oob.getString("openid"),"UTF-8"));
             return mav;
+
 
         } catch (Exception e) {
             log.error("获取用户授权后的用户信息",e);
