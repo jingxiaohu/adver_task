@@ -386,16 +386,16 @@ public class Wx_goods_orderDao extends BaseDao{
                  "	`order_id`  VARCHAR(80) COMMENT '//varchar(80)    订单号'," +
                  "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    用户ID'," +
                  "	`express_info`  TINYTEXT COMMENT '//varchar(255)    快递信息（例如：已经签收收发室代收投递员：宋李鹏15608194018）'," +
-                 "	`express_time`  TIMESTAMP COMMENT '//timestamp    快递签收时间（2017-12-0116：49：35）'," +
+                 "	`express_time`  TIMESTAMP NOT NULL COMMENT '//timestamp    快递签收时间（2017-12-0116：49：35）'," +
                  "	`address`  TINYTEXT COMMENT '//varchar(255)    收货地址（四川省成都市青羊区四川省成都市青羊区金丝街22号）'," +
                  "	`name`  VARCHAR(30) COMMENT '//varchar(30)    收货人姓名'," +
                  "	`telephone`  VARCHAR(20) COMMENT '//varchar(20)    收货人手机号码'," +
                  "	`subtotal`  INT(11) COMMENT '//int(11)    商品小计金额单位分'," +
                  "	`freight_price`  INT(11) COMMENT '//int(11)    运费单位分'," +
                  "	`money`  INT(11) COMMENT '//int(11)    实付金额（含运费）单位分'," +
-                 "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
-                 "	`ptime`  TIMESTAMP COMMENT '//timestamp    支付时间'," +
-                 "	`stime`  TIMESTAMP COMMENT '//timestamp    发货时间'," +
+                 "	`ctime`  TIMESTAMP NOT NULL COMMENT '//timestamp    创建时间'," +
+                 "	`ptime`  TIMESTAMP NOT NULL COMMENT '//timestamp    支付时间'," +
+                 "	`stime`  TIMESTAMP NOT NULL COMMENT '//timestamp    发货时间'," +
                  "	`is_after_sale`  INT(11) COMMENT '//int(11)    是否申请了售后0：没有1：有'," +
                  "	`is_pay`  INT(11) COMMENT '//int(11)    是否支付成功0：没有1：支付成功'," +
                  "	`state`  INT(11) COMMENT '//int(11)    订单状态0：待付款1：待发货2：待收货3：已完成'," +

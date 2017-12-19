@@ -14,7 +14,7 @@ public class Wx_after_sale implements Cloneable , Serializable{
     public int sales_return;//int(11)    退货原因：0：未指定1：不想要了2：卖家缺货3：拍错了/订单信息错误4:其它
     public String sales_return_intro="";//varchar(500)    退款说明（选填）
     public int refund_money;//int(11)    退款金额单位分
-    public byte[] img_urls;//varbinary(600)    上传凭证（图片集）
+    public String img_urls="";//varchar(600)    上传凭证（图片集）
     public String notice="";//varchar(150)    提示信息（例如：你可以退款的最大金额为41.90）
     public int allow_refund_money;//int(11)    允许退款最大金额单位分
     public String refund_info="";//varchar(500)    退款系统文字提示
@@ -72,11 +72,14 @@ public class Wx_after_sale implements Cloneable , Serializable{
         this.refund_money= value;
     }
 
-    public byte[] getImg_urls(){
+    public String getImg_urls(){
         return img_urls;
     }
 
-    public void setImg_urls(byte[] value){
+    public void setImg_urls(String value){
+    	if(value == null){
+           value = "";
+        }
         this.img_urls= value;
     }
 
@@ -185,7 +188,7 @@ public class Wx_after_sale implements Cloneable , Serializable{
 
 
 
-    public static Wx_after_sale newWx_after_sale(long as_id, int type, int sales_return, String sales_return_intro, int refund_money, byte[] img_urls, String notice, int allow_refund_money, String refund_info, java.util.Date ctime, long ui_id, String order_id, long g_id, int dispose_type, int dispose_state, String note, int is_del) {
+    public static Wx_after_sale newWx_after_sale(long as_id, int type, int sales_return, String sales_return_intro, int refund_money, String img_urls, String notice, int allow_refund_money, String refund_info, java.util.Date ctime, long ui_id, String order_id, long g_id, int dispose_type, int dispose_state, String note, int is_del) {
         Wx_after_sale ret = new Wx_after_sale();
         ret.setAs_id(as_id);
         ret.setType(type);
@@ -213,7 +216,7 @@ public class Wx_after_sale implements Cloneable , Serializable{
         int sales_return = wx_after_sale.getSales_return();
         String sales_return_intro = wx_after_sale.getSales_return_intro();
         int refund_money = wx_after_sale.getRefund_money();
-        byte[] img_urls = wx_after_sale.getImg_urls();
+        String img_urls = wx_after_sale.getImg_urls();
         String notice = wx_after_sale.getNotice();
         int allow_refund_money = wx_after_sale.getAllow_refund_money();
         String refund_info = wx_after_sale.getRefund_info();
@@ -253,7 +256,7 @@ public class Wx_after_sale implements Cloneable , Serializable{
         int sales_return = wx_after_sale.getSales_return();
         String sales_return_intro = wx_after_sale.getSales_return_intro();
         int refund_money = wx_after_sale.getRefund_money();
-        byte[] img_urls = wx_after_sale.getImg_urls();
+        String img_urls = wx_after_sale.getImg_urls();
         String notice = wx_after_sale.getNotice();
         int allow_refund_money = wx_after_sale.getAllow_refund_money();
         String refund_info = wx_after_sale.getRefund_info();
@@ -277,7 +280,7 @@ public class Wx_after_sale implements Cloneable , Serializable{
         int sales_return = wx_after_sale.getSales_return();
         String sales_return_intro = wx_after_sale.getSales_return_intro();
         int refund_money = wx_after_sale.getRefund_money();
-        byte[] img_urls = wx_after_sale.getImg_urls();
+        String img_urls = wx_after_sale.getImg_urls();
         String notice = wx_after_sale.getNotice();
         int allow_refund_money = wx_after_sale.getAllow_refund_money();
         String refund_info = wx_after_sale.getRefund_info();

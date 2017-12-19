@@ -120,7 +120,7 @@ public class Wx_after_saleDao extends BaseDao{
                     ps.setInt(2, bean.sales_return);
                     ps.setString(3, bean.sales_return_intro);
                     ps.setInt(4, bean.refund_money);
-                    ps.setBytes(5, bean.img_urls);
+                    ps.setString(5, bean.img_urls);
                     ps.setString(6, bean.notice);
                     ps.setInt(7, bean.allow_refund_money);
                     ps.setString(8, bean.refund_info);
@@ -294,7 +294,7 @@ public class Wx_after_saleDao extends BaseDao{
                     ps.setInt(2, bean.sales_return);
                     ps.setString(3, bean.sales_return_intro);
                     ps.setInt(4, bean.refund_money);
-                    ps.setBytes(5, bean.img_urls);
+                    ps.setString(5, bean.img_urls);
                     ps.setString(6, bean.notice);
                     ps.setInt(7, bean.allow_refund_money);
                     ps.setString(8, bean.refund_info);
@@ -369,11 +369,11 @@ public class Wx_after_saleDao extends BaseDao{
                  "	`sales_return`  INT(11) COMMENT '//int(11)    退货原因：0：未指定1：不想要了2：卖家缺货3：拍错了/订单信息错误4:其它'," +
                  "	`sales_return_intro`  TINYTEXT COMMENT '//varchar(500)    退款说明（选填）'," +
                  "	`refund_money`  INT(11) COMMENT '//int(11)    退款金额单位分'," +
-                 "	`img_urls`  VARBINARY(600) COMMENT '//varbinary(600)    上传凭证（图片集）'," +
+                 "	`img_urls`  TINYTEXT COMMENT '//varchar(600)    上传凭证（图片集）'," +
                  "	`notice`  VARCHAR(150) COMMENT '//varchar(150)    提示信息（例如：你可以退款的最大金额为41.90）'," +
                  "	`allow_refund_money`  INT(11) COMMENT '//int(11)    允许退款最大金额单位分'," +
                  "	`refund_info`  TINYTEXT COMMENT '//varchar(500)    退款系统文字提示'," +
-                 "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
+                 "	`ctime`  TIMESTAMP NOT NULL COMMENT '//timestamp    创建时间'," +
                  "	`ui_id`  BIGINT(20) COMMENT '//bigint(20)    用户ID'," +
                  "	`order_id`  VARCHAR(80) COMMENT '//varchar(80)    订单号'," +
                  "	`g_id`  BIGINT(20) COMMENT '//bigint(20)    商品ID'," +

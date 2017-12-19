@@ -376,7 +376,7 @@ public class Wx_order_goodsDao extends BaseDao{
                  "	`clothing`  TINYTEXT COMMENT '//varchar(255)    服装类商品尺码颜色JSON{'size':[120,130,140,150],'color':['黄色','红色','蓝色']}'," +
                  "	`gt_id`  BIGINT(20) COMMENT '//bigint(20)    商品类型ID'," +
                  "	`is_del`  INT(11) COMMENT '//int(11)    是否逻辑删除:0：不删除1：删除'," +
-                 "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
+                 "	`ctime`  TIMESTAMP NOT NULL COMMENT '//timestamp    创建时间'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
                  "	PRIMARY KEY (`og_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";

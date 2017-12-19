@@ -6,7 +6,7 @@
 |sales_return|退货原因：0：未指定1：不想要了2：卖家缺货3：拍错了/订单信息错误4:其它|int|
 |sales_return_intro|退款说明（选填）|String|
 |refund_money|退款金额单位分|int|
-|img_urls|上传凭证（图片集）|byte[]|
+|img_urls|上传凭证（图片集）|String|
 |notice|提示信息（例如：你可以退款的最大金额为41.90）|String|
 |allow_refund_money|允许退款最大金额单位分|int|
 |refund_info|退款系统文字提示|String|

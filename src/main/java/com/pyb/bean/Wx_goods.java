@@ -7,13 +7,14 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_goods implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"g_id","name","price_new","price_old","express_price","stock_num","dimension","market_num","evaluate_num","hp_num","zp_num","cp_num","st_num","logo_url","banner_urls","intro","src_intro","hp_percent","express","is_bestseller","is_timelimit","is_recommend","is_promotion","is_postage","is_new","gt_id","is_show","is_putaway","order_num","order_pay_num","is_sellout","modify_admin_id","create_admin_id","ctime","utime","note","is_del","clothing","express_price_str"};
+    //public static String[] carrays ={"g_id","name","price_new","price_old","express_price","express_price_str","stock_num","dimension","market_num","evaluate_num","hp_num","zp_num","cp_num","st_num","logo_url","banner_urls","intro","src_intro","hp_percent","express","is_bestseller","is_timelimit","is_recommend","is_promotion","is_postage","is_new","gt_id","is_show","is_putaway","order_num","order_pay_num","is_sellout","modify_admin_id","create_admin_id","ctime","utime","note","is_del","clothing"};
 
     public long g_id;//bigint(20)    主键ID
     public String name="";//varchar(60)    商品名称
     public int price_new;//int(11)    商品卖价单位分
     public int price_old;//int(11)    商品原价单位分
     public int express_price;//int(11)    快递费用
+    public String express_price_str="";//varchar(40)    快递费用（区间）
     public int stock_num;//int(11)    商品库存数量
     public String dimension="";//varchar(20)    商品量纲单位
     public int market_num;//int(11)    商品销量
@@ -47,7 +48,6 @@ public class Wx_goods implements Cloneable , Serializable{
     public String note="";//varchar(60)    备注
     public int is_del;//int(11)    是否逻辑删除:0：不删除1：删除
     public String clothing="";//varchar(255)    服装类商品尺码颜色JSON{"size":[120,130,140,150],"color":["黄色","红色","蓝色"]}
-    public String express_price_str="";//varchar(40)    快递费用（区间）
 
 
 
@@ -92,6 +92,17 @@ public class Wx_goods implements Cloneable , Serializable{
 
     public void setExpress_price(int value){
         this.express_price= value;
+    }
+
+    public String getExpress_price_str(){
+        return express_price_str;
+    }
+
+    public void setExpress_price_str(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.express_price_str= value;
     }
 
     public int getStock_num(){
@@ -391,26 +402,16 @@ public class Wx_goods implements Cloneable , Serializable{
         this.clothing= value;
     }
 
-    public String getExpress_price_str(){
-        return express_price_str;
-    }
-
-    public void setExpress_price_str(String value){
-    	if(value == null){
-           value = "";
-        }
-        this.express_price_str= value;
-    }
 
 
-
-    public static Wx_goods newWx_goods(long g_id, String name, int price_new, int price_old, int express_price, int stock_num, String dimension, int market_num, int evaluate_num, int hp_num, int zp_num, int cp_num, int st_num, String logo_url, String banner_urls, String intro, String src_intro, String hp_percent, String express, int is_bestseller, int is_timelimit, int is_recommend, int is_promotion, int is_postage, int is_new, long gt_id, int is_show, int is_putaway, int order_num, int order_pay_num, int is_sellout, long modify_admin_id, long create_admin_id, java.util.Date ctime, java.util.Date utime, String note, int is_del, String clothing, String express_price_str) {
+    public static Wx_goods newWx_goods(long g_id, String name, int price_new, int price_old, int express_price, String express_price_str, int stock_num, String dimension, int market_num, int evaluate_num, int hp_num, int zp_num, int cp_num, int st_num, String logo_url, String banner_urls, String intro, String src_intro, String hp_percent, String express, int is_bestseller, int is_timelimit, int is_recommend, int is_promotion, int is_postage, int is_new, long gt_id, int is_show, int is_putaway, int order_num, int order_pay_num, int is_sellout, long modify_admin_id, long create_admin_id, java.util.Date ctime, java.util.Date utime, String note, int is_del, String clothing) {
         Wx_goods ret = new Wx_goods();
         ret.setG_id(g_id);
         ret.setName(name);
         ret.setPrice_new(price_new);
         ret.setPrice_old(price_old);
         ret.setExpress_price(express_price);
+        ret.setExpress_price_str(express_price_str);
         ret.setStock_num(stock_num);
         ret.setDimension(dimension);
         ret.setMarket_num(market_num);
@@ -444,7 +445,6 @@ public class Wx_goods implements Cloneable , Serializable{
         ret.setNote(note);
         ret.setIs_del(is_del);
         ret.setClothing(clothing);
-        ret.setExpress_price_str(express_price_str);
         return ret;    
     }
 
@@ -454,6 +454,7 @@ public class Wx_goods implements Cloneable , Serializable{
         int price_new = wx_goods.getPrice_new();
         int price_old = wx_goods.getPrice_old();
         int express_price = wx_goods.getExpress_price();
+        String express_price_str = wx_goods.getExpress_price_str();
         int stock_num = wx_goods.getStock_num();
         String dimension = wx_goods.getDimension();
         int market_num = wx_goods.getMarket_num();
@@ -487,13 +488,13 @@ public class Wx_goods implements Cloneable , Serializable{
         String note = wx_goods.getNote();
         int is_del = wx_goods.getIs_del();
         String clothing = wx_goods.getClothing();
-        String express_price_str = wx_goods.getExpress_price_str();
 
         this.setG_id(g_id);
         this.setName(name);
         this.setPrice_new(price_new);
         this.setPrice_old(price_old);
         this.setExpress_price(express_price);
+        this.setExpress_price_str(express_price_str);
         this.setStock_num(stock_num);
         this.setDimension(dimension);
         this.setMarket_num(market_num);
@@ -527,7 +528,6 @@ public class Wx_goods implements Cloneable , Serializable{
         this.setNote(note);
         this.setIs_del(is_del);
         this.setClothing(clothing);
-        this.setExpress_price_str(express_price_str);
 
     }
 
@@ -538,6 +538,7 @@ public class Wx_goods implements Cloneable , Serializable{
         int price_new = wx_goods.getPrice_new();
         int price_old = wx_goods.getPrice_old();
         int express_price = wx_goods.getExpress_price();
+        String express_price_str = wx_goods.getExpress_price_str();
         int stock_num = wx_goods.getStock_num();
         String dimension = wx_goods.getDimension();
         int market_num = wx_goods.getMarket_num();
@@ -571,7 +572,6 @@ public class Wx_goods implements Cloneable , Serializable{
         String note = wx_goods.getNote();
         int is_del = wx_goods.getIs_del();
         String clothing = wx_goods.getClothing();
-        String express_price_str = wx_goods.getExpress_price_str();
     }
 
     public Map<String,Object> toMap(){
@@ -584,6 +584,7 @@ public class Wx_goods implements Cloneable , Serializable{
         int price_new = wx_goods.getPrice_new();
         int price_old = wx_goods.getPrice_old();
         int express_price = wx_goods.getExpress_price();
+        String express_price_str = wx_goods.getExpress_price_str();
         int stock_num = wx_goods.getStock_num();
         String dimension = wx_goods.getDimension();
         int market_num = wx_goods.getMarket_num();
@@ -617,7 +618,6 @@ public class Wx_goods implements Cloneable , Serializable{
         String note = wx_goods.getNote();
         int is_del = wx_goods.getIs_del();
         String clothing = wx_goods.getClothing();
-        String express_price_str = wx_goods.getExpress_price_str();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("g_id",g_id);
@@ -625,6 +625,7 @@ public class Wx_goods implements Cloneable , Serializable{
         _ret.put("price_new",price_new);
         _ret.put("price_old",price_old);
         _ret.put("express_price",express_price);
+        _ret.put("express_price_str",express_price_str);
         _ret.put("stock_num",stock_num);
         _ret.put("dimension",dimension);
         _ret.put("market_num",market_num);
@@ -658,7 +659,6 @@ public class Wx_goods implements Cloneable , Serializable{
         _ret.put("note",note);
         _ret.put("is_del",is_del);
         _ret.put("clothing",clothing);
-        _ret.put("express_price_str",express_price_str);
         return _ret;
     }
 

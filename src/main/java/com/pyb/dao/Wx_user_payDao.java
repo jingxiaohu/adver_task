@@ -384,14 +384,14 @@ public class Wx_user_payDao extends BaseDao{
                  "	`tel`  VARCHAR(20) COMMENT '//varchar(20)    用户电话号码'," +
                  "	`money`  INT(11) COMMENT '//int(11)    '," +
                  "	`act_type`  INT(11) COMMENT '//int(11)    行为类型1：充值2：普通订单支付3：租赁订单支付'," +
-                 "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
-                 "	`utime`  TIMESTAMP COMMENT '//timestamp    第三方回调时间'," +
-                 "	`etime`  TIMESTAMP COMMENT '//timestamp    订单失效时间'," +
+                 "	`ctime`  TIMESTAMP NOT NULL COMMENT '//timestamp    创建时间'," +
+                 "	`utime`  TIMESTAMP NOT NULL COMMENT '//timestamp    第三方回调时间'," +
+                 "	`etime`  TIMESTAMP NOT NULL COMMENT '//timestamp    订单失效时间'," +
                  "	`state`  INT(11) COMMENT '//int(11)    交易状态(0:未支付1：已支付2：支付失败)'," +
                  "	`ip`  VARCHAR(100) COMMENT '//varchar(100)    IP地址'," +
                  "	`referer`  TINYTEXT COMMENT '//varchar(255)    第三方回调referer'," +
                  "	`subject`  VARCHAR(200) COMMENT '//varchar(200)    商品名称'," +
-                 "	`car_order_id`  TINYTEXT COMMENT '//text    停车订单号如果多个中间逗号分割例如（a123,b123,c123）'," +
+                 "	`car_order_id`  TEXT COMMENT '//text    停车订单号如果多个中间逗号分割例如（a123,b123,c123）'," +
                  "	`note`  VARCHAR(100) COMMENT '//varchar(100)    备注'," +
                  "	PRIMARY KEY (`id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
