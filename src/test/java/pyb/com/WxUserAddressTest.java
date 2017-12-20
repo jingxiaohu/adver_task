@@ -43,7 +43,7 @@ public class WxUserAddressTest extends BaseWebTest {
       System.err.println(result);
       String path = this.getClass().getResource(".").getPath();
       path = path + "WxUserAddress.md";
-      InterfaceUtil.AddInterfacePred(path, moduleName,
+      InterfaceUtil.AddInterfacePredAspect(path, moduleName,
               "新增地址",
               "ui_id",
               "/goods/add_address",
