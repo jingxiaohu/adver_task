@@ -34,7 +34,7 @@ public class WxUserAddressTest extends BaseWebTest {
       params.add("telephone","15882345446");
       params.add("area","四川省成都市龙泉驿区");
       params.add("address","十陵灵龙路218号");
-      params.add("is_defaut","1");
+//      params.add("is_defaut","1");
       sign(params, "ui_id");
 
       MvcResult mvcResult = mockMvc.perform(post("/v1/goods/add_address").params(params))

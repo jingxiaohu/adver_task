@@ -133,7 +133,6 @@ public class UserManageBiz extends BaseWxBiz {
      */
     public void AddAddress(ReturnDataNew returnData, Param_addOrUpdate_Address param) {
         try {
-
             Wx_user_address wx_user_address = new  Wx_user_address();
             wx_user_address.setName(param.getName());
             wx_user_address.setTelephone(param.getTelephone());
@@ -221,7 +220,17 @@ public class UserManageBiz extends BaseWxBiz {
      */
     public void isdefault_address(ReturnDataNew returnData, Param_del_Address param) {
         try {
-            Wx_user_address wx_user_address = daoFactory.getWx_user_addressDao().selectByKey(param.getUa_id());
+            Wx_user_address wx_user_address =  FindUserDefaultAddress(param.getUi_id());
+            if(wx_user_address != null){
+                wx_user_address.setIs_defaut(0);
+                int count  = daoFactory.getWx_user_addressDao().updateByKey(wx_user_address);
+                if(count != 1){
+                    returnData.setReturnData(errorcode_data, "设置为默认地址失败", "");
+                    return;
+                }
+            }
+
+            wx_user_address = daoFactory.getWx_user_addressDao().selectByKey(param.getUa_id());
             if(wx_user_address == null){
                 returnData.setReturnData(errorcode_data, "该地址不存在", "");
                 return;
@@ -260,4 +269,18 @@ public class UserManageBiz extends BaseWxBiz {
         return null;
     }
 
+    /**
+     * 查找是否已经有设置为默认地址的了 如果有则不允许设置
+     */
+    public  Wx_user_address FindUserDefaultAddress(long ui_id){
+
+        try {
+            String sql = "select * from wx_user_address where ui_id=? and is_defaut=1 limit 1";
+            Wx_user_address wx_user_address = getDB().queryUniqueT(sql, Wx_user_address.class, ui_id);
+            return wx_user_address;
+        } catch (Exception e) {
+            log.error("FindUserDefaultAddress 查找是否已经有设置为默认地址失败", e);
+        }
+        return null;
+    }
 }
