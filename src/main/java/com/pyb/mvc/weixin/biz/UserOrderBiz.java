@@ -1,11 +1,9 @@
 package com.pyb.mvc.weixin.biz;
 
 import com.alibaba.fastjson.JSONObject;
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.Wx_after_sale;
-import com.pyb.bean.Wx_goods_order;
-import com.pyb.bean.Wx_order_goods;
+import com.pyb.bean.*;
 import com.pyb.constants.Constants;
+import com.pyb.exception.QzException;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
@@ -14,8 +12,10 @@ import com.pyb.mvc.weixin.util.KdniaoTrackQueryAPI;
 import com.pyb.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -189,7 +189,8 @@ public class UserOrderBiz extends  BaseWxBiz{
     /**
      * 用户确认收货
      */
-    public void UserOrderSure(ReturnDataNew returnData, Param_order param) {
+    @Transactional(rollbackFor = QzException.class)
+    public void UserOrderSure(ReturnDataNew returnData, Param_order param) throws  QzException{
         try {
             String sql = "select * from wx_goods_order where go_id=? and order_id=? and ui_id=? limit 1";
             Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,param.getGo_id(),param.getOrder_id(),param.getUi_id());
@@ -206,7 +207,29 @@ public class UserOrderBiz extends  BaseWxBiz{
             int count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
             if(count != 1){
                 returnData.setReturnData(errorcode_data, "用户确认收货失败", "","3");
-                return;
+                throw new QzException("用户确认收货失败");
+            }else{
+                //这里处理 用户推荐人的收益确认
+                sql = "select * from wx_recommend_earnings where ui_id=? and state=1 limit 1";
+                Wx_recommend_earnings wx_recommend_earnings = getDB().queryUniqueT(sql, Wx_recommend_earnings.class, wx_goods_order.getRecommend_id());
+                if(wx_recommend_earnings != null){
+                    //总收益累积
+                    wx_recommend_earnings.setEarnings_total(wx_recommend_earnings.getEarnings_total() + wx_goods_order.getMoney());
+                    //待确认收益增加
+                    if(wx_recommend_earnings.getUnconfirmed_receiving() - wx_goods_order.getMoney() >= 0){
+                        wx_recommend_earnings.setUnconfirmed_receiving(wx_recommend_earnings.getUnconfirmed_receiving() - wx_goods_order.getMoney());
+                    }else{
+                        wx_recommend_earnings.setUnconfirmed_receiving(0);
+                    }
+                    //待结算收益
+                    wx_recommend_earnings.setWait_account(wx_recommend_earnings.getWait_account()+wx_goods_order.getMoney());
+                    wx_recommend_earnings.setUtime(new Date());
+                    count = daoFactory.getWx_recommend_earningsDao().updateByKey(wx_recommend_earnings);
+                    if(count != 1){
+                        returnData.setReturnData(errorcode_param, "通知更新失败", "");
+                        throw new QzException("更新处理该用户的推荐人的收益数据失败 orderid=" + wx_goods_order.getOrder_id());
+                    }
+                }
             }
             returnData.setReturnData(errorcode_success, "用户确认收货成功", "");
         } catch (Exception e) {

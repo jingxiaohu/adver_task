@@ -13,4 +13,5 @@
 |state|是否审核通过0：申请中待审核1：审核通过2：审核不通过|int|
 |weixin_id|推荐合伙人对公众平台微信IDweixin_id|String|
 |re_type|合伙人类型：0：普通推荐合伙人1：中级推荐合伙人2：高级推荐合伙人|int|
+|wait_account|待结算收益|int|
 

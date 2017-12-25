@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_recommend_earnings implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"re_id","earnings_total","allow_drawings","drawings","unconfirmed_receiving","ctime","utime","note","ui_id","state","weixin_id","re_type"};
+    //public static String[] carrays ={"re_id","earnings_total","allow_drawings","drawings","unconfirmed_receiving","ctime","utime","note","ui_id","state","weixin_id","re_type","wait_account"};
 
     public long re_id;//bigint(20)    主键ID
     public int earnings_total;//int(11)    推荐人总累积收益
@@ -21,6 +21,7 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
     public int state;//int(11)    是否审核通过0：申请中待审核1：审核通过2：审核不通过
     public String weixin_id="";//varchar(80)    推荐合伙人对公众平台微信IDweixin_id
     public int re_type;//int(11)    合伙人类型：0：普通推荐合伙人1：中级推荐合伙人2：高级推荐合伙人
+    public int wait_account;//int(11)    待结算收益
 
 
 
@@ -132,9 +133,17 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         this.re_type= value;
     }
 
+    public int getWait_account(){
+        return wait_account;
+    }
+
+    public void setWait_account(int value){
+        this.wait_account= value;
+    }
 
 
-    public static Wx_recommend_earnings newWx_recommend_earnings(long re_id, int earnings_total, int allow_drawings, int drawings, int unconfirmed_receiving, java.util.Date ctime, java.util.Date utime, String note, long ui_id, int state, String weixin_id, int re_type) {
+
+    public static Wx_recommend_earnings newWx_recommend_earnings(long re_id, int earnings_total, int allow_drawings, int drawings, int unconfirmed_receiving, java.util.Date ctime, java.util.Date utime, String note, long ui_id, int state, String weixin_id, int re_type, int wait_account) {
         Wx_recommend_earnings ret = new Wx_recommend_earnings();
         ret.setRe_id(re_id);
         ret.setEarnings_total(earnings_total);
@@ -148,6 +157,7 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         ret.setState(state);
         ret.setWeixin_id(weixin_id);
         ret.setRe_type(re_type);
+        ret.setWait_account(wait_account);
         return ret;    
     }
 
@@ -164,6 +174,7 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         int state = wx_recommend_earnings.getState();
         String weixin_id = wx_recommend_earnings.getWeixin_id();
         int re_type = wx_recommend_earnings.getRe_type();
+        int wait_account = wx_recommend_earnings.getWait_account();
 
         this.setRe_id(re_id);
         this.setEarnings_total(earnings_total);
@@ -177,6 +188,7 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         this.setState(state);
         this.setWeixin_id(weixin_id);
         this.setRe_type(re_type);
+        this.setWait_account(wait_account);
 
     }
 
@@ -194,6 +206,7 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         int state = wx_recommend_earnings.getState();
         String weixin_id = wx_recommend_earnings.getWeixin_id();
         int re_type = wx_recommend_earnings.getRe_type();
+        int wait_account = wx_recommend_earnings.getWait_account();
     }
 
     public Map<String,Object> toMap(){
@@ -213,6 +226,7 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         int state = wx_recommend_earnings.getState();
         String weixin_id = wx_recommend_earnings.getWeixin_id();
         int re_type = wx_recommend_earnings.getRe_type();
+        int wait_account = wx_recommend_earnings.getWait_account();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("re_id",re_id);
@@ -227,6 +241,7 @@ public class Wx_recommend_earnings implements Cloneable , Serializable{
         _ret.put("state",state);
         _ret.put("weixin_id",weixin_id);
         _ret.put("re_type",re_type);
+        _ret.put("wait_account",wait_account);
         return _ret;
     }
 

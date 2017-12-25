@@ -1,16 +1,20 @@
 package com.pyb.mvc.weixin.biz;
 
-import com.pyb.bean.ReturnDataNew;
-import com.pyb.bean.Wx_recommend_earnings;
-import com.pyb.bean.Wx_user_address;
-import com.pyb.bean.Wx_user_info;
+import com.alibaba.fastjson.JSON;
+import com.pyb.bean.*;
+import com.pyb.exception.QzException;
 import com.pyb.mvc.action.v1.param.BaseParam;
 import com.pyb.mvc.action.v1.user.param.Param_addOrUpdate_Address;
 import com.pyb.mvc.action.v1.user.param.Param_del_Address;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_complement;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_list;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,8 +33,8 @@ public class UserManageBiz extends BaseWxBiz {
             Wx_user_info userinfo = getDB().queryUniqueT(sql,Wx_user_info.class,param.getOpenid());
             returnData.setReturnData("0", "获取用户信息成功", userinfo);
         } catch (Exception e) {
-            log.error("GoodsBiz GainUserInfoByOpenId is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainUserInfoByOpenId is error", "");
+            log.error("UserManageBiz GainUserInfoByOpenId is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz GainUserInfoByOpenId is error", "");
         }
     }
 
@@ -42,8 +46,8 @@ public class UserManageBiz extends BaseWxBiz {
             Wx_user_info userinfo = daoFactory.getWx_user_infoDao().selectByKey(param.getUi_id());
             returnData.setReturnData("0", "获取用户信息成功", userinfo);
         } catch (Exception e) {
-            log.error("GoodsBiz GainUserInfo is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainUserInfo is error", "");
+            log.error("UserManageBiz GainUserInfo is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz GainUserInfo is error", "");
         }
     }
 
@@ -76,8 +80,8 @@ public class UserManageBiz extends BaseWxBiz {
             }
             returnData.setReturnData("0", "添加成功", wx_recommend_earnings);
         } catch (Exception e) {
-            log.error("GoodsBiz ApplyUser is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz ApplyUser is error", "");
+            log.error("UserManageBiz ApplyUser is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz ApplyUser is error", "");
         }
     }
 
@@ -90,8 +94,8 @@ public class UserManageBiz extends BaseWxBiz {
             Wx_recommend_earnings wx_recommend_earnings = getDB().queryUniqueT(sql, Wx_recommend_earnings.class, param.getUi_id());
             returnData.setReturnData("0", "获取合伙人的收益汇总成功", wx_recommend_earnings);
         } catch (Exception e) {
-            log.error("GoodsBiz GainApplyUser is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainApplyUser is error", "");
+            log.error("UserManageBiz GainApplyUser is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz GainApplyUser is error", "");
         }
     }
 
@@ -108,8 +112,8 @@ public class UserManageBiz extends BaseWxBiz {
             List<Wx_user_address> list = getDB().queryListT(sql,Wx_user_address.class,param.getUi_id());
             returnData.setReturnData(errorcode_success, "获取用户收货地址信息列表成功", list);
         } catch (Exception e) {
-            log.error("GoodsBiz GainUserAddressList is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainUserAddressList is error", "");
+            log.error("UserManageBiz GainUserAddressList is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz GainUserAddressList is error", "");
         }
     }
 
@@ -122,8 +126,8 @@ public class UserManageBiz extends BaseWxBiz {
             List<Wx_user_info> list = getDB().queryListT(sql, Wx_user_info.class, param.getUi_id());
             returnData.setReturnData("0", "获取合伙人的收益汇总成功", list);
         } catch (Exception e) {
-            log.error("GoodsBiz GainMyRecommendUser is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz GainMyRecommendUser is error", "");
+            log.error("UserManageBiz GainMyRecommendUser is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz GainMyRecommendUser is error", "");
         }
     }
 
@@ -151,8 +155,8 @@ public class UserManageBiz extends BaseWxBiz {
             wx_user_address.setUa_id(id);
             returnData.setReturnData(errorcode_success, "新增地址成功", wx_user_address);
         } catch (Exception e) {
-            log.error("GoodsBiz AddAddress is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz AddAddress is error", "");
+            log.error("UserManageBiz AddAddress is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz AddAddress is error", "");
         }
     }
     /**
@@ -192,8 +196,8 @@ public class UserManageBiz extends BaseWxBiz {
             }
             returnData.setReturnData(errorcode_success, "修改地址成功", wx_user_address);
         } catch (Exception e) {
-            log.error("GoodsBiz upAddress is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz upAddress is error", "");
+            log.error("UserManageBiz upAddress is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz upAddress is error", "");
         }
     }
 
@@ -210,8 +214,8 @@ public class UserManageBiz extends BaseWxBiz {
             }
             returnData.setReturnData(errorcode_success, "删除地址成功", "");
         } catch (Exception e) {
-            log.error("GoodsBiz DelAddress is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz DelAddress is error", "");
+            log.error("UserManageBiz DelAddress is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz DelAddress is error", "");
         }
     }
 
@@ -247,8 +251,140 @@ public class UserManageBiz extends BaseWxBiz {
             }
             returnData.setReturnData(errorcode_success, "设置为默认地址成功", "");
         } catch (Exception e) {
-            log.error("GoodsBiz isdefault_address is error", e);
-            returnData.setReturnData(errorcode_systerm, "GoodsBiz isdefault_address is error", "");
+            log.error("UserManageBiz isdefault_address is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz isdefault_address is error", "");
+        }
+    }
+
+
+
+
+    /**
+     * 合作人提现
+     */
+    @Transactional(rollbackFor = QzException.class)
+    public void UserWithDraw(ReturnDataNew returnData, Param_user_withdraw param) throws QzException{
+        try {
+            Date date = new Date();
+
+            //获取用户信息
+            Wx_user_info wx_user_info = daoFactory.getWx_user_infoDao().selectByKey(param.getUi_id());
+            if(wx_user_info == null){
+                returnData.setReturnData(errorcode_data,"该用户不存在","");
+                return;
+            }
+            if(!StringUtils.hasLength(wx_user_info.getTelephone())){
+                //用户没有绑定手机号码
+                returnData.setReturnData(errorcode_data,"亲，你还没有绑定手机号码","1");
+                return;
+            }
+            if(!StringUtils.hasLength(wx_user_info.getUser_weixin())){
+                //用户没有绑定微信号码
+                returnData.setReturnData(errorcode_data,"亲，你还没有绑定微信号码","1");
+                return;
+            }
+
+            String sql = "select * from wx_recommend_earnings where ui_id=? and state=1 limit 1";
+            Wx_recommend_earnings wx_recommend_earnings = getDB().queryUniqueT(sql, Wx_recommend_earnings.class, param.getUi_id());
+            if(wx_recommend_earnings == null){
+                returnData.setReturnData(errorcode_data,"非法请求","");
+                return;
+            }
+
+            if(wx_recommend_earnings.getAllow_drawings() - param.getMoney() < 0){
+                returnData.setReturnData(errorcode_data,"你没有那么多钱可提现,亲","","2");
+                return;
+            }
+
+            String snap_json = JSON.toJSONString(wx_recommend_earnings);
+
+            wx_recommend_earnings.setAllow_drawings(wx_recommend_earnings.getAllow_drawings() - param.getMoney());//可提现收益
+            wx_recommend_earnings.setDrawings(wx_recommend_earnings.getDrawings()+param.getMoney());//提现收益
+            wx_recommend_earnings.setUtime(date);
+            int count = daoFactory.getWx_recommend_earningsDao().updateByKey(wx_recommend_earnings);
+            if(count != 1){
+                returnData.setReturnData(errorcode_data,"提现失败","","3");
+                throw new QzException("提现失败 daoFactory.getWx_recommend_earningsDao().updateByKey ui_id="+param.getUi_id());
+            }
+
+            Wx_user_withdraw wx_user_withdraw = new Wx_user_withdraw();
+            wx_user_withdraw.setCtime(date);
+            wx_user_withdraw.setMoney(param.getMoney());
+            wx_user_withdraw.setSnap_json(snap_json);
+            wx_user_withdraw.setTelephone(wx_user_info.getTelephone());
+            wx_user_withdraw.setWeixin_no(wx_user_info.getUser_weixin());
+            wx_user_withdraw.setUi_id(param.getUi_id());
+            int id = daoFactory.getWx_user_withdrawDao().insert(wx_user_withdraw);
+            if(id < 1){
+                returnData.setReturnData(errorcode_data,"提现失败","","3");
+                throw new QzException("提现失败 daoFactory.getWx_user_withdrawDao().insert(wx_user_withdraw) ui_id="+param.getUi_id());
+            }
+            returnData.setReturnData(errorcode_success, "提现申请成功","");
+        } catch (Exception e) {
+            log.error("UserManageBiz UserWithDraw is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz UserWithDraw is error", "");
+            throw new QzException("提现失败 ui_id="+param.getUi_id(),e);
+        }
+    }
+
+
+
+    /**
+     * 合作人完善个人提现信息
+     */
+    public void UserWithDrawComplement(ReturnDataNew returnData, Param_user_withdraw_complement param){
+        try {
+            Date date = new Date();
+
+            //获取用户信息
+            Wx_user_info wx_user_info = daoFactory.getWx_user_infoDao().selectByKey(param.getUi_id());
+            if(wx_user_info == null){
+                returnData.setReturnData(errorcode_data,"该用户不存在","");
+                return;
+            }
+            if(!StringUtils.hasLength(wx_user_info.getTelephone())){
+                //用户没有绑定手机号码
+                wx_user_info.setTelephone(param.getTelephone());
+            }
+            if(!StringUtils.hasLength(wx_user_info.getUser_weixin())){
+                //用户没有绑定微信号码
+                wx_user_info.setUser_weixin(param.getUser_weixin());
+            }
+            wx_user_info.setUtime(date);
+            int count = daoFactory.getWx_user_infoDao().updateByKey(wx_user_info);
+            if(count != 1){
+                returnData.setReturnData(errorcode_data,"合作人完善个人提现信息失败","");
+                return ;
+            }
+            returnData.setReturnData(errorcode_success, "合作人完善个人提现信息成功","");
+        } catch (Exception e) {
+            log.error("UserManageBiz UserWithDrawComplement is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz UserWithDrawComplement is error", "");
+        }
+    }
+
+
+    /**
+     * 获取用户提现明细列表
+     */
+    public void GainUserWithDrawList(ReturnDataNew returnData, Param_user_withdraw_list param) {
+        try {
+            int page = param.getPage();
+            int size = param.getSize();
+            int start = (page - 1) * size;
+            if(param.getState() == null){
+                String sql = "select * from wx_user_withdraw where ui_id =? and is_del=0 order by ctime desc  limit " + start + "," + size;
+                List<Wx_user_withdraw> list = getDB().queryListT(sql,Wx_user_withdraw.class,param.getUi_id());
+                returnData.setReturnData(errorcode_success, "获取用户提现明细列表成功", list);
+            }else{
+                String sql = "select * from wx_user_withdraw where ui_id =? and state=? and is_del=0 order by ctime desc limit " + start + "," + size;
+                List<Wx_user_withdraw> list = getDB().queryListT(sql,Wx_user_withdraw.class,param.getUi_id(),param.getState());
+                returnData.setReturnData(errorcode_success, "获取用户提现明细列表成功", list);
+            }
+
+        } catch (Exception e) {
+            log.error("UserManageBiz GainUserWithDrawList is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz GainUserWithDrawList is error", "");
         }
     }
     /****************************下面是封装的查询方法********************************/

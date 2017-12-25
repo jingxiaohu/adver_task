@@ -97,6 +97,8 @@ protected Admin_roleDao admin_roleDao;
 protected Wx_banner_imgDao wx_banner_imgDao;
 @Autowired
 protected Wx_user_payDao wx_user_payDao;
+@Autowired
+protected Wx_user_withdrawDao wx_user_withdrawDao;
 
 /*******************************下面是GET方法**************************************/
 public User_info_newDao getUser_info_newDao() {
@@ -230,6 +232,9 @@ public Wx_banner_imgDao getWx_banner_imgDao() {
 }
 public Wx_user_payDao getWx_user_payDao() {
 	return wx_user_payDao;
+}
+public Wx_user_withdrawDao getWx_user_withdrawDao() {
+	return wx_user_withdrawDao;
 }
 
 

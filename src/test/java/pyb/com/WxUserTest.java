@@ -2,6 +2,9 @@ package pyb.com;
 
 import apidoc.jxh.cn.InterfaceUtil;
 import com.pyb.mvc.action.v1.param.BaseParam;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_complement;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_list;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -153,6 +156,90 @@ public class WxUserTest extends BaseWebTest {
                 5,
                 params,
                 Param_userinfo.class,
+                result);
+    }
+
+    /**
+     * 合作人完善个人提现信息例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void F_user_withdraw_complement() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("telephone","15882345446");
+        params.add("user_weixin","j251878350");
+        sign(params, "ui_id","telephone","user_weixin");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/user_withdraw_complement").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "合作人完善个人提现信息",
+                "ui_id+telephone+user_weixin",
+                "/goods/user_withdraw_complement",
+                6,
+                params,
+                Param_user_withdraw_complement.class,
+                result);
+    }
+
+
+    /**
+     * 合作人提现例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void G_user_withdraw() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("money","5000");
+        sign(params, "ui_id","money");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/user_withdraw").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "合作人提现",
+                "ui_id+money",
+                "/goods/user_withdraw",
+                7,
+                params,
+                Param_user_withdraw.class,
+                result);
+    }
+
+
+    /**
+     * 获取用户提现明细列表例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void H_user_withdraw_list() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("state","0");
+        sign(params, "ui_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/user_withdraw_list").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取用户提现明细列表",
+                "ui_id",
+                "/goods/user_withdraw_list",
+                8,
+                params,
+                Param_user_withdraw_list.class,
                 result);
     }
 }

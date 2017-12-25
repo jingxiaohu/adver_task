@@ -268,7 +268,7 @@ public class WxPayBiz extends BaseBiz {
    */
   @Transactional(rollbackFor = QzException.class)
   public void notify_weixin_userpay(ReturnDataNew returnData, String orderid,
-                            String trade_no, String type, long money) {
+                            String trade_no, String type, long money) throws QzException{
     // TODO Auto-generated method stub
     try {
       Wx_user_pay  wx_user_pay  = selectOneUserPay( orderid);
@@ -313,11 +313,24 @@ public class WxPayBiz extends BaseBiz {
         wx_goods_order.setPtime(new Date());//支付时间
         count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
         if(count == 1){
-          returnData.setReturnData(errorcode_success, "通知更新成功", wx_goods_order);
-          return;
+          /*returnData.setReturnData(errorcode_success, "通知更新成功", wx_goods_order);
+          return;*/
+          //这里处理该用户的推荐人的收益数据
+          sql = "select * from wx_recommend_earnings where ui_id=? and state=1 limit 1";
+          Wx_recommend_earnings wx_recommend_earnings = getDB().queryUniqueT(sql, Wx_recommend_earnings.class, wx_goods_order.getRecommend_id());
+          if(wx_recommend_earnings != null){
+              //待确认收益增加
+            wx_recommend_earnings.setEarnings_total(wx_recommend_earnings.getUnconfirmed_receiving()+wx_goods_order.getMoney());
+            wx_recommend_earnings.setUtime(new Date());
+            count = daoFactory.getWx_recommend_earningsDao().updateByKey(wx_recommend_earnings);
+            if(count != 1){
+              returnData.setReturnData(errorcode_param, "通知更新失败", "");
+              throw new QzException("更新处理该用户的推荐人的收益数据失败 type=" + type + "  orderid=" + wx_user_pay.getOrder_id());
+            }
+          }
         }else{
           returnData.setReturnData(errorcode_param, "通知更新失败", "");
-          return;
+          throw new QzException("更新处理该用户的推荐人的收益数据失败 type=" + type + "  orderid=" + wx_user_pay.getOrder_id());
         }
       }
 
@@ -327,7 +340,7 @@ public class WxPayBiz extends BaseBiz {
     } catch (Exception e) {
       log.error("WxPayBiz.notify_weixin is error", e);
       returnData.setReturnData(errorcode_data, "通知更新失败", "");
-      return;
+      throw new QzException("更新处理该用户的推荐人的收益数据失败" );
     }
   }
 

@@ -1,0 +1,15 @@
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|uw_id|主键ID|long|
+|ui_id|用户id|long|
+|money|提现金额(单位分)|int|
+|telephone|用户手机号码|String|
+|weixin_no|用户微信号码|String|
+|snap_json|提现前快照JSON字符串|String|
+|state|打款状态(0:未打款1：打款成功2：打款失败信息不吻合)|int|
+|is_del|是否逻辑删除(0:不删除1：删除)|int|
+|remit_time|打款处理时间|java.util.Date|
+|ctime|创建时间|java.util.Date|
+|note|备注|String|
+

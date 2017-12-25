@@ -29,7 +29,7 @@ public class JxhCoderAuto {
 						,"wx_goods_order","wx_order_goods"
 						,"wx_goods_type","wx_user_address","wx_apply_cash",
 						"wx_recommend_user","wx_recommend_earnings","wx_accesstoken"
-						,"admin_user","admin_role","wx_banner_img","wx_user_pay"
+						,"admin_user","admin_role","wx_banner_img","wx_user_pay","wx_user_withdraw"
 				};
 //		String ip = "114.55.10.246";
 		String ip = "127.0.0.1";

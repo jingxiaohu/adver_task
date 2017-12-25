@@ -4,8 +4,8 @@ package com.pyb.mvc.action.v1.weixin.user;
 import com.pyb.bean.ReturnDataNew;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
-import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_list;
-import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw;
+import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_complement;
 import com.pyb.mvc.weixin.biz.UserManageBiz;
 import com.pyb.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 获取推荐合作人
+ * 合作人提现
  *
  * @author jingxiaohu
  */
 @RestController
 @RequestMapping(value = "/v1")
-public class Read_applyUserAction extends BaseV1Controller {
+public class Write_UserWithdrawAction extends BaseV1Controller {
 
   /**
    *
@@ -34,11 +34,11 @@ public class Read_applyUserAction extends BaseV1Controller {
   UserManageBiz userManageBiz;
 
   /**
-   * 申请成为推荐合作人信息
+   * 合作人提现
    */
-  @RequestMapping(value = "/goods/read_cooperator")
+  @RequestMapping(value = "/goods/user_withdraw")
   @ResponseBody
-  public String read_cooperator(HttpServletRequest request, HttpServletResponse response, Param_userinfo param) {
+  public String user_withdraw(HttpServletRequest request, HttpServletResponse response, Param_user_withdraw param) {
 
 
     ReturnDataNew returnData = new ReturnDataNew();
@@ -62,7 +62,18 @@ public class Read_applyUserAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
-
+      if (RequestUtil.checkObjectBlank(param.getMoney())) {
+        returnData.setReturnData(errorcode_param, " money is null", "");
+        sendResp(returnData, response);
+        return null;
+      }else{
+        if(param.getMoney() < 5000){
+          //小于50元钱不允许提现
+          returnData.setReturnData(errorcode_param, " 提现最小金额要50元以上", "");
+          sendResp(returnData, response);
+          return null;
+        }
+      }
 
       //对封装的参数对象中的属性进行 非空等规则验证
       if (RequestUtil.checkObjectBlank(param.sign)) {
@@ -70,7 +81,7 @@ public class Read_applyUserAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
-      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.ui_id);
+      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.ui_id,param.getMoney());
       if (!param.sign.equalsIgnoreCase(sign_str)) {
         log.warn("sign=" + param.sign + "  sign_str=" + sign_str);
         returnData.setReturnData(errorcode_param, " sign is not right", null);
@@ -78,25 +89,24 @@ public class Read_applyUserAction extends BaseV1Controller {
         return null;
       }
 
-      userManageBiz.GainApplyUser(returnData,param);
+      userManageBiz.UserWithDraw(returnData,param);
       sendResp(returnData, response);
       return null;
 
     } catch (Exception e) {
-      log.error("Read_applyUserAction.read_cooperator is error  获取推荐合作人信息 - P", e);
+      log.error("Write_UserWithdrawAction.user_withdraw is error  合作人提现 - P", e);
       returnData.setReturnData(errorcode_systerm, "system is error", "");
     }
     sendResp(returnData, response);
     return null;
   }
-
 
   /**
-   * 获取用户提现明细列表
+   * 合作人完善个人提现信息
    */
-  @RequestMapping(value = "/goods/user_withdraw_list")
+  @RequestMapping(value = "/goods/user_withdraw_complement")
   @ResponseBody
-  public String user_withdraw_list(HttpServletRequest request, HttpServletResponse response, Param_user_withdraw_list param) {
+  public String user_withdraw_complement(HttpServletRequest request, HttpServletResponse response, Param_user_withdraw_complement param) {
 
 
     ReturnDataNew returnData = new ReturnDataNew();
@@ -120,15 +130,30 @@ public class Read_applyUserAction extends BaseV1Controller {
         sendResp(returnData, response);
         return null;
       }
-
-
+      if (RequestUtil.checkObjectBlank(param.getTelephone())) {
+        returnData.setReturnData(errorcode_param, " telephone is null", "");
+        sendResp(returnData, response);
+        return null;
+      }else{
+        if(!isMobileNO(param.getTelephone())){
+          //不是正确的电话号码
+          returnData.setReturnData(errorcode_param, " telephone is not right", "");
+          sendResp(returnData, response);
+          return null;
+        }
+      }
+      if (RequestUtil.checkObjectBlank(param.getUser_weixin())) {
+        returnData.setReturnData(errorcode_param, " user_weixin is null", "");
+        sendResp(returnData, response);
+        return null;
+      }
       //对封装的参数对象中的属性进行 非空等规则验证
       if (RequestUtil.checkObjectBlank(param.sign)) {
         returnData.setReturnData(errorcode_param, " sign is null", "");
         sendResp(returnData, response);
         return null;
       }
-      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.ui_id);
+      String sign_str = getSignature(Constants.getSystemKey(param.dtype), param.ui_id,param.getTelephone(),param.getUser_weixin());
       if (!param.sign.equalsIgnoreCase(sign_str)) {
         log.warn("sign=" + param.sign + "  sign_str=" + sign_str);
         returnData.setReturnData(errorcode_param, " sign is not right", null);
@@ -136,16 +161,17 @@ public class Read_applyUserAction extends BaseV1Controller {
         return null;
       }
 
-      userManageBiz.GainUserWithDrawList(returnData,param);
+      userManageBiz.UserWithDrawComplement(returnData,param);
       sendResp(returnData, response);
       return null;
 
     } catch (Exception e) {
-      log.error("Read_applyUserAction.user_withdraw_list is error  获取用户提现明细列表 - P", e);
+      log.error("Write_UserWithdrawAction.user_withdraw_complement is error  合作人完善个人提现信息 - P", e);
       returnData.setReturnData(errorcode_systerm, "system is error", "");
     }
     sendResp(returnData, response);
     return null;
   }
+
 
 }
