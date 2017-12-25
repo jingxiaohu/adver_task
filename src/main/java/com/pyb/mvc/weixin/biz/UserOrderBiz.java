@@ -2,14 +2,19 @@ package com.pyb.mvc.weixin.biz;
 
 import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.ReturnDataNew;
+import com.pyb.bean.Wx_after_sale;
 import com.pyb.bean.Wx_goods_order;
 import com.pyb.bean.Wx_order_goods;
+import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
+import com.pyb.mvc.action.v1.weixin.order.param.Param_order_refund;
 import com.pyb.mvc.weixin.util.KdniaoTrackQueryAPI;
+import com.pyb.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -20,6 +25,43 @@ import java.util.List;
 public class UserOrderBiz extends  BaseWxBiz{
     @Autowired
     KdniaoTrackQueryAPI kdniaoTrackQueryAPI;
+
+
+
+
+
+
+    /**
+     * 获取用户推广明细订单列表
+     */
+    public void GainRecommendUserOrderList(ReturnDataNew returnData, Param_orderList param) {
+        try {
+            int page = param.getPage();
+            int size = param.getSize();
+            int start = (page - 1) * size;
+
+            String sql = "";
+            List<Wx_goods_order> list = null;
+            if(param.getState() == null){
+                //全部查询
+                sql = "select * from wx_goods_order where recommend_id=? and is_del=0 order by ctime desc limit " + start + "," + size;
+                list = getDB().queryListT(sql,Wx_goods_order.class,param.getUi_id());
+            }else{
+                //分情况查询
+                sql = "select * from wx_goods_order where recommend_id=? and state=? and is_del=0 order by ctime desc limit " + start + "," + size;
+                list = getDB().queryListT(sql,Wx_goods_order.class,param.getUi_id(),param.getState());
+            }
+            returnData.setReturnData(errorcode_success, "获取用户推广明细订单列表成功", list);
+        } catch (Exception e) {
+            log.error("UserOrderBiz GainRecommendUserOrderList is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserOrderBiz GainRecommendUserOrderList is error", "");
+        }
+    }
+
+
+
+
+
     /**
      * 获取我的订单列表
      */
@@ -172,7 +214,70 @@ public class UserOrderBiz extends  BaseWxBiz{
             returnData.setReturnData(errorcode_systerm, "UserOrderBiz UserOrderSure is error", "");
         }
     }
+    /**
+     * 用户退货或者退款
+     */
+    public void order_refund(ReturnDataNew returnData, Param_order_refund param) {
+        try {
+            String sql = "select * from wx_after_sale where order_id=? and ui_id=? and is_del=0 limit 1";
+            Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,param.getOrder_id(),param.getUi_id());
+            if(wx_goods_order != null){
+                returnData.setReturnData(errorcode_data, "该笔订单已经申诉过了", "","1");
+                return;
+            }
 
+            Wx_after_sale after_sale = new Wx_after_sale();
+            after_sale.setUi_id(param.getUi_id());
+            after_sale.setOrder_id(param.getOrder_id());
+            after_sale.setType(param.getType());
+            after_sale.setSales_return(param.getSales_return());
+
+            if(param.getAllow_refund_money() != null){
+                //允许退款最大金额单位分
+                after_sale.setAllow_refund_money(param.getAllow_refund_money());
+            }
+            if(param.getNotice() != null){
+                after_sale.setNotice(param.getNotice());
+            }
+            if(param.getRefund_info() != null){
+                after_sale.setRefund_info(param.getRefund_info());
+            }
+            if(param.getRefund_money() != null){
+                after_sale.setRefund_money(param.getRefund_money());
+            }
+            if(param.getSales_return_intro() != null){
+                after_sale.setSales_return_intro(param.getSales_return_intro());
+            }
+            if(param.getMultipartfiles() != null){
+                StringBuffer sb = new StringBuffer();
+                //图片进行轮询 获取
+                MultipartFile[] multipartfiles = param.getMultipartfiles();
+                for (MultipartFile multipartfile : multipartfiles) {
+                    String fileName =  multipartfile.getOriginalFilename();
+                    //上传文件
+                    String url = FileUtil.uploadScaleAvatarImage(multipartfile, fileName, Constants.IMG_ADVER,
+                            Constants.CARD_HIGHT, Constants.CARD_HIGHT, null);
+                    if (url == null) {
+                        returnData.setReturnData(errorcode_data, "上传退款图片错误", "","1");
+                        return;
+                    }
+                    sb.append(url).append(",");
+                }
+                if(sb.length() > 0){
+                    after_sale.setImg_urls(sb.substring(0,sb.lastIndexOf(",")));
+                }
+            }
+            int id = daoFactory.getWx_after_saleDao().insert(after_sale);
+            if(id < 1){
+                returnData.setReturnData(errorcode_data, "用户退货或者退款失败", "","2");
+                return;
+            }
+            returnData.setReturnData(errorcode_success, "用户退货或者退款成功", "");
+        } catch (Exception e) {
+            log.error("UserOrderBiz order_refund is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserOrderBiz UserOrderSure is error", "");
+        }
+    }
     /****************************下面是封装的查询方法********************************/
 
 }

@@ -7,6 +7,7 @@ import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi_goods;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
 import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
+import com.pyb.mvc.action.v1.weixin.order.param.Param_order_refund;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -248,6 +249,63 @@ public class UserOrderTest extends BaseWebTest {
                 7,
                 params,
                 Param_order.class,
+                result);
+    }
+
+    /**
+     * 1.7 获取用户推广明细订单列表例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void H_recommend_order_list() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("state","0");//订单状态 0：待付款 1：待发货 2：待收货 3：已完成
+        sign(params, "dtype","ui_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/recommend_order_list").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "UserOrder.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取用户推广明细订单列表",
+                "dtype+ui_id",
+                "/goods/recommend_order_list",
+                8,
+                params,
+                Param_orderList.class,
+                result);
+    }
+
+
+    /**
+     * 1.8 用户退货或者退款例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void I_order_refund() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("order_id","2017121423121300935");//订单状态 0：待付款 1：待发货 2：待收货 3：已完成
+        params.add("type","1");
+        params.add("sales_return","1");
+        sign(params, "ui_id","order_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/order_refund").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "UserOrder.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "用户退货或者退款",
+                "ui_id+order_id",
+                "/goods/order_refund",
+                9,
+                params,
+                Param_order_refund.class,
                 result);
     }
 }

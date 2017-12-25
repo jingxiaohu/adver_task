@@ -1,29 +1,21 @@
 package com.pyb.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.pyb.constants.Constants;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.pyb.constants.Constants;
 
 
 public class RequestUtil {
@@ -190,7 +182,14 @@ public class RequestUtil {
 	public static String getUUID() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
-
+	/**
+	 * 生成32位UUID
+	 */
+	public static String returnUUID() {
+//		return RequestUtil.getUUID().substring(13)+System.currentTimeMillis();
+		return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date()) +"-"+ RandomStringUtils
+				.random(17, false, true);
+	}
 	/**
 	 * 特殊字符检查
 	 * 

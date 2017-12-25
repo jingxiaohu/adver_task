@@ -539,3 +539,105 @@
 }
 
 ```
+
+#### 8->获取用户推广明细订单列表
+|参数名称|值描述|是否可空|限制长度|参数类型|举例|
+|--------|-----|----|--------|-------|-----|
+|state|订单状态 0：待付款 1：待发货 2：待收货 3：已完成|是|无|整型|0|
+| sign| MD5数字签名(dtype+ui_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+#### 请求路径
+[/goods/recommend_order_list](/goods/recommend_order_list)
+###### 返回结果
+```json
+{
+	"data":[
+		{
+			"address":"四川省成都市龙泉驿区十陵灵龙路23号",
+			"ctime":"1513266349000",
+			"express_info":"",
+			"express_time":"1513266349000",
+			"freight_price":"500",
+			"go_id":"10",
+			"is_after_sale":"0",
+			"is_del":"0",
+			"is_evaluate":"0",
+			"is_pay":"0",
+			"is_send":"1",
+			"logistic_code":"6903244675338",
+			"money":"20000",
+			"name":"敬小虎",
+			"note":"",
+			"order_id":"2017121423454961853",
+			"ptime":"1513847475000",
+			"recommend_id":"1",
+			"shipper_code":"HHKD",
+			"shipper_name":"华航快递",
+			"state":"0",
+			"stime":"1513266349000",
+			"subtotal":"0",
+			"telephone":"15882345446",
+			"transaction_id":"",
+			"ui_id":"2"
+		}
+	],
+	"errorcode":"",
+	"errormsg":"获取用户推广明细订单列表成功",
+	"errorno":"0"
+}
+
+```
+#########返回字段说明
+|名称|描述|类型|
+|----|----|---|
+|go_id|主键ID|long|
+|order_id|订单号|String|
+|ui_id|用户ID|long|
+|express_info|快递信息（例如：已经签收收发室代收投递员：宋李鹏15608194018）|String|
+|express_time|快递签收时间（2017-12-0116：49：35）|java.util.Date|
+|address|收货地址（四川省成都市青羊区四川省成都市青羊区金丝街22号）|String|
+|name|收货人姓名|String|
+|telephone|收货人手机号码|String|
+|subtotal|商品小计金额单位分|int|
+|freight_price|运费单位分|int|
+|money|实付金额（含运费）单位分|int|
+|ctime|创建时间|java.util.Date|
+|ptime|支付时间|java.util.Date|
+|stime|发货时间|java.util.Date|
+|is_after_sale|是否申请了售后0：没有1：有|int|
+|is_pay|是否支付成功0：没有1：支付成功|int|
+|state|订单状态0：待付款1：待发货2：待收货3：已完成|int|
+|is_send|卖家是否发货0：没有1：已经发货|int|
+|is_evaluate|是否待评价0：待评价1：已评价|int|
+|note|备注|String|
+|is_del|是否逻辑删除:0：不删除1：删除|int|
+|recommend_id|我的推荐人用户ID|long|
+|transaction_id|第三方交易单号|String|
+|logistic_code|快递单号|String|
+|shipper_name|快递公司名称|String|
+|shipper_code|快鸟-快递公司编码|String|
+
+
+#### 9->用户退货或者退款
+|参数名称|值描述|是否可空|限制长度|参数类型|举例|
+|--------|-----|----|--------|-------|-----|
+|sales_return_intro|退款说明（选填）|是|无|字符串||
+|sales_return|退货原因：0：未指定1：不想要了2：卖家缺货3：拍错了/订单信息错误4:其它|否|无|整型|1|
+|refund_info|退款系统文字提示|是|无|字符串||
+|refund_money|退款金额单位分|是|无|整型||
+|allow_refund_money|允许退款最大金额单位分|是|无|整型||
+|type|处理方式0：未指定1：退货退款2：换货3：退款（仅退款不退货）|否|无|整型|1|
+|order_id|订单编号|否|无|字符串|2017121423121300935|
+|notice|提示信息（例如：你可以退款的最大金额为41.90）|是|无|字符串||
+| sign| MD5数字签名(ui_id+order_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+#### 请求路径
+[/goods/order_refund](/goods/order_refund)
+###### 返回结果
+```json
+{
+	"data":"",
+	"errorcode":"",
+	"errormsg":"用户退货或者退款成功",
+	"errorno":"0"
+}
+
+```

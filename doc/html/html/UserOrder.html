@@ -229,6 +229,65 @@
 </li>
 </ul>
 </li>
+<li><span class="title">
+<a href="#8-&gt;获取用户推广明细订单列表" title="8->获取用户推广明细订单列表">8-&gt;获取用户推广明细订单列表</a>
+</span>
+<!--span class="number">
+26
+</span-->
+</li>
+<li><span class="title">
+<a href="#请求路径-7" title="请求路径">请求路径</a>
+</span>
+<!--span class="number">
+27
+</span-->
+<ul>
+<li><ul>
+<li><span class="title">
+<a href="#返回结果-7" title="返回结果">返回结果</a>
+</span>
+<!--span class="number">
+28
+</span-->
+</li>
+<li><span class="title">
+<a href="####返回字段说明-2" title="###返回字段说明">###返回字段说明</a>
+</span>
+<!--span class="number">
+29
+</span-->
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><span class="title">
+<a href="#9-&gt;用户退货或者退款" title="9->用户退货或者退款">9-&gt;用户退货或者退款</a>
+</span>
+<!--span class="number">
+30
+</span-->
+</li>
+<li><span class="title">
+<a href="#请求路径-8" title="请求路径">请求路径</a>
+</span>
+<!--span class="number">
+31
+</span-->
+<ul>
+<li><ul>
+<li><span class="title">
+<a href="#返回结果-8" title="返回结果">返回结果</a>
+</span>
+<!--span class="number">
+32
+</span-->
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -1686,6 +1745,342 @@
     "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"用户确认收货成功"</span></span>,
+    "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}
+</code></pre><h4 id="8->获取用户推广明细订单列表"><a name="8->获取用户推广明细订单列表" href="#8-&gt;获取用户推广明细订单列表"></a>8-&gt;获取用户推广明细订单列表</h4><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>值描述</th>
+<th>是否可空</th>
+<th>限制长度</th>
+<th>参数类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>state</td>
+<td>订单状态 0：待付款 1：待发货 2：待收货 3：已完成</td>
+<td>是</td>
+<td>无</td>
+<td>整型</td>
+<td>0</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>MD5数字签名(dtype+ui_id)按参数的首字母升序顺序进行组装</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>—-</td>
+</tr>
+</tbody>
+</table><h4 id="请求路径"><a name="请求路径" href="#请求路径"></a>请求路径</h4><p><a href="/goods/recommend_order_list">/goods/recommend_order_list</a></p><h6 id="返回结果"><a name="返回结果" href="#返回结果"></a>返回结果</h6><pre class="json hljs"><code class="json" data-origin="<pre><code class=&quot;json&quot;>{
+    &quot;data&quot;:[
+        {
+            &quot;address&quot;:&quot;四川省成都市龙泉驿区十陵灵龙路23号&quot;,
+            &quot;ctime&quot;:&quot;1513266349000&quot;,
+            &quot;express_info&quot;:&quot;&quot;,
+            &quot;express_time&quot;:&quot;1513266349000&quot;,
+            &quot;freight_price&quot;:&quot;500&quot;,
+            &quot;go_id&quot;:&quot;10&quot;,
+            &quot;is_after_sale&quot;:&quot;0&quot;,
+            &quot;is_del&quot;:&quot;0&quot;,
+            &quot;is_evaluate&quot;:&quot;0&quot;,
+            &quot;is_pay&quot;:&quot;0&quot;,
+            &quot;is_send&quot;:&quot;1&quot;,
+            &quot;logistic_code&quot;:&quot;6903244675338&quot;,
+            &quot;money&quot;:&quot;20000&quot;,
+            &quot;name&quot;:&quot;敬小虎&quot;,
+            &quot;note&quot;:&quot;&quot;,
+            &quot;order_id&quot;:&quot;2017121423454961853&quot;,
+            &quot;ptime&quot;:&quot;1513847475000&quot;,
+            &quot;recommend_id&quot;:&quot;1&quot;,
+            &quot;shipper_code&quot;:&quot;HHKD&quot;,
+            &quot;shipper_name&quot;:&quot;华航快递&quot;,
+            &quot;state&quot;:&quot;0&quot;,
+            &quot;stime&quot;:&quot;1513266349000&quot;,
+            &quot;subtotal&quot;:&quot;0&quot;,
+            &quot;telephone&quot;:&quot;15882345446&quot;,
+            &quot;transaction_id&quot;:&quot;&quot;,
+            &quot;ui_id&quot;:&quot;2&quot;
+        }
+    ],
+    &quot;errorcode&quot;:&quot;&quot;,
+    &quot;errormsg&quot;:&quot;获取用户推广明细订单列表成功&quot;,
+    &quot;errorno&quot;:&quot;0&quot;
+}
+</code></pre>">{
+    "<span class="hljs-attribute">data</span>":<span class="hljs-value">[
+        {
+            "<span class="hljs-attribute">address</span>":<span class="hljs-value"><span class="hljs-string">"四川省成都市龙泉驿区十陵灵龙路23号"</span></span>,
+            "<span class="hljs-attribute">ctime</span>":<span class="hljs-value"><span class="hljs-string">"1513266349000"</span></span>,
+            "<span class="hljs-attribute">express_info</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">express_time</span>":<span class="hljs-value"><span class="hljs-string">"1513266349000"</span></span>,
+            "<span class="hljs-attribute">freight_price</span>":<span class="hljs-value"><span class="hljs-string">"500"</span></span>,
+            "<span class="hljs-attribute">go_id</span>":<span class="hljs-value"><span class="hljs-string">"10"</span></span>,
+            "<span class="hljs-attribute">is_after_sale</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">is_del</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">is_evaluate</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">is_pay</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">is_send</span>":<span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+            "<span class="hljs-attribute">logistic_code</span>":<span class="hljs-value"><span class="hljs-string">"6903244675338"</span></span>,
+            "<span class="hljs-attribute">money</span>":<span class="hljs-value"><span class="hljs-string">"20000"</span></span>,
+            "<span class="hljs-attribute">name</span>":<span class="hljs-value"><span class="hljs-string">"敬小虎"</span></span>,
+            "<span class="hljs-attribute">note</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">order_id</span>":<span class="hljs-value"><span class="hljs-string">"2017121423454961853"</span></span>,
+            "<span class="hljs-attribute">ptime</span>":<span class="hljs-value"><span class="hljs-string">"1513847475000"</span></span>,
+            "<span class="hljs-attribute">recommend_id</span>":<span class="hljs-value"><span class="hljs-string">"1"</span></span>,
+            "<span class="hljs-attribute">shipper_code</span>":<span class="hljs-value"><span class="hljs-string">"HHKD"</span></span>,
+            "<span class="hljs-attribute">shipper_name</span>":<span class="hljs-value"><span class="hljs-string">"华航快递"</span></span>,
+            "<span class="hljs-attribute">state</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">stime</span>":<span class="hljs-value"><span class="hljs-string">"1513266349000"</span></span>,
+            "<span class="hljs-attribute">subtotal</span>":<span class="hljs-value"><span class="hljs-string">"0"</span></span>,
+            "<span class="hljs-attribute">telephone</span>":<span class="hljs-value"><span class="hljs-string">"15882345446"</span></span>,
+            "<span class="hljs-attribute">transaction_id</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+            "<span class="hljs-attribute">ui_id</span>":<span class="hljs-value"><span class="hljs-string">"2"</span>
+        </span>}
+    ]</span>,
+    "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"获取用户推广明细订单列表成功"</span></span>,
+    "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}
+</code></pre><h6 id="###返回字段说明"><a name="###返回字段说明" href="####返回字段说明"></a>###返回字段说明</h6><table>
+<thead>
+<tr>
+<th>名称</th>
+<th>描述</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>go_id</td>
+<td>主键ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>order_id</td>
+<td>订单号</td>
+<td>String</td>
+</tr>
+<tr>
+<td>ui_id</td>
+<td>用户ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>express_info</td>
+<td>快递信息（例如：已经签收收发室代收投递员：宋李鹏15608194018）</td>
+<td>String</td>
+</tr>
+<tr>
+<td>express_time</td>
+<td>快递签收时间（2017-12-0116：49：35）</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>address</td>
+<td>收货地址（四川省成都市青羊区四川省成都市青羊区金丝街22号）</td>
+<td>String</td>
+</tr>
+<tr>
+<td>name</td>
+<td>收货人姓名</td>
+<td>String</td>
+</tr>
+<tr>
+<td>telephone</td>
+<td>收货人手机号码</td>
+<td>String</td>
+</tr>
+<tr>
+<td>subtotal</td>
+<td>商品小计金额单位分</td>
+<td>int</td>
+</tr>
+<tr>
+<td>freight_price</td>
+<td>运费单位分</td>
+<td>int</td>
+</tr>
+<tr>
+<td>money</td>
+<td>实付金额（含运费）单位分</td>
+<td>int</td>
+</tr>
+<tr>
+<td>ctime</td>
+<td>创建时间</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>ptime</td>
+<td>支付时间</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>stime</td>
+<td>发货时间</td>
+<td>java.util.Date</td>
+</tr>
+<tr>
+<td>is_after_sale</td>
+<td>是否申请了售后0：没有1：有</td>
+<td>int</td>
+</tr>
+<tr>
+<td>is_pay</td>
+<td>是否支付成功0：没有1：支付成功</td>
+<td>int</td>
+</tr>
+<tr>
+<td>state</td>
+<td>订单状态0：待付款1：待发货2：待收货3：已完成</td>
+<td>int</td>
+</tr>
+<tr>
+<td>is_send</td>
+<td>卖家是否发货0：没有1：已经发货</td>
+<td>int</td>
+</tr>
+<tr>
+<td>is_evaluate</td>
+<td>是否待评价0：待评价1：已评价</td>
+<td>int</td>
+</tr>
+<tr>
+<td>note</td>
+<td>备注</td>
+<td>String</td>
+</tr>
+<tr>
+<td>is_del</td>
+<td>是否逻辑删除:0：不删除1：删除</td>
+<td>int</td>
+</tr>
+<tr>
+<td>recommend_id</td>
+<td>我的推荐人用户ID</td>
+<td>long</td>
+</tr>
+<tr>
+<td>transaction_id</td>
+<td>第三方交易单号</td>
+<td>String</td>
+</tr>
+<tr>
+<td>logistic_code</td>
+<td>快递单号</td>
+<td>String</td>
+</tr>
+<tr>
+<td>shipper_name</td>
+<td>快递公司名称</td>
+<td>String</td>
+</tr>
+<tr>
+<td>shipper_code</td>
+<td>快鸟-快递公司编码</td>
+<td>String</td>
+</tr>
+</tbody>
+</table><h4 id="9->用户退货或者退款"><a name="9->用户退货或者退款" href="#9-&gt;用户退货或者退款"></a>9-&gt;用户退货或者退款</h4><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>值描述</th>
+<th>是否可空</th>
+<th>限制长度</th>
+<th>参数类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sales_return_intro</td>
+<td>退款说明（选填）</td>
+<td>是</td>
+<td>无</td>
+<td>字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>sales_return</td>
+<td>退货原因：0：未指定1：不想要了2：卖家缺货3：拍错了/订单信息错误4:其它</td>
+<td>否</td>
+<td>无</td>
+<td>整型</td>
+<td>1</td>
+</tr>
+<tr>
+<td>refund_info</td>
+<td>退款系统文字提示</td>
+<td>是</td>
+<td>无</td>
+<td>字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>refund_money</td>
+<td>退款金额单位分</td>
+<td>是</td>
+<td>无</td>
+<td>整型</td>
+<td></td>
+</tr>
+<tr>
+<td>allow_refund_money</td>
+<td>允许退款最大金额单位分</td>
+<td>是</td>
+<td>无</td>
+<td>整型</td>
+<td></td>
+</tr>
+<tr>
+<td>type</td>
+<td>处理方式0：未指定1：退货退款2：换货3：退款（仅退款不退货）</td>
+<td>否</td>
+<td>无</td>
+<td>整型</td>
+<td>1</td>
+</tr>
+<tr>
+<td>order_id</td>
+<td>订单编号</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>2017121423121300935</td>
+</tr>
+<tr>
+<td>notice</td>
+<td>提示信息（例如：你可以退款的最大金额为41.90）</td>
+<td>是</td>
+<td>无</td>
+<td>字符串</td>
+<td></td>
+</tr>
+<tr>
+<td>sign</td>
+<td>MD5数字签名(ui_id+order_id)按参数的首字母升序顺序进行组装</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>—-</td>
+</tr>
+</tbody>
+</table><h4 id="请求路径"><a name="请求路径" href="#请求路径"></a>请求路径</h4><p><a href="/goods/order_refund">/goods/order_refund</a></p><h6 id="返回结果"><a name="返回结果" href="#返回结果"></a>返回结果</h6><pre class="json hljs"><code class="json" data-origin="<pre><code class=&quot;json&quot;>{
+    &quot;data&quot;:&quot;&quot;,
+    &quot;errorcode&quot;:&quot;&quot;,
+    &quot;errormsg&quot;:&quot;用户退货或者退款成功&quot;,
+    &quot;errorno&quot;:&quot;0&quot;
+}
+</code></pre>">{
+    "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"用户退货或者退款成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
 </span>}
 </code></pre>

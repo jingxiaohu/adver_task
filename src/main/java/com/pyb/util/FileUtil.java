@@ -1,22 +1,15 @@
 package com.pyb.util;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Calendar;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import com.pyb.constants.AppProperties;
 import org.apache.commons.lang.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.pyb.constants.AppProperties;
+import java.io.*;
+import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class FileUtil {
 	
@@ -421,7 +414,7 @@ public class FileUtil {
 		// 得到文件名
 		String imageName = "";
 		if(telephone == null){
-			imageName = RequestUtil.getUUID() + "." + imageType;
+			imageName = RequestUtil.returnUUID() + "." + imageType;
 		}else{
 			imageName = "head" +telephone+"_"+RandomStringUtils.random(5, false, true)+ "." + imageType;
 		}
