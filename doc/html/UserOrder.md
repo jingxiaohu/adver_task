@@ -628,6 +628,7 @@
 |type|处理方式0：未指定1：退货退款2：换货3：退款（仅退款不退货）|否|无|整型|1|
 |order_id|订单编号|否|无|字符串|2017121423121300935|
 |notice|提示信息（例如：你可以退款的最大金额为41.90）|是|无|字符串||
+|multipartfiles|图片文件数组（例如：MultipartFile[] multipartfiles）|是|无|file||
 | sign| MD5数字签名(ui_id+order_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
 #### 请求路径
 [/goods/order_refund](/goods/order_refund)
