@@ -9,7 +9,7 @@
 |openid|用户对于微信公众号APPID唯一ID|是|无|字符串|oA_cb0jLCM68XRZMlQ5Z_VHX5onI|
 |name|收货人姓名|否|无|字符串|敬小虎|
 |telephone|收货人电话号码|否|无|字符串|15882345446|
-|type|用户token|是|无|整型|0|
+|type|是支付 还是 充值  0:订单支付 1：充值|是|无|整型|0|
 |token|用户token|否|无|字符串|d7d87c21bedc6d236b1f77ca36c1a770|
 | sign| MD5数字签名(dtype+ui_id+type+t+token+telephone)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
 #### 请求路径
