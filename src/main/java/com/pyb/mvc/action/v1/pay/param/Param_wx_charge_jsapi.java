@@ -14,7 +14,7 @@ public class Param_wx_charge_jsapi extends BaseParam {
     public long t;//时间戳ms
     @TargetComment(value = "用户token", isnull = "否")
     public String token;//令牌 用户token
-    @TargetComment(value = "用户token", isnull = "是")
+    @TargetComment(value = "是支付 还是 充值  0:订单支付 1：充值", isnull = "是")
     public Integer type;//是支付 还是 充值  0:订单支付 1：充值
     @TargetComment(value = "用户对于微信公众号APPID唯一ID", isnull = "是")
     public String openid;//用户对于微信公众号APPID唯一ID
