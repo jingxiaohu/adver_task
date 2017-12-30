@@ -72,7 +72,8 @@
 			"subtotal":"0",
 			"telephone":"15882345446",
 			"transaction_id":"",
-			"ui_id":"1"
+			"ui_id":"1",
+            "wx_pay_json":"{"nonce_str":"YAXGAgmrA5rc0qYn","appid":"wxebee99b0aba36d8f","sign":"08F20A062EA102393B96644C39AD8FE4","trade_type":"JSAPI","return_msg":"OK","result_code":"SUCCESS","mch_id":"1486469632","return_code":"SUCCESS","prepay_id":"wx20171230200231c13b0dab2a0603470458"}"
 		},
 		{
 			"address":"四川省成都市龙泉驿区十陵灵龙路23号",

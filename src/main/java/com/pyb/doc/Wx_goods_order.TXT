@@ -27,4 +27,5 @@
 |logistic_code|快递单号|String|
 |shipper_name|快递公司名称|String|
 |shipper_code|快鸟-快递公司编码|String|
+|wx_pay_json|微信支付下单返回值JSON|String|
 

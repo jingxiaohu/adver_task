@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_user_pay implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"id","order_id","transaction_id","type","version_code","system_type","return_url","ui_id","ui_nd","tel","money","act_type","ctime","utime","etime","state","ip","referer","subject","car_order_id","note"};
+    //public static String[] carrays ={"id","order_id","transaction_id","type","version_code","system_type","return_url","ui_id","ui_nd","tel","money","act_type","ctime","utime","etime","state","ip","referer","subject","car_order_id","note","is_del"};
 
     public long id;//bigint(20)    主键ID
     public String order_id="";//varchar(100)    我的订单
@@ -30,6 +30,7 @@ public class Wx_user_pay implements Cloneable , Serializable{
     public String subject="";//varchar(200)    商品名称
     public String car_order_id="";//text    停车订单号如果多个中间逗号分割例如（a123,b123,c123）
     public String note="";//varchar(100)    备注
+    public int is_del;//int(11)    是否逻辑删除（0：不删除1：删除）
 
 
 
@@ -240,9 +241,17 @@ public class Wx_user_pay implements Cloneable , Serializable{
         this.note= value;
     }
 
+    public int getIs_del(){
+        return is_del;
+    }
+
+    public void setIs_del(int value){
+        this.is_del= value;
+    }
 
 
-    public static Wx_user_pay newWx_user_pay(long id, String order_id, String transaction_id, int type, int version_code, int system_type, String return_url, long ui_id, String ui_nd, String tel, int money, int act_type, java.util.Date ctime, java.util.Date utime, java.util.Date etime, int state, String ip, String referer, String subject, String car_order_id, String note) {
+
+    public static Wx_user_pay newWx_user_pay(long id, String order_id, String transaction_id, int type, int version_code, int system_type, String return_url, long ui_id, String ui_nd, String tel, int money, int act_type, java.util.Date ctime, java.util.Date utime, java.util.Date etime, int state, String ip, String referer, String subject, String car_order_id, String note, int is_del) {
         Wx_user_pay ret = new Wx_user_pay();
         ret.setId(id);
         ret.setOrder_id(order_id);
@@ -265,6 +274,7 @@ public class Wx_user_pay implements Cloneable , Serializable{
         ret.setSubject(subject);
         ret.setCar_order_id(car_order_id);
         ret.setNote(note);
+        ret.setIs_del(is_del);
         return ret;    
     }
 
@@ -290,6 +300,7 @@ public class Wx_user_pay implements Cloneable , Serializable{
         String subject = wx_user_pay.getSubject();
         String car_order_id = wx_user_pay.getCar_order_id();
         String note = wx_user_pay.getNote();
+        int is_del = wx_user_pay.getIs_del();
 
         this.setId(id);
         this.setOrder_id(order_id);
@@ -312,6 +323,7 @@ public class Wx_user_pay implements Cloneable , Serializable{
         this.setSubject(subject);
         this.setCar_order_id(car_order_id);
         this.setNote(note);
+        this.setIs_del(is_del);
 
     }
 
@@ -338,6 +350,7 @@ public class Wx_user_pay implements Cloneable , Serializable{
         String subject = wx_user_pay.getSubject();
         String car_order_id = wx_user_pay.getCar_order_id();
         String note = wx_user_pay.getNote();
+        int is_del = wx_user_pay.getIs_del();
     }
 
     public Map<String,Object> toMap(){
@@ -366,6 +379,7 @@ public class Wx_user_pay implements Cloneable , Serializable{
         String subject = wx_user_pay.getSubject();
         String car_order_id = wx_user_pay.getCar_order_id();
         String note = wx_user_pay.getNote();
+        int is_del = wx_user_pay.getIs_del();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("id",id);
@@ -389,6 +403,7 @@ public class Wx_user_pay implements Cloneable , Serializable{
         _ret.put("subject",subject);
         _ret.put("car_order_id",car_order_id);
         _ret.put("note",note);
+        _ret.put("is_del",is_del);
         return _ret;
     }
 

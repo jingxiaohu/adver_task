@@ -41,9 +41,9 @@ public class Wx_user_payDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"id","order_id","transaction_id","type","version_code","system_type","return_url","ui_id","ui_nd","tel","money","act_type","ctime","utime","etime","state","ip","referer","subject","car_order_id","note"};
-    private  String coulmns ="id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note";
-    private  String coulmns2 ="order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note";
+    private  String[] carrays ={"id","order_id","transaction_id","type","version_code","system_type","return_url","ui_id","ui_nd","tel","money","act_type","ctime","utime","etime","state","ip","referer","subject","car_order_id","note","is_del"};
+    private  String coulmns ="id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del";
+    private  String coulmns2 ="order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_user_payDao extends BaseDao{
     public int insert(Wx_user_pay bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note) VALUES (:order_id,:transaction_id,:type,:version_code,:system_type,:return_url,:ui_id,:ui_nd,:tel,:money,:act_type,:ctime,:utime,:etime,:state,:ip,:referer,:subject,:car_order_id,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del) VALUES (:order_id,:transaction_id,:type,:version_code,:system_type,:return_url,:ui_id,:ui_nd,:tel,:money,:act_type,:ctime,:utime,:etime,:state,:ip,:referer,:subject,:car_order_id,:note,:is_del)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wx_user_payDao extends BaseDao{
     public int insert_primarykey(Wx_user_pay bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note) VALUES (:id,:order_id,:transaction_id,:type,:version_code,:system_type,:return_url,:ui_id,:ui_nd,:tel,:money,:act_type,:ctime,:utime,:etime,:state,:ip,:referer,:subject,:car_order_id,:note)";
+            sql = "INSERT INTO "+TABLENAME2+" (id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del) VALUES (:id,:order_id,:transaction_id,:type,:version_code,:system_type,:return_url,:ui_id,:ui_nd,:tel,:money,:act_type,:ctime,:utime,:etime,:state,:ip,:referer,:subject,:car_order_id,:note,:is_del)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wx_user_payDao extends BaseDao{
     public int[] insert(final List<Wx_user_pay> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -135,6 +135,7 @@ public class Wx_user_payDao extends BaseDao{
                     ps.setString(18, bean.subject);
                     ps.setString(19, bean.car_order_id);
                     ps.setString(20, bean.note);
+                    ps.setInt(21, bean.is_del);
                 }
             });
         }catch(Exception e){
@@ -153,7 +154,7 @@ public class Wx_user_payDao extends BaseDao{
     public List<Wx_user_pay> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note FROM "+TABLENAME2+" ORDER BY id";
+            sql = "SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del FROM "+TABLENAME2+" ORDER BY id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_user_pay>(Wx_user_pay.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -171,7 +172,7 @@ public class Wx_user_payDao extends BaseDao{
     public List<Wx_user_pay> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
+            sql = "SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del FROM "+TABLENAME2+" ORDER BY id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_user_pay>(Wx_user_pay.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -189,7 +190,7 @@ public class Wx_user_payDao extends BaseDao{
     public List<Wx_user_pay> selectGtKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note FROM "+TABLENAME2+" WHERE id>:id";
+            sql="SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del FROM "+TABLENAME2+" WHERE id>:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_user_pay>(Wx_user_pay.class));
@@ -209,7 +210,7 @@ public class Wx_user_payDao extends BaseDao{
     public Wx_user_pay selectByKey(long id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note FROM "+TABLENAME2+" WHERE id=:id";
+            sql="SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del FROM "+TABLENAME2+" WHERE id=:id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("id", id);
             List<Wx_user_pay> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_user_pay>(Wx_user_pay.class));
@@ -248,7 +249,7 @@ public class Wx_user_payDao extends BaseDao{
     public List<Wx_user_pay> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT id,order_id,transaction_id,type,version_code,system_type,return_url,ui_id,ui_nd,tel,money,act_type,ctime,utime,etime,state,ip,referer,subject,car_order_id,note,is_del FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_user_pay>(Wx_user_pay.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -266,7 +267,7 @@ public class Wx_user_payDao extends BaseDao{
     public int updateByKey(Wx_user_pay bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET order_id=:order_id,transaction_id=:transaction_id,type=:type,version_code=:version_code,system_type=:system_type,return_url=:return_url,ui_id=:ui_id,ui_nd=:ui_nd,tel=:tel,money=:money,act_type=:act_type,ctime=:ctime,utime=:utime,etime=:etime,state=:state,ip=:ip,referer=:referer,subject=:subject,car_order_id=:car_order_id,note=:note WHERE id=:id";
+            sql = "UPDATE "+TABLENAME2+" SET order_id=:order_id,transaction_id=:transaction_id,type=:type,version_code=:version_code,system_type=:system_type,return_url=:return_url,ui_id=:ui_id,ui_nd=:ui_nd,tel=:tel,money=:money,act_type=:act_type,ctime=:ctime,utime=:utime,etime=:etime,state=:state,ip=:ip,referer=:referer,subject=:subject,car_order_id=:car_order_id,note=:note,is_del=:is_del WHERE id=:id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -284,7 +285,7 @@ public class Wx_user_payDao extends BaseDao{
     public int[] updateByKey (final List<Wx_user_pay> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET order_id=?,transaction_id=?,type=?,version_code=?,system_type=?,return_url=?,ui_id=?,ui_nd=?,tel=?,money=?,act_type=?,ctime=?,utime=?,etime=?,state=?,ip=?,referer=?,subject=?,car_order_id=?,note=? WHERE id=?";
+            sql = "UPDATE "+TABLENAME2+" SET order_id=?,transaction_id=?,type=?,version_code=?,system_type=?,return_url=?,ui_id=?,ui_nd=?,tel=?,money=?,act_type=?,ctime=?,utime=?,etime=?,state=?,ip=?,referer=?,subject=?,car_order_id=?,note=?,is_del=? WHERE id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -313,7 +314,8 @@ public class Wx_user_payDao extends BaseDao{
                     ps.setString(18, bean.subject);
                     ps.setString(19, bean.car_order_id);
                     ps.setString(20, bean.note);
-                    ps.setLong(21, bean.id);
+                    ps.setInt(21, bean.is_del);
+                    ps.setLong(22, bean.id);
                 }
             });
         }catch(Exception e){
@@ -393,6 +395,7 @@ public class Wx_user_payDao extends BaseDao{
                  "	`subject`  VARCHAR(200) COMMENT '//varchar(200)    商品名称'," +
                  "	`car_order_id`  TEXT COMMENT '//text    停车订单号如果多个中间逗号分割例如（a123,b123,c123）'," +
                  "	`note`  VARCHAR(100) COMMENT '//varchar(100)    备注'," +
+                 "	`is_del`  INT(11) COMMENT '//int(11)    是否逻辑删除（0：不删除1：删除）'," +
                  "	PRIMARY KEY (`id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

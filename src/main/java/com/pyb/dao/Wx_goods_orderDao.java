@@ -41,9 +41,9 @@ public class Wx_goods_orderDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"go_id","order_id","ui_id","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","transaction_id","logistic_code","shipper_name","shipper_code"};
-    private  String coulmns ="go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code";
-    private  String coulmns2 ="order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code";
+    private  String[] carrays ={"go_id","order_id","ui_id","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","transaction_id","logistic_code","shipper_name","shipper_code","wx_pay_json"};
+    private  String coulmns ="go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json";
+    private  String coulmns2 ="order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public int insert(Wx_goods_order bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code) VALUES (:order_id,:ui_id,:express_info,:express_time,:address,:name,:telephone,:subtotal,:freight_price,:money,:ctime,:ptime,:stime,:is_after_sale,:is_pay,:state,:is_send,:is_evaluate,:note,:is_del,:recommend_id,:transaction_id,:logistic_code,:shipper_name,:shipper_code)";
+            sql = "INSERT INTO "+TABLENAME2+" (order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json) VALUES (:order_id,:ui_id,:express_info,:express_time,:address,:name,:telephone,:subtotal,:freight_price,:money,:ctime,:ptime,:stime,:is_after_sale,:is_pay,:state,:is_send,:is_evaluate,:note,:is_del,:recommend_id,:transaction_id,:logistic_code,:shipper_name,:shipper_code,:wx_pay_json)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public int insert_primarykey(Wx_goods_order bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code) VALUES (:go_id,:order_id,:ui_id,:express_info,:express_time,:address,:name,:telephone,:subtotal,:freight_price,:money,:ctime,:ptime,:stime,:is_after_sale,:is_pay,:state,:is_send,:is_evaluate,:note,:is_del,:recommend_id,:transaction_id,:logistic_code,:shipper_name,:shipper_code)";
+            sql = "INSERT INTO "+TABLENAME2+" (go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json) VALUES (:go_id,:order_id,:ui_id,:express_info,:express_time,:address,:name,:telephone,:subtotal,:freight_price,:money,:ctime,:ptime,:stime,:is_after_sale,:is_pay,:state,:is_send,:is_evaluate,:note,:is_del,:recommend_id,:transaction_id,:logistic_code,:shipper_name,:shipper_code,:wx_pay_json)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public int[] insert(final List<Wx_goods_order> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -140,6 +140,7 @@ public class Wx_goods_orderDao extends BaseDao{
                     ps.setString(23, bean.logistic_code);
                     ps.setString(24, bean.shipper_name);
                     ps.setString(25, bean.shipper_code);
+                    ps.setString(26, bean.wx_pay_json);
                 }
             });
         }catch(Exception e){
@@ -158,7 +159,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public List<Wx_goods_order> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code FROM "+TABLENAME2+" ORDER BY go_id";
+            sql = "SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json FROM "+TABLENAME2+" ORDER BY go_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_goods_order>(Wx_goods_order.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -176,7 +177,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public List<Wx_goods_order> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code FROM "+TABLENAME2+" ORDER BY go_id DESC LIMIT "+num+"" ;
+            sql = "SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json FROM "+TABLENAME2+" ORDER BY go_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_goods_order>(Wx_goods_order.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -194,7 +195,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public List<Wx_goods_order> selectGtKey(long go_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code FROM "+TABLENAME2+" WHERE go_id>:go_id";
+            sql="SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json FROM "+TABLENAME2+" WHERE go_id>:go_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("go_id", go_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_goods_order>(Wx_goods_order.class));
@@ -214,7 +215,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public Wx_goods_order selectByKey(long go_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code FROM "+TABLENAME2+" WHERE go_id=:go_id";
+            sql="SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json FROM "+TABLENAME2+" WHERE go_id=:go_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("go_id", go_id);
             List<Wx_goods_order> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_goods_order>(Wx_goods_order.class));
@@ -253,7 +254,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public List<Wx_goods_order> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT go_id,order_id,ui_id,express_info,express_time,address,name,telephone,subtotal,freight_price,money,ctime,ptime,stime,is_after_sale,is_pay,state,is_send,is_evaluate,note,is_del,recommend_id,transaction_id,logistic_code,shipper_name,shipper_code,wx_pay_json FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_goods_order>(Wx_goods_order.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -271,7 +272,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public int updateByKey(Wx_goods_order bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET order_id=:order_id,ui_id=:ui_id,express_info=:express_info,express_time=:express_time,address=:address,name=:name,telephone=:telephone,subtotal=:subtotal,freight_price=:freight_price,money=:money,ctime=:ctime,ptime=:ptime,stime=:stime,is_after_sale=:is_after_sale,is_pay=:is_pay,state=:state,is_send=:is_send,is_evaluate=:is_evaluate,note=:note,is_del=:is_del,recommend_id=:recommend_id,transaction_id=:transaction_id,logistic_code=:logistic_code,shipper_name=:shipper_name,shipper_code=:shipper_code WHERE go_id=:go_id";
+            sql = "UPDATE "+TABLENAME2+" SET order_id=:order_id,ui_id=:ui_id,express_info=:express_info,express_time=:express_time,address=:address,name=:name,telephone=:telephone,subtotal=:subtotal,freight_price=:freight_price,money=:money,ctime=:ctime,ptime=:ptime,stime=:stime,is_after_sale=:is_after_sale,is_pay=:is_pay,state=:state,is_send=:is_send,is_evaluate=:is_evaluate,note=:note,is_del=:is_del,recommend_id=:recommend_id,transaction_id=:transaction_id,logistic_code=:logistic_code,shipper_name=:shipper_name,shipper_code=:shipper_code,wx_pay_json=:wx_pay_json WHERE go_id=:go_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -289,7 +290,7 @@ public class Wx_goods_orderDao extends BaseDao{
     public int[] updateByKey (final List<Wx_goods_order> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET order_id=?,ui_id=?,express_info=?,express_time=?,address=?,name=?,telephone=?,subtotal=?,freight_price=?,money=?,ctime=?,ptime=?,stime=?,is_after_sale=?,is_pay=?,state=?,is_send=?,is_evaluate=?,note=?,is_del=?,recommend_id=?,transaction_id=?,logistic_code=?,shipper_name=?,shipper_code=? WHERE go_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET order_id=?,ui_id=?,express_info=?,express_time=?,address=?,name=?,telephone=?,subtotal=?,freight_price=?,money=?,ctime=?,ptime=?,stime=?,is_after_sale=?,is_pay=?,state=?,is_send=?,is_evaluate=?,note=?,is_del=?,recommend_id=?,transaction_id=?,logistic_code=?,shipper_name=?,shipper_code=?,wx_pay_json=? WHERE go_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -323,7 +324,8 @@ public class Wx_goods_orderDao extends BaseDao{
                     ps.setString(23, bean.logistic_code);
                     ps.setString(24, bean.shipper_name);
                     ps.setString(25, bean.shipper_code);
-                    ps.setLong(26, bean.go_id);
+                    ps.setString(26, bean.wx_pay_json);
+                    ps.setLong(27, bean.go_id);
                 }
             });
         }catch(Exception e){
@@ -408,6 +410,7 @@ public class Wx_goods_orderDao extends BaseDao{
                  "	`logistic_code`  VARCHAR(100) COMMENT '//varchar(100)    快递单号'," +
                  "	`shipper_name`  VARCHAR(100) COMMENT '//varchar(100)    快递公司名称'," +
                  "	`shipper_code`  VARCHAR(30) COMMENT '//varchar(30)    快鸟-快递公司编码'," +
+                 "	`wx_pay_json`  TINYTEXT COMMENT '//varchar(255)    微信支付下单返回值JSON'," +
                  "	PRIMARY KEY (`go_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

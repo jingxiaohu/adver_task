@@ -22,4 +22,5 @@
 |subject|商品名称|String|
 |car_order_id|停车订单号如果多个中间逗号分割例如（a123,b123,c123）|String|
 |note|备注|String|
+|is_del|是否逻辑删除（0：不删除1：删除）|int|
 

@@ -303,4 +303,50 @@ public class UserOrderBiz extends  BaseWxBiz{
     }
     /****************************下面是封装的查询方法********************************/
 
+    /**
+     * 处理订单支付超时进行关闭
+     */
+    public  void  checkOrderTimeOut()throws  QzException{
+        String sql = "select * from wx_goods_order where is_pay=0 and is_del=0";
+        try {
+            List<Wx_goods_order> list = getDB().queryListT(sql,Wx_goods_order.class);
+            if(list == null || list.size() == 0){
+                    return;
+            }
+            //遍历处理超时的订单 关闭掉
+            for (Wx_goods_order wx_goods_order : list) {
+                if(wx_goods_order.getCtime().getTime() - System.currentTimeMillis() > 2*60*60*1000){
+                    wx_goods_order.setIs_del(1);//设置该订单关闭 || 后面需要给用户进行推送消息发送
+                    int count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
+                    if(count != 1){
+                        //更新失败
+                        log.error("daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order) 失败");
+                        throw  new QzException("daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order)");
+                    }
+                    //处理user_pay表对应数据删除   订单表订单号跟支付表支付单号一样
+                    sql = "select * from wx_user_pay where order_id=? limit 1";
+                    Wx_user_pay wx_user_pay = getDB().queryUniqueT(sql,Wx_user_pay.class,wx_goods_order.getOrder_id());
+                    if(wx_user_pay == null){
+                        log.error("wx_user_pay == null 失败 wx_goods_order.getOrder_id()="+wx_goods_order.getOrder_id());
+                        throw  new QzException("wx_user_pay == null 失败 wx_goods_order.getOrder_id()="+wx_goods_order.getOrder_id());
+                    }else{
+                        wx_user_pay.setIs_del(1);
+                        count = daoFactory.getWx_user_payDao().updateByKey(wx_user_pay);
+                        if(count != 1){
+                            //更新失败
+                            log.error("daoFactory.getWx_user_payDao().updateByKey(wx_user_pay) 失败");
+                            throw  new QzException("daoFactory.getWx_user_payDao().updateByKey(wx_user_pay) 失败");
+                        }
+                    }
+
+                }
+                
+            }
+
+        } catch (Exception e) {
+            log.error("处理订单支付超时进行关闭 checkOrderTimeOut is error",e);
+            throw  new QzException("处理订单支付超时进行关闭 checkOrderTimeOut is error",e);
+        }
+    }
+
 }

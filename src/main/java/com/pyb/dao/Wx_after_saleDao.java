@@ -43,7 +43,7 @@ public class Wx_after_saleDao extends BaseDao{
 
     private  String[] carrays ={"as_id","type","sales_return","sales_return_intro","refund_money","img_urls","notice","allow_refund_money","refund_info","ctime","ui_id","order_id","g_id","dispose_type","dispose_state","note","is_del"};
     private  String coulmns ="as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del";
-    private  String coulmns2 ="as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,order_id,g_id,dispose_type,dispose_state,note,is_del";
+    private  String coulmns2 ="type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_after_saleDao extends BaseDao{
     public int insert(Wx_after_sale bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,order_id,g_id,dispose_type,dispose_state,note,is_del) VALUES (:as_id,:type,:sales_return,:sales_return_intro,:refund_money,:img_urls,:notice,:allow_refund_money,:refund_info,:ctime,:order_id,:g_id,:dispose_type,:dispose_state,:note,:is_del)";
+            sql = "INSERT INTO "+TABLENAME2+" (type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del) VALUES (:type,:sales_return,:sales_return_intro,:refund_money,:img_urls,:notice,:allow_refund_money,:refund_info,:ctime,:ui_id,:order_id,:g_id,:dispose_type,:dispose_state,:note,:is_del)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -106,7 +106,7 @@ public class Wx_after_saleDao extends BaseDao{
     public int[] insert(final List<Wx_after_sale> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,order_id,g_id,dispose_type,dispose_state,note,is_del) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -115,7 +115,6 @@ public class Wx_after_saleDao extends BaseDao{
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     Wx_after_sale bean = beans.get(i);
-                    ps.setLong(0, bean.as_id);
                     ps.setInt(1, bean.type);
                     ps.setInt(2, bean.sales_return);
                     ps.setString(3, bean.sales_return_intro);
@@ -125,6 +124,7 @@ public class Wx_after_saleDao extends BaseDao{
                     ps.setInt(7, bean.allow_refund_money);
                     ps.setString(8, bean.refund_info);
                     ps.setTimestamp(9, new Timestamp(bean.ctime.getTime()));
+                    ps.setLong(10, bean.ui_id);
                     ps.setString(11, bean.order_id);
                     ps.setLong(12, bean.g_id);
                     ps.setInt(13, bean.dispose_type);
@@ -149,7 +149,7 @@ public class Wx_after_saleDao extends BaseDao{
     public List<Wx_after_sale> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" ORDER BY ui_id";
+            sql = "SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" ORDER BY as_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_after_sale>(Wx_after_sale.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -167,7 +167,7 @@ public class Wx_after_saleDao extends BaseDao{
     public List<Wx_after_sale> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" ORDER BY ui_id DESC LIMIT "+num+"" ;
+            sql = "SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" ORDER BY as_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_after_sale>(Wx_after_sale.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -177,17 +177,17 @@ public class Wx_after_saleDao extends BaseDao{
     }
 
     //根据主键查询
-    public List<Wx_after_sale> selectGtKey(long ui_id) {
-        return selectGtKey(ui_id, TABLENAME);
+    public List<Wx_after_sale> selectGtKey(long as_id) {
+        return selectGtKey(as_id, TABLENAME);
     }
 
     //根据主键查询
-    public List<Wx_after_sale> selectGtKey(long ui_id, String TABLENAME2) {
+    public List<Wx_after_sale> selectGtKey(long as_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" WHERE ui_id>:ui_id";
+            sql="SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" WHERE as_id>:as_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("ui_id", ui_id);
+            param.put("as_id", as_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_after_sale>(Wx_after_sale.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -197,22 +197,22 @@ public class Wx_after_saleDao extends BaseDao{
     }
 
     //根据主键查询
-    public Wx_after_sale selectByKey(long ui_id) {
-        return selectByKey(ui_id, TABLENAME);
+    public Wx_after_sale selectByKey(long as_id) {
+        return selectByKey(as_id, TABLENAME);
     }
 
     //根据主键查询
-    public Wx_after_sale selectByKey(long ui_id, String TABLENAME2) {
+    public Wx_after_sale selectByKey(long as_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" WHERE ui_id=:ui_id";
+            sql="SELECT as_id,type,sales_return,sales_return_intro,refund_money,img_urls,notice,allow_refund_money,refund_info,ctime,ui_id,order_id,g_id,dispose_type,dispose_state,note,is_del FROM "+TABLENAME2+" WHERE as_id=:as_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("ui_id", ui_id);
+            param.put("as_id", as_id);
             List<Wx_after_sale> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_after_sale>(Wx_after_sale.class));
             return (list == null || list.size() == 0) ? null : list.get(0);
         }catch(Exception e){
             //createTable(TABLENAME2);
-            log.error("selectByKey ui_id="+ui_id,e);
+            log.error("selectByKey as_id="+as_id,e);
             return null;
         }
     }
@@ -262,7 +262,7 @@ public class Wx_after_saleDao extends BaseDao{
     public int updateByKey(Wx_after_sale bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET as_id=:as_id,type=:type,sales_return=:sales_return,sales_return_intro=:sales_return_intro,refund_money=:refund_money,img_urls=:img_urls,notice=:notice,allow_refund_money=:allow_refund_money,refund_info=:refund_info,ctime=:ctime,order_id=:order_id,g_id=:g_id,dispose_type=:dispose_type,dispose_state=:dispose_state,note=:note,is_del=:is_del WHERE ui_id=:ui_id";
+            sql = "UPDATE "+TABLENAME2+" SET type=:type,sales_return=:sales_return,sales_return_intro=:sales_return_intro,refund_money=:refund_money,img_urls=:img_urls,notice=:notice,allow_refund_money=:allow_refund_money,refund_info=:refund_info,ctime=:ctime,ui_id=:ui_id,order_id=:order_id,g_id=:g_id,dispose_type=:dispose_type,dispose_state=:dispose_state,note=:note,is_del=:is_del WHERE as_id=:as_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -280,7 +280,7 @@ public class Wx_after_saleDao extends BaseDao{
     public int[] updateByKey (final List<Wx_after_sale> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET as_id=?,type=?,sales_return=?,sales_return_intro=?,refund_money=?,img_urls=?,notice=?,allow_refund_money=?,refund_info=?,ctime=?,order_id=?,g_id=?,dispose_type=?,dispose_state=?,note=?,is_del=? WHERE ui_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET type=?,sales_return=?,sales_return_intro=?,refund_money=?,img_urls=?,notice=?,allow_refund_money=?,refund_info=?,ctime=?,ui_id=?,order_id=?,g_id=?,dispose_type=?,dispose_state=?,note=?,is_del=? WHERE as_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -289,7 +289,6 @@ public class Wx_after_saleDao extends BaseDao{
                 //@Override
                 public void setValues(PreparedStatement ps, int i) throws SQLException {
                     Wx_after_sale bean = beans.get(i);
-                    ps.setLong(0, bean.as_id);
                     ps.setInt(1, bean.type);
                     ps.setInt(2, bean.sales_return);
                     ps.setString(3, bean.sales_return_intro);
@@ -299,13 +298,14 @@ public class Wx_after_saleDao extends BaseDao{
                     ps.setInt(7, bean.allow_refund_money);
                     ps.setString(8, bean.refund_info);
                     ps.setTimestamp(9, new Timestamp(bean.ctime.getTime()));
+                    ps.setLong(10, bean.ui_id);
                     ps.setString(11, bean.order_id);
                     ps.setLong(12, bean.g_id);
                     ps.setInt(13, bean.dispose_type);
                     ps.setInt(14, bean.dispose_state);
                     ps.setString(15, bean.note);
                     ps.setInt(16, bean.is_del);
-                    ps.setLong(17, bean.ui_id);
+                    ps.setLong(17, bean.as_id);
                 }
             });
         }catch(Exception e){
@@ -315,17 +315,17 @@ public class Wx_after_saleDao extends BaseDao{
     }
 
     //删除单条数据
-    public int deleteByKey(long ui_id) throws SQLException{
-        return deleteByKey(ui_id, TABLENAME);
+    public int deleteByKey(long as_id) throws SQLException{
+        return deleteByKey(as_id, TABLENAME);
     }
 
     //删除单条数据
-    public int deleteByKey(long ui_id, String TABLENAME2) throws SQLException{
+    public int deleteByKey(long as_id, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE ui_id=:ui_id";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE as_id=:as_id";
             Map<String,Object> param = new HashMap<String,Object>();
-            param.put("ui_id", ui_id);
+            param.put("as_id", as_id);
             return _np.update(sql, param);
         }catch(Exception e){
             log.error("deleteByKey", e);
@@ -342,7 +342,7 @@ public class Wx_after_saleDao extends BaseDao{
     public int[] deleteByKey(final long[] keys, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "DELETE FROM "+TABLENAME2+" WHERE ui_id=?";
+            sql = "DELETE FROM "+TABLENAME2+" WHERE as_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -364,7 +364,7 @@ public class Wx_after_saleDao extends BaseDao{
         try{
             String sql;
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
-                 "	`as_id`  BIGINT(20) COMMENT '//bigint(20)    '," +
+                 "	`as_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    '," +
                  "	`type`  INT(11) COMMENT '//int(11)    处理方式0：未指定1：退货退款2：换货3：退款（仅退款不退货）'," +
                  "	`sales_return`  INT(11) COMMENT '//int(11)    退货原因：0：未指定1：不想要了2：卖家缺货3：拍错了/订单信息错误4:其它'," +
                  "	`sales_return_intro`  TINYTEXT COMMENT '//varchar(500)    退款说明（选填）'," +
@@ -381,6 +381,7 @@ public class Wx_after_saleDao extends BaseDao{
                  "	`dispose_state`  INT(11) COMMENT '//int(11)    处理退款进度：0：无1：已经调用微信支付退款完毕2：已经调用微信支付退款且退货完毕3：已经进行换货处理完毕'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
                  "	`is_del`  INT(11) COMMENT '//int(11)    是否逻辑删除:0：不删除1：删除'," +
+                 "	PRIMARY KEY (`as_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();
             params.put("TABLENAME", TABLENAME2);

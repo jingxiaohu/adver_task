@@ -7,24 +7,24 @@ import com.pyb.exception.QzException;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi_goods;
 import com.pyb.mvc.service.BaseBiz;
-import com.pyb.mvc.service.common.PayParkPB;
-import com.pyb.transaction.PayTransaction;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.pyb.util.XMLBeanUtils;
+import com.weixin.config.HttpTool;
+import com.weixin.config.WeixinPayConstants;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class WxPayBiz extends BaseBiz {
 
-  @Autowired
+/*  @Autowired
   private PayTransaction payTransaction;
   @Autowired
-  private PayParkPB payParkPB;
+  private PayParkPB payParkPB;*/
 
   private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
@@ -137,9 +137,11 @@ public class WxPayBiz extends BaseBiz {
   /**
    * 微信 -- 用户充值
    */
-  public Wx_user_pay weixin_charge_userpay(ReturnDataNew returnData,Param_wx_charge_jsapi param) throws QzException{
+  public Map<String, String> weixin_charge_userpay(ReturnDataNew returnData, Param_wx_charge_jsapi param
+          , String appid, String appsecret, String partner, String subject, String ip , String Notify_url) throws QzException{
     // TODO Auto-generated method stub
     try {
+      String out_trade_no  = returnUUID();
       String callbackurl = "";//回调地址
       String uuid = "";
       String tel = "";
@@ -159,7 +161,7 @@ public class WxPayBiz extends BaseBiz {
 
       //处理返回数据和业务逻辑
       Wx_goods_order wx_goods_order = new Wx_goods_order();
-      wx_goods_order.setOrder_id(returnUUID());
+      wx_goods_order.setOrder_id(out_trade_no);
       wx_goods_order.setAddress(param.getAddress());
       wx_goods_order.setTelephone(param.getTelephone());
       wx_goods_order.setName(param.getName());
@@ -216,6 +218,52 @@ public class WxPayBiz extends BaseBiz {
 
       wx_goods_order.setFreight_price(yf);//运费 单位分
       wx_goods_order.setMoney(money);
+      //****************************************************微信支付************************************************************//
+      Map<String, String> result = null;
+      try {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("appid", appid);
+        params.put("mch_id", partner);
+        params.put("attach", String.valueOf(param.type));
+        params.put("body", subject);
+        params.put("nonce_str", RandomStringUtils.random(32, true, true));
+        params.put("out_trade_no", out_trade_no);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 5);
+        params.put("time_expire", dateFormat.format(calendar.getTime()));
+        params.put("total_fee", String.valueOf(money));
+        params.put("spbill_create_ip", ip);
+        params.put("notify_url", Notify_url);
+
+        /**
+         * 3、交易类型
+         JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里
+         MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口
+         */
+        params.put("trade_type", "JSAPI");
+        params.put("openid",param.openid);
+        params.put("product_id", out_trade_no);
+        String sign = getSign(params,appsecret);
+        //设置SIGN
+        params.put("sign", sign);
+        //向微信服务器公共下单接口发送请求
+        String resultStr = HttpTool
+                .sendPost(WeixinPayConstants.createOrderURL, XMLBeanUtils.map2xml(params));
+        if (log.isDebugEnabled()) {
+          log.debug("微信下单返回结果：" + resultStr);
+        }
+        //组装返回数据
+//        JSONObject obj = new JSONObject();
+        result = XMLBeanUtils.xml2Map(resultStr);
+        if (result != null && getSign(result,appsecret).equals(result.get("sign")) && "SUCCESS".equals(result.get("return_code")) && "SUCCESS".equals(result.get("result_code"))) {
+          //记录到订单某字段
+          wx_goods_order.setWx_pay_json(JSON.toJSONString(result));
+        }
+      } catch (Exception e) {
+        throw new QzException("微信支付下单请求调用失败",e);
+      }
+      //***************************************************************************************************************//
       //新增
       int id = daoFactory.getWx_goods_orderDao().insert(wx_goods_order);
       if(id < 1){
@@ -233,7 +281,7 @@ public class WxPayBiz extends BaseBiz {
       user_pay.setEtime(date);
       user_pay.setUtime(date);
       user_pay.setMoney(money);
-      user_pay.setOrder_id(returnUUID());
+      user_pay.setOrder_id(out_trade_no);
       user_pay.setReturn_url(callbackurl);
       user_pay.setState(0);//交易状态(0:未支付1：已支付2：支付失败)
       user_pay.setSystem_type(3);//操作系统类型（IOSAndroidweb）1:android2:IOS3:web4:PDA
@@ -254,7 +302,7 @@ public class WxPayBiz extends BaseBiz {
       }
       user_pay.setId(id);
       returnData.setReturnData("0", "下单成功", user_pay);
-      return user_pay;
+      return result;
 
     } catch (Exception e) {
       log.error("WxPayBiz.weixin_charge is error", e);
@@ -391,6 +439,8 @@ public class WxPayBiz extends BaseBiz {
       return;
     }
   }
+
+
   /*****************************************************************************************/
   /**
    * 用户充值::通过订单编号获取某条用户充值订单详情
@@ -404,5 +454,35 @@ public class WxPayBiz extends BaseBiz {
       log.error("selectOneUserPay 用户充值::通过订单编号获取某条用户充值订单详情错误", e);
     }
     return null;
+  }
+
+  /**
+   * 对支付参数信息进行签名
+   *
+   * @param params 待签名授权信息
+   */
+  public String getSign(Map<String, String> params,String appsecret) {
+    //获取待签名字符串
+    List<String> keys = new ArrayList<>(params.keySet());
+    Collections.sort(keys);
+
+    String prestr = "";
+
+    for (int i = 0; i < keys.size(); i++) {
+      String key = keys.get(i);
+      String value = params.get(key);
+      if (value == null || value.equals("") || key.equalsIgnoreCase("sign")) {
+        continue;
+      }
+      if (i == keys.size() - 1) {//拼接时，不包括最后一个&字符
+        prestr = prestr + key + "=" + value;
+      } else {
+        prestr = prestr + key + "=" + value + "&";
+      }
+    }
+    //获得签名验证结果
+    String stringSignTemp = prestr + "&key=" + appsecret;
+    return org.springframework.util.DigestUtils.md5DigestAsHex(stringSignTemp.getBytes())
+            .toUpperCase();
   }
 }

@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_goods_order implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"go_id","order_id","ui_id","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","transaction_id","logistic_code","shipper_name","shipper_code"};
+    //public static String[] carrays ={"go_id","order_id","ui_id","express_info","express_time","address","name","telephone","subtotal","freight_price","money","ctime","ptime","stime","is_after_sale","is_pay","state","is_send","is_evaluate","note","is_del","recommend_id","transaction_id","logistic_code","shipper_name","shipper_code","wx_pay_json"};
 
     public long go_id;//bigint(20)    主键ID
     public String order_id="";//varchar(80)    订单号
@@ -35,6 +35,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public String logistic_code="";//varchar(100)    快递单号
     public String shipper_name="";//varchar(100)    快递公司名称
     public String shipper_code="";//varchar(30)    快鸟-快递公司编码
+    public String wx_pay_json="";//varchar(255)    微信支付下单返回值JSON
 
 
 
@@ -288,9 +289,20 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.shipper_code= value;
     }
 
+    public String getWx_pay_json(){
+        return wx_pay_json;
+    }
+
+    public void setWx_pay_json(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.wx_pay_json= value;
+    }
 
 
-    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long ui_id, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String transaction_id, String logistic_code, String shipper_name, String shipper_code) {
+
+    public static Wx_goods_order newWx_goods_order(long go_id, String order_id, long ui_id, String express_info, java.util.Date express_time, String address, String name, String telephone, int subtotal, int freight_price, int money, java.util.Date ctime, java.util.Date ptime, java.util.Date stime, int is_after_sale, int is_pay, int state, int is_send, int is_evaluate, String note, int is_del, long recommend_id, String transaction_id, String logistic_code, String shipper_name, String shipper_code, String wx_pay_json) {
         Wx_goods_order ret = new Wx_goods_order();
         ret.setGo_id(go_id);
         ret.setOrder_id(order_id);
@@ -318,6 +330,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         ret.setLogistic_code(logistic_code);
         ret.setShipper_name(shipper_name);
         ret.setShipper_code(shipper_code);
+        ret.setWx_pay_json(wx_pay_json);
         return ret;    
     }
 
@@ -348,6 +361,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String logistic_code = wx_goods_order.getLogistic_code();
         String shipper_name = wx_goods_order.getShipper_name();
         String shipper_code = wx_goods_order.getShipper_code();
+        String wx_pay_json = wx_goods_order.getWx_pay_json();
 
         this.setGo_id(go_id);
         this.setOrder_id(order_id);
@@ -375,6 +389,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         this.setLogistic_code(logistic_code);
         this.setShipper_name(shipper_name);
         this.setShipper_code(shipper_code);
+        this.setWx_pay_json(wx_pay_json);
 
     }
 
@@ -406,6 +421,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String logistic_code = wx_goods_order.getLogistic_code();
         String shipper_name = wx_goods_order.getShipper_name();
         String shipper_code = wx_goods_order.getShipper_code();
+        String wx_pay_json = wx_goods_order.getWx_pay_json();
     }
 
     public Map<String,Object> toMap(){
@@ -439,6 +455,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         String logistic_code = wx_goods_order.getLogistic_code();
         String shipper_name = wx_goods_order.getShipper_name();
         String shipper_code = wx_goods_order.getShipper_code();
+        String wx_pay_json = wx_goods_order.getWx_pay_json();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("go_id",go_id);
@@ -467,6 +484,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
         _ret.put("logistic_code",logistic_code);
         _ret.put("shipper_name",shipper_name);
         _ret.put("shipper_code",shipper_code);
+        _ret.put("wx_pay_json",wx_pay_json);
         return _ret;
     }
 

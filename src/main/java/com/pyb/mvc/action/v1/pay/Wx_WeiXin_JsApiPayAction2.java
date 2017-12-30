@@ -2,6 +2,7 @@
 package com.pyb.mvc.action.v1.pay;
 
 import com.pyb.bean.ReturnDataNew;
+import com.pyb.bean.Wx_user_pay;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.mvc.action.v1.notify.Notify_WeiXinJsApiction;
@@ -9,7 +10,10 @@ import com.pyb.mvc.action.v1.notify.Notify_WeiXinction;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.weixin.biz.WxPayBiz;
 import com.pyb.util.RequestUtil;
+import com.pyb.util.XMLBeanUtils;
+import com.weixin.config.HttpTool;
 import com.weixin.config.WeixinPayConstants;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.stereotype.Controller;
@@ -19,10 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 微信 -- 用户下单支付
@@ -31,7 +32,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping(value = "/v1")
-public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
+public class Wx_WeiXin_JsApiPayAction2 extends BaseV1Controller {
 
   /**
    *
@@ -51,10 +52,10 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
 
   public String getNotify_url() throws NoSuchMethodException {
     return ControllerLinkBuilder.linkTo(Notify_WeiXinction.class,
-            Notify_WeiXinJsApiction.class.getMethod("notify_weixin_jsapi", HttpServletRequest.class, HttpServletResponse.class)).withSelfRel().getHref()+ ".php";
+            Notify_WeiXinJsApiction.class.getMethod("notify_weixin_jsapi2", HttpServletRequest.class, HttpServletResponse.class)).withSelfRel().getHref()+ ".php";
   }
 
-  @RequestMapping(value = "/goods/weixin_charge_jsapi")
+  @RequestMapping(value = "/goods/weixin_charge_jsapi2")
   @ResponseBody
   public String weixin_charge_jsapi(HttpServletRequest request, HttpServletResponse response,Param_wx_charge_jsapi param) {
 
@@ -178,11 +179,75 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
       //元 转变成分
 //      int pay_price_fen = param.pay_price;
       String subject = "拼一把商品";//商品名称
+/*      Wx_goods_order wx_goods_order = wxPayBiz.weixin_charge(returnData,param);
 
-      Map<String, String> wxpay = wxPayBiz.weixin_charge_userpay(returnData,param,appid,appsecret,partner, subject, ip ,getNotify_url());
-      returnData.setReturnData(errorcode_success, "微信充值成功", wxpay);
+      if (wx_goods_order != null && returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
+        long money = wx_goods_order.getMoney();*/
+      Wx_user_pay user_pay = null;
+//              wxPayBiz.weixin_charge_userpay(returnData,param);
+
+      if (user_pay != null && returnData != null && "0".equalsIgnoreCase(returnData.getErrorno())) {
+        int money = user_pay.getMoney();
+//        subject = wx_goods_order.getG_name();
+//        JSONObject obj = (JSONObject) JSONObject.toJSON(returnData.getData());
+        if (money == 0) {
+          returnData.setReturnData(errorcode_data, "微信充值失败", "");
+          sendResp(returnData, response);
+          return null;
+        }
+        String out_trade_no = user_pay.getCar_order_id();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("appid", appid);
+        params.put("mch_id", partner);
+        params.put("attach", String.valueOf(param.type));
+        params.put("body", subject);
+        params.put("nonce_str", RandomStringUtils.random(32, true, true));
+        params.put("out_trade_no", out_trade_no);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 5);
+        params.put("time_expire", dateFormat.format(calendar.getTime()));
+        params.put("total_fee", String.valueOf(money));
+        params.put("spbill_create_ip", ip);
+        params.put("notify_url", getNotify_url());
+
+        /**
+         * 3、交易类型
+         JSAPI--公众号支付、NATIVE--原生扫码支付、APP--app支付，统一下单接口trade_type的传参可参考这里
+         MICROPAY--刷卡支付，刷卡支付有单独的支付接口，不调用统一下单接口
+         */
+        params.put("trade_type", "JSAPI");
+        params.put("openid",param.openid);
+        params.put("product_id", out_trade_no);
+        String sign = getSign(params);
+        //设置SIGN
+        params.put("sign", sign);
+        //向微信服务器公共下单接口发送请求
+        String resultStr = HttpTool
+            .sendPost(WeixinPayConstants.createOrderURL, XMLBeanUtils.map2xml(params));
+        if (log.isDebugEnabled()) {
+          log.debug("微信下单返回结果：" + resultStr);
+        }
+        //组装返回数据
+//        JSONObject obj = new JSONObject();
+        Map<String, String> result = XMLBeanUtils.xml2Map(resultStr);
+        if (result != null && getSign(result).equals(result.get("sign")) && "SUCCESS".equals(result.get("return_code")) && "SUCCESS".equals(result.get("result_code"))) {
+          /*obj.put("orderInfo", result.get("code_url"));
+          obj.put("sign", "");
+          obj.put("timestamp", sf.format(new Date()));*/
+          //记录到订单某字段
+
+
+
+
+          returnData.setReturnData(errorcode_success, "微信充值成功", result);
+          sendResp(returnData, response);
+          return null;
+        }
+      }
       sendResp(returnData, response);
       return null;
+
     } catch (Throwable e) {
       log.error("Wx_WeiXin_JsApiPayAction.weixin_charge_face is error 用户微信充值", e);
       returnData.setReturnData(errorcode_systerm, "systerm is error", "");
@@ -221,9 +286,5 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
     return org.springframework.util.DigestUtils.md5DigestAsHex(stringSignTemp.getBytes())
         .toUpperCase();
   }
-
-
-
-
 
 }
