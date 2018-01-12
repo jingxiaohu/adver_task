@@ -267,11 +267,14 @@ public class WxPayBiz extends BaseBiz {
           wxmap.put("nonceStr",result.get("nonce_str"));
           wxmap.put("package","prepay_id="+result.get("prepay_id"));
           wxmap.put("timeStamp",time.getTime()/1000+"");
+          wxmap.put("signType","MD5");
+
 
           result.put("appId",result.get("appid"));
           result.put("nonceStr",result.get("nonce_str"));
           result.put("package","prepay_id="+result.get("prepay_id"));
           result.put("timeStamp",time.getTime()/1000+"");
+          result.put("signType","MD5");
           result.put("paySign",getSign(wxmap,appsecret));
           //记录到订单某字段
           wx_goods_order.setWx_pay_json(JSON.toJSONString(result));
