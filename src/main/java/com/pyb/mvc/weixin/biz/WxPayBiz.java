@@ -302,6 +302,24 @@ public class WxPayBiz extends BaseBiz {
       }
       user_pay.setId(id);
       returnData.setReturnData("0", "下单成功", user_pay);
+
+      //这里对前端的 微信发起H5支付处理
+      Date time = new Date();
+
+     // result.put("timeStamp",time.getTime()/1000+"");
+      String str = "appid="+result.get("appid")+"&nonceStr="+ result.get("nonce_str")+"&package=prepay_id="+result.get("prepay_id")+"&timeStamp="+time.getTime()/1000+"&key=";
+      Map<String,String> wxmap = new HashMap<String,String>();
+      wxmap.put("appId",result.get("appid"));
+      wxmap.put("nonceStr",result.get("nonce_str"));
+      wxmap.put("package","prepay_id="+result.get("prepay_id"));
+      wxmap.put("timeStamp",time.getTime()/1000+"");
+
+      result.put("appId",result.get("appid"));
+      result.put("nonceStr",result.get("nonce_str"));
+      result.put("package","prepay_id="+result.get("prepay_id"));
+      result.put("timeStamp",time.getTime()/1000+"");
+      result.put("paySign",getSign(wxmap,appsecret));
+
       return result;
 
     } catch (Exception e) {
