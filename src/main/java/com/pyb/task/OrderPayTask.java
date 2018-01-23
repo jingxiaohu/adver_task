@@ -23,11 +23,13 @@ public class OrderPayTask {
 	/**
 	 * 调度检查哪些订单支持下单超时
 	 */
-	@Scheduled(cron = "0 0/10 * * * ?")
+//	@Scheduled(cron = "0 0/10 * * * ?")
+	@Scheduled(cron = "0 0/1 * * * ?")
 	public void checkOrderTimeOut(){
 		try{
-				log.info("------------Task--checkOrderTimeOut--------------is start---");
-			userOrderBiz.checkOrderTimeOut();
+				System.out.println("------------Task--checkOrderTimeOut--------------is start---");
+				log.error("------------Task--checkOrderTimeOut--------------is start---");
+			    //userOrderBiz.checkOrderTimeOut();
 		}catch (Throwable e) {
 			log.error("OrderPayTask.checkOrderTimeOut is error", e);
 		}
