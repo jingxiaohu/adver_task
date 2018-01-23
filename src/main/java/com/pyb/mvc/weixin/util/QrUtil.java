@@ -1,6 +1,11 @@
 package com.pyb.mvc.weixin.util;
 
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * 临时二维码请求说明
@@ -25,6 +30,8 @@ import com.alibaba.fastjson.JSONObject;
  {"action_name": "QR_LIMIT_STR_SCENE", "action_info": {"scene": {"scene_str": "test"}}}
  */
 public class QrUtil {
+    private static Logger log = LoggerFactory.getLogger(QrUtil.class);
+
     private String url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=%s";
     private String TicketUrl = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=%s";
 
@@ -101,14 +108,40 @@ public class QrUtil {
      * @return
      */
     public String  ExchangeImage(String ticket){
-        String url_now  = String.format(TicketUrl,ticket);
-        System.out.println("url_now="+url_now);
-        String ticket_imge = WeixinUtil.httpRequest2(url_now,"GET",null);
-        if(ticket_imge != null){
-            System.out.println("ticket_imge="+ticket_imge);
+        try {
+            String url_now  = String.format(TicketUrl, URLEncoder.encode(ticket,"utf-8"));
+            System.out.println("url_now="+url_now);
+           /* String ticket_imge = WeixinUtil.httpRequest2(url_now,"GET",null);
+            if(ticket_imge != null){
+                System.out.println("ticket_imge="+ticket_imge);
+            }*/
+           return  url_now;
+        } catch (UnsupportedEncodingException e) {
+            log.error("URLEncoder.encode(ticket,\"utf-8\") is error",e);
         }
         return null;
     }
+
+    /**
+     * 获取我的推荐二维码
+     * @param access_token:平台账号对应的授权码
+     * @param weixin_no：平台自动生成的编码
+     * @return
+     */
+    public static String GainMyQR(String access_token,String weixin_no){
+        try {
+            QrUtil qrUtil =  new QrUtil();
+            JSONObject obj = qrUtil.MakeQrTemp(access_token, 2592000,weixin_no);
+            if(obj != null){
+                String  ticket = obj.getString("ticket");
+                return qrUtil.ExchangeImage(ticket);
+            }
+        } catch (Exception e) {
+            log.error("获取推荐二维码失败",e);
+        }
+        return null;
+    }
+
 
     public static void main(String[] args) {
         QrUtil qrUtil =  new QrUtil();

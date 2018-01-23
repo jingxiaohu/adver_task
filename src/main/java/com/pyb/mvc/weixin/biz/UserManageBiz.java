@@ -1,7 +1,9 @@
 package com.pyb.mvc.weixin.biz;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.*;
+import com.pyb.constants.Constants;
 import com.pyb.exception.QzException;
 import com.pyb.mvc.action.v1.param.BaseParam;
 import com.pyb.mvc.action.v1.user.param.Param_addOrUpdate_Address;
@@ -10,6 +12,7 @@ import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_complement;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_user_withdraw_list;
 import com.pyb.mvc.action.v1.weixin.user.param.Param_userinfo;
+import com.pyb.mvc.weixin.util.QrUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -130,7 +133,33 @@ public class UserManageBiz extends BaseWxBiz {
             returnData.setReturnData(errorcode_systerm, "UserManageBiz GainMyRecommendUser is error", "");
         }
     }
+    /**
+     * 获取我的推荐二维码
+     */
+    public void GainMyQrcode(ReturnDataNew returnData, BaseParam param) {
+        try {
+            String sql = "select * from wx_user_info where ui_id=?  limit 1";
+            Wx_user_info wx_user_info = getDB().queryUniqueT(sql, Wx_user_info.class, param.getUi_id());
+            if(wx_user_info == null){
+                returnData.setReturnData(errorcode_data, "用户不存在", "","1");
+                return;
+            }
+            //验证accessToken是否过期 如果过期则进行刷新处理
+            doAccessToken();
 
+            String qrimgurl = QrUtil.GainMyQR(Constants.getWx_accesstoken().getAccess_token(),wx_user_info.weixin_no);
+            if(!StringUtils.hasLength(qrimgurl)){
+                returnData.setReturnData(errorcode_data, "获取我的推荐二维码失败", "","2");
+                return;
+            }
+            JSONObject obj = new JSONObject();
+            obj.put("qrcode_url",qrimgurl);
+            returnData.setReturnData("0", "获取我的推荐二维码成功", obj);
+        } catch (Exception e) {
+            log.error("UserManageBiz GainMyQrcode is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserManageBiz GainMyQrcode is error", "");
+        }
+    }
 
     /**
      * 新增地址
@@ -419,4 +448,7 @@ public class UserManageBiz extends BaseWxBiz {
         }
         return null;
     }
+
+
+
 }

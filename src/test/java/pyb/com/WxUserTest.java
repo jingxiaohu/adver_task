@@ -242,4 +242,31 @@ public class WxUserTest extends BaseWebTest {
                 Param_user_withdraw_list.class,
                 result);
     }
+
+
+    /**
+     * 获取我的推荐二维码例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void I_read_qrcode() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        sign(params, "ui_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/read_qrcode").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "WxUser.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "获取我的推荐二维码",
+                "ui_id",
+                "/goods/read_qrcode",
+                9,
+                params,
+                BaseParam.class,
+                result);
+    }
 }

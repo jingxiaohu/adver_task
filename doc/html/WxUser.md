@@ -317,3 +317,22 @@
 |remit_time|打款处理时间|java.util.Date|
 |ctime|创建时间|java.util.Date|
 |note|备注|String|
+
+#### 9->获取我的推荐二维码
+|参数名称|值描述|是否可空|限制长度|参数类型|举例|
+|--------|-----|----|--------|-------|-----|
+| sign| MD5数字签名(ui_id)按参数的首字母升序顺序进行组装| 否| 无 |字符串|---|
+#### 请求路径
+[/goods/read_qrcode](/goods/read_qrcode)
+###### 返回结果
+```json
+{
+	"data":	{
+		"qrcode_url":"https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=gQEo7zwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAycVJzZU51M1RjcmkxeGVTZWhxY3EAAgROqWZaAwQAjScA"
+	},
+	"errorcode":"",
+	"errormsg":"获取我的推荐二维码成功",
+	"errorno":"0"
+}
+
+```

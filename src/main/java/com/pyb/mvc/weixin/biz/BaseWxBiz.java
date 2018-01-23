@@ -1,11 +1,16 @@
 package com.pyb.mvc.weixin.biz;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.User_info_new;
+import com.pyb.bean.Wx_accesstoken;
+import com.pyb.constants.Constants;
 import com.pyb.dao.DaoFactory;
 import com.pyb.mq.RabbitPublisher;
 import com.pyb.service.MySelfService;
 import com.pyb.service.UserRedisService;
 import com.pyb.task.AsyncJpushTask;
+import com.pyb.util.HttpUtil;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.GetMethod;
@@ -581,5 +586,95 @@ public MySelfService getDB() {
 //
 //    System.out.println(new BaseBiz().one_day("24:00-23:00", cl.getTime(), cl2.getTime()));
 //  }
+
+
+
+  //处理access_tonken
+  public void doAccessToken() throws Exception {
+    if (Constants.getWx_accesstoken() == null) {
+      //从数据库里面获取accesstoken
+      List<Wx_accesstoken> wx_accesstoken_list = daoFactory.getWx_accesstokenDao().selectAll();
+      if (wx_accesstoken_list != null && wx_accesstoken_list.size() == 1) {
+        Wx_accesstoken wx_accesstoken = wx_accesstoken_list.get(0);
+        //检查是否access_token 过期  Expires_in 凭证有效时间，单位：秒
+        if (System.currentTimeMillis() - wx_accesstoken.getExpires_in() * 1000 >= wx_accesstoken.getUtime().getTime()) {
+          //过期重新请求
+          JSONObject obj = RefeshAccessToken();
+          if (obj != null) {
+            String WeiXinAccessToken = obj.getString("access_token");
+            String expires_in = obj.getString("expires_in");
+            wx_accesstoken.setAccess_token(WeiXinAccessToken);
+            wx_accesstoken.setExpires_in(Integer.parseInt(expires_in));
+            wx_accesstoken.setUtime(new Date());
+            int count = daoFactory.getWx_accesstokenDao().updateByKey(wx_accesstoken);
+            if (count != 1) {
+              log.error("access_token 刷新失败 wx_accesstokenDao.updateByKey(wx_accesstoken)");
+            }
+          }
+
+        }
+        //设置到Constants 中的 access_token 中去
+        Constants.setWx_accesstoken(wx_accesstoken);
+      } else {
+        //
+        Wx_accesstoken wx_accesstoken = new Wx_accesstoken();
+        //重新请求
+        JSONObject obj = RefeshAccessToken();
+        if (obj != null) {
+          String WeiXinAccessToken = obj.getString("access_token");
+          String expires_in = obj.getString("expires_in");
+          wx_accesstoken.setAccess_token(WeiXinAccessToken);
+          wx_accesstoken.setExpires_in(Integer.parseInt(expires_in));
+          wx_accesstoken.setUtime(new Date());
+          int id = daoFactory.getWx_accesstokenDao().insert(wx_accesstoken);
+          if (id < 1) {
+            log.error("access_token 刷新失败 wx_accesstokenDao.insert(wx_accesstoken)");
+          }
+        }
+        //设置到Constants 中的 access_token 中去
+        Constants.setWx_accesstoken(wx_accesstoken);
+      }
+    } else {
+      //过期检查
+      Wx_accesstoken wx_accesstoken = Constants.getWx_accesstoken();
+      if (System.currentTimeMillis() - wx_accesstoken.getExpires_in() * 1000 >= wx_accesstoken.getUtime().getTime()) {
+        //过期重新请求
+        JSONObject obj = RefeshAccessToken();
+        if (obj != null) {
+          String WeiXinAccessToken = obj.getString("access_token");
+          String expires_in = obj.getString("expires_in");
+          List<Wx_accesstoken> wx_accesstoken_list = daoFactory.getWx_accesstokenDao().selectAll();
+          wx_accesstoken = wx_accesstoken_list.get(0);
+
+          wx_accesstoken.setAccess_token(WeiXinAccessToken);
+          wx_accesstoken.setExpires_in(Integer.parseInt(expires_in));
+          wx_accesstoken.setUtime(new Date());
+          int count = daoFactory.getWx_accesstokenDao().updateByKey(wx_accesstoken);
+          if (count != 1) {
+            log.error("access_token 刷新失败 wx_accesstokenDao.updateByKey(wx_accesstoken)");
+          }
+        }
+        //设置到Constants 中的 access_token 中去
+        Constants.setWx_accesstoken(wx_accesstoken);
+      }
+
+    }
+  }
+
+  //刷新 access_token
+  public JSONObject RefeshAccessToken(){
+    //获取access_token
+    String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxebee99b0aba36d8f&secret=a4a6df2df45185cf4746a381155cf0fa";
+    String jsondata = HttpUtil.doGet(url,null,null);
+    if(jsondata != null){
+      JSONObject oob = JSON.parseObject(jsondata);
+      if(oob != null){
+//          WeiXinAccessToken = oob.getString("access_token");
+//          String expires_in = oob.getString("expires_in");
+        return oob;
+      }
+    }
+    return  null;
+  }
 
 }
