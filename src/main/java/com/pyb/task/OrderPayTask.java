@@ -24,7 +24,7 @@ public class OrderPayTask {
 	 * 调度检查哪些订单支持下单超时
 	 */
 //	@Scheduled(cron = "0 0/10 * * * ?")
-	@Scheduled(cron = "0 0/1 * * * ?")
+	@Scheduled(cron = "0/5 * * * * ?")
 	public void checkOrderTimeOut(){
 		try{
 				System.out.println("------------Task--checkOrderTimeOut--------------is start---");

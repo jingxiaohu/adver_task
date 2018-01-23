@@ -17,8 +17,9 @@
     	 
          <import resource="jdbc_test.xml"/>
          <import resource="redis.xml"/>
-         <import resource="task.xml"/>
+
          <!--
+         <import resource="task.xml"/>
          	<import resource="mq.xml"/> 
           -->
          <!-- <import resource="mongodb.xml"/> -->
