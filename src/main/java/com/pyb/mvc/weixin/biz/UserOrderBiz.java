@@ -315,7 +315,7 @@ public class UserOrderBiz extends  BaseWxBiz{
             }
             //遍历处理超时的订单 关闭掉
             for (Wx_goods_order wx_goods_order : list) {
-                if(wx_goods_order.getCtime().getTime() - System.currentTimeMillis() > 2*60*60*1000){
+                if(System.currentTimeMillis() - wx_goods_order.getCtime().getTime() > 2*60*60*1000){
                     wx_goods_order.setIs_del(1);//设置该订单关闭 || 后面需要给用户进行推送消息发送
                     int count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
                     if(count != 1){
