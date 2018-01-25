@@ -5,7 +5,6 @@ import com.pyb.bean.ReturnDataNew;
 import com.pyb.constants.Constants;
 import com.pyb.mvc.action.v1.BaseV1Controller;
 import com.pyb.mvc.action.v1.notify.Notify_WeiXinJsApiction;
-import com.pyb.mvc.action.v1.notify.Notify_WeiXinction;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.weixin.biz.WxPayBiz;
 import com.pyb.util.RequestUtil;
@@ -50,7 +49,7 @@ public class Wx_WeiXin_JsApiPayAction extends BaseV1Controller {
   private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 
   public String getNotify_url() throws NoSuchMethodException {
-    return ControllerLinkBuilder.linkTo(Notify_WeiXinction.class,
+    return ControllerLinkBuilder.linkTo(Notify_WeiXinJsApiction.class,
             Notify_WeiXinJsApiction.class.getMethod("notify_weixin_jsapi", HttpServletRequest.class, HttpServletResponse.class)).withSelfRel().getHref()+ ".php";
   }
 
