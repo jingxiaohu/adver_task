@@ -204,7 +204,7 @@ public class WeiXinTokenAction extends BaseV1Controller {
         if (Constants.getWx_accesstoken() == null) {
             //从数据库里面获取accesstoken
             List<Wx_accesstoken> wx_accesstoken_list = wx_accesstokenDao.selectAll();
-            if (wx_accesstoken_list != null && wx_accesstoken_list.size() == 1) {
+            if (wx_accesstoken_list != null && wx_accesstoken_list.size() > 0) {
                 Wx_accesstoken wx_accesstoken = wx_accesstoken_list.get(0);
                 //检查是否access_token 过期  Expires_in 凭证有效时间，单位：秒
                 if (System.currentTimeMillis() - wx_accesstoken.getExpires_in() * 1000 >= wx_accesstoken.getUtime().getTime()) {
