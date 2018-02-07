@@ -42,7 +42,7 @@ public class Wx_WeiXin_JsApiPayAction2 extends BaseV1Controller {
 
   //商户相关资料
   private static String appid = WeixinPayConstants.appid;
-  private static String appsecret = WeixinPayConstants.appsecret_gzh;
+  private static String appsecret = WeixinPayConstants.partnerkey;
   private static String partner = WeixinPayConstants.partner;
 
   @Autowired

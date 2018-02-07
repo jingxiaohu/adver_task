@@ -7,19 +7,37 @@ import com.pyb.exception.QzException;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi_goods;
 import com.pyb.mvc.service.BaseBiz;
+import com.pyb.mvc.weixin.bean.Transfers;
 import com.pyb.util.XMLBeanUtils;
+import com.pyb.util.XMLUtil;
 import com.weixin.config.HttpTool;
 import com.weixin.config.WeixinPayConstants;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLContexts;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import javax.net.ssl.SSLContext;
+import java.io.*;
+import java.security.KeyStore;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
 public class WxPayBiz extends BaseBiz {
+  @Autowired
+  XMLUtil xmlUtil;
 
 /*  @Autowired
   private PayTransaction payTransaction;
@@ -459,6 +477,29 @@ public class WxPayBiz extends BaseBiz {
     }
   }
 
+  /**
+   * 给用户打款
+   */
+  @Transactional(rollbackFor = QzException.class)
+  public void RemitToUser(ReturnDataNew returnData, String partner_trade_no, String openId, int amount) {
+    // TODO Auto-generated method stub
+    try {
+      //打款
+      redPackets(amount,  openId, partner_trade_no);
+
+      returnData.setReturnData(errorcode_success, "打款成功", "");
+      return;
+
+    } catch (Exception e) {
+      log.error("WxPayBiz.RemitToUser is error", e);
+      returnData.setReturnData(errorcode_data, "打款失败", "");
+      return;
+    }
+  }
+
+
+
+
 
   /*****************************************************************************************/
   /**
@@ -504,4 +545,132 @@ public class WxPayBiz extends BaseBiz {
     return org.springframework.util.DigestUtils.md5DigestAsHex(stringSignTemp.getBytes())
             .toUpperCase();
   }
+
+  /**
+   * 企业给用户微信打款
+   * @param amount ：打款金额 单位 分
+   * @param openId :用户针对微信公众号的OPENID
+   * @param partner_trade_no :商户订单号
+   * @throws Exception
+   */
+  private void redPackets(int amount, String openId,String partner_trade_no) throws Exception {
+//    int amount = (int) (total*100);
+
+    Transfers transfers=new Transfers();
+    String nonce = UUID.randomUUID().toString().substring(0, 30);
+
+    SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+    String time = df.format(new Date());
+    Random ne=new Random();
+    int guid=ne.nextInt(9999-1000+1)+1000;
+
+    transfers.setMch_appid(WeixinPayConstants.appid);// 自己的公众账号
+    transfers.setMchid(WeixinPayConstants.partner);//自己的 商户号
+    transfers.setNonce_str(nonce);// 随机字符串
+    transfers.setOpenid(openId);// 用户openId
+    transfers.setCheck_name("NO_CHECK");// 校验用户姓名选项
+    transfers.setAmount(amount);// 付款金额
+//    transfers.setDesc("微信企业付款");// 企业付款描述信息
+    transfers.setDesc("jxh");// 企业付款描述信息
+    transfers.setSpbill_create_ip("222.212.140.66");// 调用接口的机器Ip地址
+//    transfers.setPartner_trade_no(WeixinPayConstants.partner+time+guid);// 商户订单号
+    transfers.setPartner_trade_no(partner_trade_no);// 商户订单号
+    String sign = createSendRedPackOrderSign(transfers);
+    transfers.setSign(sign);// 签名
+
+    xmlUtil.xstream().alias("xml", transfers.getClass());
+    String xml = xmlUtil.xstream().toXML(transfers);
+
+    String sendEedPackUrl="https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers";
+    String response = ssl(sendEedPackUrl,xml);
+    Map<String, String> responseMap = xmlUtil.parseXml(response);
+    System.out.println( responseMap.toString());
+    String return_msg = responseMap.get("return_msg");
+    System.out.println(return_msg);
+  }
+  public String createSendRedPackOrderSign(Transfers transfers){
+    List<String> list = new ArrayList<String>();
+    list.add("mch_appid="+transfers.getMch_appid());
+    list.add("mchid="+transfers.getMchid());
+    list.add("nonce_str="+transfers.getNonce_str());
+    list.add("partner_trade_no="+transfers.getPartner_trade_no());
+    list.add("openid="+transfers.getOpenid());
+    list.add("check_name="+transfers.getCheck_name());
+    list.add("amount="+transfers.getAmount());
+    list.add("desc="+transfers.getDesc());
+    list.add("spbill_create_ip="+transfers.getSpbill_create_ip());
+//    list.add("key="+WeixinPayConstants.partnerkey);
+    System.out.println("MD5===="+list.toString());
+    // 先将参数以其参数名的字典序升序进行排序
+    Collections.sort(list);
+    // 遍历排序后的字典，将所有参数按"key=value"格式拼接在一起
+    StringBuilder basestring = new StringBuilder();
+    for (Object param : list) {
+      basestring.append(param).append("&");
+    }
+    basestring.append("key="+WeixinPayConstants.partnerkey);
+    log.debug("待签名字符：{}", basestring.toString());
+
+    return  DigestUtils.md5Hex(basestring.toString()).toUpperCase();
+  }
+
+  private String ssl(String url,String data){
+    StringBuffer message = new StringBuffer();
+    try {
+      KeyStore keyStore  = KeyStore.getInstance("PKCS12");
+//      FileInputStream instream = new FileInputStream(new File("apiclient_cert.p12"));
+      InputStream instream = ClassLoader.getSystemClassLoader().getResourceAsStream("apiclient_cert.p12");
+      keyStore.load(instream, WeixinPayConstants.partner.toCharArray());
+      // Trust own CA and all self-signed certs
+      SSLContext sslcontext = SSLContexts.custom()
+              .loadKeyMaterial(keyStore, WeixinPayConstants.partner.toCharArray())
+              .build();
+      // Allow TLSv1 protocol only
+      SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+              sslcontext,
+              new String[] { "TLSv1" },
+              null,
+              SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER);
+      CloseableHttpClient httpclient = HttpClients.custom()
+              .setSSLSocketFactory(sslsf)
+              .build();
+      HttpPost httpost = new HttpPost(url);
+
+      httpost.addHeader("Connection", "keep-alive");
+      httpost.addHeader("Accept", "*/*");
+      httpost.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+      httpost.addHeader("Host", "api.mch.weixin.qq.com");
+      httpost.addHeader("X-Requested-With", "XMLHttpRequest");
+      httpost.addHeader("Cache-Control", "max-age=0");
+      httpost.addHeader("User-Agent", "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0) ");
+      httpost.setEntity(new StringEntity(data, "UTF-8"));
+      //System.out.println("executing request" + httpost.getRequestLine());
+
+      CloseableHttpResponse response = httpclient.execute(httpost);
+      try {
+        HttpEntity entity = response.getEntity();
+
+        //System.out.println("----------------------------------------");
+        //System.out.println(response.getStatusLine());
+        if (entity != null) {
+          //System.out.println("Response content length: " + entity.getContentLength());
+          BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(entity.getContent(),"UTF-8"));
+          String text;
+          while ((text = bufferedReader.readLine()) != null) {
+            message.append(text);
+          }
+        }
+        EntityUtils.consume(entity);
+      } catch (IOException e) {
+        e.printStackTrace();
+      } finally {
+        response.close();
+      }
+    } catch (Exception e1) {
+      e1.printStackTrace();
+    }
+
+    return message.toString();
+  }
+
 }

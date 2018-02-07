@@ -86,7 +86,7 @@ public class Notify_WeiXinJsApiction extends BaseV1Controller {
 			@param publicKey 验签公钥
 			@param charset 验签字符集
 			**/
-			String appsecret = WeixinPayConstants.appsecret_gzh;
+			String appsecret = WeixinPayConstants.partnerkey;
 			if(sign != null && sign.equalsIgnoreCase(WeiXinSignUtil.getSign(params, appsecret))){
 				
 				//验签成功

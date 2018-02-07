@@ -29,8 +29,8 @@ import java.util.regex.Pattern;
 @Controller
 public class BaseV1Controller implements Serializable {
 
-  @Autowired
-  private ServletContext servletContext;
+ /* @Autowired
+  private ServletContext servletContext;*/
 
   private static final long serialVersionUID = 6182244061803296061L;
 
