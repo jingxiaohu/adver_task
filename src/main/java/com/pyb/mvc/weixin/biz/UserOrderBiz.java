@@ -321,6 +321,7 @@ public class UserOrderBiz extends  BaseWxBiz{
                 return;
             }
             wx_goods_order.setState(2);
+            wx_goods_order.setIs_send(1);//卖家是否发货0：没有1：已经发货
             int count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
             if(count != 1){
                 returnData.setReturnData(errorcode_data, "物流发货状态变更失败", "","3");
