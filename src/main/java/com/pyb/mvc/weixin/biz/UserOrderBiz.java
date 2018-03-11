@@ -326,6 +326,29 @@ public class UserOrderBiz extends  BaseWxBiz{
                 returnData.setReturnData(errorcode_data, "物流发货状态变更失败", "","3");
                 return;
             }
+            //给用户发送推送消息
+            String content = "您好，您的订单编号为%s的订单已经由快递公司发货。";
+            content = String.format(content,wx_goods_order.getOrder_id());
+            Wx_user_info user_info = daoFactory.getWx_user_infoDao().selectByKey(wx_goods_order.getUi_id());
+            if(user_info != null){
+                String accessToken = "";
+                Wx_accesstoken wxAccesstoken = Constants.getWx_accesstoken();
+                if(null != wxAccesstoken){
+                    accessToken = wxAccesstoken.getAccess_token();
+                }else{
+                    sql = "select * from wx_accesstoken where id = 1";
+                    try{
+                        wxAccesstoken = getDB().queryUniqueT(sql, Wx_accesstoken.class);
+                        accessToken = wxAccesstoken.getAccess_token();
+                    }catch (Exception e){
+                        log.error("获取access_token 异常：",e);
+                    }
+                }
+                if(StringUtils.hasLength(accessToken)){
+                    MessageUtil.SendMessageToUser(user_info.getWeixin_id(), content, accessToken);
+                }
+
+            }
             returnData.setReturnData(errorcode_success, "物流发货状态变更成功", "");
         } catch (Exception e) {
             log.error("UserOrderBiz order_deliver_goods is error", e);

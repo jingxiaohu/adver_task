@@ -106,7 +106,8 @@ public class MenuManager {
          * 封装整个菜单
          */
         Menu menu = new Menu();
-        menu.setButton(new Button[] { mainBtn1, mainBtn2, mainBtn3 });
+//        menu.setButton(new Button[] { mainBtn1, mainBtn2, mainBtn3 });
+        menu.setButton(new Button[] { mainBtn1});
 
         return menu;
     }
