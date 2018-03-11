@@ -4,10 +4,7 @@ import apidoc.jxh.cn.InterfaceUtil;
 import com.alibaba.fastjson.JSONArray;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi;
 import com.pyb.mvc.action.v1.pay.param.Param_wx_charge_jsapi_goods;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_order_refund;
+import com.pyb.mvc.action.v1.weixin.order.param.*;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
@@ -306,6 +303,33 @@ public class UserOrderTest extends BaseWebTest {
                 9,
                 params,
                 Param_order_refund.class,
+                result);
+    }
+
+    /**
+     * 1.2 物流发货订单状态变更例子：
+     * <pre>
+     * </pre>
+     */
+    @Test
+    public void J_order_deliver_goods() throws Exception {
+        MultiValueMap<String, String> params = getParams();
+        params.add("order_id","2017121423121300935");
+        sign(params, "order_id");
+
+        MvcResult mvcResult = mockMvc.perform(post("/v1/goods/order_deliver_goods").params(params))
+                .andExpect(status().isOk()).andReturn();
+        String result = mvcResult.getResponse().getContentAsString();
+        System.err.println(result);
+        String path = this.getClass().getResource(".").getPath();
+        path = path + "UserOrder.md";
+        InterfaceUtil.AddInterfacePred(path, moduleName,
+                "物流发货订单状态变更",
+                "order_id",
+                "/goods/order_deliver_goods",
+                10,
+                params,
+                Param_order_deliver_goods.class,
                 result);
     }
 }

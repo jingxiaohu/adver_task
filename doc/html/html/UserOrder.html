@@ -288,6 +288,32 @@
 </li>
 </ul>
 </li>
+<li><span class="title">
+<a href="#10-&gt;物流发货订单状态变更" title="10->物流发货订单状态变更">10-&gt;物流发货订单状态变更</a>
+</span>
+<!--span class="number">
+33
+</span-->
+</li>
+<li><span class="title">
+<a href="#请求路径-9" title="请求路径">请求路径</a>
+</span>
+<!--span class="number">
+34
+</span-->
+<ul>
+<li><ul>
+<li><span class="title">
+<a href="#返回结果-9" title="返回结果">返回结果</a>
+</span>
+<!--span class="number">
+35
+</span-->
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -2091,6 +2117,47 @@
     "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
     "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"用户退货或者退款成功"</span></span>,
+    "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
+</span>}
+</code></pre><h4 id="10->物流发货订单状态变更"><a name="10->物流发货订单状态变更" href="#10-&gt;物流发货订单状态变更"></a>10-&gt;物流发货订单状态变更</h4><table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>值描述</th>
+<th>是否可空</th>
+<th>限制长度</th>
+<th>参数类型</th>
+<th>举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>order_id</td>
+<td>订单编号</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>2017121423121300935</td>
+</tr>
+<tr>
+<td>sign</td>
+<td>MD5数字签名(order_id)按参数的首字母升序顺序进行组装</td>
+<td>否</td>
+<td>无</td>
+<td>字符串</td>
+<td>—-</td>
+</tr>
+</tbody>
+</table><h4 id="请求路径"><a name="请求路径" href="#请求路径"></a>请求路径</h4><p><a href="/goods/order_deliver_goods">/goods/order_deliver_goods</a></p><h6 id="返回结果"><a name="返回结果" href="#返回结果"></a>返回结果</h6><pre class="json hljs"><code class="json" data-origin="<pre><code class=&quot;json&quot;>{
+    &quot;data&quot;:&quot;&quot;,
+    &quot;errorcode&quot;:&quot;&quot;,
+    &quot;errormsg&quot;:&quot;物流发货状态变更成功&quot;,
+    &quot;errorno&quot;:&quot;0&quot;
+}
+</code></pre>">{
+    "<span class="hljs-attribute">data</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errorcode</span>":<span class="hljs-value"><span class="hljs-string">""</span></span>,
+    "<span class="hljs-attribute">errormsg</span>":<span class="hljs-value"><span class="hljs-string">"物流发货状态变更成功"</span></span>,
     "<span class="hljs-attribute">errorno</span>":<span class="hljs-value"><span class="hljs-string">"0"</span>
 </span>}
 </code></pre>

@@ -6,11 +6,16 @@ import com.thoughtworks.xstream.core.util.QuickWriter;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
 import com.thoughtworks.xstream.io.xml.XppDriver;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Writer;
 import java.util.HashMap;
@@ -25,6 +30,13 @@ import java.util.Map;
  * 发布版本：V1.0  </br>
  */
 public class MessageUtil {
+    static Logger log = LoggerFactory.getLogger(MessageUtil.class);
+    //客服消息发送 URL
+    public static final String CustomUrl = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=";
+
+
+
+
     // 请求消息类型：文本
     public static final String REQ_MESSAGE_TYPE_TEXT = "text";
     // 请求消息类型：图片
@@ -192,5 +204,66 @@ public class MessageUtil {
         xstream.alias("xml", newsMessage.getClass());
         xstream.alias("item", new Article().getClass());
         return xstream.toXML(newsMessage);
+    }
+
+
+    public static String makeTextCustomMessage(String openId,String content){
+        content.replace("\"", "\\\"");
+        String jsonMsg="{\"touser\":\"%s\",\"msgtype\":\"text\",\"text\":{\"content\":\"%s\"}}";
+        return String.format(jsonMsg, openId,content);
+
+    }
+
+    /**
+     * 主动发送客服消息给关注了公众号的用户
+     */
+    public static boolean SendMessageToUser(String user_openid,String content,String accesstoken){
+        HttpClient httpUtil = new HttpClient();
+        PostMethod post = new UTF8PostMethod(CustomUrl+accesstoken);
+        try {
+            /*BaseSendMessage xx = new BaseSendMessage();
+            xx.setTouser(user_openid);
+            xx.setMsgtype("text");
+            JSONObject obj = new JSONObject();
+            obj.put("content",content);
+            xx.setText(JSON.toJSONString(obj));
+            post.setRequestBody(JSON.toJSONString(xx));
+            */
+            String content_temp = makeTextCustomMessage( user_openid, content);
+            post.setRequestBody(content_temp);
+            int state = httpUtil.executeMethod(post);
+            if(state == 200){
+                System.out.println(post.getResponseBodyAsString());
+                return  true;
+            }else{
+                log.error(post.getResponseBodyAsString());
+            }
+        } catch (IOException e) {
+            log.error("SendMessageToUser(String user_openid,String content,String accesstoken) is error",e);
+        }finally {
+            if (post != null) {
+                post.releaseConnection();
+                //释放链接
+                httpUtil.getHttpConnectionManager().closeIdleConnections(0);
+            }
+        }
+        return false;
+    }
+    public static class UTF8PostMethod extends PostMethod {
+        public UTF8PostMethod(String url){
+            super(url);
+        }
+        @Override
+        public String getRequestCharSet() {
+            //return super.getRequestCharSet();
+            return "utf-8";
+        }
+    }
+
+    public static void main(String[] args) {
+        String accesstoken ="6_qvq9pdo44oxjXtQgZBLBPzsxLBsq22eQT0fwyLBwS0WgAdKoK0UTuvxd9mdLeVa9I6T3VPUOjnvb2XqVcMS04M4TwFc_BfXhYIB51EEq133zjOw3wnyZ0x3wb2-1ImkrwCTSD0Ld2RYPndEoODFaACARGI";
+        String content= "吾泊停车提醒您，注意安全";
+        String user_openid="oqbOkwf-uZhUxBKBHteCcbsTTsgs";
+        SendMessageToUser( user_openid, content, accesstoken);
     }
 }

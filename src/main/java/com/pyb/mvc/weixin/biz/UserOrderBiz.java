@@ -4,15 +4,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.pyb.bean.*;
 import com.pyb.constants.Constants;
 import com.pyb.exception.QzException;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_kdwl;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_order;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_orderList;
-import com.pyb.mvc.action.v1.weixin.order.param.Param_order_refund;
+import com.pyb.mvc.action.v1.weixin.order.param.*;
 import com.pyb.mvc.weixin.util.KdniaoTrackQueryAPI;
+import com.pyb.mvc.weixin.util.MessageUtil;
 import com.pyb.util.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -301,6 +300,38 @@ public class UserOrderBiz extends  BaseWxBiz{
             returnData.setReturnData(errorcode_systerm, "UserOrderBiz UserOrderSure is error", "");
         }
     }
+
+
+    /**
+     * 物流发货订单状态变更
+     * @param returnData
+     * @param param
+     */
+    public void order_deliver_goods(ReturnDataNew returnData, Param_order_deliver_goods param) {
+        try {
+            String sql = "select * from wx_goods_order where order_id=? limit 1";
+            Wx_goods_order wx_goods_order = getDB().queryUniqueT(sql,Wx_goods_order.class,param.getOrder_id());
+            if(wx_goods_order == null){
+                returnData.setReturnData(errorcode_data, "订单不存在", "","1");
+                return;
+            }
+            //订单状态 0：待付款 1：待发货 2：待收货 3：已完成
+            if(wx_goods_order.getState() != 1){
+                returnData.setReturnData(errorcode_data, "订单状态不正确", "","2");
+                return;
+            }
+            wx_goods_order.setState(2);
+            int count = daoFactory.getWx_goods_orderDao().updateByKey(wx_goods_order);
+            if(count != 1){
+                returnData.setReturnData(errorcode_data, "物流发货状态变更失败", "","3");
+                return;
+            }
+            returnData.setReturnData(errorcode_success, "物流发货状态变更成功", "");
+        } catch (Exception e) {
+            log.error("UserOrderBiz order_deliver_goods is error", e);
+            returnData.setReturnData(errorcode_systerm, "UserOrderBiz order_deliver_goods is error", "");
+        }
+    }
     /****************************下面是封装的查询方法********************************/
 
     /**
@@ -364,9 +395,34 @@ public class UserOrderBiz extends  BaseWxBiz{
                             throw  new QzException("daoFactory.getWx_user_payDao().updateByKey(wx_user_pay) 失败");
                         }
                     }
+                    //给用户发送推送消息
+            String content = "您好，您的订单编号为%s的订单\n处于未付款状态达到系统规定的2小时，现已关闭该订单。";
+            content = String.format(content,wx_goods_order.getOrder_id());
+            Wx_user_info user_info = daoFactory.getWx_user_infoDao().selectByKey(wx_goods_order.getUi_id());
+            if(user_info != null){
+                String accessToken = "";
+                Wx_accesstoken wxAccesstoken = Constants.getWx_accesstoken();
+                if(null != wxAccesstoken){
+                    accessToken = wxAccesstoken.getAccess_token();
+                }else{
+                    sql = "select * from wx_accesstoken where id = 1";
+                    try{
+                        wxAccesstoken = getDB().queryUniqueT(sql, Wx_accesstoken.class);
+                        accessToken = wxAccesstoken.getAccess_token();
+                    }catch (Exception e){
+                        log.error("获取access_token 异常：",e);
+                    }
+                }
+                if(StringUtils.hasLength(accessToken)){
+                    MessageUtil.SendMessageToUser(user_info.getWeixin_id(), content, accessToken);
+                }
+
+            }
         } catch (Exception e) {
             log.error("处理订单支付超时进行关闭 checkOrderTimeOutSigle is error",e);
             throw  new QzException("处理订单支付超时进行关闭 checkOrderTimeOutSigle is error",e);
         }
     }
+
+
 }
