@@ -35,7 +35,7 @@ public class MenuManager {
         // 调用接口获取access_token
 //        AccessToken at = WeixinUtil.getAccessToken(appId, appSecret);
         AccessToken at = new AccessToken();
-        at.setToken("DqHWBc8_MjQsDo6sPGwzSWaZ4GqjoTL7w-REeLAEC-SPEMmJxJS8tMZE4-kk4fokAuOtJwcyflHwmSF7yx2mwWp-uUHEW1Es6ihB0DfR3L2E_VjkODeIsTNTxBz-st0VDNLaAEAISQ");
+        at.setToken("7_J3oYm6i3kzM51j3X5VG_SWgZC1LVklSeS7EhpHncpJ-RIJaVwKeTXuJu6G7j2YoecD6YXLS-JBQut_2HvuNDPVflP4NESOl6CXklDk-t4Ox7WK7e5ML_GwRZ7okSZEeAEAOVA");
         at.setExpiresIn(7200);
         if (null != at) {
             // 调用接口创建菜单
