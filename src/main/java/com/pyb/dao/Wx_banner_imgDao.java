@@ -41,9 +41,9 @@ public class Wx_banner_imgDao extends BaseDao{
     }
 
 
-    private  String[] carrays ={"bi_id","img_name","img_url","img_intro","ctime","note","weight"};
-    private  String coulmns ="bi_id,img_name,img_url,img_intro,ctime,note,weight";
-    private  String coulmns2 ="img_name,img_url,img_intro,ctime,note,weight";
+    private  String[] carrays ={"bi_id","img_name","img_url","img_intro","ctime","note","weight","jump_url"};
+    private  String coulmns ="bi_id,img_name,img_url,img_intro,ctime,note,weight,jump_url";
+    private  String coulmns2 ="img_name,img_url,img_intro,ctime,note,weight,jump_url";
 
     public  String[] getCarrays(){
         return  carrays;
@@ -66,7 +66,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public int insert(Wx_banner_img bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (img_name,img_url,img_intro,ctime,note,weight) VALUES (:img_name,:img_url,:img_intro,:ctime,:note,:weight)";
+            sql = "INSERT INTO "+TABLENAME2+" (img_name,img_url,img_intro,ctime,note,weight,jump_url) VALUES (:img_name,:img_url,:img_intro,:ctime,:note,:weight,:jump_url)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             KeyHolder keyholder = new GeneratedKeyHolder();
             _np.update(sql, ps, keyholder);
@@ -87,7 +87,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public int insert_primarykey(Wx_banner_img bean, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (bi_id,img_name,img_url,img_intro,ctime,note,weight) VALUES (:bi_id,:img_name,:img_url,:img_intro,:ctime,:note,:weight)";
+            sql = "INSERT INTO "+TABLENAME2+" (bi_id,img_name,img_url,img_intro,ctime,note,weight,jump_url) VALUES (:bi_id,:img_name,:img_url,:img_intro,:ctime,:note,:weight,:jump_url)";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -106,7 +106,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public int[] insert(final List<Wx_banner_img> beans, String TABLENAME2) throws SQLException{
         String sql;
         try{
-            sql = "INSERT INTO "+TABLENAME2+" (img_name,img_url,img_intro,ctime,note,weight) VALUES (?,?,?,?,?,?)";
+            sql = "INSERT INTO "+TABLENAME2+" (img_name,img_url,img_intro,ctime,note,weight,jump_url) VALUES (?,?,?,?,?,?,?)";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -121,6 +121,7 @@ public class Wx_banner_imgDao extends BaseDao{
                     ps.setTimestamp(4, new Timestamp(bean.ctime.getTime()));
                     ps.setString(5, bean.note);
                     ps.setInt(6, bean.weight);
+                    ps.setString(7, bean.jump_url);
                 }
             });
         }catch(Exception e){
@@ -139,7 +140,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public List<Wx_banner_img> selectAll(String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight FROM "+TABLENAME2+" ORDER BY bi_id";
+            sql = "SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight,jump_url FROM "+TABLENAME2+" ORDER BY bi_id";
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_banner_img>(Wx_banner_img.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -157,7 +158,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public List<Wx_banner_img> selectLast(int num ,String TABLENAME2) {
         String sql;
         try{
-            sql = "SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight FROM "+TABLENAME2+" ORDER BY bi_id DESC LIMIT "+num+"" ;
+            sql = "SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight,jump_url FROM "+TABLENAME2+" ORDER BY bi_id DESC LIMIT "+num+"" ;
             return _np.getJdbcOperations().query(sql, new BeanPropertyRowMapper<Wx_banner_img>(Wx_banner_img.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -175,7 +176,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public List<Wx_banner_img> selectGtKey(long bi_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight FROM "+TABLENAME2+" WHERE bi_id>:bi_id";
+            sql="SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight,jump_url FROM "+TABLENAME2+" WHERE bi_id>:bi_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("bi_id", bi_id);
             return _np.query(sql, param, new BeanPropertyRowMapper<Wx_banner_img>(Wx_banner_img.class));
@@ -195,7 +196,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public Wx_banner_img selectByKey(long bi_id, String TABLENAME2) {
         String sql;
         try{
-            sql="SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight FROM "+TABLENAME2+" WHERE bi_id=:bi_id";
+            sql="SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight,jump_url FROM "+TABLENAME2+" WHERE bi_id=:bi_id";
             Map<String,Object> param = new HashMap<String,Object>();
             param.put("bi_id", bi_id);
             List<Wx_banner_img> list =  _np.query(sql, param, new BeanPropertyRowMapper<Wx_banner_img>(Wx_banner_img.class));
@@ -234,7 +235,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public List<Wx_banner_img> selectByPage(int begin, int num, String TABLENAME2) {
         try{
             String sql;
-            sql = "SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
+            sql = "SELECT bi_id,img_name,img_url,img_intro,ctime,note,weight,jump_url FROM "+TABLENAME2+" LIMIT "+begin+", "+num+"";
             return _np.getJdbcOperations().query(sql,new BeanPropertyRowMapper<Wx_banner_img>(Wx_banner_img.class));
         }catch(Exception e){
             //createTable(TABLENAME2);
@@ -252,7 +253,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public int updateByKey(Wx_banner_img bean, String TABLENAME2) {
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET img_name=:img_name,img_url=:img_url,img_intro=:img_intro,ctime=:ctime,note=:note,weight=:weight WHERE bi_id=:bi_id";
+            sql = "UPDATE "+TABLENAME2+" SET img_name=:img_name,img_url=:img_url,img_intro=:img_intro,ctime=:ctime,note=:note,weight=:weight,jump_url=:jump_url WHERE bi_id=:bi_id";
             SqlParameterSource ps = new BeanPropertySqlParameterSource(bean);
             return _np.update(sql, ps);
         }catch(Exception e){
@@ -270,7 +271,7 @@ public class Wx_banner_imgDao extends BaseDao{
     public int[] updateByKey (final List<Wx_banner_img> beans, String TABLENAME2) throws SQLException{
         try{
             String sql;
-            sql = "UPDATE "+TABLENAME2+" SET img_name=?,img_url=?,img_intro=?,ctime=?,note=?,weight=? WHERE bi_id=?";
+            sql = "UPDATE "+TABLENAME2+" SET img_name=?,img_url=?,img_intro=?,ctime=?,note=?,weight=?,jump_url=? WHERE bi_id=?";
             return _np.getJdbcOperations().batchUpdate(sql, new BatchPreparedStatementSetter() {
                 //@Override
                 public int getBatchSize() {
@@ -285,7 +286,8 @@ public class Wx_banner_imgDao extends BaseDao{
                     ps.setTimestamp(4, new Timestamp(bean.ctime.getTime()));
                     ps.setString(5, bean.note);
                     ps.setInt(6, bean.weight);
-                    ps.setLong(7, bean.bi_id);
+                    ps.setString(7, bean.jump_url);
+                    ps.setLong(8, bean.bi_id);
                 }
             });
         }catch(Exception e){
@@ -351,6 +353,7 @@ public class Wx_banner_imgDao extends BaseDao{
                  "	`ctime`  TIMESTAMP NOT NULL COMMENT '//timestamp    创建时间'," +
                  "	`note`  VARCHAR(60) COMMENT '//varchar(60)    备注'," +
                  "	`weight`  INT(11) COMMENT '//int(11)    权重'," +
+                 "	`jump_url`  VARCHAR(200) COMMENT '//varchar(200)    跳转的目的地链接'," +
                  "	PRIMARY KEY (`bi_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

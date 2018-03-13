@@ -410,7 +410,7 @@ public class Wx_goods_orderDao extends BaseDao{
                  "	`logistic_code`  VARCHAR(100) COMMENT '//varchar(100)    快递单号'," +
                  "	`shipper_name`  VARCHAR(100) COMMENT '//varchar(100)    快递公司名称'," +
                  "	`shipper_code`  VARCHAR(30) COMMENT '//varchar(30)    快鸟-快递公司编码'," +
-                 "	`wx_pay_json`  TINYTEXT COMMENT '//varchar(255)    微信支付下单返回值JSON'," +
+                 "	`wx_pay_json`  TINYTEXT COMMENT '//varchar(1000)    微信支付下单返回值JSON'," +
                  "	PRIMARY KEY (`go_id`)" +
                  ") ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 AUTO_INCREMENT=1 ;";
             Map<String,String> params = new HashMap<String,String>();

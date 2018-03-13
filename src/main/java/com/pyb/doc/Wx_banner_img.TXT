@@ -8,4 +8,5 @@
 |ctime|创建时间|java.util.Date|
 |note|备注|String|
 |weight|权重|int|
+|jump_url|跳转的目的地链接|String|
 

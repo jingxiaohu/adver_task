@@ -348,7 +348,7 @@ public class Wx_goods_detailsDao extends BaseDao{
             sql = "CREATE TABLE IF NOT EXISTS `${TABLENAME}` (" +
                  "	`gd_id`  BIGINT(20) NOT NULL AUTO_INCREMENT COMMENT '//bigint(20)    主键ID'," +
                  "	`g_id`  BIGINT(20) COMMENT '//bigint(20)    商品表主键ID'," +
-                 "	`goods_desc`  TINYTEXT COMMENT '//varchar(1000)    详情介绍'," +
+                 "	`goods_desc`  TINYTEXT COMMENT '//text    详情介绍'," +
                  "	`img_urls`  TINYTEXT COMMENT '//varchar(800)    详情图片URL逗号分割'," +
                  "	`ctime`  TIMESTAMP COMMENT '//timestamp    创建时间'," +
                  "	`utime`  TIMESTAMP COMMENT '//timestamp    更新时间'," +

@@ -11,7 +11,7 @@ public class Wx_goods_details implements Cloneable , Serializable{
 
     public long gd_id;//bigint(20)    主键ID
     public long g_id;//bigint(20)    商品表主键ID
-    public String goods_desc="";//varchar(1000)    详情介绍
+    public String goods_desc="";//text    详情介绍
     public String img_urls="";//varchar(800)    详情图片URL逗号分割
     public java.util.Date ctime=new java.util.Date();//timestamp    创建时间
     public java.util.Date utime=new java.util.Date();//timestamp    更新时间

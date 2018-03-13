@@ -35,7 +35,7 @@ public class Wx_goods_order implements Cloneable , Serializable{
     public String logistic_code="";//varchar(100)    快递单号
     public String shipper_name="";//varchar(100)    快递公司名称
     public String shipper_code="";//varchar(30)    快鸟-快递公司编码
-    public String wx_pay_json="";//varchar(255)    微信支付下单返回值JSON
+    public String wx_pay_json="";//varchar(1000)    微信支付下单返回值JSON
 
 
 

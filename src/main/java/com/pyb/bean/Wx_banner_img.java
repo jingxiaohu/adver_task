@@ -7,7 +7,7 @@ import java.util.*;
 @SuppressWarnings({"serial"})
 public class Wx_banner_img implements Cloneable , Serializable{
 
-    //public static String[] carrays ={"bi_id","img_name","img_url","img_intro","ctime","note","weight"};
+    //public static String[] carrays ={"bi_id","img_name","img_url","img_intro","ctime","note","weight","jump_url"};
 
     public long bi_id;//bigint(20)    主键ID
     public String img_name="";//varchar(80)    图片名称
@@ -16,6 +16,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
     public java.util.Date ctime=new java.util.Date();//timestamp    创建时间
     public String note="";//varchar(60)    备注
     public int weight;//int(11)    权重
+    public String jump_url="";//varchar(200)    跳转的目的地链接
 
 
 
@@ -90,9 +91,20 @@ public class Wx_banner_img implements Cloneable , Serializable{
         this.weight= value;
     }
 
+    public String getJump_url(){
+        return jump_url;
+    }
+
+    public void setJump_url(String value){
+    	if(value == null){
+           value = "";
+        }
+        this.jump_url= value;
+    }
 
 
-    public static Wx_banner_img newWx_banner_img(long bi_id, String img_name, String img_url, String img_intro, java.util.Date ctime, String note, int weight) {
+
+    public static Wx_banner_img newWx_banner_img(long bi_id, String img_name, String img_url, String img_intro, java.util.Date ctime, String note, int weight, String jump_url) {
         Wx_banner_img ret = new Wx_banner_img();
         ret.setBi_id(bi_id);
         ret.setImg_name(img_name);
@@ -101,6 +113,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         ret.setCtime(ctime);
         ret.setNote(note);
         ret.setWeight(weight);
+        ret.setJump_url(jump_url);
         return ret;    
     }
 
@@ -112,6 +125,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         java.util.Date ctime = wx_banner_img.getCtime();
         String note = wx_banner_img.getNote();
         int weight = wx_banner_img.getWeight();
+        String jump_url = wx_banner_img.getJump_url();
 
         this.setBi_id(bi_id);
         this.setImg_name(img_name);
@@ -120,6 +134,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         this.setCtime(ctime);
         this.setNote(note);
         this.setWeight(weight);
+        this.setJump_url(jump_url);
 
     }
 
@@ -132,6 +147,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         java.util.Date ctime = wx_banner_img.getCtime();
         String note = wx_banner_img.getNote();
         int weight = wx_banner_img.getWeight();
+        String jump_url = wx_banner_img.getJump_url();
     }
 
     public Map<String,Object> toMap(){
@@ -146,6 +162,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         java.util.Date ctime = wx_banner_img.getCtime();
         String note = wx_banner_img.getNote();
         int weight = wx_banner_img.getWeight();
+        String jump_url = wx_banner_img.getJump_url();
     
         Map<String,Object>  _ret = new HashMap<String,Object>();
         _ret.put("bi_id",bi_id);
@@ -155,6 +172,7 @@ public class Wx_banner_img implements Cloneable , Serializable{
         _ret.put("ctime",ctime);
         _ret.put("note",note);
         _ret.put("weight",weight);
+        _ret.put("jump_url",jump_url);
         return _ret;
     }
 
