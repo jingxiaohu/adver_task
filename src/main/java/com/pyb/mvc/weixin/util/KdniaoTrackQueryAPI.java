@@ -51,6 +51,7 @@ public class KdniaoTrackQueryAPI {
             WLNameMap.put("安能物流","ANE");
             WLNameMap.put("精英速运","JYSY");
             WLNameMap.put("邮政快递","YZPY");
+            WLNameMap.put("京东","JD");
         }
         return WLNameMap;
     }
@@ -63,7 +64,8 @@ public class KdniaoTrackQueryAPI {
         try {
            /* String result = api.getOrderTracesByJson(getWLNameMap().get("百世快递"), "70049954752928");
             System.out.print(result);*/
-            String result = api.getOrderTracesByJson(getWLNameMap().get("邮政快递"), "9891649961956");
+//            String result = api.getOrderTracesByJson(getWLNameMap().get("邮政快递"), "9891649961956");
+            String result = api.getOrderTracesByJson(getWLNameMap().get("京东"), "VD41885987850");
             System.out.print(result);
            /* String result = api.getOrderRecognitionByJson("9891649961956");
             System.out.print(result);*/
